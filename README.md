@@ -2,6 +2,15 @@
 
 ## TODOS
 
+- [ ] Categorias Hijas
+- [ ] SKU
 - [ ] Delete Globally at the end
 - [ ] Delete Dependencies from Migration (SANITY)
-- [ ] Make a WPFetch function to get every page id
+- [ ] TIPSA Envió
+- [ ] Delete unused UI components
+
+## PAYMENT METHODS
+
+- [ ] Redsys
+- [ ] Paypal
+- [ ] Bank Tranfer
