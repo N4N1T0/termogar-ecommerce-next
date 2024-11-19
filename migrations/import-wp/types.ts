@@ -1,4 +1,3 @@
-import { NumberDiff } from 'sanity'
 import type {
   WP_REST_API_Categories,
   WP_REST_API_Pages,
@@ -8,6 +7,41 @@ import type {
   WP_REST_API_Users
 } from 'wp-types'
 
+export type WordPressDataType =
+  | 'categories'
+  | 'posts'
+  | 'pages'
+  | 'tags'
+  | 'users'
+  | 'products'
+  | 'product_cat'
+  | 'product_tag'
+  | 'coupons'
+
+export type WordPressDataTypeResponses = {
+  categories: WP_REST_API_Categories
+  posts: WP_REST_API_Posts
+  pages: WP_REST_API_Pages
+  tags: WP_REST_API_Tags
+  users: WP_REST_API_Users
+  products: WP_REST_API_Products
+  product_cat: WP_REST_API_Term
+  product_tag: WP_REST_API_Term
+  coupons: WP_REST_API_Coupons
+}
+
+export type SanitySchemaType =
+  | 'category'
+  | 'post'
+  | 'page'
+  | 'tag'
+  | 'author'
+  | 'product'
+  | 'productCategory'
+  | 'productTag'
+  | 'coupon'
+
+// * CUSTOM TYPES
 export type WP_REST_API_Product = {
   id: number
   date_created: string
@@ -20,6 +54,7 @@ export type WP_REST_API_Product = {
   type: string
   link: string
   name: string
+  stockQuantity: number
   sale_price: string
   date_on_sale_from: string
   date_on_sale_to: string
@@ -68,35 +103,37 @@ export type WP_REST_API_Product = {
   related_ids: number[]
 }
 
-export type WP_REST_API_Products = WP_REST_API_Product[]
-
-export type WordPressDataType =
-  | 'categories'
-  | 'posts'
-  | 'pages'
-  | 'tags'
-  | 'users'
-  | 'products'
-  | 'product_cat'
-  | 'product_tag'
-
-export type WordPressDataTypeResponses = {
-  categories: WP_REST_API_Categories
-  posts: WP_REST_API_Posts
-  pages: WP_REST_API_Pages
-  tags: WP_REST_API_Tags
-  users: WP_REST_API_Users
-  products: WP_REST_API_Products
-  product_cat: WP_REST_API_Term
-  product_tag: WP_REST_API_Term
+export type WP_REST_API_Coupon = {
+  id: number
+  code: string
+  amount: string
+  status: string
+  date_created: string
+  date_created_gmt: Date
+  date_modified: string
+  date_modified_gmt: Date
+  discount_type: string
+  description: string
+  date_expires: null
+  date_expires_gmt: null
+  usage_count: number
+  individual_use: boolean
+  product_ids: any[]
+  excluded_product_ids: any[]
+  usage_limit: null
+  usage_limit_per_user: null
+  limit_usage_to_x_items: null
+  free_shipping: boolean
+  product_categories: any[]
+  excluded_product_categories: any[]
+  exclude_sale_items: boolean
+  minimum_amount: string
+  maximum_amount: string
+  email_restrictions: any[]
+  used_by: any[]
+  meta_data: any[]
 }
 
-export type SanitySchemaType =
-  | 'category'
-  | 'post'
-  | 'page'
-  | 'tag'
-  | 'author'
-  | 'product'
-  | 'productCategory'
-  | 'productTag'
+export type WP_REST_API_Coupons = WP_REST_API_Coupon[]
+
+export type WP_REST_API_Products = WP_REST_API_Product[]

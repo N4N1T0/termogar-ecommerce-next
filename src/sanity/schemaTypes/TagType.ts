@@ -17,7 +17,10 @@ export const tagType = defineType({
       name: 'slug',
       type: 'slug',
       title: 'Slug de la etiqueta',
-      description: 'El slug de la etiqueta.'
+      description: 'El slug de la etiqueta.',
+      options: {
+        source: 'name'
+      }
     })
   ],
   preview: {

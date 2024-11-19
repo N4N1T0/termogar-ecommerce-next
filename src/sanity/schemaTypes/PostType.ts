@@ -19,7 +19,10 @@ export const postType = defineType({
       name: 'slug',
       type: 'slug',
       title: 'Slug',
-      description: 'El slug es el identificador único de la entrada del blog.'
+      description: 'El slug es el identificador único de la entrada del blog.',
+      options: {
+        source: 'title'
+      }
     }),
     defineField({
       name: 'date',

@@ -26,7 +26,10 @@ export const productTagType = defineType({
       name: 'slug',
       type: 'slug',
       title: 'Slug',
-      description: 'El slug de la etiqueta de producto.'
+      description: 'El slug de la etiqueta de producto.',
+      options: {
+        source: 'name'
+      }
     }),
     defineField({
       name: 'taxonomy',

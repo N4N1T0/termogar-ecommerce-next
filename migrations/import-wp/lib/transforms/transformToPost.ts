@@ -8,12 +8,12 @@ import {
   sanityIdToImageReference,
   sanityUploadImageFromUrl,
   wpImageFetch
-} from './utils/wpImageFetch'
-import { htmlToBlockContent } from './utils/htmlToBlockContent'
-import { decodeAndStripHtml } from './utils/decodeHtmlToString'
+} from '../utils/wpImageFetch'
+import { htmlToBlockContent } from '../utils/htmlToBlockContent'
+import { decodeAndStripHtml } from '../utils/decodeHtmlToString'
 
 // Remove these keys because they'll be created by Content Lake
-type StagedPost = Omit<Post, '_createdAt' | '_updatedAt' | '_rev'>
+export type StagedPost = Omit<Post, '_createdAt' | '_updatedAt' | '_rev'>
 
 export async function transformToPost(
   wpDoc: WP_REST_API_Post,

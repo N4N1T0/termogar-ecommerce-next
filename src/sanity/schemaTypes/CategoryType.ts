@@ -17,7 +17,10 @@ export const categoryType = defineType({
       name: 'slug',
       type: 'slug',
       title: 'Slug',
-      description: 'El identificador único de la categoría.'
+      description: 'El identificador único de la categoría.',
+      options: {
+        source: 'name'
+      }
     })
   ],
   preview: {

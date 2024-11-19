@@ -19,6 +19,15 @@ export const pageType = defineType({
       name: 'slug',
       title: 'Slug',
       description: 'El slug es el identificador único de la página.',
+      type: 'slug',
+      options: {
+        source: 'title'
+      }
+    }),
+    defineField({
+      name: 'link',
+      title: 'Enlace Principal',
+      description: 'El enlace de la página.',
       type: 'slug'
     }),
     defineField({

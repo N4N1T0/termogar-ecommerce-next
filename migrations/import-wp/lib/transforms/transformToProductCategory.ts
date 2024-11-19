@@ -1,10 +1,10 @@
 import { ProductCategory } from '@/types/sanity'
 import type { WP_REST_API_Term } from 'wp-types'
-import { htmlToBlockContent } from './utils/htmlToBlockContent'
+import { htmlToBlockContent } from '../utils/htmlToBlockContent'
 import { SanityClient } from 'sanity'
 
 // Remove these keys because they'll be created by Content Lake
-type StagedProductCategory = Omit<
+export type StagedProductCategory = Omit<
   ProductCategory,
   '_createdAt' | '_updatedAt' | '_rev'
 >

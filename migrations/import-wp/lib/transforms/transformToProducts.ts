@@ -5,18 +5,18 @@ import type { SanityClient } from 'sanity'
 import {
   sanityIdToImageReference,
   sanityUploadImageFromUrl
-} from './utils/wpImageFetch'
-import { htmlToBlockContent } from './utils/htmlToBlockContent'
-import { decodeAndStripHtml } from './utils/decodeHtmlToString'
-import { WP_REST_API_Product } from '../types'
+} from '../utils/wpImageFetch'
+import { htmlToBlockContent } from '../utils/htmlToBlockContent'
+import { decodeAndStripHtml } from '../utils/decodeHtmlToString'
+import { WP_REST_API_Product } from '../../types'
 import {
   sanityIdToDocumentReference,
   sanityUploadDocumentsFromUrl,
   wpDocumentsFetch
-} from './utils/wpDocumentsFetch'
+} from '../utils/wpDocumentsFetch'
 
 // Remove these keys because they'll be created by Content Lake
-type StagedProduct = Omit<Product, '_createdAt' | '_updatedAt' | '_rev'>
+export type StagedProduct = Omit<Product, '_createdAt' | '_updatedAt' | '_rev'>
 
 export async function transformToProduct(
   wpDoc: WP_REST_API_Product,
@@ -130,6 +130,10 @@ export async function transformToProduct(
     )
   }
 
+  if (wpDoc.stockQuantity) {
+    doc.stockQuantity = wpDoc.stockQuantity
+  }
+
   if (wpDoc.meta_data && wpDoc.meta_data.length) {
     const documentInfo = wpDoc.meta_data.find(
       (item) => item.key === '_yoast_wpseo_metadesc'
@@ -142,7 +146,7 @@ export async function transformToProduct(
       (item) => item.key === 'documents'
     )
 
-    if (documentInfo) {
+    if (documentInfo && documentInfo.value.length > 0) {
       if (existingDocuments[documentInfo?.id]) {
         doc.downloads = sanityIdToDocumentReference(
           existingDocuments[documentInfo?.id]
@@ -218,6 +222,8 @@ export async function transformToProduct(
       values: wpDoc.attributes[0].options.map((option) => option)
     }
   }
+
+  // TODO: With Patch
 
   // if (Array.isArray(wpDoc.variations) && wpDoc.variations.length > 0) {
   //   doc.variations = wpDoc.variations.map((variation) => ({

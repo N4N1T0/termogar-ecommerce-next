@@ -5,22 +5,13 @@ import {
   BadgeEuro,
   BookOpenText,
   BookOpen,
-  BookText,
-  Calendar,
-  ClipboardType,
-  Footprints,
-  IdCard,
-  Mail,
-  Map,
   StickyNote,
-  PanelsTopLeft,
-  RectangleEllipsis,
   ShoppingBasket,
-  Ticket,
-  UserRound,
   UserRoundPen,
   Tag,
-  Filter
+  Filter,
+  UserPen,
+  Building2
 } from 'lucide-react'
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -36,8 +27,13 @@ export const structure: StructureResolver = (S) =>
             .title('Contenido del Sitio')
             .items([
               S.documentTypeListItem('page')
-                .title('Paginas')
+                .title('Paginas WP')
                 .icon(() => <BookOpenText className='h-4 w-4' />),
+              S.divider(),
+              S.listItem()
+                .title('Pagina Principal')
+                .icon(() => <BookOpen className='h-4 w-4' />)
+                .child(S.document().schemaType('homePage')),
               S.divider(),
               S.documentTypeListItem('post')
                 .title('Entradas')
@@ -50,7 +46,10 @@ export const structure: StructureResolver = (S) =>
                 .icon(() => <Tag className='h-4 w-4' />),
               S.documentTypeListItem('category')
                 .title('Categorías')
-                .icon(() => <Filter className='h-4 w-4' />)
+                .icon(() => <Filter className='h-4 w-4' />),
+              S.documentTypeListItem('subscriberNewsletter')
+                .title('Suscriptores')
+                .icon(() => <UserPen className='h-4 w-4' />)
             ])
         ),
       S.listItem()
@@ -68,7 +67,13 @@ export const structure: StructureResolver = (S) =>
                 .icon(() => <Filter className='h-4 w-4' />),
               S.documentTypeListItem('productTag')
                 .title('Etiquetas')
-                .icon(() => <Tag className='h-4 w-4' />)
+                .icon(() => <Tag className='h-4 w-4' />),
+              S.documentTypeListItem('coupon')
+                .title('Cupones')
+                .icon(() => <BadgeEuro className='h-4 w-4' />),
+              S.documentTypeListItem('brand')
+                .title('Marcas')
+                .icon(() => <Building2 className='h-4 w-4' />)
             ])
         )
     ])

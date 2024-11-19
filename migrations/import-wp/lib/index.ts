@@ -5,6 +5,7 @@ import { transformToCategory } from './transforms/transformToCategories'
 import { transformToProductCategory } from './transforms/transformToProductCategory'
 import { transformToProductTag } from './transforms/transformToProductTag'
 import { transformToProduct } from './transforms/transformToProducts'
+import { transformToCoupon } from './transforms/transformToCoupon'
 
 export {
   transformToPost,
@@ -13,5 +14,6 @@ export {
   transformToCategory,
   transformToProductCategory,
   transformToProductTag,
-  transformToProduct
+  transformToProduct,
+  transformToCoupon
 }

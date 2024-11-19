@@ -12,6 +12,7 @@ import { sanityFetchDocuments } from './lib/utils/wpDocumentsFetch'
 // * TRANSFORMERS
 import {
   transformToCategory,
+  transformToCoupon,
   transformToPage,
   transformToPost,
   transformToProduct,
@@ -26,7 +27,7 @@ import type {
   WP_REST_API_Term,
   WP_REST_API_Page
 } from 'wp-types'
-import { WP_REST_API_Product } from './types'
+import { WP_REST_API_Coupon, WP_REST_API_Product } from './types'
 
 const limit = pLimit(2)
 
@@ -43,11 +44,20 @@ export default defineMigration({
     const existingDocuments = await sanityFetchDocuments(client)
 
     const { wpType } = getDataTypes(process.argv)
+    // Define pages to skip
+    const skipPages = [25, 50, 74]
     let page = 1
     let hasMore = true
 
     while (hasMore) {
       try {
+        // Check if the current page is in the skip list
+        if (skipPages.includes(page)) {
+          console.log(`Skipping page ${page}`)
+          page++
+          continue // Skip this iteration and go to the next page
+        }
+
         let wpData = await wpDataTypeFetch(wpType, page)
 
         if (Array.isArray(wpData) && wpData.length) {
@@ -95,19 +105,29 @@ export default defineMigration({
                   existingDocuments
                 )
                 return doc
+              } else if (wpType === 'coupons') {
+                wpDoc = wpDoc as WP_REST_API_Coupon
+                const doc = await transformToCoupon(wpDoc)
+                return doc
               }
 
-              // TODO: Reviews, Client, Coupons
+              // TODO: Client
 
               hasMore = false
               throw new Error(`Unhandled WordPress type: ${wpType}`)
             })
           )
 
-          // Resolve all documents concurrently, throttled by p-limit
-          const resolvedDocs = await Promise.all(docs)
+          // Filter out null documents and resolve all valid documents concurrently
+          const resolvedDocs = await Promise.all(
+            docs.map(async (docPromise) => {
+              const doc = await docPromise
+              return doc !== null ? createOrReplace(doc) : null
+            })
+          )
 
-          yield resolvedDocs.map((doc) => createOrReplace(doc))
+          // Yield only the non-null results
+          yield resolvedDocs.filter((doc) => doc !== null)
           page++
         } else {
           hasMore = false

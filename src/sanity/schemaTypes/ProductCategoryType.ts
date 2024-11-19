@@ -26,7 +26,10 @@ export const productCategoryType = defineType({
       name: 'slug',
       type: 'slug',
       title: 'Slug',
-      description: 'El slug de la categoría de producto.'
+      description: 'El slug de la categoría de producto.',
+      options: {
+        source: 'title'
+      }
     }),
     defineField({
       name: 'link',

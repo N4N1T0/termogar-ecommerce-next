@@ -10,7 +10,10 @@ import { tagType } from './TagType'
 import { productType } from './ProductsType'
 import { productCategoryType } from './ProductCategoryType'
 import { productTagType } from './ProductTagType'
-import { reviewType } from './ReviewType'
+import { couponsType } from './CouponsTypes'
+import { subscriberNewsletterType } from './SubscriberNewsletterType'
+import { homePageType } from './HomePageType'
+import { brandType } from './BrandType'
 
 // TODO: Reviews, Client, Coupons
 
@@ -25,6 +28,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     productType,
     productCategoryType,
     productTagType,
-    reviewType
+    couponsType,
+    subscriberNewsletterType,
+    homePageType,
+    brandType
   ]
 }

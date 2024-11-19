@@ -19,7 +19,10 @@ export const productType = defineType({
       name: 'slug',
       type: 'slug',
       title: 'Slug',
-      description: 'El slug es el identificador único del producto.'
+      description: 'El slug es el identificador único del producto.',
+      options: {
+        source: 'title'
+      }
     }),
     defineField({
       name: 'link',
@@ -172,6 +175,12 @@ export const productType = defineType({
       of: [{ type: 'image' }]
     }),
     defineField({
+      name: 'stockQuantity',
+      type: 'number',
+      title: 'Stock',
+      description: 'Stock del Producto'
+    }),
+    defineField({
       name: 'commentStatus',
       type: 'string',
       title: 'Estatus Comentarios',
@@ -196,13 +205,6 @@ export const productType = defineType({
       title: 'Etiquetas',
       description: 'Las etiquetas del producto.',
       of: [{ type: 'reference', to: [{ type: 'productTag' }] }]
-    }),
-    defineField({
-      name: 'reviews',
-      type: 'array',
-      title: 'Reseñas',
-      description: 'Las reseñas del producto.',
-      of: [{ type: 'reference', to: [{ type: 'review' }] }]
     }),
     defineField({
       name: 'variations',

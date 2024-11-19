@@ -2,7 +2,10 @@ import { Category } from '@/types/sanity'
 import type { WP_REST_API_Category } from 'wp-types'
 
 // Remove these keys because they'll be created by Content Lake
-type StagedCategory = Omit<Category, '_createdAt' | '_updatedAt' | '_rev'>
+export type StagedCategory = Omit<
+  Category,
+  '_createdAt' | '_updatedAt' | '_rev'
+>
 
 export async function transformToCategory(
   wpDoc: WP_REST_API_Category
