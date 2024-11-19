@@ -10,7 +10,7 @@ const ServiceClientLayout = async ({
 }) => {
   const { slug } = await params
   return (
-    <main className='relative flex gap-5'>
+    <main className='relative flex w-full'>
       <CostumerServiceSidebar slug={slug} />
       {children}
     </main>

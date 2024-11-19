@@ -38,7 +38,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='es' suppressHydrationWarning>
-      <body className={`bg-gray-50 antialiased ${korbFonts.className}`}>
+      <body
+        className={`overflow-x-hidden bg-gray-50 antialiased ${korbFonts.className}`}
+      >
         {children}
         <Toaster />
       </body>

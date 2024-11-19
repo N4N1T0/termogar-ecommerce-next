@@ -8,6 +8,7 @@ import { PortableText } from 'next-sanity'
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
+import PageTitle from '@/components/Helpers/PageTitle'
 
 const CostumerServicePageSlug = async ({
   params
@@ -16,10 +17,12 @@ const CostumerServicePageSlug = async ({
 }) => {
   const { slug } = await params
 
+  if (!slug) return notFound()
+
   const searchedPage = await sanityClientRead.fetch(
     GET_COSTUMER_SERVICES_PAGE,
     {
-      slug
+      slug: [slug]
     }
   )
 
@@ -27,18 +30,31 @@ const CostumerServicePageSlug = async ({
 
   const { title, content } = searchedPage
 
-  // TODO: FIX THE LINKS IN THE CONTENT
+  // TODO: FIX THE LINKS IN THE CONTENT`
 
   return (
     <section
       id='costumer-service-page-index'
-      className='mx-auto mt-10 flex w-full flex-col items-center justify-center'
+      className='flex w-full flex-col items-center justify-start pb-5'
     >
-      <h1 className='my-5 text-3xl font-semibold text-gray-900'>{title}</h1>
+      <PageTitle
+        breadcrumb={[
+          { name: 'P. Principal', path: '/' },
+          {
+            name: 'Serv. Cliente',
+            path: '/servicio-al-cliente'
+          },
+          {
+            name: title || 'Términos y condiciones de Uso',
+            path: `/servicio-al-cliente/${slug}`
+          }
+        ]}
+        title={title || 'Términos y condiciones de Uso'}
+      />
       {content ? (
         <section
           id='content'
-          className='prose w-full max-w-none text-pretty px-5'
+          className='prose mx-auto ml-5 mt-10 w-full max-w-none text-pretty px-5'
         >
           <PortableText value={content} />
         </section>

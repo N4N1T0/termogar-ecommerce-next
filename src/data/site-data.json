@@ -53,19 +53,15 @@
     "Atención al Cliente": [
       {
         "name": "Servicio de atención al cliente",
-        "slug": "servicio-de-atencion-al-cliente"
-      },
-      {
-        "name": "Términos y condiciones de uso",
-        "slug": "terminos-y-condiciones-de-uso"
+        "slug": "servicio-al-cliente"
       },
       {
         "name": "Plazos y horarios de entrega",
-        "slug": "servicio-de-atencion-al-cliente/envio-y-entrega/plazos-horarios-entrega"
+        "slug": "servicio-al-cliente/plazos-horarios-entrega"
       },
       {
         "name": "Seguimiento de pedidos",
-        "slug": "mi-cuenta/seguimiento-de-pedidos"
+        "slug": "servicio-al-cliente/seguimiento-de-pedidos"
       }
     ],
     "Paginas Legales": [

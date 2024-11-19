@@ -20,7 +20,7 @@ const Footer = async () => {
   const searchedCategories = await sanityClientRead.fetch(GET_MENU_CATEGORIES)
   return (
     <footer className='footer-section-wrapper bg-white print:hidden'>
-      <div className='container-x mx-auto block pt-[56px]'>
+      <div className='container-x mx-auto block pt-5'>
         <div className='mb-[20px] flex w-full flex-col items-center border-b border-gray-200 pb-5'>
           {/* logo area */}
           <Link href='/'>
@@ -29,7 +29,7 @@ const Footer = async () => {
               height={36}
               src={bigLogo}
               alt='Termogar logo'
-              className='mb-[40px] h-auto w-auto'
+              className='mb-5 h-auto w-auto'
             />
           </Link>
         </div>
@@ -60,7 +60,7 @@ const Footer = async () => {
               <ul className='flex flex-col space-y-1'>
                 {searchedCategories.map(({ id, link, name }) => (
                   <li key={id}>
-                    <Link href={`/category/${link?.current}`}>
+                    <Link href={`/categoria${link?.current}`}>
                       <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                         {name}
                       </span>
@@ -76,7 +76,7 @@ const Footer = async () => {
               <ul className='flex flex-col space-y-1'>
                 {footerLinks['Atención al Cliente'].map(({ name, slug }) => (
                   <li key={name}>
-                    <Link href={`'/servicio-al-cliente/${slug}`}>
+                    <Link href={`/${slug}`}>
                       <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                         {name}
                       </span>
@@ -92,7 +92,7 @@ const Footer = async () => {
               <ul className='flex flex-col space-y-1'>
                 {footerLinks['Paginas Legales'].map(({ name, slug }) => (
                   <li key={name}>
-                    <Link href={`'/servicio-al-cliente/${slug}`}>
+                    <Link href={`/paginas-legales/${slug}`}>
                       <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                         {name}
                       </span>

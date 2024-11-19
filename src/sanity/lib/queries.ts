@@ -65,7 +65,7 @@ export const GET_COSTUMER_SERVICES_SIDEBAR_MENU =
 }`)
 
 export const GET_COSTUMER_SERVICES_PAGE =
-  defineQuery(`*[_type =='page' && status == 'publish' && slug.current == $slug][0]{
+  defineQuery(`*[_type =='page' && status == 'publish' && slug.current in $slug][0]{
   "id": _id,
   "slug": slug.current,
   title,
