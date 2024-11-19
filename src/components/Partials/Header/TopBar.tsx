@@ -1,20 +1,7 @@
-'use client'
-
-import { useState } from 'react'
-import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
-export default function TopBar({
-  message = '¡Envío gratis en pedidos superiores a $50!',
-  className = ''
-}: {
-  message?: string
-  className?: string
-}) {
-  const [isVisible, setIsVisible] = useState(true)
-
-  if (!isVisible) return null
-
+export default function TopBar({ className = '' }: { className?: string }) {
   return (
     <div
       className={cn(
@@ -22,15 +9,17 @@ export default function TopBar({
         className
       )}
     >
-      <div className='mx-auto flex max-w-7xl items-center justify-center'>
-        <p className='text-center'>{message}</p>
-        <button
-          onClick={() => setIsVisible(false)}
-          className='absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1 transition-colors duration-200 hover:text-white/80'
-          aria-label='Close announcement'
+      <div className='mx-auto flex max-w-7xl items-center justify-end gap-2'>
+        <span className='animate-pulse font-semibold uppercase text-accent'>
+          ¿Necesitas ayuda?
+        </span>
+        <p>Puedes usar nuestro Apartado de Atencion al Cliente pinchando:</p>
+        <Link
+          href='/servicio-al-cliente'
+          className='hover-200 font-semibold uppercase hover:text-accent'
         >
-          <X className='h-4 w-4' color='currentColor' />
-        </button>
+          En este Enlace
+        </Link>
       </div>
     </div>
   )

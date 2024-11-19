@@ -10,9 +10,22 @@ import Brand9 from './images/brand-9.png'
 import Brand10 from './images/brand-10.png'
 import Brand11 from './images/brand-11.png'
 import Brand12 from './images/brand-12.png'
+import Banner1 from './images/banner-1.png'
+import Banner2 from './images/banner-2.png'
+import Banner3 from './images/banner-3.png'
 
 // * PLACEHOLDERS
 import PlaceholderSquare from './images/about-banner.png'
+import PlaceholderProductCard from './images/banner-4.1.png'
+import PlaceholderBlogPost from './images/banner-1.png'
+import PlaceholderHorizontal from './images/ads-1.png'
+
+// * BACKGROUNDS
+import NewsletterBG from './images/new-letter.jpg'
+
+// * LOGOS
+import bigLogo from './logos/termogar_logo1-02.png'
+import smallLogo from './logos/termogar_imagotipo-03.png'
 
 export {
   Brand1,
@@ -27,5 +40,14 @@ export {
   Brand10,
   Brand11,
   Brand12,
-  PlaceholderSquare
+  Banner1,
+  Banner2,
+  Banner3,
+  PlaceholderSquare,
+  PlaceholderProductCard,
+  PlaceholderBlogPost,
+  PlaceholderHorizontal,
+  NewsletterBG,
+  bigLogo,
+  smallLogo
 }

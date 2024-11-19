@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import localFont from 'next/font/local'
+import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -39,7 +40,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='es' suppressHydrationWarning>
-      <body className={`antialiased ${korbFonts.className}`}>{children}</body>
+      <body className={`bg-gray-50 antialiased ${korbFonts.className}`}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   )
 }

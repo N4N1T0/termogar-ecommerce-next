@@ -4,6 +4,7 @@ import DataIteration from '@/components/Helpers/DataIteration'
 import PageTitle from '@/components/Helpers/PageTitle'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH } from '@/sanity/lib/queries'
+import { GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCHResult } from '@/types/sanity'
 
 const SearchPage = async ({
   searchParams
@@ -19,7 +20,6 @@ const SearchPage = async ({
     }
   )
 
-  console.log(searchedProducts)
   return (
     <main>
       <div className='title-bar'>
@@ -31,17 +31,27 @@ const SearchPage = async ({
             { name: 'Busqueda', path: '/busqueda' }
           ]}
         />
-        {/* <DataIteration
-          datas={products.products.slice(0, 16)}
-          startLength={0}
-          endLength={16}
+        <section
+          id='products'
+          className='container-x mx-auto grid grid-cols-1 gap-5 p-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
         >
-          {({ datas }) => (
-            <div data-aos='fade-up' key={datas.id} className='item'>
-              <ProductCardStyleOne datas={datas} />
-            </div>
-          )}
-        </DataIteration> */}
+          <DataIteration<GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCHResult[number]>
+            datas={searchedProducts}
+            startLength={0}
+            endLength={searchedProducts.length}
+          >
+            {({ datas, index }) => (
+              <div data-aos='fade-up' key={datas?.id} className='item'>
+                <ProductCardStyleOne<
+                  GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCHResult[number]
+                >
+                  datas={datas}
+                  priority={index < 6}
+                />
+              </div>
+            )}
+          </DataIteration>
+        </section>
       </div>
     </main>
   )

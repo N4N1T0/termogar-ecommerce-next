@@ -1,16 +1,18 @@
-// * PROJECT COMPONENTS IMPORTS
-import Cart from '@/components/Cart'
-import SearchBox from '@/components/Helpers/SearchBox'
-
 // * NEXTJS IMPORTS
 import Link from 'next/link'
+import Image from 'next/image'
 
 // * ASSETS IMPORTS
-import Logo3 from '@/assets/images/logo-3.svg'
-import { GitCompareArrows, Heart, ShoppingBag, User } from 'lucide-react'
+import CartPopup from '@/components/Cart/cart-popup'
+import SearchBox from '@/components/Helpers/search-box'
+import { WishlistLink } from '@/components/Wishlist/wishlist-helpers'
+import { User } from 'lucide-react'
+import { bigLogo, smallLogo } from '@/assets'
 
-// * TYPES IMPORTS
+// * UTILS IMPORTS
 import { GET_MENU_CATEGORIESResult } from '@/types/sanity'
+import { CartLink } from '@/components/Cart/cart-helpers'
+import { CompaireLink } from '@/components/Compaire/compaire-helpers'
 
 export default function Middlebar({
   className,
@@ -25,40 +27,32 @@ export default function Middlebar({
         <div className='relative h-full'>
           <div className='flex h-full items-center justify-between'>
             <div>
-              <Link href='/'>
-                <img width='152' height='36' src={Logo3} alt='logo' />
+              <Link href='/' className='hidden sm:block'>
+                <Image
+                  width='152'
+                  height='36'
+                  src={bigLogo}
+                  alt='Termogar logo'
+                />
+              </Link>
+              <Link href='/' className='block sm:hidden'>
+                <Image
+                  width='152'
+                  height='36'
+                  src={smallLogo}
+                  alt='Termogar logo'
+                />
               </Link>
             </div>
             <div className='h-[44px] w-[517px]'>
               <SearchBox categories={categories} className='search-com' />
             </div>
             <div className='flex items-center space-x-6'>
-              <div className='compaire relative'>
-                <Link href='/comparar-productos'>
-                  <GitCompareArrows />
-                </Link>
-                <span className='absolute -right-2.5 -top-2.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-accent text-[9px]'>
-                  2
-                </span>
-              </div>
-              <div className='favorite relative'>
-                <Link href='/wishlist'>
-                  <Heart />
-                </Link>
-                <span className='absolute -right-2.5 -top-2.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-accent text-[9px]'>
-                  1
-                </span>
-              </div>
+              <CompaireLink />
+              <WishlistLink />
               <div className='cart-wrapper group relative py-4'>
-                <div className='cart relative cursor-pointer'>
-                  <Link href='/carrito-de-la-compra'>
-                    <ShoppingBag />
-                  </Link>
-                  <span className='absolute -right-2.5 -top-2.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-accent text-[9px]'>
-                    15
-                  </span>
-                </div>
-                <Cart className='absolute -right-[45px] top-11 z-50 hidden group-hover:block' />
+                <CartLink />
+                <CartPopup className='absolute -right-[45px] top-11 z-50 hidden group-hover:block' />
               </div>
               <div>
                 <Link href='/profile'>

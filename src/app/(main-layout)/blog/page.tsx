@@ -1,6 +1,6 @@
 // * PROJECT COMPONENTS IMPORTS
-import PaginationBlog from '@/components/Blogs/Pagination'
-import BlogCard from '@/components/Helpers/Cards/BlogCard'
+import PaginationBlog from '@/components/Blogs/pagination'
+import BlogCard from '@/components/Helpers/Cards/blog-card'
 import DataIteration from '@/components/Helpers/DataIteration'
 import PageTitle from '@/components/Helpers/PageTitle'
 
@@ -40,7 +40,7 @@ const BlogPage = async ({
             title='Nuestros Artículos'
             breadcrumb={[
               { name: 'P. Principal', path: '/' },
-              { name: 'Artículos', path: '/blogs' }
+              { name: 'Artículos', path: '/blog' }
             ]}
           />
         </div>
@@ -62,7 +62,7 @@ const BlogPage = async ({
                   index: number
                 }) => (
                   <div data-aos='fade-up' className='item w-full'>
-                    <BlogCard data={datas} priority={index < 4} />
+                    <BlogCard type='blog' data={datas} priority={index < 6} />
                   </div>
                 )}
               </DataIteration>

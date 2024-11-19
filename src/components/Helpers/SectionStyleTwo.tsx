@@ -1,31 +1,40 @@
-// Components Imports
-import ProductCardRowStyleOne from '@/components/Helpers/Cards/ProductCardRowStyleOne'
-import DataIteration from '@/components/Helpers/DataIteration'
+// * ASSETS IMPORTS
+import ProductCardRowStyleOne from './Cards/ProductCardRowStyleOne'
 
-// Utils Imports
+// * UTILS IMPORTS
 import { cn } from '@/lib/utils'
+import { ProductCardType, SectionStyleTwoProps } from '@/types'
+import ViewMoreTitle from './view-more-title'
+import { sanityClientRead } from '@/sanity/lib/client'
+import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY } from '@/sanity/lib/queries'
 
-// Types Imports
-import { SectionStyleTwoProps } from '@/types'
-
-export default function SectionStyleTwo({
+const SectionStyleTwo = async ({
   className,
-  products
-}: SectionStyleTwoProps) {
+  sectionTitle,
+  seeMoreUrl
+}: SectionStyleTwoProps) => {
+  const searchedProducts = await sanityClientRead.fetch(
+    GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY,
+    { type: sectionTitle === null ? ['Calentadores'] : [sectionTitle] }
+  )
   return (
-    <div
-      className={cn(
-        'section-content grid w-full grid-cols-1 gap-5 sm:grid-cols-2 xl:gap-[30px]',
-        className
-      )}
-    >
-      <DataIteration datas={products} startLength={0} endLength={4}>
-        {({ datas }) => (
-          <div key={datas.id} className='item w-full'>
-            <ProductCardRowStyleOne datas={datas} />
+    <section id='section-5' className={cn('section-style-one', className)}>
+      <ViewMoreTitle
+        categoryTitle={sectionTitle || 'Calentadores'}
+        seeMoreUrl={`/categorias/${seeMoreUrl || 'calentadores'}`}
+      >
+        <div className='products-section w-full'>
+          <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-[30px]'>
+            {searchedProducts.slice(0, 12).map((product: ProductCardType) => (
+              <div key={product.id} className='item w-full'>
+                <ProductCardRowStyleOne datas={product} priority={false} />
+              </div>
+            ))}
           </div>
-        )}
-      </DataIteration>
-    </div>
+        </div>
+      </ViewMoreTitle>
+    </section>
   )
 }
+
+export default SectionStyleTwo

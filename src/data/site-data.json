@@ -1,0 +1,81 @@
+{
+  "compaireCharacteristics": [
+    {
+      "label": "etiquetas",
+      "key": "tags"
+    },
+    {
+      "label": "precio",
+      "key": "price"
+    },
+    {
+      "label": "opciones",
+      "key": "options"
+    },
+    {
+      "label": "categorías",
+      "key": "categories"
+    },
+    {
+      "label": "cantidad_en_stock",
+      "key": "stock_quantity"
+    },
+    {
+      "label": "descripción",
+      "key": "excerpt"
+    },
+    {
+      "label": "dimensiones",
+      "key": "dimensions"
+    },
+    {
+      "label": "fecha",
+      "key": "date"
+    },
+    {
+      "label": "id",
+      "key": "id"
+    },
+    {
+      "label": "oferta",
+      "key": "sale"
+    }
+  ],
+  "footerLinks": {
+    "info": [
+      "TERMOGAR. © 2024. Expertos en Climatización.",
+      "C/ Cerrajería, 12 - Polígono el Palmar. CP: 11500, El Puerto de Santa María (Cádiz)",
+      "tlf: 956 861 081 / 667 525 413",
+      "E-mail:Atención al Cliente: clientes@termogar.es",
+      "Horario tienda: LUN-VIE: 08:00 a 14:00 h. | 16:00 a 19:00 hr."
+    ],
+    "Categorias": [],
+    "Atención al Cliente": [
+      {
+        "name": "Servicio de atención al cliente",
+        "slug": "servicio-de-atencion-al-cliente"
+      },
+      {
+        "name": "Términos y condiciones de uso",
+        "slug": "terminos-y-condiciones-de-uso"
+      },
+      {
+        "name": "Plazos y horarios de entrega",
+        "slug": "servicio-de-atencion-al-cliente/envio-y-entrega/plazos-horarios-entrega"
+      },
+      {
+        "name": "Seguimiento de pedidos",
+        "slug": "mi-cuenta/seguimiento-de-pedidos"
+      }
+    ],
+    "Paginas Legales": [
+      {
+        "name": "Términos y condiciones de uso",
+        "slug": "terminos-y-condiciones-de-uso"
+      },
+      { "name": "Aviso legal", "slug": "aviso-legal" },
+      { "name": "Política de privacidad", "slug": "politica-de-privacidad" },
+      { "name": "Política de cookies", "slug": "politica-de-cookies" }
+    ]
+  }
+}

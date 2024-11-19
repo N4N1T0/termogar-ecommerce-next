@@ -1,6 +1,6 @@
 // * PROJECT COMPONENTS IMPORTS
-import PaginationBlog from '@/components/Blogs/Pagination'
-import BlogCard from '@/components/Helpers/Cards/BlogCard'
+import PaginationBlog from '@/components/Blogs/pagination'
+import BlogCard from '@/components/Helpers/Cards/blog-card'
 import DataIteration from '@/components/Helpers/DataIteration'
 import PageTitle from '@/components/Helpers/PageTitle'
 
@@ -62,7 +62,7 @@ const NewsPage = async ({
                   index: number
                 }) => (
                   <div data-aos='fade-up' className='item w-full'>
-                    <BlogCard data={datas} priority={index < 4} />
+                    <BlogCard data={datas} priority={index < 6} type='news' />
                   </div>
                 )}
               </DataIteration>

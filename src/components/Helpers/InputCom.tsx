@@ -9,6 +9,7 @@ export default function InputCom({
   children,
   inputHandler,
   value,
+  isPending,
   inputClasses,
   labelClasses = 'text-gray-500 text-[13px] font-normal'
 }: InputComProps) {
@@ -18,6 +19,7 @@ export default function InputCom({
         <label
           className={`input-label mb-2 block capitalize ${labelClasses || ''}`}
           htmlFor={name}
+          aria-disabled={isPending}
         >
           {label}
         </label>
@@ -27,11 +29,13 @@ export default function InputCom({
           placeholder={placeholder}
           value={value}
           onChange={inputHandler}
+          disabled={isPending}
           className={`input-field text-dark-gray h-full w-full bg-white px-6 text-sm font-normal placeholder:text-sm focus:outline-none focus:ring-0 ${
             inputClasses || ''
           }`}
           type={type}
           id={name}
+          name={name}
         />
         {children && children}
       </div>

@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 import ProductCardRowStyleTwo from './Cards/ProductCardRowStyleTwo'
 import DataIteration from './DataIteration'
-import ViewMoreTitle from './ViewMoreTitle'
+import ViewMoreTitle from './view-more-title'
 
 // Types Imports
 import { SectionStyleFourProps } from '@/types'

@@ -1,27 +1,15 @@
 import { CategoryCardProps } from '@/types'
 import Link from 'next/link'
 
-// Assets Imports
-import SectionCategory from '@/assets/images/section-category-1.jpg'
-
 export default function CategoryCard({
-  background,
-  title,
-  brands = []
+  childrenCategories = []
 }: CategoryCardProps) {
   return (
-    <div
-      className='category-card-wrappwer h-full w-full p-[30px]'
-      style={{
-        background: `url(${background || SectionCategory.src}) no-repeat`,
-        backgroundSize: 'cover'
-      }}
-    >
+    <div className='category-card-wrappwer h-full w-full p-[30px]'>
       <div>
-        <h1 className='font-600 mb-2 text-base tracking-wide'>{title}</h1>
         <div className='brands-list mb-[7px]'>
           <ul>
-            {brands.map((brand) => (
+            {childrenCategories.map((brand) => (
               <li key={brand + Math.random()}>
                 <Link href='/all-products'>
                   <span className='hover:text-qBlack hover:border-qblack hover:text-qblack border-b border-transparent text-sm capitalize text-gray-500'>
