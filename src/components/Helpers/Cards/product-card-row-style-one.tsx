@@ -4,17 +4,14 @@ import Image from 'next/image'
 
 // * ASSETS IMPORTS
 import { ProductCardRowStyleTwoProps, ProductCardType } from '@/types'
-import { Expand, GitCompareArrows, Heart } from 'lucide-react'
+import ProductQuickViewDynamic from '@/components/Helpers/quick-view'
+import { WishlistBtn } from '@/components/Wishlist/wishlist-helpers'
+import AddToCart from '@/components/Helpers/quantity'
+import { CompaireBtn } from '@/components/Compaire/compaire-helpers'
 
 // * UTILS IMPORTS
 import { cn, eurilize } from '@/lib/utils'
 import { PlaceholderSquare } from '@/assets'
-
-// * COMPONENTS IMPORTS
-import ProductQuickViewDynamic from '@/components/Helpers/QuickView'
-import { WishlistBtn } from '@/components/Wishlist/wishlist-helpers'
-import AddToCart from '@/components/Helpers/quantity'
-import { CompaireBtn } from '@/components/Compaire/compaire-helpers'
 
 const ProductCardRowStyleOne = ({
   className,

@@ -14,23 +14,22 @@ export interface SectionStyleOneProps {
   sectionTitle: string | null | undefined
 }
 
-export interface SectionStyleTwoProps
-  extends Omit<
-    SectionStyleOneProps,
-    'categoryTitle' | 'brands' | 'categoryBackground'
-  > {}
+export type SectionStyleTwoProps = Omit<
+  SectionStyleOneProps,
+  'categoryTitle' | 'brands' | 'categoryBackground'
+>
 
-export interface SectionStyleThreeProps
-  extends Omit<
-    SectionStyleOneProps,
-    'categoryTitle' | 'brands' | 'categoryBackground'
-  > {}
+export type SectionStyleThreeProps = Omit<
+  SectionStyleOneProps,
+  'categoryTitle' | 'brands' | 'categoryBackground'
+>
 
-export interface SectionStyleFourProps
-  extends Omit<
-    SectionStyleOneProps,
-    'categoryTitle' | 'brands' | 'categoryBackground'
-  > {}
+export type SectionStyleFourProps = Omit<
+  SectionStyleOneProps,
+  'categoryTitle' | 'brands' | 'categoryBackground'
+> & {
+  products: ProductCardType[]
+}
 
 export interface ViewMoreTitleProps {
   categoryTitle?: string | null | undefined
@@ -248,7 +247,7 @@ interface ImageBlock {
 }
 
 // Define the main Content type as an array of the above types
-export interface Content extends Array<ContentItem> {}
+export type Content = Array<ContentItem>
 
 // Union type for different content items within the Content array
 type ContentItem = ({ _key: string } & ExternalImage) | Block | ImageBlock

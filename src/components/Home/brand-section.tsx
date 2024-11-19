@@ -38,7 +38,7 @@ const BrandSection = async ({ className, sectionTitle }: BrandSectionProps) => {
                   height={100}
                   placeholder='blur'
                   blurDataURL={media.blur || PlaceholderSquare.blurDataURL}
-                  className='transition-transform duration-300 ease-out group-hover:scale-110'
+                  className='h-auto w-auto transition-transform duration-300 ease-out group-hover:scale-110'
                 />
               </div>
             </Link>

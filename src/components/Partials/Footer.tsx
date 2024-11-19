@@ -25,11 +25,11 @@ const Footer = async () => {
           {/* logo area */}
           <Link href='/'>
             <Image
-              width='152'
-              height='36'
+              width={152}
+              height={36}
               src={bigLogo}
               alt='Termogar logo'
-              className='mb-[40px]'
+              className='mb-[40px] h-auto w-auto'
             />
           </Link>
         </div>
@@ -75,7 +75,7 @@ const Footer = async () => {
               </h6>
               <ul className='flex flex-col space-y-1'>
                 {footerLinks['Atención al Cliente'].map(({ name, slug }) => (
-                  <li id={name}>
+                  <li key={name}>
                     <Link href={`'/servicio-al-cliente/${slug}`}>
                       <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                         {name}
@@ -91,7 +91,7 @@ const Footer = async () => {
               </h6>
               <ul className='flex flex-col space-y-1'>
                 {footerLinks['Paginas Legales'].map(({ name, slug }) => (
-                  <li id={name}>
+                  <li key={name}>
                     <Link href={`'/servicio-al-cliente/${slug}`}>
                       <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                         {name}

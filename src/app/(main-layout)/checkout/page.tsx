@@ -1,5 +1,4 @@
 import React from 'react'
-import InputCom from '@/components/Helpers/InputCom'
 import PageTitle from '@/components/Helpers/PageTitle'
 import Link from 'next/link'
 import OrderSummary from '@/components/CheakoutPage/order-summary'

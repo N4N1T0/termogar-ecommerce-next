@@ -1,15 +1,14 @@
 'use client'
 
-import { PlaceholderSquare } from '@/assets'
+// * ASSETS IMPORTS
 import BreadcrumbCom from '@/components/BreadcrumbCom'
 import EmptyCompaireError from '@/components/Compaire/empty'
 import CompaireProductTable from '@/components/Compaire/product-table'
 import LoaderStyleOne from '@/components/Helpers/Loaders/LoaderStyleOne'
 import PageTitle from '@/components/Helpers/PageTitle'
-import { eurilize } from '@/lib/utils'
+
+// * UTILS IMPORTS
 import { useCompare } from '@/stores'
-import { Star } from 'lucide-react'
-import Image from 'next/image'
 
 const CompaireProductsPage = () => {
   const { products, rehydrated } = useCompare()

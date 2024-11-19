@@ -34,9 +34,7 @@ const NewsArticlePage = async ({
     featuredMedia,
     author,
     date,
-    content,
-    categories,
-    tags
+    content
   } = searchedPostArticule
 
   return (

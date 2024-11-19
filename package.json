@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "prepare": "husky",
-    "typegen": "pnpm dlx sanity@latest schema extract && pnpm dlx sanity@latest typegen generate",
-    "hello": "pnpm run ./src/lib/hello.ts"
+    "typegen": "pnpm dlx sanity@latest schema extract && pnpm dlx sanity@latest typegen generate"
   },
   "lint-staged": {
     "*/src/**/*": [
@@ -23,11 +23,9 @@
     "@clerk/nextjs": "^5.7.5",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-dialog": "^1.1.2",
-    "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
-    "@radix-ui/react-tooltip": "^1.1.4",
     "@sanity/client": "^6.22.2",
     "@sanity/image-url": "^1.0.2",
     "@sanity/schema": "^3.62.3",
@@ -35,14 +33,12 @@
     "@sanity/vision": "3.62.0",
     "@sanity/webhook": "^4.0.4",
     "@woocommerce/woocommerce-rest-api": "^1.0.1",
-    "@wordpress/api-fetch": "^7.11.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "decimal.js": "^10.4.3",
     "lucide-react": "^0.453.0",
     "next": "15.0.1",
     "next-sanity": "^9.8.8",
-    "next-themes": "^0.4.3",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
     "redsys-easy": "^5.2.6",
@@ -53,12 +49,13 @@
     "styled-components": "^6.1.13",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "use-debounce": "^10.0.4",
     "uuid": "^10.0.0",
     "zod": "^3.23.8",
     "zustand": "^5.0.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.15.0",
     "@sanity/block-tools": "^3.62.3",
     "@tailwindcss/typography": "^0.5.15",
     "@types/jsdom": "^21.1.7",
@@ -66,7 +63,6 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/woocommerce__woocommerce-rest-api": "^1.0.5",
-    "@wordpress/block-serialization-default-parser": "^5.11.0",
     "eslint": "^9.13.0",
     "eslint-config-next": "15.0.1",
     "eslint-config-prettier": "^9.1.0",
@@ -84,9 +80,6 @@
     "wp-types": "^4.66.1"
   },
   "pnpm": {
-    "allowedDeprecatedVersions": {
-      "eslint": "8.57.1"
-    },
     "pnpm": {
       "peerDependencyRules": {
         "allowAny": [

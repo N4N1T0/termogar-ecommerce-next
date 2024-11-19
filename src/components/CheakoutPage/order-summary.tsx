@@ -21,10 +21,12 @@ const OrderSummary = () => {
     return total + price * item.quantity
   }, 0)
 
+  console.log(coupon)
+
   return (
     <section id='order-summary' className='flex-1'>
       <h2 className='mb-5 text-xl font-medium text-gray-900 sm:text-2xl'>
-        Reseumen de Orden
+        Resumen de Orden
       </h2>
 
       <div className='w-full border border-gray-200 px-10 py-[30px]'>

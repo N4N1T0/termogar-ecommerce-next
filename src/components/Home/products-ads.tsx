@@ -43,7 +43,7 @@ export default function ProductsAds({
                   placeholder='blur'
                   width={740}
                   height={300}
-                  className='h-full w-full'
+                  className='h-auto w-auto'
                 />
               </Link>
             </div>

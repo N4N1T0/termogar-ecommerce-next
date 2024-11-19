@@ -1,5 +1,5 @@
 // * ASSETS IMPORTS
-import ProductCardStyleOne from '@/components/Helpers/Cards/ProductCardStyleOne'
+import ProductCardStyleOne from '@/components/Helpers/Cards/product-card-style-one'
 import DataIteration from '@/components/Helpers/DataIteration'
 import ViewMoreTitle from '@/components/Helpers/view-more-title'
 

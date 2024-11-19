@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import productDatas from '../../data/products.json'
 import BreadcrumbCom from '../BreadcrumbCom'
-import ProductCardStyleOne from '../Helpers/Cards/ProductCardStyleOne'
+import ProductCardStyleOne from '../Helpers/Cards/product-card-style-one'
 import DataIteration from '../Helpers/DataIteration'
 import Layout from '../Partials/Layout'
 import ProductsFilter from './ProductsFilter'

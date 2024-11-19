@@ -39,7 +39,7 @@ export default function Banner({
                 height={600}
                 // blurDataURL={banners[0].blur}
                 // placeholder='blur'
-                className='h-auto w-full max-w-full object-cover'
+                className='h-auto w-auto max-w-full object-cover'
                 priority
               />
             </Link>
@@ -57,7 +57,7 @@ export default function Banner({
                   height={285}
                   // blurDataURL={banners[1].blur}
                   // placeholder='blur'
-                  className='h-full w-full'
+                  className='h-auto w-auto'
                   priority
                 />
               </Link>
@@ -71,7 +71,7 @@ export default function Banner({
                   height={285}
                   // blurDataURL={banners[2].blur}
                   // placeholder='blur'
-                  className='h-full w-full'
+                  className='h-auto w-auto'
                   priority
                 />
               </Link>

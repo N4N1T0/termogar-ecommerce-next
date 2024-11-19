@@ -1,10 +1,9 @@
 import { cn } from '@/lib/utils'
-import ProductCardRowStyleTwo from './Cards/ProductCardRowStyleTwo'
-import DataIteration from './DataIteration'
-import ViewMoreTitle from './view-more-title'
+import ProductCardRowStyleTwo from '@/components/Helpers/Cards/product-card-row-style-one'
+import ViewMoreTitle from '@/components/Helpers/view-more-title'
 
 // Types Imports
-import { SectionStyleFourProps } from '@/types'
+import { ProductCardType, SectionStyleFourProps } from '@/types'
 
 export default function SectionStyleFour({
   className,
@@ -18,25 +17,31 @@ export default function SectionStyleFour({
         <div className='products-section w-full'>
           <div className='grid grid-cols-1 lg:grid-cols-3 lg:gap-5 xl:gap-[30px]'>
             <div className='item-col'>
-              <DataIteration datas={products} startLength={0} endLength={4}>
-                {({ datas }) => (
-                  <ProductCardRowStyleTwo key={datas.id} datas={datas} />
-                )}
-              </DataIteration>
+              {products.slice(0, 4).map((product: ProductCardType) => (
+                <ProductCardRowStyleTwo
+                  key={product.id}
+                  datas={product}
+                  priority={false}
+                />
+              ))}
             </div>
             <div className='item-col'>
-              <DataIteration datas={products} startLength={4} endLength={8}>
-                {({ datas }) => (
-                  <ProductCardRowStyleTwo key={datas.id} datas={datas} />
-                )}
-              </DataIteration>
+              {products.slice(4, 8).map((product: ProductCardType) => (
+                <ProductCardRowStyleTwo
+                  key={product.id}
+                  datas={product}
+                  priority={false}
+                />
+              ))}
             </div>
             <div className='item-col'>
-              <DataIteration datas={products} startLength={8} endLength={12}>
-                {({ datas }) => (
-                  <ProductCardRowStyleTwo key={datas.id} datas={datas} />
-                )}
-              </DataIteration>
+              {products.slice(8, 12).map((product: ProductCardType) => (
+                <ProductCardRowStyleTwo
+                  key={product.id}
+                  datas={product}
+                  priority={false}
+                />
+              ))}
             </div>
           </div>
         </div>

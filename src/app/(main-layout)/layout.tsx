@@ -1,6 +1,6 @@
 // Project Components Imports
+import Footer from '@/components/Partials/footer'
 import Header from '@/components/Partials/Header'
-import Footer from '@/components/Partials/Footer'
 // import Drawer from '@/components/Mobile/Drawer'
 
 export default function MainLayout({

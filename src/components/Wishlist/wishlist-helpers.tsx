@@ -4,7 +4,7 @@
 import React from 'react'
 
 // * ASSETS IMPORTS
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import { Heart, X } from 'lucide-react'
 import { toast } from 'sonner'
 

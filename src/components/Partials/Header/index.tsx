@@ -1,19 +1,16 @@
 // * NEXT.JS IMPORTS
 import Link from 'next/link'
+import Image from 'next/image'
 
-// * PROJECT COMPONENTS IMPORTS
+// * ASSETS IMPORTS
+import Logo3 from '@/assets/images/logo-3.svg'
+import { ShoppingBag } from 'lucide-react'
 import Middlebar from './Middlebar'
 import Navbar from './Navbar'
 import TopBar from './TopBar'
 
 // * UTILS IMPORTS
 import { cn } from '@/lib/utils'
-
-// * ASSETS IMPORTS
-import Logo3 from '@/assets/images/logo-3.svg'
-import { ShoppingBag } from 'lucide-react'
-
-// * QUERIES IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_MENU_CATEGORIES } from '@/sanity/lib/queries'
 
@@ -46,9 +43,16 @@ const HeaderOne = async ({ className }: { className?: string }) => {
             />
           </svg>
           <div>
-            {/* TODO: ADD THE REAL LOGO */}
             <Link href='/'>
-              <img width='152' height='36' src={Logo3} alt='logo' />
+              <Image
+                width={152}
+                height={36}
+                src={Logo3}
+                alt='Termogar Logo'
+                title='Termogar Logo'
+                priority
+                className='h-auto w-auto'
+              />
             </Link>
           </div>
           <div className='cart relative cursor-pointer'>

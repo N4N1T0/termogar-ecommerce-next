@@ -31,9 +31,9 @@ export const POST = async (request: NextRequest) => {
     product_categories,
     product_ids,
     usage_limit,
-    usage_count,
-    limit_usage_to_x_items,
-    usage_limit_per_user
+    usage_count
+    // limit_usage_to_x_items,
+    // usage_limit_per_user
   } = searchedCoupon
 
   if (date_expires && new Date(date_expires) < today) {

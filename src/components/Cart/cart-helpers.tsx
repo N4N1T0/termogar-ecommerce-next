@@ -5,7 +5,7 @@ import { Minus, Plus, ShoppingBag, X } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { toast } from 'sonner'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 
 const CartLink = () => {
   const { products, rehydrated } = useCart()

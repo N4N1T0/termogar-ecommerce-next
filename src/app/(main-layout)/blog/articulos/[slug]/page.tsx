@@ -11,6 +11,7 @@ import { UserCircle, Calendar } from 'lucide-react'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_BLOG_ARTICLE_BY_SLUG } from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
+import { jldBlogArticle } from '@/components/seo'
 
 const BogArticlePage = async ({
   params
@@ -34,9 +35,7 @@ const BogArticlePage = async ({
     featuredMedia,
     author,
     date,
-    content,
-    categories,
-    tags
+    content
   } = searchedPostArticule
 
   return (
@@ -105,6 +104,7 @@ const BogArticlePage = async ({
           />
         </div>
       </div>
+      {jldBlogArticle(searchedPostArticule)}
     </main>
   )
 }

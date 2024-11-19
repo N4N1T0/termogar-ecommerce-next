@@ -47,7 +47,7 @@ const YouTubeEmbed = ({
             src={thumbnailUrl}
             alt={`Thumbnail for ${title}`}
             fill
-            objectFit='cover'
+            className='object-cover'
           />
           <div
             className='group absolute inset-0 flex cursor-pointer items-center justify-center bg-black bg-opacity-20'

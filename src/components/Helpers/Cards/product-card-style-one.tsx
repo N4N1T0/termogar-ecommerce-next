@@ -10,7 +10,7 @@ import { ProductCardStyleOneProps, ProductCardType } from '@/types'
 import { eurilize } from '@/lib/utils'
 
 // * COMPONENTS IMPORTS
-import ProductQuickViewDynamic from '@/components/Helpers/QuickView'
+import ProductQuickViewDynamic from '@/components/Helpers/quick-view'
 import AddToCart from '@/components/Helpers/quantity'
 import { WishlistBtn } from '@/components/Wishlist/wishlist-helpers'
 import { CompaireBtn } from '@/components/Compaire/compaire-helpers'

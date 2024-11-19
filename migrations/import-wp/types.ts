@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {
   WP_REST_API_Categories,
   WP_REST_API_Pages,

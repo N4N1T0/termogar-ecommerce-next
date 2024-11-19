@@ -9,6 +9,7 @@ import FeaturedBlog from '@/components/Home/featured-blog'
 import NewsletterBanner from '@/components/Home/newsletter-banner'
 import ProductsAds from '@/components/Home/products-ads'
 import YouTubeVideoSection from '@/components/Home/youtube-section'
+import { jldHomePage } from '@/components/seo'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
@@ -55,6 +56,7 @@ export default async function Home() {
       // videos={searchedMainPage?.youtubeVideos}
       />
       <NewsletterBanner />
+      {jldHomePage()}
     </main>
   )
 }

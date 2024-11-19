@@ -18,17 +18,17 @@ import { PlaceholderProductCard } from '@/assets'
 
 // * UTILS IMPORTS
 import { ProductQuickViewProps } from '@/types'
-import { eurilize } from '@/lib/utils'
+// import { eurilize } from '@/lib/utils'
 
 const ProductQuickView = ({ data }: ProductQuickViewProps) => {
   const {
     featuredMedia,
     title,
-    stockQuantity,
-    sale,
-    slug,
-    price,
-    categories,
+    // stockQuantity,
+    // sale,
+    // slug,
+    // price,
+    // categories,
     excerpt
   } = data
 

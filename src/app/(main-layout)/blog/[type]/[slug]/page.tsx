@@ -1,15 +1,17 @@
-import PageTitle from '@/components/Helpers/PageTitle'
-import { sanityClientRead } from '@/sanity/lib/client'
-import {
-  GET_CARD_BLOG_POST_BY_CATEGORIES,
-  GET_CARD_BLOG_POST_BY_TAGS,
-  GET_TOTAL_BLOG_POST
-} from '@/sanity/lib/queries'
+// * NEXT.JS IMPORTS
 import React from 'react'
 import { notFound } from 'next/navigation'
+
+// * ASSETS IMPORTS
+import {
+  GET_CARD_BLOG_POST_BY_CATEGORIES,
+  GET_CARD_BLOG_POST_BY_TAGS
+} from '@/sanity/lib/queries'
+import PageTitle from '@/components/Helpers/PageTitle'
+import { GET_CARD_BLOG_POST_BY_CATEGORIESResult } from '@/types/sanity'
 import DataIteration from '@/components/Helpers/DataIteration'
 import BlogCard from '@/components/Helpers/Cards/blog-card'
-import { GET_CARD_BLOG_POST_BY_CATEGORIESResult } from '@/types/sanity'
+import { sanityClientRead } from '@/sanity/lib/client'
 
 const CategoriesOrTagPage = async ({
   params
@@ -30,10 +32,6 @@ const CategoriesOrTagPage = async ({
       : await sanityClientRead.fetch(GET_CARD_BLOG_POST_BY_TAGS, {
           slug: [slug]
         })
-
-  const totalPages = await sanityClientRead
-    .withConfig({ useCdn: false })
-    .fetch(GET_TOTAL_BLOG_POST, { type: [slug] })
 
   return (
     <main>
