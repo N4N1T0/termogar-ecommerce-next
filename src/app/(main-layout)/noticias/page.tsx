@@ -2,7 +2,7 @@
 import { Metadata } from 'next'
 
 // * ASSETS IMPORTS
-import PaginationBlog from '@/components/Blogs/pagination'
+import PaginationBlog from '@/components/Blogs/Pagination'
 import BlogCard from '@/components/Helpers/Cards/blog-card'
 import DataIteration from '@/components/Helpers/DataIteration'
 import PageTitle from '@/components/Helpers/PageTitle'

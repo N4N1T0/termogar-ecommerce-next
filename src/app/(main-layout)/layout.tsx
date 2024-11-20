@@ -1,5 +1,5 @@
 // Project Components Imports
-import Footer from '@/components/Partials/footer'
+import Footer from '@/components/Partials/Footer'
 import Header from '@/components/Partials/Header'
 // import Drawer from '@/components/Mobile/Drawer'
 
