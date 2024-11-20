@@ -39,10 +39,12 @@ export default function RootLayout({
   return (
     <html lang='es' suppressHydrationWarning>
       <head>
-        <script
-          src='https://unpkg.com/react-scan/dist/auto.global.js'
-          async
-        ></script>
+        {process.env.NODE_ENV === 'development' && (
+          <script
+            src='https://unpkg.com/react-scan/dist/auto.global.js'
+            async
+          ></script>
+        )}
       </head>
       <body
         className={`overflow-x-hidden bg-gray-50 antialiased ${korbFonts.className}`}
