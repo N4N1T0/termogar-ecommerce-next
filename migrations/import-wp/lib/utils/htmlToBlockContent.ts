@@ -53,12 +53,33 @@ export async function htmlToBlockContent(
 
           return undefined
         }
+      },
+      {
+        deserialize(node, next, block) {
+          const el = node as HTMLElement
+
+          if (node.nodeName.toLowerCase() === 'a') {
+            const url = el.getAttribute('href')
+
+            if (!url) {
+              return undefined
+            }
+
+            const refactoredUrl = url.split('/').filter(Boolean).pop()
+
+            return block({
+              _type: 'link',
+              text: el.textContent || '',
+              link: refactoredUrl
+            })
+          }
+        }
       }
     ]
   })
 
   // Note: Multiple documents may be running this same function concurrently
-  const limit = pLimit(2)
+  const limit = pLimit(1)
 
   const blocksWithUploads = blocks.map((block) =>
     limit(async () => {
@@ -69,15 +90,15 @@ export async function htmlToBlockContent(
       // The filename is usually stored as the "slug" in WordPress media documents
       // Filename may be appended with dimensions like "-1024x683", remove with regex
       const dimensions = /-\d+x\d+$/
-      let slug = (block.url as string)
-        .split('/')
+      const slug = (block.url as string)
+        .split('/uploads')
         .pop()
         ?.split('.')
         ?.shift()
         ?.replace(dimensions, '')
         .toLocaleLowerCase()
 
-      const imageId = await fetch(`${BASE_URL}/media?slug=${slug}`)
+      const imageId = await fetch(`${BASE_URL}/media?search=${slug}`)
         .then((res) => (res.ok ? res.json() : null))
         .then((data) =>
           Array.isArray(data) && data.length ? data[0].id : null
@@ -97,7 +118,7 @@ export async function htmlToBlockContent(
       const imageMetadata = await wpImageFetch(imageId)
       if (imageMetadata?.source?.url) {
         const imageDocument = await sanityUploadImageFromUrl(
-          imageMetadata.source.url,
+          block.url as string,
           client,
           imageMetadata
         )
@@ -138,6 +159,6 @@ export async function htmlToBlockContent(
   )
 
   // TS complains there's no _key in these blocks, but this is corrected in the map above
-  // @ts-expect-error
+  // @ts-expect-error ignore
   return blocks
 }

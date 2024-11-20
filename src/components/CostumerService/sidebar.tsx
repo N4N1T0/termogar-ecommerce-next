@@ -31,15 +31,15 @@ const CostumerServiceSidebar = async ({
   // TODO: GROUP ????
 
   return (
-    <aside className='sticky top-0 h-full w-64 overflow-y-auto text-balance border-r border-gray-200 bg-gray-100 p-4'>
-      <nav aria-label='Customer Service Navigation'>
+    <aside className='sticky top-0 h-full w-64 text-balance border-r border-gray-200 bg-gray-100 p-4'>
+      <nav aria-label='Customer Service Navigation' className='overflow-y-auto'>
         <h2 className='mb-4 text-lg font-semibold'>
           Servicio de Atencion al cliente
         </h2>
 
         <Accordion type='single' collapsible className='mb-4'>
           <AccordionItem value='links-de-ayuda'>
-            <AccordionTrigger className='font-bold'>
+            <AccordionTrigger className='text-lg font-bold'>
               Links de Ayuda
             </AccordionTrigger>
             <AccordionContent>

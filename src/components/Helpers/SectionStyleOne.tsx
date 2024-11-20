@@ -1,6 +1,5 @@
 // * ASSETS IMPORTS
 import ProductCardStyleOne from '@/components/Helpers/Cards/product-card-style-one'
-import DataIteration from '@/components/Helpers/DataIteration'
 import ViewMoreTitle from '@/components/Helpers/view-more-title'
 
 // * UTILS IMPORTS
@@ -31,24 +30,22 @@ const SectionStyleOne = async ({
       >
         <div className='products-section w-full'>
           <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px]'>
-            <DataIteration<
-              GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]
-            >
-              datas={searchedProducts}
-              startLength={0}
-              endLength={4}
-            >
-              {({ datas }) => (
-                <div key={datas.id} className='item'>
-                  <ProductCardStyleOne<
-                    GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]
-                  >
-                    datas={datas}
-                    priority={false}
-                  />
-                </div>
+            {searchedProducts
+              .slice(0, 12)
+              .map(
+                (
+                  product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]
+                ) => (
+                  <div key={product.id} className='item'>
+                    <ProductCardStyleOne<
+                      GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]
+                    >
+                      datas={product}
+                      priority={false}
+                    />
+                  </div>
+                )
               )}
-            </DataIteration>
           </div>
         </div>
       </ViewMoreTitle>

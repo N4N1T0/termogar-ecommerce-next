@@ -9,8 +9,6 @@ import {
   GET_CARD_BLOG_POST_BY_TAGS
 } from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
-import { GET_CARD_BLOG_POST_BY_CATEGORIESResult } from '@/types/sanity'
-import DataIteration from '@/components/Helpers/DataIteration'
 import BlogCard from '@/components/Helpers/Cards/blog-card'
 import { sanityClientRead } from '@/sanity/lib/client'
 
@@ -68,23 +66,11 @@ const CategoriesOrTagPage = async ({
         <div className='container-x mx-auto'>
           <div className='w-full'>
             <div className='grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-[30px] xl:grid-cols-3'>
-              <DataIteration
-                datas={blogPosts}
-                startLength={0}
-                endLength={blogPosts.length}
-              >
-                {({
-                  datas,
-                  index
-                }: {
-                  datas: GET_CARD_BLOG_POST_BY_CATEGORIESResult[number]
-                  index: number
-                }) => (
-                  <div data-aos='fade-up' className='item w-full'>
-                    <BlogCard type='blog' data={datas} priority={index < 6} />
-                  </div>
-                )}
-              </DataIteration>
+              {blogPosts.map((post, index) => (
+                <div data-aos='fade-up' className='item w-full' key={post.id}>
+                  <BlogCard type='blog' data={post} priority={index < 6} />
+                </div>
+              ))}
             </div>
           </div>
         </div>

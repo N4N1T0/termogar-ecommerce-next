@@ -10,6 +10,7 @@ import { PortableText } from 'next-sanity'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
+import { portableTextComponents } from '@/components/Helpers/PortableText'
 
 export const metadata: Metadata = {
   title: 'Servicio de Atención al Cliente',
@@ -33,7 +34,7 @@ const CostumerServicePageIndex = async () => {
   return (
     <section
       id='costumer-service-page-index'
-      className='flex w-full flex-col items-center justify-center pb-5'
+      className='flex w-full flex-col items-center justify-start pb-5'
     >
       <PageTitle
         breadcrumb={[
@@ -50,7 +51,7 @@ const CostumerServicePageIndex = async () => {
           id='content'
           className='prose mx-auto ml-5 mt-10 w-full max-w-none text-pretty px-5'
         >
-          <PortableText value={content} />
+          <PortableText value={content} components={portableTextComponents} />
         </section>
       ) : (
         <CostumerServiceError />

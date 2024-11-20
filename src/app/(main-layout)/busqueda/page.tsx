@@ -3,7 +3,6 @@ import { Metadata } from 'next'
 
 // * ASSETS IMPORTS
 import ProductCardStyleOne from '@/components/Helpers/Cards/product-card-style-one'
-import DataIteration from '@/components/Helpers/DataIteration'
 import PageTitle from '@/components/Helpers/PageTitle'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH } from '@/sanity/lib/queries'
@@ -51,22 +50,16 @@ const SearchPage = async ({
           id='products'
           className='container-x mx-auto grid grid-cols-1 gap-5 p-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
         >
-          <DataIteration<GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCHResult[number]>
-            datas={searchedProducts}
-            startLength={0}
-            endLength={searchedProducts.length}
-          >
-            {({ datas, index }) => (
-              <div data-aos='fade-up' key={datas?.id} className='item'>
-                <ProductCardStyleOne<
-                  GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCHResult[number]
-                >
-                  datas={datas}
-                  priority={index < 6}
-                />
-              </div>
-            )}
-          </DataIteration>
+          {searchedProducts.map((product, index) => (
+            <div data-aos='fade-up' key={product?.id} className='item'>
+              <ProductCardStyleOne<
+                GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCHResult[number]
+              >
+                datas={product}
+                priority={index < 6}
+              />
+            </div>
+          ))}
         </section>
       </div>
     </main>

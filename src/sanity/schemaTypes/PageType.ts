@@ -65,7 +65,11 @@ export const pageType = defineType({
       title: 'Contenido',
       description: 'El contenido de la página.',
       type: 'array',
-      of: [{ type: 'block' }, { type: 'image' }, { type: 'externalImage' }]
+      of: [
+        { type: 'block' },
+        { type: 'image' },
+        { type: 'reference', to: [{ type: 'externalImage' }] }
+      ]
     }),
     defineField({
       name: 'excerpt',

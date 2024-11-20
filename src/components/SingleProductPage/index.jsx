@@ -2,7 +2,6 @@ import { useRef, useState } from 'react'
 import data from '../../data/products.json'
 import BreadcrumbCom from '../BreadcrumbCom'
 import ProductCardStyleOne from '../Helpers/Cards/ProductCardStyleOne'
-import DataIteration from '../Helpers/DataIteration'
 import InputCom from '../Helpers/InputCom'
 import Layout from '../Partials/Layout'
 import ProductView from './ProductView'
@@ -241,17 +240,11 @@ export default function SingleProductPage() {
                   data-aos='fade-up'
                   className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px]'
                 >
-                  <DataIteration
-                    datas={data.products}
-                    startLength={5}
-                    endLength={9}
-                  >
-                    {({ datas }) => (
-                      <div key={datas.id} className='item'>
-                        <ProductCardStyleOne datas={datas} />
-                      </div>
-                    )}
-                  </DataIteration>
+                  {data.products.slice(0, 4).map((product) => (
+                    <div key={product.id} className='item'>
+                      <ProductCardStyleOne datas={product} />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

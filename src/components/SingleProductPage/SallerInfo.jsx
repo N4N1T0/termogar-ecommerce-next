@@ -1,5 +1,4 @@
 import ProductCardStyleOne from '../Helpers/Cards/ProductCardStyleOne'
-import DataIteration from '../Helpers/DataIteration'
 import Star from '../Helpers/icons/Star'
 
 export default function SallerInfo({ products }) {
@@ -85,17 +84,11 @@ export default function SallerInfo({ products }) {
       <div className='saller-product mt-[30px] w-full'>
         <h1 className='mb-5 text-[18px] font-medium'>Product from Shop</h1>
         <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px]'>
-          <DataIteration
-            datas={products}
-            startLength={0}
-            endLength={products.length}
-          >
-            {({ datas }) => (
-              <div key={datas.id} className='item'>
-                <ProductCardStyleOne datas={datas} />
-              </div>
-            )}
-          </DataIteration>
+          {products.map((product) => (
+            <div key={product.id} className='item'>
+              <ProductCardStyleOne datas={product} />
+            </div>
+          ))}
         </div>
       </div>
     </div>

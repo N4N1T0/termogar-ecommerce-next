@@ -10,6 +10,7 @@ import MegaMenu from '@/assets/images/mega-menu-thumb.jpg'
 import { cn } from '@/lib/utils'
 import { GET_MENU_CATEGORIESResult } from '@/types/sanity'
 import { PortableText } from 'next-sanity'
+import { portableTextComponents } from '@/components/Helpers/PortableText'
 
 export default function Navbar({
   className,
@@ -125,7 +126,10 @@ const MegaMenuLi = ({ menu }: { menu: GET_MENU_CATEGORIESResult[number] }) => {
             </div>
             {menu.description && (
               <div className='categories-wrapper -ml-[70px] flex h-full flex-1 justify-around'>
-                <PortableText value={menu.description} />
+                <PortableText
+                  value={menu.description}
+                  components={portableTextComponents}
+                />
               </div>
             )}
             <div className='thumbnil h-full w-[348px]'>

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import productDatas from '../../data/products.json'
 import ProductCardStyleOne from '../Helpers/Cards/ProductCardStyleOne'
-import DataIteration from '../Helpers/DataIteration'
 import Star from '../Helpers/icons/Star'
 import Layout from '../Partials/Layout'
 import ProductsFilter from './ProductsFilter'
@@ -240,13 +239,11 @@ export default function SallerPage() {
                   </button>
                 </div>
                 <div className='mb-[40px] grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
-                  <DataIteration datas={products} startLength={0} endLength={6}>
-                    {({ datas }) => (
-                      <div data-aos='fade-up' key={datas.id}>
-                        <ProductCardStyleOne datas={datas} />
-                      </div>
-                    )}
-                  </DataIteration>
+                  {products?.slice(0, 6).map((product) => (
+                    <div data-aos='fade-up' key={product.id}>
+                      <ProductCardStyleOne datas={product} />
+                    </div>
+                  ))}
                 </div>
 
                 <div className='mb-[40px] h-[164px] w-full overflow-hidden'>
@@ -259,17 +256,11 @@ export default function SallerPage() {
                   />
                 </div>
                 <div className='mb-[40px] grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 xl:gap-[30px]'>
-                  <DataIteration
-                    datas={products}
-                    startLength={6}
-                    endLength={15}
-                  >
-                    {({ datas }) => (
-                      <div data-aos='fade-up' key={datas.id}>
-                        <ProductCardStyleOne datas={datas} />
-                      </div>
-                    )}
-                  </DataIteration>
+                  {products.slice(6, 15).map((product) => (
+                    <div data-aos='fade-up' key={product.id}>
+                      <ProductCardStyleOne datas={product} />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

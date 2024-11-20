@@ -1,9 +1,7 @@
 // * ASSETS IMPORTS
-import DataIteration from '@/components/Helpers/DataIteration'
 import BlogCard from '@/components/Helpers/Cards/blog-card'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_CARD_BLOG_POST } from '@/sanity/lib/queries'
-import { GET_CARD_BLOG_POSTResult } from '@/types/sanity'
 
 const FeaturedBlog = async () => {
   const blogPosts = await sanityClientRead.fetch(GET_CARD_BLOG_POST, {
@@ -15,18 +13,11 @@ const FeaturedBlog = async () => {
         Articulos destacados
       </h3>
       <div className='mx-auto grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:gap-[30px] xl:grid-cols-3'>
-        <DataIteration datas={blogPosts} startLength={0} endLength={6}>
-          {({
-            datas
-          }: {
-            datas: GET_CARD_BLOG_POSTResult[number]
-            index: number
-          }) => (
-            <div data-aos='fade-up' className='item w-full'>
-              <BlogCard data={datas} priority={false} type='blog' />
-            </div>
-          )}
-        </DataIteration>
+        {blogPosts?.slice(0, 6).map((post) => (
+          <div data-aos='fade-up' className='item w-full' key={post.id}>
+            <BlogCard data={post} priority={false} type='blog' />
+          </div>
+        ))}
       </div>
     </div>
   )

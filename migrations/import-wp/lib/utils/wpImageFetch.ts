@@ -22,7 +22,7 @@ export async function wpImageFetch(
     return null
   }
 
-  let metadata: UploadClientConfig = {
+  const metadata: UploadClientConfig = {
     filename: imageData.source_url.split('/').pop(),
     source: {
       id: imageData.id,
@@ -30,7 +30,7 @@ export async function wpImageFetch(
       url: imageData.source_url
     },
     // Not technically part of the Sanity imageAsset schema, but used by the popular Media Plugin
-    // @ts-expect-error
+    // @ts-expect-error ignore
     altText: imageData.alt_text
   }
 
@@ -88,7 +88,7 @@ export async function sanityUploadImageFromUrl(
   }
   let data: SanityImageAssetDocument | null = null
   try {
-    // @ts-expect-error
+    // @ts-expect-error ignore
     data = await client.assets.upload('image', Readable.fromWeb(body), metadata)
   } catch (error) {
     console.error(`Failed to upload image from ${url}`)

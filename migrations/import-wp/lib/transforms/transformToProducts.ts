@@ -81,7 +81,7 @@ export async function transformToProduct(
         ]
       } else {
         // Retrieve image details from WordPress
-        let metadata = {
+        const metadata = {
           filename: image.name,
           source: {
             id: String(image.id),

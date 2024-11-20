@@ -43,13 +43,6 @@ export interface CategoryCardProps {
   childrenCategories: string[]
 }
 
-export interface DataIterationProps<T> {
-  datas: Array<T>
-  startLength: number
-  endLength: number
-  children: ({ datas, index }: { datas: T; index: number }) => React.ReactNode
-}
-
 export interface BrandSectionProps {
   className?: string
   sectionTitle: string

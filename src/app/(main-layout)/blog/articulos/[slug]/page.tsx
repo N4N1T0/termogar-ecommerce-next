@@ -13,6 +13,7 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_BLOG_ARTICLE_BY_SLUG } from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
 import { jldBlogArticle } from '@/components/seo'
+import { portableTextComponents } from '@/components/Helpers/PortableText'
 
 export async function generateMetadata({
   params
@@ -112,7 +113,10 @@ const BogArticlePage = async ({
                   id='content'
                   className='prose w-full max-w-none text-pretty'
                 >
-                  <PortableText value={content} />
+                  <PortableText
+                    value={content}
+                    components={portableTextComponents}
+                  />
                 </section>
               ) : (
                 <p className='text-xl text-gray-700'>Sin Contenido</p>

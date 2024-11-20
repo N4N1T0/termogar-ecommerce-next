@@ -59,7 +59,11 @@ export const postType = defineType({
       type: 'array',
       title: 'Contenido',
       description: 'El contenido de la entrada del blog.',
-      of: [{ type: 'block' }, { type: 'image' }, { type: 'externalImage' }]
+      of: [
+        { type: 'block' },
+        { type: 'image' },
+        { type: 'reference', to: [{ type: 'externalImage' }] }
+      ]
     }),
     defineField({
       name: 'excerpt',

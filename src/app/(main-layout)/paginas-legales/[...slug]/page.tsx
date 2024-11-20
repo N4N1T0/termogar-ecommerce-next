@@ -10,6 +10,7 @@ import PageTitle from '@/components/Helpers/PageTitle'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
+import { portableTextComponents } from '@/components/Helpers/PortableText'
 
 export async function generateMetadata({
   params
@@ -68,7 +69,7 @@ const LegalPages = async ({
       <div className='flex w-full items-center justify-center'>
         {content ? (
           <section id='content' className='prose w-full text-pretty px-5'>
-            <PortableText value={content} />
+            <PortableText value={content} components={portableTextComponents} />
           </section>
         ) : (
           <CostumerServiceError />

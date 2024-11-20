@@ -58,7 +58,7 @@ export default defineMigration({
           continue // Skip this iteration and go to the next page
         }
 
-        let wpData = await wpDataTypeFetch(wpType, page)
+        const wpData = await wpDataTypeFetch(wpType, page)
 
         if (Array.isArray(wpData) && wpData.length) {
           // Create an array of concurrency-limited promises to stage documents

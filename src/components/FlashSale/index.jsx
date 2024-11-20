@@ -1,7 +1,6 @@
 import products from '../../data/products.json'
 import ProductCardStyleOne from '../Helpers/Cards/ProductCardStyleOne'
 import CountDown from '../Helpers/CountDown'
-import DataIteration from '../Helpers/DataIteration'
 import Layout from '../Partials/Layout'
 
 export default function FlashSale() {
@@ -68,17 +67,11 @@ export default function FlashSale() {
               </div>
             </div>
             <div className='products grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px]'>
-              <DataIteration
-                datas={products.products.slice(0, 16)}
-                startLength={0}
-                endLength={16}
-              >
-                {({ datas }) => (
-                  <div data-aos='fade-up' key={datas.id} className='item'>
-                    <ProductCardStyleOne datas={datas} />
-                  </div>
-                )}
-              </DataIteration>
+              {products.products.slice(0, 16).map((product, index) => (
+                <div data-aos='fade-up' className='item' key={product.id}>
+                  <ProductCardStyleOne datas={product} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
