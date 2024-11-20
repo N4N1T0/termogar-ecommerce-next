@@ -1,6 +1,7 @@
 // * NEXT.JS IMPORTS
 import React from 'react'
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 
 // * ASSETS IMPORTS
 import {
@@ -12,6 +13,19 @@ import { GET_CARD_BLOG_POST_BY_CATEGORIESResult } from '@/types/sanity'
 import DataIteration from '@/components/Helpers/DataIteration'
 import BlogCard from '@/components/Helpers/Cards/blog-card'
 import { sanityClientRead } from '@/sanity/lib/client'
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ [key: string]: string | string[] | undefined }>
+}): Promise<Metadata> {
+  const { type, slug } = await params
+
+  return {
+    title: Array.isArray(slug) || slug === undefined ? 'blog' : slug,
+    description: Array.isArray(type) || type === undefined ? 'blog' : type
+  }
+}
 
 const CategoriesOrTagPage = async ({
   params

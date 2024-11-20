@@ -1,10 +1,26 @@
-// * PROJECT COMPONENTS IMPORTS
+// * NEXT.JS IMPORTS
+import { Metadata } from 'next'
+
+// * ASSETS IMPORTS
 import ProductCardStyleOne from '@/components/Helpers/Cards/product-card-style-one'
 import DataIteration from '@/components/Helpers/DataIteration'
 import PageTitle from '@/components/Helpers/PageTitle'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH } from '@/sanity/lib/queries'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCHResult } from '@/types/sanity'
+
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}): Promise<Metadata> {
+  const { search, category } = await searchParams
+
+  return {
+    title: `Resultados de la busqueda para "${search}"`,
+    description: `Busqueda de producto en la categoría de ${category}`
+  }
+}
 
 const SearchPage = async ({
   searchParams

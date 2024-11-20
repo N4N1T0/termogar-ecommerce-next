@@ -1,5 +1,6 @@
 // * NEXT.JS IMPORTS
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 
 // * ASSETS IMPORTS
 import CostumerServiceError from '@/components/CostumerService/empty'
@@ -9,6 +10,26 @@ import PageTitle from '@/components/Helpers/PageTitle'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ [key: string]: string | string[] | undefined }>
+}): Promise<Metadata> {
+  const { slug } = await params
+
+  const searchedPage = await sanityClientRead.fetch(
+    GET_COSTUMER_SERVICES_PAGE,
+    {
+      slug
+    }
+  )
+
+  return {
+    title: searchedPage?.title || 'Sin Titulo',
+    description: searchedPage?.excerpt || 'Sin Descripcion'
+  }
+}
 
 const LegalPages = async ({
   params
@@ -30,7 +51,6 @@ const LegalPages = async ({
 
   const { title, content } = searchedPage
 
-  console.log(title)
   return (
     <main className='terms-condition-page w-full bg-white pb-[30px]'>
       <div className='mb-[30px] w-full'>

@@ -1,5 +1,6 @@
 // * NEXT.JS IMPORTS
 import Image from 'next/image'
+import { Metadata } from 'next'
 
 // * ASSETS IMPORTS
 import { PlaceholderBlogPost } from '@/assets'
@@ -11,6 +12,27 @@ import { UserCircle, Calendar } from 'lucide-react'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_BLOG_ARTICLE_BY_SLUG } from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
+
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{ [key: string]: string | string[] | undefined }>
+}): Promise<Metadata> {
+  const { slug } = await params
+
+  const searchedPostArticule = await sanityClientRead.fetch(
+    GET_BLOG_ARTICLE_BY_SLUG,
+    { slug: slug }
+  )
+
+  return {
+    title: searchedPostArticule?.title || 'Sin Titulo',
+    description: searchedPostArticule?.excerpt || 'Sin Descripcion',
+    openGraph: {
+      images: searchedPostArticule?.featuredMedia.url || '/favicon.ico'
+    }
+  }
+}
 
 const NewsArticlePage = async ({
   params

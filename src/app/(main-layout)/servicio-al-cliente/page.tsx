@@ -1,5 +1,6 @@
 // * NEXT.JS IMPORTS
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 
 // * ASSETS IMPORTS
 import CostumerServiceError from '@/components/CostumerService/empty'
@@ -9,6 +10,11 @@ import { PortableText } from 'next-sanity'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
+
+export const metadata: Metadata = {
+  title: 'Servicio de Atención al Cliente',
+  description: 'Servicio de Atención al Cliente para termogar.'
+}
 
 const CostumerServicePageIndex = async () => {
   const searchedPage = await sanityClientRead.fetch(

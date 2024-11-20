@@ -1,8 +1,17 @@
+// * NEXT.JS IMPORTS
+import { Metadata } from 'next'
 import React from 'react'
+
+// * ASSETS IMPORTS
 import PageTitle from '@/components/Helpers/PageTitle'
 import Link from 'next/link'
 import OrderSummary from '@/components/CheakoutPage/order-summary'
 import BillingAddress from '@/components/CheakoutPage/billing-address'
+
+export const metadata: Metadata = {
+  title: 'Formulario de Pago',
+  description: 'Formulario de pago para termogar.'
+}
 
 const CheckoutPage = () => {
   return (

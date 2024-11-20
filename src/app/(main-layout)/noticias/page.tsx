@@ -1,10 +1,13 @@
-// * PROJECT COMPONENTS IMPORTS
+// * NEXT.JS IMPORTS
+import { Metadata } from 'next'
+
+// * ASSETS IMPORTS
 import PaginationBlog from '@/components/Blogs/pagination'
 import BlogCard from '@/components/Helpers/Cards/blog-card'
 import DataIteration from '@/components/Helpers/DataIteration'
 import PageTitle from '@/components/Helpers/PageTitle'
 
-// * QUERIES IMPORTS
+// * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import {
   GET_CARD_BLOG_POST,
@@ -12,6 +15,11 @@ import {
   GET_TOTAL_BLOG_POST
 } from '@/sanity/lib/queries'
 import { GET_CARD_BLOG_POSTResult } from '@/types/sanity'
+
+export const metadata: Metadata = {
+  title: 'Noticias',
+  description: 'Encuentra el artículo que mejor se adapte a tus necesidades.'
+}
 
 const NewsPage = async ({
   searchParams

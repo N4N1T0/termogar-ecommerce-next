@@ -1,3 +1,6 @@
+// * NEXT.JS IMPORTS
+import { Metadata } from 'next'
+
 // * PROJECT COMPONENTS IMPORTS
 import PaginationBlog from '@/components/Blogs/pagination'
 import BlogCard from '@/components/Helpers/Cards/blog-card'
@@ -12,6 +15,11 @@ import {
   GET_TOTAL_BLOG_POST
 } from '@/sanity/lib/queries'
 import { GET_CARD_BLOG_POSTResult } from '@/types/sanity'
+
+export const metadata: Metadata = {
+  title: 'Blog',
+  description: 'Encuentra el artículo que mejor se adapte a tus necesidades.'
+}
 
 const BlogPage = async ({
   searchParams
