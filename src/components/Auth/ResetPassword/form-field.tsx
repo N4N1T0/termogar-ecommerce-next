@@ -1,0 +1,158 @@
+// * NEXT.JS IMPORTS
+import Link from 'next/link'
+
+// * ASSETS IMPORTS
+import { Control, FieldValues, Path } from 'react-hook-form'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
+import { Checkbox } from '@/components/ui/checkbox'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Textarea } from '@/components/ui/textarea'
+
+interface FormFieldComponentProps<T extends FieldValues> {
+  control: Control<T>
+  name: Path<T>
+  label: string
+  placeholder: string
+  type?:
+    | 'text'
+    | 'email'
+    | 'date'
+    | 'select'
+    | 'checkbox'
+    | 'radio'
+    | 'file'
+    | 'textarea'
+  options?: string[]
+  isSubmitting: boolean
+  className?: string | null
+}
+
+const FormFieldComponent = <T extends FieldValues>({
+  control,
+  name,
+  label,
+  placeholder,
+  type = 'text',
+  options = [],
+  isSubmitting,
+  className = ''
+}: FormFieldComponentProps<T>) => (
+  <FormField
+    control={control}
+    name={name} // Type assertion for the name
+    render={({ field }) => (
+      <FormItem
+        className={`${type === 'checkbox' ? 'flex flex-row-reverse items-center justify-end gap-2' : ''} ${className}`}
+      >
+        <FormLabel className='font-bold text-gray-800'>
+          {label === 'He Leído las Privacy Policy' ? (
+            <span>
+              He Leído{' '}
+              <Link
+                className='text-accent hover:underline'
+                target='_blank'
+                href='/privacy policy'
+              >
+                las Privacy Policy
+              </Link>
+            </span>
+          ) : (
+            label
+          )}
+        </FormLabel>
+        <FormControl>
+          {type === 'select' ? (
+            <Select
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+              disabled={isSubmitting}
+            >
+              <FormControl>
+                <SelectTrigger className='border border-accent/50'>
+                  <SelectValue
+                    placeholder={placeholder}
+                    className='font-normal text-gray-600'
+                  />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent className='border border-accent/50'>
+                {options.map((option) => (
+                  <SelectItem
+                    key={option}
+                    value={option}
+                    className='font-medium focus:bg-accent/20'
+                  >
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : type === 'checkbox' ? (
+            <Checkbox
+              checked={field.value}
+              onCheckedChange={field.onChange}
+              disabled={isSubmitting}
+              className='!mt-0'
+            />
+          ) : type === 'radio' ? (
+            <RadioGroup
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+              className='flex flex-col space-y-1'
+              disabled={isSubmitting}
+            >
+              {options.map((option) => (
+                <FormItem key={option} className='flex items-center space-x-3'>
+                  <FormControl>
+                    <RadioGroupItem value={option} disabled={isSubmitting} />
+                  </FormControl>
+                  <FormLabel className='font-normal'>{option}</FormLabel>
+                </FormItem>
+              ))}
+            </RadioGroup>
+          ) : type === 'file' ? (
+            <Input
+              type='file'
+              onChange={(e) => field.onChange(e.target.files)} // Handle file input change
+              disabled={isSubmitting}
+              className='border border-accent/50'
+            />
+          ) : type === 'textarea' ? (
+            <Textarea
+              placeholder={placeholder}
+              className='resize-none'
+              disabled={isSubmitting}
+              {...field}
+            />
+          ) : (
+            <Input
+              type={type}
+              autoComplete={type}
+              placeholder={placeholder}
+              {...field}
+              disabled={isSubmitting}
+              className='border border-accent/50'
+            />
+          )}
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    )}
+  />
+)
+
+export default FormFieldComponent

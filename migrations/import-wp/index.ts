@@ -12,6 +12,7 @@ import { sanityFetchDocuments } from './lib/utils/wpDocumentsFetch'
 // * TRANSFORMERS
 import {
   transformToCategory,
+  transformToCostumers,
   transformToCoupon,
   transformToPage,
   transformToPost,
@@ -27,7 +28,11 @@ import type {
   WP_REST_API_Term,
   WP_REST_API_Page
 } from 'wp-types'
-import { WP_REST_API_Coupon, WP_REST_API_Product } from './types'
+import {
+  WP_REST_API_Costumer,
+  WP_REST_API_Coupon,
+  WP_REST_API_Product
+} from './types'
 
 const limit = pLimit(2)
 
@@ -45,18 +50,18 @@ export default defineMigration({
 
     const { wpType } = getDataTypes(process.argv)
     // Define pages to skip
-    const skipPages = [25, 50, 74]
+    // const skipPages = [25, 50, 74]
     let page = 1
     let hasMore = true
 
     while (hasMore) {
       try {
         // Check if the current page is in the skip list
-        if (skipPages.includes(page)) {
-          console.log(`Skipping page ${page}`)
-          page++
-          continue // Skip this iteration and go to the next page
-        }
+        // if (skipPages.includes(page)) {
+        //   console.log(`Skipping page ${page}`)
+        //   page++
+        //   continue
+        // }
 
         const wpData = await wpDataTypeFetch(wpType, page)
 
@@ -109,9 +114,15 @@ export default defineMigration({
                 wpDoc = wpDoc as WP_REST_API_Coupon
                 const doc = await transformToCoupon(wpDoc)
                 return doc
+              } else if (wpType === 'customers') {
+                wpDoc = wpDoc as WP_REST_API_Costumer
+                const doc = await transformToCostumers(
+                  wpDoc,
+                  client,
+                  existingImages
+                )
+                return doc
               }
-
-              // TODO: Client
 
               hasMore = false
               throw new Error(`Unhandled WordPress type: ${wpType}`)

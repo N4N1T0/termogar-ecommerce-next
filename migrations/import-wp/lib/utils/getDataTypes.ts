@@ -6,11 +6,11 @@ export function getDataTypes(args: string[]): {
   wpType: WordPressDataType
   sanityType: SanitySchemaType
 } {
-  let wpType = args
+  const wpType = args
     .find((a) => a.startsWith('--type='))
     ?.split('=')
     .pop() as WordPressDataType
-  let sanityType = WP_TYPE_TO_SANITY_SCHEMA_TYPE[wpType]
+  const sanityType = WP_TYPE_TO_SANITY_SCHEMA_TYPE[wpType]
 
   if (!wpType || !sanityType) {
     throw new Error(

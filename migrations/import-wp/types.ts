@@ -18,6 +18,7 @@ export type WordPressDataType =
   | 'product_cat'
   | 'product_tag'
   | 'coupons'
+  | 'customers'
 
 export type WordPressDataTypeResponses = {
   categories: WP_REST_API_Categories
@@ -29,6 +30,7 @@ export type WordPressDataTypeResponses = {
   product_cat: WP_REST_API_Term
   product_tag: WP_REST_API_Term
   coupons: WP_REST_API_Coupons
+  customers: WP_REST_API_Costumers
 }
 
 export type SanitySchemaType =
@@ -41,6 +43,7 @@ export type SanitySchemaType =
   | 'productCategory'
   | 'productTag'
   | 'coupon'
+  | 'customers'
 
 // * CUSTOM TYPES
 export type WP_REST_API_Product = {
@@ -138,3 +141,53 @@ export type WP_REST_API_Coupon = {
 export type WP_REST_API_Coupons = WP_REST_API_Coupon[]
 
 export type WP_REST_API_Products = WP_REST_API_Product[]
+
+export type WP_REST_API_Costumer = {
+  id: number
+  date_created: Date
+  date_created_gmt: Date
+  date_modified: null
+  date_modified_gmt: null
+  email: string
+  first_name: string
+  last_name: string
+  role: string
+  username: string
+  billing: Ing
+  shipping: Ing
+  is_paying_customer: boolean
+  avatar_url: string
+  meta_data: MetaDatum[]
+  _links: Links
+}
+
+export type Links = {
+  self: Collection[]
+  collection: Collection[]
+}
+
+export type Collection = {
+  href: string
+}
+
+export type Ing = {
+  first_name: string
+  last_name: string
+  company: string
+  address_1: string
+  address_2: string
+  city: string
+  postcode: string
+  country: string
+  state: string
+  email?: string
+  phone: string
+}
+
+export type MetaDatum = {
+  id: number
+  key: string
+  value: string
+}
+
+export type WP_REST_API_Costumers = WP_REST_API_Costumer[]

@@ -1,12 +1,12 @@
 'use server'
 
-import { SubscribeSchema } from '@/lib/schemas'
+import { subscribeSchema } from '@/lib/schemas'
 import { sanityClientWrite } from '@/sanity/lib/client'
 import { SubscriberNewsletter } from '@/types/sanity'
 import { uuid } from '@sanity/uuid'
 
 export async function subscribeToNewsletter({ email }: { email: string }) {
-  const validatedData = SubscribeSchema.safeParse({ email })
+  const validatedData = subscribeSchema.safeParse({ email })
 
   if (!validatedData.success) {
     return {

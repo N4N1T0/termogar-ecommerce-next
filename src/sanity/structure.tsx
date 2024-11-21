@@ -11,7 +11,8 @@ import {
   Tag,
   Filter,
   UserPen,
-  Building2
+  Building2,
+  FileUser
 } from 'lucide-react'
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -73,7 +74,11 @@ export const structure: StructureResolver = (S) =>
                 .icon(() => <BadgeEuro className='h-4 w-4' />),
               S.documentTypeListItem('brand')
                 .title('Marcas')
-                .icon(() => <Building2 className='h-4 w-4' />)
+                .icon(() => <Building2 className='h-4 w-4' />),
+              S.divider(),
+              S.documentTypeListItem('costumer')
+                .title('Clientes')
+                .icon(() => <FileUser className='h-4 w-4' />)
             ])
         )
     ])

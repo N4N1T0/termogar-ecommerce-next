@@ -19,11 +19,6 @@ const seoMetatags = (): Metadata => {
     generator: 'Next.js',
     applicationName: 'Termogar',
     referrer: 'origin-when-cross-origin',
-    icons: {
-      icon: '/favicon.ico',
-      shortcut: '/favicon-16x16.png',
-      apple: '/apple-touch-icon.png'
-    },
     keywords: [
       'calefacción',
       'aire acondicionado',

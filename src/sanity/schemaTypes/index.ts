@@ -14,6 +14,8 @@ import { couponsType } from './CouponsTypes'
 import { subscriberNewsletterType } from './SubscriberNewsletterType'
 import { homePageType } from './HomePageType'
 import { brandType } from './BrandType'
+import { costumerType } from './CostumerType'
+import { addressType } from './AddressType'
 
 // TODO: Reviews, Client, Coupons
 
@@ -31,6 +33,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     couponsType,
     subscriberNewsletterType,
     homePageType,
-    brandType
+    brandType,
+    costumerType,
+    addressType
   ]
 }

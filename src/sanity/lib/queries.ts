@@ -320,6 +320,24 @@ export const GET_COUPONS_FOR_VALIDATION =
     usage_limit_per_user
 }`)
 
+// * USER QUERIES
+export const GET_USER_INFO =
+  defineQuery(`*[_type =='costumer' && _id == $id][0]{
+  "id": _id,
+  "active": isPayingCustomer,
+  userName,
+  lastName,
+  firstName,
+  password,
+    email,
+  "avatar": avatarUrl.asset->{
+    "url": url,
+    "blur": metadata.lqip
+  },
+ "billingAddress": billingAddress[0],
+  shippingAddresses
+}`)
+
 // * STATICS AND ISR QUERIES
 export const GET_STATIC_BLOG_OR_NEWS_SLUG =
   defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(date desc) {
