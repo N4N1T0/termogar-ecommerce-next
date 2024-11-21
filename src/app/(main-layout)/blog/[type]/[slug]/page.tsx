@@ -18,22 +18,19 @@ import { sanityClientRead } from '@/sanity/lib/client'
 export const revalidate = 86400
 
 export async function generateStaticParams() {
-  // Fetch categories and tags slugs from Sanity
   const categories = await sanityClientRead.fetch(GET_STATIC_CATEGORIES_SLUGS)
   const tags = await sanityClientRead.fetch(GET_STATIC_TAGS_SLUGS)
 
-  // Map slugs to their corresponding types
   const categoryParams = categories.map((category) => ({
     type: 'categorias',
-    slug: category.slug.current // Adjust the path to match your Sanity data structure
+    slug: category.slug
   }))
 
   const tagParams = tags.map((tag) => ({
     type: 'etiquetas',
-    slug: tag.slug.current // Adjust the path to match your Sanity data structure
+    slug: tag.slug
   }))
 
-  // Combine both category and tag params
   return [...categoryParams, ...tagParams]
 }
 

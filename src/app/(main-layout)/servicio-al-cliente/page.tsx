@@ -12,6 +12,10 @@ import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
 
+// * ISR
+export const revalidate = 43200
+
+// * METADATA
 export const metadata: Metadata = {
   title: 'Servicio de Atención al Cliente',
   description: 'Servicio de Atención al Cliente para termogar.'

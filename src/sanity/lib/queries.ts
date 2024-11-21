@@ -335,3 +335,8 @@ export const GET_STATIC_CATEGORIES_SLUGS =
   defineQuery(`*[_type =='category'] | order(date desc) {
   "slug": slug.current
   }`)
+
+export const GET_STATIC_COSTUMER_SERVICES_PAGES_SUG =
+  defineQuery(`*[_type =='page' && status == 'publish']{
+  "slug": slug.current,
+}`)

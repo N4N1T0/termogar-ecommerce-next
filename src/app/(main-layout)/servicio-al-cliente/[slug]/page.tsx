@@ -8,10 +8,26 @@ import { PortableText } from 'next-sanity'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
-import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
+import {
+  GET_COSTUMER_SERVICES_PAGE,
+  GET_STATIC_COSTUMER_SERVICES_PAGES_SUG
+} from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
 
+// * ISR
+export const revalidate = 43200
+
+export async function generateStaticParams() {
+  const pages = await sanityClientRead.fetch(
+    GET_STATIC_COSTUMER_SERVICES_PAGES_SUG
+  )
+  return pages.map((page) => ({
+    slug: page.slug
+  }))
+}
+
+// * METADATA
 export async function generateMetadata({
   params
 }: {
@@ -38,7 +54,6 @@ const CostumerServicePageSlug = async ({
   params: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { slug } = await params
-
   if (!slug) return notFound()
 
   const searchedPage = await sanityClientRead.fetch(
@@ -47,12 +62,9 @@ const CostumerServicePageSlug = async ({
       slug: [slug]
     }
   )
-
   if (!searchedPage) return notFound()
 
   const { title, content } = searchedPage
-
-  // TODO: FIX THE LINKS IN THE CONTENT`
 
   return (
     <section
