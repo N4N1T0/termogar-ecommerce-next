@@ -11,6 +11,16 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
+import siteData from '@/data/site-data.json'
+
+// * ISR
+export const revalidate = 86400
+
+export function generateStaticParams() {
+  return siteData.footerLinks['Paginas Legales'].map((post) => ({
+    slug: String(post.slug)
+  }))
+}
 
 export async function generateMetadata({
   params
@@ -18,11 +28,10 @@ export async function generateMetadata({
   params: Promise<{ [key: string]: string | string[] | undefined }>
 }): Promise<Metadata> {
   const { slug } = await params
-
   const searchedPage = await sanityClientRead.fetch(
     GET_COSTUMER_SERVICES_PAGE,
     {
-      slug
+      slug: [slug]
     }
   )
 
@@ -38,16 +47,14 @@ const LegalPages = async ({
   params: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { slug } = await params
-
   if (!slug) return notFound()
 
   const searchedPage = await sanityClientRead.fetch(
     GET_COSTUMER_SERVICES_PAGE,
     {
-      slug
+      slug: [slug]
     }
   )
-
   if (!searchedPage) return notFound()
 
   const { title, content } = searchedPage

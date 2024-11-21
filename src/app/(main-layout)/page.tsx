@@ -21,7 +21,7 @@ export default async function Home() {
     <main>
       <Banner
         className='banner-wrapper mb-[60px] pt-10'
-        // banners={searchedMainPage.mainBanner}
+        banners={searchedMainPage?.mainBanner}
       />
       <SectionStyleOne
         sectionTitle={searchedMainPage?.mainCategory?.name}

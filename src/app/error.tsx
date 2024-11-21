@@ -29,6 +29,9 @@ export default function Error({
           <h1 className='mb-5 text-center text-2xl font-semibold sm:text-xl'>
             ¡Lo siento! ¡Hubo un Error en el Servidor!
           </h1>
+          <small className='mb-3 max-w-[500px] text-center'>
+            {error.message}
+          </small>
           <div className='flex gap-10'>
             <Link
               href='/'
@@ -37,6 +40,7 @@ export default function Error({
               Volver a la Tienda
             </Link>
             <button
+              type='reset'
               className='hover-200 w-fit self-center bg-accent px-4 py-2 text-gray-900 hover:text-gray-50'
               onClick={() => reset()}
             >

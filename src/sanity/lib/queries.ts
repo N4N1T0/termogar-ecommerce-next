@@ -2,7 +2,11 @@ import { defineQuery } from 'next-sanity'
 
 // * MAIN PAGE
 export const GET_MAIN_PAGE = defineQuery(`*[_type =='homePage'][0]{
-  mainBanner,
+ mainBanner[]{
+    "url": image.asset->url,
+    "blur": image.asset->metadata.lqip,
+     "link": link.current
+  },
   "mainCategory": mainCategory->{
   name,
   "slug": slug.current

@@ -41,15 +41,21 @@ const Footer = async () => {
               </li>
             ))}
             <li className='flex items-center space-x-5 text-gray-600'>
-              <a href='#'>
+              <Link
+                href='https://www.instagram.com/termogar.es/'
+                target='_blank'
+              >
                 <Instagram className='fill-current hover:text-gray-900' />
-              </a>
-              <a href='#'>
+              </Link>
+              <Link href='https://es-es.facebook.com/termogar' target='_blank'>
                 <Facebook className='fill-current hover:text-gray-900' />
-              </a>
-              <a href='#'>
+              </Link>
+              <Link
+                href='https://www.youtube.com/channel/UC2bX_gn3IX27PP2fyDpbhbg'
+                target='_blank'
+              >
                 <Youtube className='fill-current hover:text-gray-900' />
-              </a>
+              </Link>
             </li>
           </ul>
           <div className='flex-1 lg:flex'>

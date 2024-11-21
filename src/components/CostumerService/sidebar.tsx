@@ -36,8 +36,6 @@ const CostumerServiceSidebar = async ({
     )
   })
 
-  // TODO: GROUP ????
-
   return (
     <aside className='sticky top-0 h-screen w-72 overflow-y-scroll text-balance border-r border-gray-200 bg-gray-100 p-4'>
       <nav aria-label='Customer Service Navigation'>

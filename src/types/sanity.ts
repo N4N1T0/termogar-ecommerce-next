@@ -86,7 +86,7 @@ export type HomePage = {
       crop?: SanityImageCrop
       _type: 'image'
     }
-    link?: string
+    link?: Slug
     _key: string
   }>
   mainCategory?: {
@@ -525,9 +525,13 @@ export type Post = {
         _type: 'image'
         _key: string
       }
-    | ({
+    | {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
         _key: string
-      } & ExternalImage)
+        [internalGroqTypeReferenceTo]?: 'externalImage'
+      }
   >
   excerpt?: string
   featuredMedia?: {
@@ -638,9 +642,13 @@ export type Page = {
         _type: 'image'
         _key: string
       }
-    | ({
+    | {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
         _key: string
-      } & ExternalImage)
+        [internalGroqTypeReferenceTo]?: 'externalImage'
+      }
   >
   excerpt?: string
   featuredMedia?: {
@@ -774,22 +782,12 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./src/sanity/lib/queries.ts
 // Variable: GET_MAIN_PAGE
-// Query: *[_type =='homePage'][0]{  mainBanner,  "mainCategory": mainCategory->{  name,  "slug": slug.current  },  "offer": offer{    date,    active,    "media": {      "url": banner.assets->url,      "blur": banner.assets->metadata.lqip    }  },    secondaryCategory->{      name,      "slug": slug.current    },    "ads": ads[]->{  "media": {    "url": asset->url,    "blur": asset->metadata.lqip  },  "link": link.current},"tertiaryCategory": tertiaryCategory->{  name,  "slug": slug.current  },youtubeVideos[]{      videoId,      "id": _key,      title  }}
+// Query: *[_type =='homePage'][0]{ mainBanner[]{    "url": image.asset->url,    "blur": image.asset->metadata.lqip,     "link": link.current  },  "mainCategory": mainCategory->{  name,  "slug": slug.current  },  "offer": offer{    date,    active,    "media": {      "url": banner.assets->url,      "blur": banner.assets->metadata.lqip    }  },    secondaryCategory->{      name,      "slug": slug.current    },    "ads": ads[]->{  "media": {    "url": asset->url,    "blur": asset->metadata.lqip  },  "link": link.current},"tertiaryCategory": tertiaryCategory->{  name,  "slug": slug.current  },youtubeVideos[]{      videoId,      "id": _key,      title  }}
 export type GET_MAIN_PAGEResult = {
   mainBanner: Array<{
-    image?: {
-      asset?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-      }
-      hotspot?: SanityImageHotspot
-      crop?: SanityImageCrop
-      _type: 'image'
-    }
-    link?: string
-    _key: string
+    url: string | null
+    blur: string | null
+    link: string | null
   }> | null
   mainCategory: {
     name: string | null
@@ -869,9 +867,13 @@ export type GET_COSTUMER_SERVICES_PAGEResult = {
   link: string | null
   excerpt: string | null
   content: Array<
-    | ({
+    | {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
         _key: string
-      } & ExternalImage)
+        [internalGroqTypeReferenceTo]?: 'externalImage'
+      }
     | {
         children?: Array<{
           marks?: Array<string>
@@ -1022,9 +1024,13 @@ export type GET_BLOG_ARTICLE_BY_SLUGResult = {
   title: string | null
   date: string | null
   content: Array<
-    | ({
+    | {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
         _key: string
-      } & ExternalImage)
+        [internalGroqTypeReferenceTo]?: 'externalImage'
+      }
     | {
         children?: Array<{
           marks?: Array<string>
@@ -1390,7 +1396,7 @@ export type GET_COUPONS_FOR_VALIDATIONResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type ==\'homePage\'][0]{\n  mainBanner,\n  "mainCategory": mainCategory->{\n  name,\n  "slug": slug.current\n  },\n  "offer": offer{\n    date,\n    active,\n    "media": {\n      "url": banner.assets->url,\n      "blur": banner.assets->metadata.lqip\n    }\n  },\n    secondaryCategory->{\n      name,\n      "slug": slug.current\n    },\n    "ads": ads[]->{\n  "media": {\n    "url": asset->url,\n    "blur": asset->metadata.lqip\n  },\n  "link": link.current\n},\n"tertiaryCategory": tertiaryCategory->{\n  name,\n  "slug": slug.current\n  },\nyoutubeVideos[]{\n      videoId,\n      "id": _key,\n      title\n  }\n}': GET_MAIN_PAGEResult
+    '*[_type ==\'homePage\'][0]{\n mainBanner[]{\n    "url": image.asset->url,\n    "blur": image.asset->metadata.lqip,\n     "link": link.current\n  },\n  "mainCategory": mainCategory->{\n  name,\n  "slug": slug.current\n  },\n  "offer": offer{\n    date,\n    active,\n    "media": {\n      "url": banner.assets->url,\n      "blur": banner.assets->metadata.lqip\n    }\n  },\n    secondaryCategory->{\n      name,\n      "slug": slug.current\n    },\n    "ads": ads[]->{\n  "media": {\n    "url": asset->url,\n    "blur": asset->metadata.lqip\n  },\n  "link": link.current\n},\n"tertiaryCategory": tertiaryCategory->{\n  name,\n  "slug": slug.current\n  },\nyoutubeVideos[]{\n      videoId,\n      "id": _key,\n      title\n  }\n}': GET_MAIN_PAGEResult
     '*[_type==\'productCategory\' && main == true] | order(name asc){\n  "id": _id,\n  name, \n  description, \n  link, \n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n      "id": _id,\n    name, \n    link\n   },\n  "featuredImage": *[_type==\'product\' && references(^._id)][0]{\n    "url":featuredMedia.asset->url,\n      "blur":featuredMedia.asset->metadata.lqip\n  }\n  }': GET_MENU_CATEGORIESResult
     '*[_type ==\'page\' && status == \'publish\']{\n  "id": _id,\n  "slug": slug.current,\n  title,\n  "link": link.current\n}': GET_COSTUMER_SERVICES_SIDEBAR_MENUResult
     '*[_type ==\'page\' && status == \'publish\' && slug.current in $slug][0]{\n  "id": _id,\n  "slug": slug.current,\n  title,\n  "link": link.current,\n  excerpt,\n  content\n}': GET_COSTUMER_SERVICES_PAGEResult

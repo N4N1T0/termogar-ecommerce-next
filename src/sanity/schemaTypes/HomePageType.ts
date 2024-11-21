@@ -22,7 +22,7 @@ export const homePageType = defineType({
           type: 'object',
           fields: [
             { name: 'image', type: 'image' },
-            { name: 'link', type: 'string' }
+            { name: 'link', type: 'slug' }
           ]
         }
       ],
