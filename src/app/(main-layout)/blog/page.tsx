@@ -14,6 +14,10 @@ import {
   GET_TOTAL_BLOG_POST
 } from '@/sanity/lib/queries'
 
+// * ISR
+export const revalidate = 84600
+
+// * METADATA
 export const metadata: Metadata = {
   title: 'Blog',
   description: 'Encuentra el artículo que mejor se adapte a tus necesidades.'
