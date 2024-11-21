@@ -319,3 +319,9 @@ export const GET_COUPONS_FOR_VALIDATION =
     usage_count,
     usage_limit_per_user
 }`)
+
+// * STATICS AND ISR QUERIES
+export const GET_STATIC_BLOG_OR_NEWS_SLUG =
+  defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0][0...12] | order(date desc) {
+  "slug": slug.current,
+  }`)

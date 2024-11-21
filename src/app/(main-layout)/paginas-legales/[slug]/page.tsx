@@ -22,6 +22,7 @@ export function generateStaticParams() {
   }))
 }
 
+// * METADATA
 export async function generateMetadata({
   params
 }: {

@@ -10,11 +10,27 @@ import { UserCircle, Calendar } from 'lucide-react'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
-import { GET_BLOG_ARTICLE_BY_SLUG } from '@/sanity/lib/queries'
+import {
+  GET_BLOG_ARTICLE_BY_SLUG,
+  GET_STATIC_BLOG_OR_NEWS_SLUG
+} from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
 import { jldBlogArticle } from '@/components/seo'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
 
+// * ISR
+export const revalidate = 43200
+
+export async function generateStaticParams() {
+  const blogPost = await sanityClientRead.fetch(GET_STATIC_BLOG_OR_NEWS_SLUG, {
+    type: ['Blog']
+  })
+  return blogPost.map((post) => ({
+    slug: String(post.slug)
+  }))
+}
+
+// * METADATA
 export async function generateMetadata({
   params
 }: {
