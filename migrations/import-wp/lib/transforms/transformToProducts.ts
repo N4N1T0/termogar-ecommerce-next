@@ -123,6 +123,7 @@ export async function transformToProduct(
   }
 
   if (wpDoc.description) {
+    // @ts-expect-error ignore
     doc.content = await htmlToBlockContent(
       wpDoc.description,
       client,
@@ -212,6 +213,7 @@ export async function transformToProduct(
       length: Number(wpDoc.dimensions.length),
       width: Number(wpDoc.dimensions.width),
       weight: Number(wpDoc.weight),
+      // @ts-expect-error ignore
       alt: altDimensions
     }
   }

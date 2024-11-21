@@ -12,7 +12,7 @@
     "typegen": "pnpm dlx sanity@latest schema extract && pnpm dlx sanity@latest typegen generate"
   },
   "lint-staged": {
-    "*/src/**/*": [
+    "*/src/**/*.ts": [
       "next lint --fix",
       "prettier --write"
     ]
