@@ -1465,6 +1465,19 @@ export type GET_USER_INFOResult = {
     } & Address
   > | null
 } | null
+// Variable: GET_USER_FOR_AUTH
+// Query: *[_type =='costumer' && email == $email][0]{  "id": _id,   userName,  lastName,  firstName,  password,    email,   "avatar": avatarUrl.asset->{    "url": url,  },}
+export type GET_USER_FOR_AUTHResult = {
+  id: string
+  userName: string | null
+  lastName: string | null
+  firstName: string | null
+  password: string | null
+  email: string | null
+  avatar: {
+    url: string | null
+  } | null
+} | null
 // Variable: GET_STATIC_BLOG_OR_NEWS_SLUG
 // Query: *[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(date desc) {  "slug": slug.current  }
 export type GET_STATIC_BLOG_OR_NEWS_SLUGResult = Array<{
@@ -1506,6 +1519,7 @@ declare module '@sanity/client' {
     '*[_type==\'product\' && status==\'publish\' && defined(price) && count((productCategories[]->name)[@ in $type]) > 0]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  dimensions,\n  "stockQuantity": stock_quantity,\n  options,\n  date,\n  "tags": productTags[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}': GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult
     '*[_type==\'coupon\' && code == $code][0] {\n   amount,\n    date_expires,\n    discount_type,\n    limit_usage_to_x_items,\n    maximum_amount,\n    minimum_amount,\n    "product_categories": product_categories[]->{\n     "id": _id\n    },\n    "product_ids": product_ids[]->{\n     "id": _id  \n   },\n    usage_limit,\n    usage_count,\n    usage_limit_per_user\n}': GET_COUPONS_FOR_VALIDATIONResult
     '*[_type ==\'costumer\' && _id == $id][0]{\n  "id": _id,\n  "active": isPayingCustomer,\n  userName,\n  lastName,\n  firstName,\n  password,\n    email,\n  "avatar": avatarUrl.asset->{\n    "url": url,\n    "blur": metadata.lqip\n  },\n "billingAddress": billingAddress[0],\n  shippingAddresses\n}': GET_USER_INFOResult
+    '*[_type ==\'costumer\' && email == $email][0]{\n  "id": _id,\n   userName,\n  lastName,\n  firstName,\n  password,\n    email,\n   "avatar": avatarUrl.asset->{\n    "url": url,\n  },\n}': GET_USER_FOR_AUTHResult
     "*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(date desc) {\n  \"slug\": slug.current\n  }": GET_STATIC_BLOG_OR_NEWS_SLUGResult
     '*[_type ==\'tag\'] | order(date desc) {\n  "slug": slug.current\n  }': GET_STATIC_TAGS_SLUGSResult
     '*[_type ==\'category\'] | order(date desc) {\n  "slug": slug.current\n  }': GET_STATIC_CATEGORIES_SLUGSResult

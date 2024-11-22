@@ -52,9 +52,7 @@ export default async function Home() {
         seeMoreUrl={searchedMainPage?.tertiaryCategory?.slug}
         className='new-products mb-[60px]'
       />
-      <YouTubeVideoSection
-      // videos={searchedMainPage?.youtubeVideos}
-      />
+      <YouTubeVideoSection videos={searchedMainPage?.youtubeVideos} />
       <NewsletterBanner />
       {jldHomePage()}
     </main>

@@ -45,5 +45,11 @@ export const addressType = defineType({
       title: 'Teléfono',
       type: 'string'
     }
-  ]
+  ],
+  preview: {
+    select: {
+      title: 'address1',
+      subtitle: 'firstName'
+    }
+  }
 })

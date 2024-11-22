@@ -338,6 +338,19 @@ export const GET_USER_INFO =
   shippingAddresses
 }`)
 
+export const GET_USER_FOR_AUTH =
+  defineQuery(`*[_type =='costumer' && email == $email][0]{
+  "id": _id,
+   userName,
+  lastName,
+  firstName,
+  password,
+    email,
+   "avatar": avatarUrl.asset->{
+    "url": url,
+  },
+}`)
+
 // * STATICS AND ISR QUERIES
 export const GET_STATIC_BLOG_OR_NEWS_SLUG =
   defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(date desc) {
