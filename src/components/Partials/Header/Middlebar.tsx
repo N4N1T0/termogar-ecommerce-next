@@ -6,21 +6,24 @@ import Image from 'next/image'
 import CartPopup from '@/components/Cart/cart-popup'
 import SearchBox from '@/components/Helpers/search-box'
 import { WishlistLink } from '@/components/Wishlist/wishlist-helpers'
-import { User } from 'lucide-react'
 import { bigLogo, smallLogo } from '@/assets'
+import UserPopup from '@/components/Partials/Header/user-popup'
 
 // * UTILS IMPORTS
 import { GET_MENU_CATEGORIESResult } from '@/types/sanity'
 import { CartLink } from '@/components/Cart/cart-helpers'
 import { CompaireLink } from '@/components/Compaire/compaire-helpers'
+import { auth } from '@/lib/auth'
 
-export default function Middlebar({
+const Middlebar = async ({
   className,
   categories
 }: {
   className?: string
   categories: GET_MENU_CATEGORIESResult
-}) {
+}) => {
+  const session = await auth()
+
   return (
     <div className={`h-[86px] w-full bg-white ${className}`}>
       <div className='container-x mx-auto h-full'>
@@ -54,11 +57,7 @@ export default function Middlebar({
                 <CartLink />
                 <CartPopup className='absolute -right-[45px] top-11 z-50 hidden group-hover:block' />
               </div>
-              <div>
-                <Link href='/profile'>
-                  <User />
-                </Link>
-              </div>
+              <UserPopup session={session} />
             </div>
           </div>
         </div>
@@ -66,3 +65,5 @@ export default function Middlebar({
     </div>
   )
 }
+
+export default Middlebar

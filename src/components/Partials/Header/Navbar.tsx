@@ -52,13 +52,13 @@ export default function Navbar({
                           }}
                         >
                           <Link
-                            className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-blue-500 hover:text-blue-500'
+                            className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'
                             href='/blog'
                           >
                             Artículos
                           </Link>
                           <Link
-                            className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-blue-500 hover:text-blue-500'
+                            className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'
                             href='/noticias'
                           >
                             Noticias
@@ -114,7 +114,7 @@ const MegaMenuLi = ({ menu }: { menu: GET_MENU_CATEGORIESResult[number] }) => {
                     {refactorChildren.map((child) => (
                       <li key={child.id}>
                         <Link href={child.link?.current || '/'}>
-                          <span className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-blue-500 hover:text-blue-500'>
+                          <span className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'>
                             {child.name}
                           </span>
                         </Link>

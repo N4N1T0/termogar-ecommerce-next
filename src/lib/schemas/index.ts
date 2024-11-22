@@ -76,7 +76,17 @@ export const passwordReset = z
     }
   })
 
+export const login = z.object({
+  email: z.string().email().min(2, {
+    message: 'El email es requerido'
+  }),
+  password: z.string().min(2, {
+    message: 'La contraseña es requerida'
+  })
+})
+
 // * TYPES
+export type LoginSchema = z.infer<typeof login>
 export type AddressSchema = z.infer<typeof addressSchema>
 export type CostumerSchema = z.infer<typeof costumerSchema>
 export type PasswordSchema = z.infer<typeof passwordReset>
