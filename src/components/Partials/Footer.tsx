@@ -119,6 +119,7 @@ const Footer = async () => {
           </div>
           <Image width='318' height='28' src={Gateways} alt='payment-getways' />
         </div>
+        {/* // TODO: Make my statement */}
       </div>
     </footer>
   )

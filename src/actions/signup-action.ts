@@ -1,0 +1,83 @@
+'use server'
+
+// * ASSETS IMPORTS
+import { SignupSchema, signupSchema } from '@/lib/schemas'
+import { AuthError } from 'next-auth'
+import { uuid } from '@sanity/uuid'
+
+// * UTILS IMPORTS
+import { sanityClientWrite } from '@/sanity/lib/client'
+import { hashPassword } from '@/lib/utils'
+import { GET_USER_FOR_AUTH } from '@/sanity/lib/queries'
+import { Costumer } from '@/types/sanity'
+import { signIn } from '@/lib/auth'
+
+const signupAction = async (values: SignupSchema) => {
+  try {
+    const parsed = signupSchema.safeParse(values)
+
+    if (!parsed.success) {
+      return {
+        success: false,
+        message: 'Las credenciales no coinciden'
+      }
+    }
+
+    const existingUser = await sanityClientWrite.fetch(GET_USER_FOR_AUTH, {
+      email: parsed.data.email
+    })
+
+    if (existingUser) {
+      return {
+        success: false,
+        message:
+          'Ya tienes una cuenta con nosotros, puedes iniciar session en la pagina principal!'
+      }
+    }
+
+    const id = uuid()
+    const hashedPassword = hashPassword(parsed.data.password!)
+
+    await sanityClientWrite.createIfNotExists<Costumer>({
+      _type: 'costumer',
+      _id: `customer-${id}`,
+      email: parsed.data.email,
+      password: hashedPassword,
+      _createdAt: new Date().toISOString(),
+      _updatedAt: new Date().toISOString(),
+      _rev: id,
+      avatarUrl: {
+        _type: 'image',
+        asset: {
+          _ref: 'image-286ad6fa76db0d586ebaa65391a382a49bc163a3-96x96-jpg',
+          _type: 'reference'
+        }
+      }
+    })
+
+    await signIn('credentials', {
+      email: parsed.data.email,
+      password: parsed.data.password,
+      redirect: false
+    })
+
+    return {
+      success: true,
+      message: 'Registro Completo, Redirigiendo a la pagina principal'
+    }
+  } catch (error) {
+    if (error instanceof AuthError) {
+      console.log(error.cause?.err?.message)
+      return {
+        success: false,
+        message: error.cause?.err?.message
+      }
+    }
+    return {
+      success: false,
+      message: 'Ocurrió un error durante el inicio de sesión'
+    }
+  }
+}
+
+export default signupAction

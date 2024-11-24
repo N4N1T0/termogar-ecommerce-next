@@ -34,23 +34,15 @@ export function ResetPasswordForm({ user }: { user: GET_USER_INFOResult }) {
       ...values,
       id: user?.id
     }
-    try {
-      const response = await resetPassword(refactoredValues)
+    const response = await resetPassword(refactoredValues)
 
-      if (response.success) {
-        toast(response.message, { duration: 4000 })
-        setState(true)
-      } else {
-        toast(response.message, {
-          duration: 4000,
-          classNames: {
-            toast:
-              'bg-red-500 border-red-500, text-gray-100 rounded-sm px-3 py-2'
-          }
-        })
-      }
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'An error occurred.')
+    if (response.success) {
+      toast.success(response.message, { duration: 4000 })
+      setState(true)
+    } else {
+      toast.error(response.message, {
+        duration: 4000
+      })
     }
   }
 

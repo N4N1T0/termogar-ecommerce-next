@@ -163,7 +163,7 @@ const FormFieldComponent = <T extends FieldValues>({
                   placeholder={placeholder}
                   className='mb-2 rounded-none border-gray-200'
                   autoComplete={autocomplete || type || ''}
-                  id='password'
+                  id={name}
                   disabled={isSubmitting}
                   aria-label='Contraseña'
                   {...field}

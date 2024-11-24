@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import localFont from 'next/font/local'
-import { Toaster } from '@/components/ui/sonner'
 import { seoMetatags } from '@/components/seo'
+import { Toaster } from 'sonner'
 
 export const metadata: Metadata = seoMetatags()
 
@@ -42,7 +42,7 @@ export default function RootLayout({
         className={`overflow-x-hidden bg-gray-50 antialiased ${korbFonts.className}`}
       >
         {children}
-        <Toaster />
+        <Toaster richColors />
       </body>
     </html>
   )

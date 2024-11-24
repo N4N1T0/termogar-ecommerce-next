@@ -1,13 +1,13 @@
-import LoginForm from '@/components/Auth/Login/login-form'
-import Thumbnail from '@/components/Auth/Login/thumbnail'
+import SignupForm from '@/components/Auth/Signup/signup-form'
+import Thumbnail from '@/components/Auth/Signup/thumbnail'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Iniciar Sesión',
-  description: 'Pagina de Iniciar Sesión'
+  title: 'Registro',
+  description: 'Pagina de Registro de Usuario'
 }
 
-const LoginPage = async ({
+const SignupPage = async ({
   searchParams
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
@@ -19,12 +19,12 @@ const LoginPage = async ({
         <div className='flex h-full w-full flex-col justify-center border border-[#E0E0E0] bg-white p-5 sm:p-10 lg:flex-1'>
           <div className='mb-7 flex w-full flex-col items-center justify-center text-center'>
             <h1 className='mb-1 border-b border-accent text-[30px] font-bold leading-[74px] text-gray-900'>
-              inicio de sesión
+              Registro de Usuario
             </h1>
-            <LoginForm redirectTo={redirectTo} />
+            <SignupForm redirectTo={redirectTo} />
           </div>
         </div>
-        <div className='hidden h-[80vh] flex-1 items-center lg:flex xl:justify-center'>
+        <div className='hidden h-[80vh] flex-1 items-center px-5 lg:flex xl:justify-center'>
           <Thumbnail />
         </div>
       </div>
@@ -32,4 +32,4 @@ const LoginPage = async ({
   )
 }
 
-export default LoginPage
+export default SignupPage

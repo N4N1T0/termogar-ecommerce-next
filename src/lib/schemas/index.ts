@@ -76,7 +76,7 @@ export const passwordReset = z
     }
   })
 
-export const login = z.object({
+export const loginSchema = z.object({
   email: z.string().email().min(2, {
     message: 'El email es requerido'
   }),
@@ -85,8 +85,33 @@ export const login = z.object({
   })
 })
 
+export const signupSchema = z
+  .object({
+    email: z.string().email().min(2, {
+      message: 'El email es requerido'
+    }),
+    password: z
+      .string()
+      .regex(/^(?=.*\d).{8,}$/, {
+        message:
+          'La contraseña debe tener al menos 8 caracteres e incluir al menos un dígito.'
+      })
+      .optional(),
+    confirmPassword: z.string().optional()
+  })
+  .superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'las contraseñas no coinciden',
+        path: ['confirmPassword']
+      })
+    }
+  })
+
 // * TYPES
-export type LoginSchema = z.infer<typeof login>
+export type LoginSchema = z.infer<typeof loginSchema>
 export type AddressSchema = z.infer<typeof addressSchema>
 export type CostumerSchema = z.infer<typeof costumerSchema>
 export type PasswordSchema = z.infer<typeof passwordReset>
+export type SignupSchema = z.infer<typeof signupSchema>

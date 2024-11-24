@@ -1,12 +1,12 @@
 'use server'
 
-import { LoginSchema, login } from '@/lib/schemas'
+import { LoginSchema, loginSchema } from '@/lib/schemas'
 import { signIn, signOut } from '@/lib/auth'
 import { AuthError } from 'next-auth'
 
 const loginAction = async (values: LoginSchema) => {
   try {
-    const parsed = login.safeParse(values)
+    const parsed = loginSchema.safeParse(values)
 
     if (!parsed.success) {
       return {
@@ -15,7 +15,16 @@ const loginAction = async (values: LoginSchema) => {
       }
     }
 
-    await signIn('credentials', parsed.data)
+    const formData = new FormData()
+    Object.entries(parsed.data).forEach(([key, value]) => {
+      formData.append(key, value as string)
+    })
+
+    await signIn('credentials', {
+      email: parsed.data.email,
+      password: parsed.data.password,
+      redirect: false
+    })
 
     return {
       success: true,
@@ -29,6 +38,7 @@ const loginAction = async (values: LoginSchema) => {
         message: error.cause?.err?.message
       }
     }
+    console.log(error)
     return {
       success: false,
       message: 'Ocurrió un error durante el inicio de sesión'

@@ -11,7 +11,7 @@ import FormFieldComponent from '@/components/Auth/ResetPassword/form-field'
 import GoogleIcon from '@/components/Auth/Login/google-icon'
 
 // * UTILS IMPORTS
-import { login, LoginSchema } from '@/lib/schemas'
+import { loginSchema, LoginSchema } from '@/lib/schemas'
 import { loginAction } from '@/actions/login-action'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
@@ -28,7 +28,7 @@ const LoginForm = ({
     redirectTo === undefined || Array.isArray(redirectTo) ? '/' : redirectTo
 
   const form = useForm<LoginSchema>({
-    resolver: zodResolver(login),
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: ''
@@ -41,11 +41,11 @@ const LoginForm = ({
     const response = await loginAction(values)
 
     if (!response?.success) {
-      toast.error(response?.message, { duration: 3000 })
+      toast.error(response?.message, { duration: 4000 })
       setForgotPassword(true)
     } else {
-      toast(response.message, { duration: 300 })
-      setTimeout(() => router.push(tempUrl), 3500)
+      toast.success(response.message, { duration: 4000 })
+      setTimeout(() => router.push(tempUrl), 4500)
     }
   }
 
