@@ -21,12 +21,12 @@ const WishlistBtn = ({ product }: { product: ProductCardType }) => {
   const handleAddToWishlist = () => {
     if (wishlistHasProduct) {
       removeProduct(product.id)
-      toast('El producto se eliminó de la lista de deseos', {
+      toast.info('El producto se eliminó de la lista de deseos', {
         duration: 2000
       })
     } else {
       addProduct(product)
-      toast('Se agregó correctamente a la lista de deseos', {
+      toast.success('Se agregó correctamente a la lista de deseos', {
         duration: 2000,
         action: {
           label: 'lista',
@@ -76,7 +76,9 @@ const WishlistProductTableRemover = ({ id }: { id: string }) => {
 
   const handleRemoveProduct = () => {
     removeProduct(id)
-    toast('El producto se eliminó de la lista de deseos', { duration: 2000 })
+    toast.info('El producto se eliminó de la lista de deseos', {
+      duration: 2000
+    })
   }
 
   return (

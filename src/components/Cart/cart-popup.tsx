@@ -22,7 +22,9 @@ export default function CartPopup({ className }: { className?: string }) {
 
   const handleRemoveProduct = (id: string) => {
     removeProduct(id)
-    toast('El producto se eliminó de la lista de deseos', { duration: 2000 })
+    toast.info('El producto se eliminó de la lista de deseos', {
+      duration: 2000
+    })
   }
 
   return (

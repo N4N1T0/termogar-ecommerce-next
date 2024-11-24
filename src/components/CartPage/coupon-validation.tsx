@@ -24,6 +24,7 @@ const CouponValidation = ({
 }) => {
   const [isPending, setIsPending] = React.useState(false)
 
+  // TODO: Make an server action
   const handleCouponValidationSubmit = async (
     e: FormEvent<HTMLFormElement>
   ) => {
@@ -49,16 +50,16 @@ const CouponValidation = ({
       const data = await response.json()
 
       if (!data.success) {
-        toast(data.message, { duration: 2000 })
+        toast.error(data.message, { duration: 2000 })
+      } else {
+        setIsPending(false)
+        toast.success(data.message, { duration: 3000 })
+
+        setCoupon({
+          amount: data.data.amount as number,
+          type: data.data.discount_type as Coupon['discount_type']
+        })
       }
-
-      toast(data.message, { duration: 3000 })
-      setIsPending(false)
-
-      setCoupon({
-        amount: data.data.amount as number,
-        type: data.data.discount_type as Coupon['discount_type']
-      })
     } catch (error) {
       console.error('Error validating coupon:', error)
     }

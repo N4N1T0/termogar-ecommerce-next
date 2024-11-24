@@ -11,25 +11,14 @@ import Form from 'next/form'
 const NewsletterBanner = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const email = e.currentTarget.email.value
+    const response = await subscribeToNewsletter({ email })
 
-    try {
-      const response = await subscribeToNewsletter({ email })
-
-      if (response.success) {
-        toast(response.message, { duration: 3000 })
-      } else {
-        toast(response.message, {
-          duration: 3000,
-          classNames: {
-            toast:
-              'bg-red-500 border-red-500, text-gray-100 rounded-sm px-3 py-2'
-          }
-        })
-      }
-    } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : 'Ha ocurrido un error.'
-      )
+    if (response.success) {
+      toast.success(response.message, { duration: 3000 })
+    } else {
+      toast.error(response.message, {
+        duration: 3000
+      })
     }
   }
 

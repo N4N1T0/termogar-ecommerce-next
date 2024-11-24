@@ -31,7 +31,7 @@ const AddToCart = ({
   const handleAddToCart = () => {
     const cartItem: CartItemType = { quantity, ...product }
     addProduct(cartItem)
-    toast('Producto agregado al carrito', {
+    toast.info('Producto agregado al carrito', {
       duration: 2000,
       action: {
         label: 'carrito',

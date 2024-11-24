@@ -41,12 +41,12 @@ const CompaireBtn = ({ product }: { product: ProductCardType }) => {
   const handleAddToCompaireList = () => {
     if (compaireHasProduct) {
       removeProduct(product.id)
-      toast('El producto se eliminó de la lista de comparación', {
+      toast.info('El producto se eliminó de la lista de comparación', {
         duration: 2000
       })
     } else {
       addProduct(product)
-      toast('Se agregó correctamente a la lista de comparación', {
+      toast.info('Se agregó correctamente a la lista de comparación', {
         duration: 2000,
         action: {
           label: 'Lista',
@@ -77,7 +77,7 @@ const CompaireProductTableRemover = ({ id }: { id: string }) => {
 
   const handleRemoveProduct = () => {
     removeProduct(id)
-    toast('El producto se eliminó de la lista de comparación', {
+    toast.info('El producto se eliminó de la lista de comparación', {
       duration: 2000
     })
   }
