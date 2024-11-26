@@ -16,44 +16,15 @@ export const addressSchema = z.object({
   phone: z.string().optional()
 })
 
-export const costumerSchema = z
-  .object({
-    email: z.string().email('Correo Electrónico no es válido.'),
-    firstName: z.string().optional(),
-    lastName: z.string().optional(),
-    password: z
-      .string()
-      .regex(/^(?=.*\d).{8,}$/, {
-        message:
-          'La contraseña debe tener al menos 8 caracteres e incluir al menos un dígito.'
-      })
-      .optional(),
-    confirmPassword: z.string().optional(),
-    userName: z.string().optional(),
-    billingAddress: z
-      .array(addressSchema)
-      .max(1, 'Solo puede haber una dirección de facturación.'),
-    shippingAddresses: z.array(addressSchema).optional(),
-    isPayingCustomer: z.boolean().optional(),
-    avatarUrl: z
-      .object({
-        _type: z.literal('image'),
-        asset: z.object({
-          _ref: z.string(),
-          _type: z.literal('reference')
-        })
-      })
-      .optional()
-  })
-  .superRefine(({ confirmPassword, password }, ctx) => {
-    if (confirmPassword !== password) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'las contraseñas no coinciden',
-        path: ['confirmPassword']
-      })
-    }
-  })
+export const costumerSchema = z.object({
+  email: z.string().email('Correo Electrónico no es válido.'),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  userName: z.string().optional(),
+  billingAddress: addressSchema,
+  shippingAddresses: z.array(addressSchema).optional(),
+  isPayingCustomer: z.boolean().optional()
+})
 
 export const passwordReset = z
   .object({

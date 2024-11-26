@@ -46,6 +46,47 @@ export type Geopoint = {
   alt?: number
 }
 
+export type Order = {
+  _id: string
+  _type: 'order'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  userEmail?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'costumer'
+  }
+  products?: Array<{
+    product?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'product'
+    }
+    quantity?: number
+    _key: string
+  }>
+  totalAmount?: number
+  purchaseDate?: string
+  paymentMethod?: string
+  status?:
+    | 'pendiente'
+    | 'completado'
+    | 'cancelado'
+    | 'procesando'
+    | 'enviado'
+    | 'entregado'
+  shippingAddress?: Array<
+    {
+      _key: string
+    } & Address
+  >
+  currierCode?: string
+  expectedDeliveryDate?: string
+}
+
 export type Address = {
   _type: 'address'
   firstName?: string
@@ -806,6 +847,7 @@ export type AllSanitySchemaTypes =
   | SanityImagePalette
   | SanityImageDimensions
   | Geopoint
+  | Order
   | Address
   | Costumer
   | Brand
@@ -1478,6 +1520,46 @@ export type GET_USER_FOR_AUTHResult = {
     url: string | null
   } | null
 } | null
+// Variable: GET_ORDERS_BY_USER_ID
+// Query: *[_type =='order' && userEmail._ref == $id ]{  "id": _id,  purchaseDate,  currierCode,  status,  expectedDeliveryDate,  paymentMethod,  "shippingAddress": shippingAddress[0],  totalAmount,  products[]{      product-> {        "id": _id,        title,        price,        "featuredMedia": {          "url": featuredMedia.asset->url,            "blur": featuredMedia.asset->metadata.lqip        },        sale      },      quantity    }}
+export type GET_ORDERS_BY_USER_IDResult = Array<{
+  id: string
+  purchaseDate: string | null
+  currierCode: string | null
+  status:
+    | 'cancelado'
+    | 'completado'
+    | 'entregado'
+    | 'enviado'
+    | 'pendiente'
+    | 'procesando'
+    | null
+  expectedDeliveryDate: string | null
+  paymentMethod: string | null
+  shippingAddress:
+    | ({
+        _key: string
+      } & Address)
+    | null
+  totalAmount: number | null
+  products: Array<{
+    product: {
+      id: string
+      title: string | null
+      price: number | null
+      featuredMedia: {
+        url: string | null
+        blur: string | null
+      }
+      sale: {
+        price?: number
+        from?: string
+        to?: string
+      } | null
+    } | null
+    quantity: number | null
+  }> | null
+}>
 // Variable: GET_STATIC_BLOG_OR_NEWS_SLUG
 // Query: *[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(date desc) {  "slug": slug.current  }
 export type GET_STATIC_BLOG_OR_NEWS_SLUGResult = Array<{
@@ -1520,6 +1602,7 @@ declare module '@sanity/client' {
     '*[_type==\'coupon\' && code == $code][0] {\n   amount,\n    date_expires,\n    discount_type,\n    limit_usage_to_x_items,\n    maximum_amount,\n    minimum_amount,\n    "product_categories": product_categories[]->{\n     "id": _id\n    },\n    "product_ids": product_ids[]->{\n     "id": _id  \n   },\n    usage_limit,\n    usage_count,\n    usage_limit_per_user\n}': GET_COUPONS_FOR_VALIDATIONResult
     '*[_type ==\'costumer\' && _id == $id][0]{\n  "id": _id,\n  "active": isPayingCustomer,\n  userName,\n  lastName,\n  firstName,\n  password,\n    email,\n  "avatar": avatarUrl.asset->{\n    "url": url,\n    "blur": metadata.lqip\n  },\n "billingAddress": billingAddress[0],\n  shippingAddresses\n}': GET_USER_INFOResult
     '*[_type ==\'costumer\' && email == $email][0]{\n  "id": _id,\n   userName,\n  lastName,\n  firstName,\n  password,\n    email,\n   "avatar": avatarUrl.asset->{\n    "url": url,\n  },\n}': GET_USER_FOR_AUTHResult
+    '*[_type ==\'order\' && userEmail._ref == $id ]{\n  "id": _id,\n  purchaseDate,\n  currierCode,\n  status,\n  expectedDeliveryDate,\n  paymentMethod,\n  "shippingAddress": shippingAddress[0],\n  totalAmount,\n  products[]{\n      product-> {\n        "id": _id,\n        title,\n        price,\n        "featuredMedia": {\n          "url": featuredMedia.asset->url,\n            "blur": featuredMedia.asset->metadata.lqip\n        },\n        sale\n      },\n      quantity\n    }\n}': GET_ORDERS_BY_USER_IDResult
     "*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(date desc) {\n  \"slug\": slug.current\n  }": GET_STATIC_BLOG_OR_NEWS_SLUGResult
     '*[_type ==\'tag\'] | order(date desc) {\n  "slug": slug.current\n  }': GET_STATIC_TAGS_SLUGSResult
     '*[_type ==\'category\'] | order(date desc) {\n  "slug": slug.current\n  }': GET_STATIC_CATEGORIES_SLUGSResult

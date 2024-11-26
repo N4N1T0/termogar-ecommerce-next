@@ -12,7 +12,8 @@ import {
   Filter,
   UserPen,
   Building2,
-  FileUser
+  FileUser,
+  CircleDollarSign
 } from 'lucide-react'
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -78,7 +79,10 @@ export const structure: StructureResolver = (S) =>
               S.divider(),
               S.documentTypeListItem('costumer')
                 .title('Clientes')
-                .icon(() => <FileUser className='h-4 w-4' />)
+                .icon(() => <FileUser className='h-4 w-4' />),
+              S.documentTypeListItem('order')
+                .title('Ordenes de Compra')
+                .icon(() => <CircleDollarSign className='h-4 w-4' />)
             ])
         )
     ])

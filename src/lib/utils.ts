@@ -208,3 +208,28 @@ export const verifyPassword = (
   ).toString('hex')
   return hash === originalHash
 }
+
+/**
+ * Returns a color code based on the given status.
+ *
+ * @param {string} status - The status to determine the color for.
+ * @return {string} The color code corresponding to the status.
+ */
+export function getStatusColor(status: string): string {
+  switch (status) {
+    case 'pendiente':
+      return '#F59E0B' // Yellow (for Pending)
+    case 'completado':
+      return '#10B981' // Green (for Completed)
+    case 'cancelado':
+      return '#EF4444' // Red (for Canceled)
+    case 'procesando':
+      return '#3B82F6' // Blue (for Processing)
+    case 'enviado':
+      return '#6366F1' // Indigo (for Shipped)
+    case 'entregado':
+      return '#22C55E' // Light Green (for Delivered)
+    default:
+      return '#6B7280' // Gray (for default/fallback)
+  }
+}

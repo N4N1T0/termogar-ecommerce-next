@@ -16,8 +16,7 @@ import { homePageType } from './HomePageType'
 import { brandType } from './BrandType'
 import { costumerType } from './CostumerType'
 import { addressType } from './AddressType'
-
-// TODO: Reviews, Client, Coupons
+import { orderType } from './OrderType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -35,6 +34,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     homePageType,
     brandType,
     costumerType,
-    addressType
+    addressType,
+    orderType
   ]
 }
