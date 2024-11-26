@@ -32,13 +32,11 @@ const loginAction = async (values: LoginSchema) => {
     }
   } catch (error) {
     if (error instanceof AuthError) {
-      console.log(error.cause?.err?.message)
       return {
         success: false,
         message: error.cause?.err?.message
       }
     }
-    console.log(error)
     return {
       success: false,
       message: 'Ocurrió un error durante el inicio de sesión'

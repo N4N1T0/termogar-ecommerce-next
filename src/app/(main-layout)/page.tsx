@@ -15,6 +15,8 @@ import { jldHomePage } from '@/components/seo'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_MAIN_PAGE } from '@/sanity/lib/queries'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
   const searchedMainPage = await sanityClientRead.fetch(GET_MAIN_PAGE)
   return (

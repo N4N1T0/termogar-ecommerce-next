@@ -21,8 +21,6 @@ const OrderSummary = () => {
     return total + price * item.quantity
   }, 0)
 
-  console.log(coupon)
-
   return (
     <section id='order-summary' className='flex-1'>
       <h2 className='mb-5 text-xl font-medium text-gray-900 sm:text-2xl'>

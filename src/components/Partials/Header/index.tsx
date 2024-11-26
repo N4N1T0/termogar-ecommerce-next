@@ -15,7 +15,6 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_MENU_CATEGORIES } from '@/sanity/lib/queries'
 
 const HeaderOne = async ({ className }: { className?: string }) => {
-  // -> SANITY QUERY FOR THE NAVBAR MENU
   const navbarMenu = await sanityClientRead.fetch(GET_MENU_CATEGORIES)
 
   return (

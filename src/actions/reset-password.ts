@@ -48,7 +48,6 @@ export default async function resetPassword(
     }
   } catch (error) {
     if (error instanceof AuthError) {
-      console.log(error.cause?.err?.message)
       return {
         success: false,
         message: error.cause?.err?.message

@@ -351,6 +351,31 @@ export const GET_USER_FOR_AUTH =
   },
 }`)
 
+export const GET_ORDERS_BY_USER_ID =
+  defineQuery(`*[_type =='order' && userEmail._ref == $id ]{
+  "id": _id,
+  purchaseDate,
+  currierCode,
+  status,
+  expectedDeliveryDate,
+  paymentMethod,
+  "shippingAddress": shippingAddress[0],
+  totalAmount,
+  products[]{
+      product-> {
+        "id": _id,
+        title,
+        price,
+        "featuredMedia": {
+          "url": featuredMedia.asset->url,
+            "blur": featuredMedia.asset->metadata.lqip
+        },
+        sale
+      },
+      quantity
+    }
+}`)
+
 // * STATICS AND ISR QUERIES
 export const GET_STATIC_BLOG_OR_NEWS_SLUG =
   defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(date desc) {

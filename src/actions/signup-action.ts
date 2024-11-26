@@ -67,7 +67,6 @@ const signupAction = async (values: SignupSchema) => {
     }
   } catch (error) {
     if (error instanceof AuthError) {
-      console.log(error.cause?.err?.message)
       return {
         success: false,
         message: error.cause?.err?.message

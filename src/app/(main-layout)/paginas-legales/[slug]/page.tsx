@@ -76,7 +76,10 @@ const LegalPages = async ({
       </div>
       <div className='flex w-full items-center justify-center'>
         {content ? (
-          <section id='content' className='prose w-full text-pretty px-5'>
+          <section
+            id='content'
+            className='container-x prose mx-auto w-full text-pretty px-5'
+          >
             <PortableText value={content} components={portableTextComponents} />
           </section>
         ) : (

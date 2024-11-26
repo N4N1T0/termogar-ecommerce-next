@@ -55,7 +55,7 @@ const UserPopup = ({ session }: { session: Session | null }) => {
           }}
         >
           <Link
-            href={`/perfil/${user?.id}`}
+            href={`/perfil/${user?.id}?tab=profile`}
             className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'
           >
             Ir Perfil

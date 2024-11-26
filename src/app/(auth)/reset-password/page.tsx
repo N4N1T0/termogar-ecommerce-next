@@ -23,8 +23,6 @@ const ResetPasswordPage = async ({
 }) => {
   const { token } = await searchParams
 
-  console.log(token)
-
   if (!token || Array.isArray(token)) return notFound()
 
   const secretKey = process.env.SECRET_KEY! // Your server-side secret
