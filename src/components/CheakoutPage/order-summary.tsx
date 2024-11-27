@@ -16,6 +16,8 @@ const OrderSummary = () => {
     type: 'fixed_cart'
   })
 
+  console.log(coupon)
+
   const cartTotal = products.reduce((total, item) => {
     const price = item.price || item.sale?.price || 1
     return total + price * item.quantity

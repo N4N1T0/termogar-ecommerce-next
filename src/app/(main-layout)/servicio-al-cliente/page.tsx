@@ -16,9 +16,22 @@ import { portableTextComponents } from '@/components/Helpers/PortableText'
 export const revalidate = 43200
 
 // * METADATA
-export const metadata: Metadata = {
-  title: 'Servicio de Atención al Cliente',
-  description: 'Servicio de Atención al Cliente para termogar.'
+export async function generateMetadata(): Promise<Metadata> {
+  const searchedPage = await sanityClientRead.fetch(
+    GET_COSTUMER_SERVICES_PAGE,
+    {
+      slug: ['servicio-de-atencion-al-cliente']
+    }
+  )
+
+  if (!searchedPage)
+    return { title: 'Not Found', description: 'Page not found' }
+
+  return {
+    title: searchedPage.title || 'Servicio de Atención al Cliente',
+    description:
+      searchedPage.excerpt || 'Servicio de Atención al Cliente para termogar.'
+  }
 }
 
 const CostumerServicePageIndex = async () => {

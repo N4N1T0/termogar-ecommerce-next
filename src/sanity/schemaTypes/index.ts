@@ -35,6 +35,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     brandType,
     costumerType,
     addressType,
+    // @ts-expect-error ignore
     orderType
   ]
 }

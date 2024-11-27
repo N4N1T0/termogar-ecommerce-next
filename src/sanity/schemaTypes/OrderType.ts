@@ -122,7 +122,7 @@ export const orderType = defineType({
       title: 'userEmail.email',
       subtitle: 'purchaseDate',
       media: 'userEmail.image'
-    },
+    } as Record<string, string>,
     prepare(selection: { title: string; subtitle: string; media: string }) {
       const { title, subtitle, media } = selection
       return {
