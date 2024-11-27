@@ -17,10 +17,13 @@ import { portableTextComponents } from '@/components/Helpers/PortableText'
 
 // * ISR
 export const revalidate = 43200
+export const dynamicParams = false
 
 export async function generateStaticParams() {
   const pages = await sanityClientRead.fetch(
-    GET_STATIC_COSTUMER_SERVICES_PAGES_SUG
+    GET_STATIC_COSTUMER_SERVICES_PAGES_SUG,
+    {},
+    { cache: 'force-cache' }
   )
   return pages.map((page) => ({
     slug: page.slug
@@ -39,7 +42,8 @@ export async function generateMetadata({
     GET_COSTUMER_SERVICES_PAGE,
     {
       slug: [slug]
-    }
+    },
+    { next: { revalidate: 43200 } }
   )
 
   return {

@@ -15,6 +15,7 @@ import siteData from '@/data/site-data.json'
 
 // * ISR
 export const revalidate = 86400
+export const dynamicParams = false
 
 export function generateStaticParams() {
   return siteData.footerLinks['Paginas Legales'].map((post) => ({
@@ -33,7 +34,8 @@ export async function generateMetadata({
     GET_COSTUMER_SERVICES_PAGE,
     {
       slug: [slug]
-    }
+    },
+    { next: { revalidate: 43200 } }
   )
 
   return {
