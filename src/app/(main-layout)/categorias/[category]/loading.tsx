@@ -1,4 +1,6 @@
-const SearchLoading = () => {
+import React from 'react'
+
+const categoriesLoading = () => {
   return (
     <main className='container-x mx-auto my-3 w-full bg-white'>
       <div className='mt-10 h-4 w-1/5 animate-pulse bg-gray-100' />
@@ -18,4 +20,4 @@ const SearchLoading = () => {
   )
 }
 
-export default SearchLoading
+export default categoriesLoading
