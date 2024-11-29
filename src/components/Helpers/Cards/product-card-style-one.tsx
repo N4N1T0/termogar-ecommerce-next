@@ -29,7 +29,7 @@ export default function ProductCardStyleOne<T>({
       className='product-card-one group relative h-full w-full overflow-hidden bg-white'
       style={{ boxShadow: '0px 15px 64px 0px rgba(0, 0, 0, 0.05)' }}
     >
-      <div className='h-[300px] w-full'>
+      <div className='h-[300px] w-full p-5'>
         <Image
           src={featuredMedia.url || PlaceholderProductCard}
           alt={title || ''}
@@ -78,7 +78,7 @@ export default function ProductCardStyleOne<T>({
       {/* DETAILS */}
       <div className='product-card-details relative px-[30px] pb-[30px]'>
         {/* add to card button */}
-        <div className='absolute left-0 top-40 h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px]'>
+        <div className='absolute left-0 top-36 h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px]'>
           <AddToCart product={datas as ProductCardType} />
         </div>
         <Link href={`/productos/${slug}`}>
