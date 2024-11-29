@@ -27,8 +27,13 @@ const ProductSidebar = async ({
       <h2 className='mb-2 text-xl font-semibold uppercase text-accent'>
         Filtrar por...
       </h2>
-      <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
-      <RadiogroupFilter categories={categoriesFilter} label='Sub Categorias' />
+      <nav aria-label='Categories filters'>
+        <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
+        <RadiogroupFilter
+          categories={categoriesFilter}
+          label='Sub Categorias'
+        />
+      </nav>
     </aside>
   )
 }
