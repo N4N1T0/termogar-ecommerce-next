@@ -1,11 +1,15 @@
+// * NEXT.JS IMPORTS
 import Link from 'next/link'
 
+// * ASSETS IMPORTS
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion'
+
+// * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_SIDEBAR_MENU } from '@/sanity/lib/queries'
 
@@ -13,10 +17,12 @@ const MATCH_URL_SERVICE = 'servicio-de-atencion-al-cliente'
 const MATCH_URL_PROFILE = 'mi-cuenta'
 
 const CostumerServiceSidebar = async ({
-  slug
+  params
 }: {
-  slug: string | string[] | undefined
+  params: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
+  const { slug } = await params
+
   const searchedPages = await sanityClientRead.fetch(
     GET_COSTUMER_SERVICES_SIDEBAR_MENU
   )
@@ -37,13 +43,18 @@ const CostumerServiceSidebar = async ({
   })
 
   return (
-    <aside className='sticky top-0 h-screen w-72 overflow-y-scroll text-balance border-r border-gray-200 bg-gray-100 p-4'>
+    <aside className='sticky top-0 m-4 h-screen w-72 divide-y-[1px] overflow-y-auto text-balance bg-white px-4 pt-10'>
       <nav aria-label='Customer Service Navigation'>
         <h2 className='mb-4 text-xl font-semibold uppercase text-accent'>
           Servicio de Atencion al cliente
         </h2>
 
-        <Accordion type='single' collapsible className='mb-4'>
+        <Accordion
+          type='single'
+          collapsible
+          className='mb-4'
+          defaultValue='links-de-ayuda'
+        >
           <AccordionItem value='cliente'>
             <AccordionTrigger className='text-lg font-bold'>
               Cliente
@@ -63,9 +74,9 @@ const CostumerServiceSidebar = async ({
               </ul>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value='links-de-ayuda'>
+          <AccordionItem value='mi-cuenta'>
             <AccordionTrigger className='text-lg font-bold'>
-              Links de Ayuda
+              Mi Cuenta
             </AccordionTrigger>
             <AccordionContent>
               <ul className='space-y-2'>
@@ -82,19 +93,26 @@ const CostumerServiceSidebar = async ({
               </ul>
             </AccordionContent>
           </AccordionItem>
+          <AccordionItem value='links-de-ayuda'>
+            <AccordionTrigger className='text-lg font-bold'>
+              Links de Ayuda
+            </AccordionTrigger>
+            <AccordionContent>
+              <ul className='space-y-2'>
+                {otherPages?.map(({ id, slug: pageSlug, title }) => (
+                  <li key={id}>
+                    <Link
+                      href={`/servicio-al-cliente/${pageSlug}`}
+                      className={`hover-200 flex items-center underline ${pageSlug === slug ? 'text-accent hover:text-gray-900' : 'text-gray-900 hover:text-accent'}`}
+                    >
+                      {title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
-        <ul className='space-y-2'>
-          {otherPages?.map(({ id, slug: pageSlug, title }) => (
-            <li key={id}>
-              <Link
-                href={`/servicio-al-cliente/${pageSlug}`}
-                className={`hover-200 flex items-center underline ${pageSlug === slug ? 'text-accent hover:text-gray-900' : 'text-gray-900 hover:text-accent'}`}
-              >
-                {title}
-              </Link>
-            </li>
-          ))}
-        </ul>
       </nav>
     </aside>
   )

@@ -36,7 +36,7 @@ const WishlistPage = () => {
     return (
       <section
         id='Empty-Wishlist'
-        className='wishlist-page-wrapper mt-10 w-full'
+        className='wishlist-page-wrapper my-10 w-full'
       >
         <div className='container-x mx-auto'>
           <BreadcrumbCom

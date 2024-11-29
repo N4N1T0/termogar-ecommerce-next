@@ -36,7 +36,7 @@ const CartPage = () => {
 
   if (products.length === 0) {
     return (
-      <section id='Empty-Cart' className='cart-page-wrapper mt-10 w-full'>
+      <section id='Empty-Cart' className='cart-page-wrapper my-10 w-full'>
         <div className='container-x mx-auto'>
           <BreadcrumbCom
             paths={[

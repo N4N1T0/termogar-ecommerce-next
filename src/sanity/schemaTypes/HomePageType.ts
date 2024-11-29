@@ -116,6 +116,26 @@ export const homePageType = defineType({
         }
       ],
       validation: (Rule) => Rule.max(4)
+    },
+    {
+      name: 'productListBanner',
+      title: 'Banner de las Listas de Producto',
+      type: 'object',
+      fields: [
+        {
+          name: 'banner',
+          title: 'Banner',
+          type: 'image',
+          options: {
+            hotspot: true
+          }
+        },
+        {
+          name: 'link',
+          title: 'Link',
+          type: 'string'
+        }
+      ]
     }
   ]
 })

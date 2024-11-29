@@ -69,6 +69,21 @@ export interface BlogCardProps {
   type: 'news' | 'blog'
 }
 
+export interface RadiogroupFilterProps {
+  categories: {
+    id: string
+    name: string | null
+    slug: string | null
+  }[]
+  label: string
+}
+
+export interface PriceRangeSliderProps {
+  min: number
+  max: number
+  step?: number
+}
+
 //* PRODUCT CARDS
 export interface ProductCardType {
   id: string
@@ -168,6 +183,7 @@ export interface PageTitleProps {
   title: string
   subTitle?: string | undefined | null
   breadcrumb: BreadcrumbProps[]
+  className?: string
 }
 
 export interface BreadcrumbProps {

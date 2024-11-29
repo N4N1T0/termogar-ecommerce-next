@@ -1,15 +1,23 @@
+import { cn } from '@/lib/utils'
 import { BreadcrumbProps } from '@/types'
 import Link from 'next/link'
 
 export default function BreadcrumbCom({
-  paths = [{ name: 'home', path: '/' }]
+  paths = [{ name: 'home', path: '/' }],
+  className = ''
 }: {
   paths: BreadcrumbProps[]
+  className?: string
 }) {
   return (
     <>
       {paths && paths.length > 0 && (
-        <div className='breadcrumb-wrapper font-400 text-qblack mb-[23px] text-[13px]'>
+        <div
+          className={cn(
+            'breadcrumb-wrapper font-400 text-qblack mb-[23px] text-[13px]',
+            className
+          )}
+        >
           {paths.map((path) => (
             <span key={path.name}>
               <Link href={path.path}>

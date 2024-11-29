@@ -3,6 +3,8 @@
 // * NEXTJS IMPORTS
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import { useState } from 'react'
 
 // * ASSETS IMPORTS
 import {
@@ -18,21 +20,22 @@ import { PlaceholderProductCard } from '@/assets'
 
 // * UTILS IMPORTS
 import { ProductQuickViewProps } from '@/types'
-// import { eurilize } from '@/lib/utils'
+import { cn, eurilize } from '@/lib/utils'
+import { PortableText } from 'next-sanity'
 
 const ProductQuickView = ({ data }: ProductQuickViewProps) => {
   const {
     featuredMedia,
     title,
-    // stockQuantity,
-    // sale,
-    // slug,
-    // price,
-    // categories,
+    sale,
+    price,
+    categories,
+    otherImages,
+    content,
     excerpt
   } = data
 
-  // const [selectedImage, setSelectedImage] = React.useState(0)
+  const [selectedImage, setSelectedImage] = useState(0)
 
   return (
     <Dialog modal>
@@ -45,40 +48,54 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
         </DialogHeader>
         <div className='grid h-full gap-4 p-0 md:grid-cols-2'>
           <div className='flex h-full max-h-[80vh] gap-4 overflow-hidden'>
-            {/* TODO: ADD OTHER IMAGES */}
-            {/* <div className='flex flex-col gap-4 overflow-y-auto pr-4'>
-              {images.map((src, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedImage(index)}
-                  className={cn(
-                    'relative h-20 w-16 overflow-hidden rounded-lg border',
-                    selectedImage === index && 'ring-primary ring-2'
-                  )}
-                >
-                  <Image
-                    src={src}
-                    alt={`Product ${index + 1}`}
-                    className='object-cover'
-                    fill
-                  />
-                </button>
-              ))}
-            </div> */}
-            <div className='relative aspect-[3/4] h-full flex-1 overflow-hidden'>
+            {otherImages.length > 1 && (
+              <div className='flex flex-col gap-4 overflow-y-auto px-2 py-4'>
+                {otherImages.map(({ url }, index) => (
+                  <button
+                    key={url}
+                    onClick={() => setSelectedImage(index)}
+                    className={cn(
+                      'h-20 w-16 overflow-hidden border',
+                      selectedImage === index ? 'ring-2 ring-accent' : ''
+                    )}
+                  >
+                    <Image
+                      src={url || PlaceholderProductCard}
+                      alt={`Product ${index + 1}`}
+                      className='h-full w-full object-cover'
+                      width={100}
+                      height={100}
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+            <div className='aspect-[3/4] h-full flex-1 overflow-hidden p-4'>
               <Image
                 src={featuredMedia.url || PlaceholderProductCard}
                 alt={title || 'Product'}
                 title={title || 'Product'}
-                className='object-cover'
-                fill
+                className='h-full w-full object-cover'
+                width={300}
+                height={400}
               />
             </div>
           </div>
           <div className='flex h-full max-h-[80vh] flex-col overflow-hidden'>
             <div className='flex-1 space-y-4 overflow-y-auto p-4 md:p-6'>
               <div className='space-y-2'>
-                <h2 className='text-2xl font-bold'>{title}</h2>
+                {categories?.length !== undefined && categories?.length > 0 && (
+                  <ul className='flex gap-2'>
+                    {categories.map(({ id, name, slug }) => (
+                      <li
+                        key={id}
+                        className='text-muted-foreground hover-200 text-sm underline hover:text-accent'
+                      >
+                        <Link href={`/categorias/${slug}`}>{name}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <div className='flex items-center gap-4'>
                   {/* TODO: ADD RATING */}
                   {/* <div className='flex'>
@@ -98,14 +115,33 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
                     Sin Reseñas
                   </span>
                 </div>
-                <div className='flex items-baseline gap-2'>
-                  <span className='text-2xl font-bold'>$39.00</span>
-                  <span className='text-muted-foreground text-sm line-through'>
-                    $70.00
-                  </span>
+                <div className='flex items-baseline gap-2 border-b pb-3'>
+                  {sale ? (
+                    <>
+                      <span className='text-2xl font-bold text-accent'>
+                        {eurilize(sale?.price || 0)}
+                      </span>
+                      <span className='text-muted-foreground text-sm line-through'>
+                        {eurilize(price || 0)}
+                      </span>
+                    </>
+                  ) : (
+                    <span className='text-2xl font-bold text-accent'>
+                      {eurilize(price || 0)}
+                    </span>
+                  )}
                 </div>
               </div>
-              <p className='text-muted-foreground text-sm'>{excerpt}</p>
+              {content ? (
+                <section
+                  id='content'
+                  className='prose w-full max-w-none text-pretty'
+                >
+                  <PortableText value={content} />
+                </section>
+              ) : (
+                <p className='text-xl text-gray-700'>{excerpt}</p>
+              )}
               {/* TODO: ADD OPTIONS */}
             </div>
             <div className='bg-background sticky bottom-0 flex gap-3 border-t p-3 md:p-5'>

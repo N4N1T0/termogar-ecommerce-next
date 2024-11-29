@@ -73,5 +73,11 @@
       { "name": "Política de privacidad", "slug": "politica-de-privacidad" },
       { "name": "Política de cookies", "slug": "politica-de-cookies" }
     ]
-  }
+  },
+  "orderBy": [
+    { "label": "Precio Mas Bajo", "value": "lowerPrice" },
+    { "label": "Precio Mas Alto", "value": "higherPrice" },
+    { "label": "Nuevo", "value": "new" },
+    { "label": "Antiguo", "value": "old" }
+  ]
 }

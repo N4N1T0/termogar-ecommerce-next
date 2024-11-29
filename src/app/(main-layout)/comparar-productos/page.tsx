@@ -33,7 +33,7 @@ const CompaireProductsPage = () => {
 
   if (products.length === 0) {
     return (
-      <section id='Empty-Cart' className='mt-10 w-full'>
+      <section id='Empty-Cart' className='my-10 w-full'>
         <div className='mx-auto w-full max-w-screen-xl px-2 md:px-6'>
           <BreadcrumbCom
             paths={[

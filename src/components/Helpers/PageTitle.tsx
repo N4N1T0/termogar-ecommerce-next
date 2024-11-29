@@ -1,16 +1,18 @@
-// Project Components Imports
+// * ASSETS IMPORTS
 import BreadcrumbCom from '@/components/BreadcrumbCom'
 
-// Types Imports
+// * UTILS IMPORTS
+import { cn } from '@/lib/utils'
 import { PageTitleProps } from '@/types'
 
 export default function PageTitle({
   title,
   subTitle,
-  breadcrumb = []
+  breadcrumb = [],
+  className = ''
 }: PageTitleProps) {
   return (
-    <div className='page-title-wrapper h-[173px] w-full bg-[#FFFAEF] py-10'>
+    <div className={cn('h-[173px] w-full bg-[#FFFAEF] py-10', className)}>
       <div className='container-x mx-auto'>
         <div className='mb-5'>
           <BreadcrumbCom paths={breadcrumb} />

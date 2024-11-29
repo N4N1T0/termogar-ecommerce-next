@@ -13,6 +13,7 @@ import Brand12 from './images/brand-12.png'
 import Banner1 from './images/banner-1.png'
 import Banner2 from './images/banner-2.png'
 import Banner3 from './images/banner-3.png'
+import Banner5 from './images/banner-5.png'
 
 // * PLACEHOLDERS
 import PlaceholderSquare from './images/about-banner.png'
@@ -43,6 +44,7 @@ export {
   Banner1,
   Banner2,
   Banner3,
+  Banner5,
   PlaceholderSquare,
   PlaceholderProductCard,
   PlaceholderBlogPost,

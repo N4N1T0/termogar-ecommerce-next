@@ -79,14 +79,24 @@ export default function Navbar({
 
 const MegaMenuLi = ({ menu }: { menu: GET_MENU_CATEGORIESResult[number] }) => {
   const refactorChildren = [
-    { id: 'all', name: 'Todos', link: menu.link },
+    {
+      id: 'all',
+      name: 'Todos',
+      slug: menu.slug
+    },
     ...menu.children
   ]
 
   return (
     <li>
       <span className='font-600 flex cursor-pointer items-center text-sm text-white'>
-        <span>{menu.name}</span>
+        {menu.children?.length === 0 || !menu.children ? (
+          <Link href={`/categorias/${menu.slug}`}>
+            <span>{menu.name}</span>
+          </Link>
+        ) : (
+          <span>{menu.name}</span>
+        )}
         {menu.children?.length > 0 && (
           <span className='ml-1.5'>
             <ChevronDownIcon className='fill-current' />
@@ -113,7 +123,7 @@ const MegaMenuLi = ({ menu }: { menu: GET_MENU_CATEGORIESResult[number] }) => {
                   <ul className='flex flex-col space-y-2'>
                     {refactorChildren.map((child) => (
                       <li key={child.id}>
-                        <Link href={child.link?.current || '/'}>
+                        <Link href={`/categorias/${child.slug}`}>
                           <span className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'>
                             {child.name}
                           </span>

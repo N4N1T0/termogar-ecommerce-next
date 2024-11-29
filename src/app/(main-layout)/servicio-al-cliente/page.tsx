@@ -62,11 +62,12 @@ const CostumerServicePageIndex = async () => {
           }
         ]}
         title='Servicio de Atención al Cliente'
+        className='mt-5'
       />
       {content ? (
         <section
           id='content'
-          className='prose mx-auto ml-5 mt-10 w-full max-w-none text-pretty px-5'
+          className='prose mx-auto mt-10 w-full max-w-none text-pretty bg-white py-10 pl-10 pr-5'
         >
           <PortableText value={content} components={portableTextComponents} />
         </section>

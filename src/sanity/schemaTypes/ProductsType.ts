@@ -16,6 +16,20 @@ export const productType = defineType({
       description: 'El título del producto.'
     }),
     defineField({
+      name: 'status',
+      type: 'string',
+      title: 'Estado',
+      description: 'El estado del producto.',
+      options: {
+        list: [
+          { title: 'Publicado', value: 'publish' },
+          { title: 'Borrador', value: 'draft' },
+          { title: 'Pendiente', value: 'pending' },
+          { title: 'Privado', value: 'private' }
+        ]
+      }
+    }),
+    defineField({
       name: 'slug',
       type: 'slug',
       title: 'Slug',
@@ -134,20 +148,6 @@ export const productType = defineType({
       description: 'La fecha de modificación del producto.'
     }),
     defineField({
-      name: 'status',
-      type: 'string',
-      title: 'Estado',
-      description: 'El estado del producto.',
-      options: {
-        list: [
-          { title: 'Publicado', value: 'publish' },
-          { title: 'Borrador', value: 'draft' },
-          { title: 'Pendiente', value: 'pending' },
-          { title: 'Privado', value: 'private' }
-        ]
-      }
-    }),
-    defineField({
       name: 'content',
       type: 'array',
       title: 'Contenido',
@@ -224,7 +224,7 @@ export const productType = defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'slug.current',
+      subtitle: 'status',
       media: 'featuredMedia'
     }
   }

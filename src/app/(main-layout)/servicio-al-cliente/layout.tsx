@@ -1,17 +1,13 @@
-// * ASSETS IMPORTS
-import CostumerServiceSidebar from '@/components/CostumerService/sidebar'
-
 const ServiceClientLayout = async ({
   children,
-  params
+  sidebar
 }: {
   children: React.ReactNode
-  params: Promise<{ [key: string]: string | string[] | undefined }>
+  sidebar: React.ReactNode
 }) => {
-  const { slug } = await params
   return (
     <main className='relative flex w-full'>
-      <CostumerServiceSidebar slug={slug} />
+      {sidebar}
       {children}
     </main>
   )

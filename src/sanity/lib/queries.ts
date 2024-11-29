@@ -47,12 +47,12 @@ export const GET_MENU_CATEGORIES =
   "id": _id,
   name, 
   description, 
-  link, 
+  "slug": slug.current, 
   "children": *[_type=='productCategory' && references(^._id)]
    {
       "id": _id,
     name, 
-    link
+    "slug": slug.current, 
    },
   "featuredImage": *[_type=='product' && references(^._id)][0]{
     "url":featuredMedia.asset->url,
@@ -286,6 +286,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
   content,
   price,
   sale,
+  createdAt,
   dimensions,
   "stockQuantity": stock_quantity,
   options,
@@ -300,6 +301,127 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
   "blur": metadata.lqip
 }
 }`)
+
+export const GET_BRANDS_AND_PRODUCTS =
+  defineQuery(`*[_type=='brand' && link.current == $slug][0]{
+  title, 
+  "banner": *[_type =='homePage'][0]{
+      "url": productListBanner.banner.asset->url,
+      "blur": productListBanner.banner.asset->metadata.lqip,
+      "link": productListBanner.link
+  },
+  "products": *[_type=='product' && status=='publish' && defined(price) && title match ^.title]{
+  "id": _id,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+  content,
+  price,
+  sale,
+  createdAt,
+  dimensions,
+  "stockQuantity": stock_quantity,
+  options,
+  date,
+  "tags": productTags[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+}
+}
+  }`)
+
+export const GET_PRODUCTS_AND_BRAND_FOR_FILTERING =
+  defineQuery(`*[_type=='brand' && link.current == $slug][0] {
+  "products": *[_type=='product' && status=='publish' && defined(price) && title match ^.title]{
+     "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current,
+  },
+    price
+  }
+  }`)
+
+export const GET_CATEGORY_AND_PRODUCTS =
+  defineQuery(`*[_type=='productCategory' && slug.current == $slug][0]{
+  name, 
+  description,
+  "banner": *[_type =='homePage'][0]{
+      "url": productListBanner.banner.asset->url,
+      "blur": productListBanner.banner.asset->metadata.lqip,
+      "link": productListBanner.link
+  },
+  "children": *[_type=='productCategory' && references(^._id)]
+   {
+    "id": _id,
+    name, 
+    link
+   },
+  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{
+  "id": _id,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+  content,
+  price,
+  sale,
+  createdAt,
+  dimensions,
+  "stockQuantity": stock_quantity,
+  options,
+  date,
+  "tags": productTags[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+}
+}
+  }`)
+
+export const GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING =
+  defineQuery(`*[_type=='productCategory' && slug.current == $slug][0] {
+  "children": *[_type=='productCategory' && references(^._id)]
+   {
+      "id": _id,
+    name, 
+    "slug": slug.current, 
+   },
+  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{
+     "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current,
+  },
+    price
+  }
+  }`)
 
 export const GET_COUPONS_FOR_VALIDATION =
   defineQuery(`*[_type=='coupon' && code == $code][0] {

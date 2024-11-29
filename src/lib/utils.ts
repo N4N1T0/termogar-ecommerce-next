@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ProductCardType } from '@/types'
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import crypto from 'crypto'
 import { randomBytes, pbkdf2Sync } from 'crypto'
+import { GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult } from '@/types/sanity'
 
 const SALT_LENGTH = 16 // Length of the salt
 const ITERATIONS = 100000 // Number of PBKDF2 iterations
@@ -233,3 +235,207 @@ export function getStatusColor(status: string): string {
       return '#6B7280' // Gray (for default/fallback)
   }
 }
+
+/**
+ * Converts a URL-friendly string back to its original format.
+ *
+ * @param {string} url - The URL-friendly string to be converted.
+ * @return {string} The converted string with spaces and proper capitalization.
+ */
+export function desurlizeForBreadcrumbs(url: string): string {
+  return decodeURIComponent(url)
+    .replace(/-/g, ' ') // Reemplaza guiones por espacios
+    .normalize('NFC')
+    .split(' ')
+    .map((word) => {
+      if (word.toLowerCase() === 'ml') {
+        return word.toLowerCase() // Mantén "ml" en minúsculas
+      }
+      // Capitaliza la primera letra de las demás palabras
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    })
+    .join(' ')
+}
+
+/**
+ * Sorts an array of products based on the specified order criteria.
+ *
+ * @param products - An array of product objects to be sorted.
+ * @param orderBy - A string or array indicating the sorting criteria.
+ *                  Accepted values are:
+ *                  - 'lowerPrice': Sorts products by price in ascending order.
+ *                  - 'higherPrice': Sorts products by price in descending order.
+ *                  - 'new': Sorts products by creation date, newest first.
+ *                  - 'old': Sorts products by creation date, oldest first.
+ *                  If `orderBy` is not provided or is an array, the products are returned as is.
+ *
+ * @returns A new array of products sorted according to the specified criteria.
+ */
+export const filteredProductsByOrder = (
+  products: any,
+  orderBy: string | string[] | undefined
+): any[] => {
+  if (!orderBy || Array.isArray(orderBy)) return products
+  switch (orderBy) {
+    case 'lowerPrice':
+      return [...products].sort((a, b) => {
+        const priceA = a.sale?.price ?? a.price ?? 0 // Use 0 as default if undefined or null
+        const priceB = b.sale?.price ?? b.price ?? 0 // Use 0 as default if undefined or null
+        return priceA - priceB
+      })
+
+    case 'higherPrice':
+      return [...products].sort((a, b) => {
+        const priceA = a.sale?.price ?? a.price ?? 0 // Use 0 as default if undefined or null
+        const priceB = b.sale?.price ?? b.price ?? 0 // Use 0 as default if undefined or null
+        return priceB - priceA // Reverse the sorting to get higher prices first
+      })
+
+    case 'new':
+      return [...products].sort((a, b) => {
+        const dateA = new Date(a.createdAt).getTime() // Ensure createdAt exists and parse date
+        const dateB = new Date(b.createdAt).getTime() // Ensure createdAt exists and parse date
+        return dateB - dateA // Sort by latest creation date
+      })
+
+    case 'old':
+      return [...products].sort((a, b) => {
+        const dateA = new Date(a.createdAt).getTime() // Ensure createdAt exists and parse date
+        const dateB = new Date(b.createdAt).getTime() // Ensure createdAt exists and parse date
+        return dateA - dateB // Sort by oldest creation date
+      })
+
+    default:
+      return products // If no valid orderBy, return products as they are
+  }
+}
+
+/**
+ * Calculates the minimum and maximum price from a dataset of products.
+ *
+ * @param data - An array of product and category data conforming to the
+ *               GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult interface.
+ *               Each entry contains a list of products with their respective prices.
+ *
+ * @returns An object with the minimum and maximum prices of the products
+ *          within the category. If no data is provided, returns an object
+ *          with minPrice and maxPrice set to 0.
+ */
+export const getPriceRange = (data: Product[] | undefined) => {
+  if (!data || data.length === 0) return { minPrice: 0, maxPrice: 0 }
+
+  let minPrice = Infinity
+  let maxPrice = -Infinity
+
+  data.forEach((product) => {
+    if (product.price !== null && product.price !== undefined) {
+      minPrice = Math.min(minPrice, product.price)
+      maxPrice = Math.max(maxPrice, product.price)
+    }
+  })
+
+  return { minPrice: minPrice - 10, maxPrice: maxPrice + 10 }
+}
+
+/**
+ * Filters the children categories from the given data based on which categories
+ * the products from the given data belong to.
+ *
+ * @param data - An array of product and category data conforming to the
+ *               GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult interface.
+ *               Each entry contains a list of products with their respective categories.
+ *
+ * @returns An array of category objects that match the categories the products
+ *          belong to. Returns an empty array if the input data is empty or undefined.
+ */
+export const matchCategories = (
+  data: GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
+) => {
+  if (!data) return []
+
+  const matchedCategories: {
+    id: string
+    name: string | null
+    slug: string | null
+  }[] = []
+
+  const productCategoryIds = new Set(
+    data.products.flatMap((product) =>
+      product?.categories?.map((cat) => cat.id)
+    )
+  )
+
+  const filteredChildren = data.children.filter((child) =>
+    productCategoryIds.has(child.id)
+  )
+
+  matchedCategories.push(...filteredChildren)
+
+  return matchedCategories
+}
+
+export const filterProductsByFilter = (
+  products: any[],
+  min?: string | string[],
+  max?: string | string[],
+  subcat?: string | string[]
+): any[] => {
+  // Convert min and max to numbers (if possible)
+  const minValue = Array.isArray(min) ? Number(min[0]) : Number(min)
+  const maxValue = Array.isArray(max) ? Number(max[0]) : Number(max)
+
+  // Extract subcat as a single string if it's an array
+  const subcatSlug = Array.isArray(subcat) ? subcat[0] : subcat
+
+  return products.filter((product) => {
+    const productPrice = product.sale?.price ?? product.price // Use sale price if available, otherwise regular price
+
+    // Filter by price range
+    const isWithinPriceRange =
+      (isNaN(minValue) ||
+        (productPrice !== null && productPrice >= minValue)) &&
+      (isNaN(maxValue) || (productPrice !== null && productPrice <= maxValue))
+
+    // Filter by subcategory
+    const isInSubcategory =
+      !subcatSlug ||
+      (product.categories?.some(
+        (category: { slug: string }) => category.slug === subcatSlug
+      ) ??
+        false)
+
+    return isWithinPriceRange && isInSubcategory
+  })
+}
+
+export const getUniqueCategories = (data: Data): Category[] => {
+  const categoryMap = new Map<string, Category>()
+
+  data?.products.forEach((product) => {
+    product?.categories?.forEach((category) => {
+      // Use the category `id` as a unique key
+      if (!categoryMap.has(category.id)) {
+        categoryMap.set(category.id, category)
+      }
+    })
+  })
+
+  // Convert the Map values back to an array
+  return Array.from(categoryMap.values())
+}
+
+// * TYPES HELPERS
+type Category = {
+  id: string
+  name: string | null
+  slug: string | null
+}
+
+type Product = {
+  categories: Category[] | null
+  price: number | null
+}
+
+type Data = {
+  products: Product[]
+} | null
