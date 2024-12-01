@@ -20,6 +20,7 @@ import PlaceholderSquare from './images/about-banner.png'
 import PlaceholderProductCard from './images/banner-4.1.png'
 import PlaceholderBlogPost from './images/banner-1.png'
 import PlaceholderHorizontal from './images/ads-1.png'
+import PlaceholderUser from './images/wp-avatar-442.jpg'
 
 // * BACKGROUNDS
 import NewsletterBG from './images/new-letter.jpg'
@@ -27,6 +28,9 @@ import NewsletterBG from './images/new-letter.jpg'
 // * LOGOS
 import bigLogo from './logos/termogar_logo1-02.png'
 import smallLogo from './logos/termogar_imagotipo-03.png'
+
+// * IMAGES
+import AtencionAlCliente from './images/servicio-atencion-al-cliente-termogar.webp'
 
 export {
   Brand1,
@@ -51,5 +55,7 @@ export {
   PlaceholderHorizontal,
   NewsletterBG,
   bigLogo,
-  smallLogo
+  smallLogo,
+  AtencionAlCliente,
+  PlaceholderUser
 }
