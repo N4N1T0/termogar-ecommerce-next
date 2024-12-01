@@ -22,7 +22,7 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
         <div className='flex items-center space-x-6'>
           <div className='flex h-[80px] w-[80px] items-center justify-center overflow-hidden border border-[#EDEDED]'>
             <Image
-              src={featuredMedia.url || PlaceholderSquare}
+              src={featuredMedia?.url || PlaceholderSquare}
               alt={title || 'Sin Nombre'}
               title={title || 'Sin Nombre'}
               width={100}

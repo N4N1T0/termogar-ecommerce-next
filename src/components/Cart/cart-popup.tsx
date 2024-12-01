@@ -44,7 +44,7 @@ export default function CartPopup({ className }: { className?: string }) {
                   <div className='my-[20px] flex items-center justify-center space-x-[6px] px-4'>
                     <div className='h-full w-[65px]'>
                       <Image
-                        src={featuredMedia.url || PlaceholderSquare}
+                        src={featuredMedia?.url || PlaceholderSquare}
                         width={65}
                         height={65}
                         alt={title || 'Sin Nombre'}

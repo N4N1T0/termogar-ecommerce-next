@@ -31,11 +31,13 @@ export default function ProductCardStyleOne<T>({
     >
       <div className='h-[300px] w-full p-5'>
         <Image
-          src={featuredMedia.url || PlaceholderProductCard}
+          src={featuredMedia?.url || PlaceholderProductCard}
           alt={title || ''}
           priority={priority}
           placeholder='blur'
-          blurDataURL={featuredMedia.blur || PlaceholderProductCard.blurDataURL}
+          blurDataURL={
+            featuredMedia?.blur || PlaceholderProductCard.blurDataURL
+          }
           className='h-full w-full object-cover'
           width={500}
           height={500}
@@ -81,7 +83,7 @@ export default function ProductCardStyleOne<T>({
         <div className='absolute left-0 top-36 h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px]'>
           <AddToCart product={datas as ProductCardType} />
         </div>
-        <Link href={`/productos/${slug}`}>
+        <Link href={`/producto/${slug}`}>
           <p className='title font-600 mb-1 line-clamp-2 text-[15px] leading-[24px] text-gray-900 transition-colors duration-150 ease-in-out hover:text-secondary'>
             {title}
           </p>

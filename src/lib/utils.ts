@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ProductCardType } from '@/types'
+import { ProductCardType, YoptopReviews } from '@/types'
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import crypto from 'crypto'
 import { randomBytes, pbkdf2Sync } from 'crypto'
 import { GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult } from '@/types/sanity'
+import { toast } from 'sonner'
 
 const SALT_LENGTH = 16 // Length of the salt
 const ITERATIONS = 100000 // Number of PBKDF2 iterations
@@ -83,10 +84,12 @@ export const isAddressEmpty = (billing: Record<string, string>): boolean => {
 export const handleCompareTableCharacteristics = (
   product: ProductCardType,
   key: string
-) => {
+): string => {
   switch (key) {
     case 'tags':
-      return product.tags || 'No hay etiquetas disponibles'
+      return product.tags
+        ? product.tags.map((category) => category.name || 'N/A').join(', ')
+        : 'No hay categorías disponibles'
     case 'price':
       return product.price !== null
         ? `${eurilize(product.price)}`
@@ -97,11 +100,13 @@ export const handleCompareTableCharacteristics = (
         : 'No hay opciones disponibles'
     case 'categories':
       return product.categories
-        ? product.categories.map((category) => category.name).join(', ')
+        ? product.categories
+            .map((category) => category.name || 'N/A')
+            .join(', ')
         : 'No hay categorías disponibles'
     case 'stock_quantity':
       return product.stockQuantity !== null
-        ? product.stockQuantity
+        ? `${product.stockQuantity}`
         : 'Cantidad en stock no disponible'
     case 'excerpt':
       return product.excerpt || 'Descripción no disponible'
@@ -112,7 +117,7 @@ export const handleCompareTableCharacteristics = (
     case 'date':
       return product.date || 'Fecha no disponible'
     case 'id':
-      return product.id
+      return product.id || 'ID no disponible'
     case 'sale':
       return product.sale
         ? `Precio de oferta: ${eurilize(product.sale.price || 0) || 'N/A'}, Desde: ${new Date(product.sale.from || new Date()).toLocaleDateString('es-ES') || 'N/A'}, Hasta: ${new Date(product.sale.to || new Date()).toLocaleDateString('es-ES') || 'N/A'}`
@@ -422,6 +427,54 @@ export const getUniqueCategories = (data: Data): Category[] => {
 
   // Convert the Map values back to an array
   return Array.from(categoryMap.values())
+}
+
+export const shareLink = (
+  platform: 'facebook' | 'whatsapp' | 'twitter' | 'copy',
+  url: string,
+  text = '',
+  hashtags = ''
+) => {
+  const encodedUrl = encodeURIComponent(url)
+  const encodedText = encodeURIComponent(text)
+  const encodedHashtags = encodeURIComponent(hashtags)
+
+  let intentUrl = ''
+
+  switch (platform) {
+    case 'facebook':
+      intentUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`
+      break
+    case 'whatsapp':
+      intentUrl = `https://wa.me/?text=${encodedText}%20${encodedUrl}`
+      break
+    case 'twitter':
+      intentUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}&hashtags=${encodedHashtags}`
+      break
+    case 'copy':
+      navigator.clipboard
+        .writeText(url)
+        .then(() => toast.success('Link copied to clipboard!'))
+        .catch(() => toast.error('Failed to copy link.'))
+      return // Exit here, no need to open a URL
+    default:
+      toast.error('Unsupported platform.')
+      return
+  }
+
+  // Open the intent URL in a new tab
+  window.open(intentUrl, '_blank')
+}
+
+export const calculateAverageRating = (data: YoptopReviews | undefined) => {
+  if (!data || !data || data.length === 0) {
+    return 0 // Return 0 if no reviews are present
+  }
+
+  const totalScore = data.reduce((sum, review) => sum + review.score, 0)
+  const averageRating = totalScore / data.length
+
+  return Math.abs(averageRating) // Round to 2 decimal places
 }
 
 // * TYPES HELPERS

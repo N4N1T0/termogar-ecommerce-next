@@ -48,11 +48,11 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
         </DialogHeader>
         <div className='grid h-full gap-4 p-0 md:grid-cols-2'>
           <div className='flex h-full max-h-[80vh] gap-4 overflow-hidden'>
-            {otherImages.length > 1 && (
+            {otherImages && otherImages.length > 1 && (
               <div className='flex flex-col gap-4 overflow-y-auto px-2 py-4'>
-                {otherImages.map(({ url }, index) => (
+                {otherImages.map((image, index) => (
                   <button
-                    key={url}
+                    key={image?.url}
                     onClick={() => setSelectedImage(index)}
                     className={cn(
                       'h-20 w-16 overflow-hidden border',
@@ -60,7 +60,7 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
                     )}
                   >
                     <Image
-                      src={url || PlaceholderProductCard}
+                      src={image?.url || PlaceholderProductCard}
                       alt={`Product ${index + 1}`}
                       className='h-full w-full object-cover'
                       width={100}
@@ -72,7 +72,7 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
             )}
             <div className='aspect-[3/4] h-full flex-1 overflow-hidden p-4'>
               <Image
-                src={featuredMedia.url || PlaceholderProductCard}
+                src={featuredMedia?.url || PlaceholderProductCard}
                 alt={title || 'Product'}
                 title={title || 'Product'}
                 className='h-full w-full object-cover'

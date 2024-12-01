@@ -29,13 +29,13 @@ const ProductCardRowStyleOne = ({
       <div className='flex h-full w-full items-center space-x-5 p-2 sm:p-5 lg:p-[30px]'>
         <div className='h-full w-1/3 lg:w-1/2'>
           <Image
-            src={featuredMedia.url || PlaceholderSquare}
+            src={featuredMedia?.url || PlaceholderSquare}
             alt={title || 'Sin Nombres'}
             title={title || 'Sin Nombres'}
             width={200}
             height={200}
             placeholder='blur'
-            blurDataURL={featuredMedia.blur || PlaceholderSquare.blurDataURL}
+            blurDataURL={featuredMedia?.blur || PlaceholderSquare.blurDataURL}
             className='h-full w-full object-contain'
           />
         </div>

@@ -5,7 +5,7 @@ import { NewsletterBG } from '@/assets'
 import { toast } from 'sonner'
 
 // * UTILS IMPORTS
-import { subscribeToNewsletter } from '@/actions/newsletter-subscriber'
+import subscribeToNewsletter from '@/actions/newsletter-subscriber'
 import Form from 'next/form'
 
 const NewsletterBanner = () => {
