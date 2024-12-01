@@ -21,7 +21,8 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)'
       },
       aria: {
-        'aria-disabled': 'disabled=true'
+        'aria-disabled': 'disabled=true',
+        'aria-checked': 'checked=true'
       },
       keyframes: {
         'accordion-down': {

@@ -90,7 +90,7 @@ export interface ProductCardType {
   featuredMedia: {
     url: string | null
     blur: string | null
-  }
+  } | null
   title: string | null
   slug: string | null
   excerpt: string | null
@@ -113,17 +113,14 @@ export interface ProductCardType {
     height?: number
     weight?: number
     alt?: Content | null
-  }
+  } | null
   options: {
     name?: string
     values?: string[]
   } | null
   date: string | null
-  tags: null
-  otherImages: {
-    url: string | null
-    blur: string | null
-  }[]
+  tags: { id: string; name: string | null; slug: string | null }[] | null
+  otherImages: ({ url: string | null; blur: string | null } | null)[] | null
 }
 
 export interface CartItemType extends ProductCardType {
@@ -299,7 +296,7 @@ export interface YoptopReview {
   content: string
   title: string
   sentiment: null
-  created_at: Date
+  created_at: string
   deleted: boolean
   verified_buyer: boolean
   source_review_id: null

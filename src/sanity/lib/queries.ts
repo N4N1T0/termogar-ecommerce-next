@@ -423,6 +423,44 @@ export const GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING =
   }
   }`)
 
+export const GET_WHOLE_PRODUCT_BY_SLUG =
+  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && slug.current == $slug][0]{
+  "id": _id,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+  content,
+  price,
+  sale,
+  createdAt,
+  dimensions,
+  "stockQuantity": stock_quantity,
+  options,
+  date,
+  "tags": productTag[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+},
+"downloads": downloads.asset->{
+    title,
+    url
+  }
+}`)
+
 export const GET_COUPONS_FOR_VALIDATION =
   defineQuery(`*[_type=='coupon' && code == $code][0] {
    amount,
@@ -516,5 +554,10 @@ export const GET_STATIC_CATEGORIES_SLUGS =
 
 export const GET_STATIC_COSTUMER_SERVICES_PAGES_SUG =
   defineQuery(`*[_type =='page' && status == 'publish']{
+  "slug": slug.current,
+}`)
+
+export const GET_STATIC_PRODUCTS_SLUG =
+  defineQuery(`*[_type=='product' && status=='publish' && defined(price)]{
   "slug": slug.current,
 }`)

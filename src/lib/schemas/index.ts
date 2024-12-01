@@ -80,7 +80,45 @@ export const signupSchema = z
     }
   })
 
+export const reportProductSchema = z.object({
+  productName: z
+    .string()
+    .min(2, { message: 'el Id del producto es obligatorio' }),
+  reason: z.enum(['inapropiado', 'falso', 'ofensivo', 'otro']),
+  description: z.string().min(2, { message: 'la descripción es obligatoria' })
+})
+
+export const reviewSchema = z.object({
+  product_id: z.string().min(1, 'El ID del producto es requerido'),
+  product_title: z
+    .string()
+    .min(1, 'El título de la review es requerido')
+    .max(150, 'El título de la review debe tener 150 caracteres o menos'),
+  product_url: z
+    .string()
+    .min(1, 'La URL del producto es requerida')
+    .max(150, 'La URL del producto debe tener 150 caracteres o menos'),
+  review_title: z
+    .string()
+    .min(1, 'El título de la review es requerido')
+    .max(150, 'El título de la review debe tener 150 caracteres o menos'),
+  review_content: z.string().min(1, 'El contenido de la review es requerido'),
+  review_score: z.number().int().min(1).max(5),
+  display_name: z.string().min(1, 'El nombre de visualización es requerido'),
+  email: z.string().email('Correo electrónico no válido'),
+  custom_fields: z.record(z.string()).optional(),
+  metadata: z.record(z.string()).optional()
+})
+
+export const rateReviewSchema = z.object({
+  reviewId: z.string().min(1),
+  voteType: z.union([z.literal('up'), z.literal('down')])
+})
+
 // * TYPES
+export type RateReviewSchema = z.infer<typeof rateReviewSchema>
+export type ReviewSchema = z.infer<typeof reviewSchema>
+export type ReportProductSchema = z.infer<typeof reportProductSchema>
 export type LoginSchema = z.infer<typeof loginSchema>
 export type AddressSchema = z.infer<typeof addressSchema>
 export type CostumerSchema = z.infer<typeof costumerSchema>

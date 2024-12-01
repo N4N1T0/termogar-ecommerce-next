@@ -1795,6 +1795,141 @@ export type GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult = {
     price: number | null
   }>
 } | null
+// Variable: GET_WHOLE_PRODUCT_BY_SLUG
+// Query: *[_type=='product' && status=='publish' && defined(price) && slug.current == $slug][0]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  createdAt,  dimensions,  "stockQuantity": stock_quantity,  options,  date,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip},"downloads": downloads.asset->{    title,    url  }}
+export type GET_WHOLE_PRODUCT_BY_SLUGResult = {
+  id: string
+  featuredMedia: {
+    url: string | null
+    blur: string | null
+  }
+  title: string | null
+  slug: string | null
+  excerpt: string | null
+  categories: Array<{
+    id: string
+    name: string | null
+    slug: string | null
+  }> | null
+  content: Array<
+    | ({
+        _key: string
+      } & ExternalImage)
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?:
+          | 'blockquote'
+          | 'h1'
+          | 'h2'
+          | 'h3'
+          | 'h4'
+          | 'h5'
+          | 'h6'
+          | 'normal'
+        listItem?: 'bullet' | 'number'
+        markDefs?: Array<{
+          href?: string
+          _type: 'link'
+          _key: string
+        }>
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+        _key: string
+      }
+  > | null
+  price: number | null
+  sale: {
+    price?: number
+    from?: string
+    to?: string
+  } | null
+  createdAt: null
+  dimensions: {
+    length?: number
+    width?: number
+    height?: number
+    weight?: number
+    alt?: Array<
+      | ({
+          _key: string
+        } & ExternalImage)
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?:
+            | 'blockquote'
+            | 'h1'
+            | 'h2'
+            | 'h3'
+            | 'h4'
+            | 'h5'
+            | 'h6'
+            | 'normal'
+          listItem?: 'bullet' | 'number'
+          markDefs?: Array<{
+            href?: string
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+          _key: string
+        }
+    >
+  } | null
+  stockQuantity: null
+  options: {
+    name?: string
+    values?: Array<string>
+  } | null
+  date: string | null
+  tags: Array<{
+    id: string
+    name: string | null
+    slug: string | null
+  }> | null
+  otherImages: Array<{
+    url: string | null
+    blur: string | null
+  } | null> | null
+  downloads: {
+    title: string | null
+    url: string | null
+  } | null
+} | null
 // Variable: GET_COUPONS_FOR_VALIDATION
 // Query: *[_type=='coupon' && code == $code][0] {   amount,    date_expires,    discount_type,    limit_usage_to_x_items,    maximum_amount,    minimum_amount,    "product_categories": product_categories[]->{     "id": _id    },    "product_ids": product_ids[]->{     "id": _id     },    usage_limit,    usage_count,    usage_limit_per_user}
 export type GET_COUPONS_FOR_VALIDATIONResult = {
@@ -1917,6 +2052,11 @@ export type GET_STATIC_CATEGORIES_SLUGSResult = Array<{
 export type GET_STATIC_COSTUMER_SERVICES_PAGES_SUGResult = Array<{
   slug: string | null
 }>
+// Variable: GET_STATIC_PRODUCTS_SLUG
+// Query: *[_type=='product' && status=='publish' && defined(price)]{  "slug": slug.current,}
+export type GET_STATIC_PRODUCTS_SLUGResult = Array<{
+  slug: string | null
+}>
 
 // Query TypeMap
 import '@sanity/client'
@@ -1940,6 +2080,7 @@ declare module '@sanity/client' {
     '*[_type==\'brand\' && link.current == $slug][0] {\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && title match ^.title]{\n     "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current,\n  },\n    price\n  }\n  }': GET_PRODUCTS_AND_BRAND_FOR_FILTERINGResult
     '*[_type==\'productCategory\' && slug.current == $slug][0]{\n  name, \n  description,\n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n    "id": _id,\n    name, \n    link\n   },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  createdAt,\n  dimensions,\n  "stockQuantity": stock_quantity,\n  options,\n  date,\n  "tags": productTags[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}\n  }': GET_CATEGORY_AND_PRODUCTSResult
     '*[_type==\'productCategory\' && slug.current == $slug][0] {\n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n      "id": _id,\n    name, \n    "slug": slug.current, \n   },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n     "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current,\n  },\n    price\n  }\n  }': GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
+    '*[_type==\'product\' && status==\'publish\' && defined(price) && slug.current == $slug][0]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  createdAt,\n  dimensions,\n  "stockQuantity": stock_quantity,\n  options,\n  date,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n},\n"downloads": downloads.asset->{\n    title,\n    url\n  }\n}': GET_WHOLE_PRODUCT_BY_SLUGResult
     '*[_type==\'coupon\' && code == $code][0] {\n   amount,\n    date_expires,\n    discount_type,\n    limit_usage_to_x_items,\n    maximum_amount,\n    minimum_amount,\n    "product_categories": product_categories[]->{\n     "id": _id\n    },\n    "product_ids": product_ids[]->{\n     "id": _id  \n   },\n    usage_limit,\n    usage_count,\n    usage_limit_per_user\n}': GET_COUPONS_FOR_VALIDATIONResult
     '*[_type ==\'costumer\' && _id == $id][0]{\n  "id": _id,\n  "active": isPayingCustomer,\n  userName,\n  lastName,\n  firstName,\n  password,\n    email,\n  "avatar": avatarUrl.asset->{\n    "url": url,\n    "blur": metadata.lqip\n  },\n "billingAddress": billingAddress[0],\n  shippingAddresses\n}': GET_USER_INFOResult
     '*[_type ==\'costumer\' && email == $email][0]{\n  "id": _id,\n   userName,\n  lastName,\n  firstName,\n  password,\n    email,\n   "avatar": avatarUrl.asset->{\n    "url": url,\n  },\n}': GET_USER_FOR_AUTHResult
@@ -1948,5 +2089,6 @@ declare module '@sanity/client' {
     '*[_type ==\'tag\'] | order(date desc) {\n  "slug": slug.current\n  }': GET_STATIC_TAGS_SLUGSResult
     '*[_type ==\'category\'] | order(date desc) {\n  "slug": slug.current\n  }': GET_STATIC_CATEGORIES_SLUGSResult
     "*[_type =='page' && status == 'publish']{\n  \"slug\": slug.current,\n}": GET_STATIC_COSTUMER_SERVICES_PAGES_SUGResult
+    "*[_type=='product' && status=='publish' && defined(price)]{\n  \"slug\": slug.current,\n}": GET_STATIC_PRODUCTS_SLUGResult
   }
 }

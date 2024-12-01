@@ -35,13 +35,13 @@ export default function Error({
           <div className='flex gap-10'>
             <Link
               href='/'
-              className='hover-200 w-fit self-center bg-accent px-4 py-2 text-gray-900 hover:text-gray-50'
+              className='hover-200 w-fit self-center bg-accent px-4 py-2 text-gray-50 hover:text-gray-900'
             >
               Volver a la Tienda
             </Link>
             <button
               type='reset'
-              className='hover-200 w-fit self-center bg-accent px-4 py-2 text-gray-900 hover:text-gray-50'
+              className='hover-200 w-fit self-center bg-accent px-4 py-2 text-gray-50 hover:text-gray-900'
               onClick={() => reset()}
             >
               Intenta de nuevo
