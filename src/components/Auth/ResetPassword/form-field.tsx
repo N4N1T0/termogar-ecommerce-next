@@ -104,7 +104,7 @@ const FormFieldComponent = <T extends FieldValues>({
                     />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className='rounded-none border border-gray-200'>
+                <SelectContent className='rounded-none border border-gray-200 bg-white'>
                   {options.map((option) => (
                     <SelectItem
                       key={option}
@@ -152,8 +152,10 @@ const FormFieldComponent = <T extends FieldValues>({
             ) : type === 'textarea' ? (
               <Textarea
                 placeholder={placeholder}
-                className='resize-none'
+                className='resize-none rounded-none border-gray-200'
                 disabled={isSubmitting}
+                cols={30}
+                rows={4}
                 {...field}
               />
             ) : type === 'password' ? (
