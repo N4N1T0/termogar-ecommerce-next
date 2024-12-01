@@ -6,9 +6,9 @@ import { sanityClientWrite } from '@/sanity/lib/client'
 import { Costumer } from '@/types/sanity'
 import { AuthError } from 'next-auth'
 
-export default async function resetPassword(
+const resetPassword = async (
   values: PasswordSchema & { id: string | undefined }
-) {
+) => {
   const password = values.password
   const confirmPassword = values.confirmPassword
   const id = values.id
@@ -59,3 +59,5 @@ export default async function resetPassword(
     }
   }
 }
+
+export default resetPassword

@@ -7,7 +7,7 @@ import { SubscriberNewsletter } from '@/types/sanity'
 import { uuid } from '@sanity/uuid'
 import { AuthError } from 'next-auth'
 
-export async function subscribeToNewsletter({ email }: { email: string }) {
+const subscribeToNewsletter = async ({ email }: { email: string }) => {
   const validatedData = subscribeSchema.safeParse({ email })
 
   try {
@@ -59,3 +59,5 @@ export async function subscribeToNewsletter({ email }: { email: string }) {
     }
   }
 }
+
+export default subscribeToNewsletter

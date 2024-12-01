@@ -15,14 +15,14 @@ export async function wpDocumentsFetch(
     return null
   }
 
-  let metadata: UploadClientConfig = {
+  const metadata: UploadClientConfig = {
     filename: url.split('/').pop(),
     source: {
       id: String(id),
       name: 'WordPress',
       url: url
     },
-    // @ts-expect-error
+    // @ts-expect-error ignore
     altText: url.split('/').pop()?.split('.').shift(),
     title: url.split('/').pop()?.split('.').shift()
   }
@@ -70,7 +70,7 @@ export async function sanityUploadDocumentsFromUrl(
   }
   let data: SanityAssetDocument | null = null
   try {
-    // @ts-expect-error
+    // @ts-expect-error ignore
     data = await client.assets.upload('file', Readable.fromWeb(body), metadata)
   } catch (error) {
     console.error(`Failed to upload file from ${url}`)
