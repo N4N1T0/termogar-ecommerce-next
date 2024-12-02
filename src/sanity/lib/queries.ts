@@ -60,6 +60,13 @@ export const GET_MENU_CATEGORIES =
   }
   }`)
 
+export const GET_ALL_TAGS =
+  defineQuery(`*[_type=='productTag'] | order(name asc){
+  "id": _id,
+  name,
+"slug": slug.current
+}`)
+
 export const GET_COSTUMER_SERVICES_SIDEBAR_MENU =
   defineQuery(`*[_type =='page' && status == 'publish']{
   "id": _id,
@@ -421,6 +428,48 @@ export const GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING =
   },
     price
   }
+  }`)
+
+export const GET_TAG_AND_PRODUCTS =
+  defineQuery(`*[_type=='productTag' && slug.current == $slug][0]{
+  name, 
+  "banner": *[_type =='homePage'][0]{
+      "url": productListBanner.banner.asset->url,
+      "blur": productListBanner.banner.asset->metadata.lqip,
+      "link": productListBanner.link
+  },
+  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{
+  "id": _id,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+  content,
+  price,
+  sale,
+  createdAt,
+  dimensions,
+  "stockQuantity": stock_quantity,
+  options,
+  date,
+  "tags": productTags[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+}
+}
   }`)
 
 export const GET_WHOLE_PRODUCT_BY_SLUG =
