@@ -12,7 +12,7 @@ export default function PageTitle({
   className = ''
 }: PageTitleProps) {
   return (
-    <div className={cn('h-[173px] w-full bg-[#FFFAEF] py-10', className)}>
+    <div className={cn('h-[173px] w-full bg-accent/5 py-10', className)}>
       <div className='container-x mx-auto'>
         <div className='mb-5'>
           <BreadcrumbCom paths={breadcrumb} />

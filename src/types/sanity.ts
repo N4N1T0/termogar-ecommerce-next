@@ -955,6 +955,13 @@ export type GET_MENU_CATEGORIESResult = Array<{
     blur: string | null
   } | null
 }>
+// Variable: GET_ALL_TAGS
+// Query: *[_type=='productTag'] | order(name asc){  "id": _id,  name,"slug": slug.current}
+export type GET_ALL_TAGSResult = Array<{
+  id: string
+  name: string | null
+  slug: string | null
+}>
 // Variable: GET_COSTUMER_SERVICES_SIDEBAR_MENU
 // Query: *[_type =='page' && status == 'publish']{  "id": _id,  "slug": slug.current,  title,  "link": link.current}
 export type GET_COSTUMER_SERVICES_SIDEBAR_MENUResult = Array<{
@@ -1795,6 +1802,141 @@ export type GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult = {
     price: number | null
   }>
 } | null
+// Variable: GET_TAG_AND_PRODUCTS
+// Query: *[_type=='productTag' && slug.current == $slug][0]{  name,   "banner": *[_type =='homePage'][0]{      "url": productListBanner.banner.asset->url,      "blur": productListBanner.banner.asset->metadata.lqip,      "link": productListBanner.link  },  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  createdAt,  dimensions,  "stockQuantity": stock_quantity,  options,  date,  "tags": productTags[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}  }
+export type GET_TAG_AND_PRODUCTSResult = {
+  name: string | null
+  banner: {
+    url: string | null
+    blur: string | null
+    link: string | null
+  } | null
+  products: Array<{
+    id: string
+    featuredMedia: {
+      url: string | null
+      blur: string | null
+    }
+    title: string | null
+    slug: string | null
+    excerpt: string | null
+    categories: Array<{
+      id: string
+      name: string | null
+      slug: string | null
+    }> | null
+    content: Array<
+      | ({
+          _key: string
+        } & ExternalImage)
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?:
+            | 'blockquote'
+            | 'h1'
+            | 'h2'
+            | 'h3'
+            | 'h4'
+            | 'h5'
+            | 'h6'
+            | 'normal'
+          listItem?: 'bullet' | 'number'
+          markDefs?: Array<{
+            href?: string
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+          _key: string
+        }
+    > | null
+    price: number | null
+    sale: {
+      price?: number
+      from?: string
+      to?: string
+    } | null
+    createdAt: null
+    dimensions: {
+      length?: number
+      width?: number
+      height?: number
+      weight?: number
+      alt?: Array<
+        | ({
+            _key: string
+          } & ExternalImage)
+        | {
+            children?: Array<{
+              marks?: Array<string>
+              text?: string
+              _type: 'span'
+              _key: string
+            }>
+            style?:
+              | 'blockquote'
+              | 'h1'
+              | 'h2'
+              | 'h3'
+              | 'h4'
+              | 'h5'
+              | 'h6'
+              | 'normal'
+            listItem?: 'bullet' | 'number'
+            markDefs?: Array<{
+              href?: string
+              _type: 'link'
+              _key: string
+            }>
+            level?: number
+            _type: 'block'
+            _key: string
+          }
+        | {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            _type: 'image'
+            _key: string
+          }
+      >
+    } | null
+    stockQuantity: null
+    options: {
+      name?: string
+      values?: Array<string>
+    } | null
+    date: string | null
+    tags: null
+    otherImages: Array<{
+      url: string | null
+      blur: string | null
+    } | null> | null
+  }>
+} | null
 // Variable: GET_WHOLE_PRODUCT_BY_SLUG
 // Query: *[_type=='product' && status=='publish' && defined(price) && slug.current == $slug][0]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  createdAt,  dimensions,  "stockQuantity": stock_quantity,  options,  date,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip},"downloads": downloads.asset->{    title,    url  }}
 export type GET_WHOLE_PRODUCT_BY_SLUGResult = {
@@ -2064,6 +2206,7 @@ declare module '@sanity/client' {
   interface SanityQueries {
     '*[_type ==\'homePage\'][0]{\n mainBanner[]{\n    "url": image.asset->url,\n    "blur": image.asset->metadata.lqip,\n     "link": link.current\n  },\n  "mainCategory": mainCategory->{\n  name,\n  "slug": slug.current\n  },\n  "offer": offer{\n    date,\n    active,\n    "media": {\n      "url": banner.assets->url,\n      "blur": banner.assets->metadata.lqip\n    }\n  },\n    secondaryCategory->{\n      name,\n      "slug": slug.current\n    },\n    "ads": ads[]->{\n  "media": {\n    "url": asset->url,\n    "blur": asset->metadata.lqip\n  },\n  "link": link.current\n},\n"tertiaryCategory": tertiaryCategory->{\n  name,\n  "slug": slug.current\n  },\nyoutubeVideos[]{\n      videoId,\n      "id": _key,\n      title\n  }\n}': GET_MAIN_PAGEResult
     '*[_type==\'productCategory\' && main == true] | order(name asc){\n  "id": _id,\n  name, \n  description, \n  "slug": slug.current, \n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n      "id": _id,\n    name, \n    "slug": slug.current, \n   },\n  "featuredImage": *[_type==\'product\' && references(^._id)][0]{\n    "url":featuredMedia.asset->url,\n      "blur":featuredMedia.asset->metadata.lqip\n  }\n  }': GET_MENU_CATEGORIESResult
+    '*[_type==\'productTag\'] | order(name asc){\n  "id": _id,\n  name,\n"slug": slug.current\n}': GET_ALL_TAGSResult
     '*[_type ==\'page\' && status == \'publish\']{\n  "id": _id,\n  "slug": slug.current,\n  title,\n  "link": link.current\n}': GET_COSTUMER_SERVICES_SIDEBAR_MENUResult
     '*[_type ==\'page\' && status == \'publish\' && slug.current in $slug][0]{\n  "id": _id,\n  "slug": slug.current,\n  title,\n  "link": link.current,\n  excerpt,\n  content\n}': GET_COSTUMER_SERVICES_PAGEResult
     '*[_type ==\'post\' && status == \'publish\' && count((categories[]->name)[@ in $type]) > 0][0...12] | order(date desc) {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POSTResult
@@ -2080,6 +2223,7 @@ declare module '@sanity/client' {
     '*[_type==\'brand\' && link.current == $slug][0] {\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && title match ^.title]{\n     "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current,\n  },\n    price\n  }\n  }': GET_PRODUCTS_AND_BRAND_FOR_FILTERINGResult
     '*[_type==\'productCategory\' && slug.current == $slug][0]{\n  name, \n  description,\n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n    "id": _id,\n    name, \n    link\n   },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  createdAt,\n  dimensions,\n  "stockQuantity": stock_quantity,\n  options,\n  date,\n  "tags": productTags[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}\n  }': GET_CATEGORY_AND_PRODUCTSResult
     '*[_type==\'productCategory\' && slug.current == $slug][0] {\n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n      "id": _id,\n    name, \n    "slug": slug.current, \n   },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n     "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current,\n  },\n    price\n  }\n  }': GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
+    '*[_type==\'productTag\' && slug.current == $slug][0]{\n  name, \n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  createdAt,\n  dimensions,\n  "stockQuantity": stock_quantity,\n  options,\n  date,\n  "tags": productTags[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}\n  }': GET_TAG_AND_PRODUCTSResult
     '*[_type==\'product\' && status==\'publish\' && defined(price) && slug.current == $slug][0]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  createdAt,\n  dimensions,\n  "stockQuantity": stock_quantity,\n  options,\n  date,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n},\n"downloads": downloads.asset->{\n    title,\n    url\n  }\n}': GET_WHOLE_PRODUCT_BY_SLUGResult
     '*[_type==\'coupon\' && code == $code][0] {\n   amount,\n    date_expires,\n    discount_type,\n    limit_usage_to_x_items,\n    maximum_amount,\n    minimum_amount,\n    "product_categories": product_categories[]->{\n     "id": _id\n    },\n    "product_ids": product_ids[]->{\n     "id": _id  \n   },\n    usage_limit,\n    usage_count,\n    usage_limit_per_user\n}': GET_COUPONS_FOR_VALIDATIONResult
     '*[_type ==\'costumer\' && _id == $id][0]{\n  "id": _id,\n  "active": isPayingCustomer,\n  userName,\n  lastName,\n  firstName,\n  password,\n    email,\n  "avatar": avatarUrl.asset->{\n    "url": url,\n    "blur": metadata.lqip\n  },\n "billingAddress": billingAddress[0],\n  shippingAddresses\n}': GET_USER_INFOResult

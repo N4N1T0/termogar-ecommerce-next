@@ -110,7 +110,7 @@ export default function Reviews({
                 )
               )
           ) : (
-            <h3 className='text-center text-xl'>
+            <h3 className='w-full bg-white p-5 text-center text-xl'>
               Aun no tenemos reseñas de este Producto, Puedes colaborar con la
               tuya en el formulario a continuación
             </h3>

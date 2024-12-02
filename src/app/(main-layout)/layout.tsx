@@ -1,4 +1,4 @@
-// Project Components Imports
+// * ASSETS IMPORTS
 import Footer from '@/components/Partials/Footer'
 import Header from '@/components/Partials/Header'
 // import Drawer from '@/components/Mobile/Drawer'

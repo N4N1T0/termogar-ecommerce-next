@@ -98,14 +98,15 @@ const SingleProductTabs = ({
 
       <div className='container-x mx-auto min-h-[400px] w-full'>
         {/* Description Tab */}
-        <TabsContent
-          value='des'
-          className='tab-content-item prose w-full max-w-none text-pretty'
-        >
+        <TabsContent value='des' className='tab-content-item'>
           {product.content ? (
-            <PortableText value={product.content} />
+            <section className='prose w-full max-w-none text-pretty bg-white p-5'>
+              <PortableText value={product.content} />
+            </section>
           ) : (
-            <h3 className='text-xl'>Sin Descripcion</h3>
+            <h3 className='w-full bg-white p-5 text-center text-xl'>
+              Sin Descripcion
+            </h3>
           )}
         </TabsContent>
 
@@ -128,7 +129,7 @@ const SingleProductTabs = ({
             {product.downloads ? (
               <ModalDocumentation pdf={product.downloads} />
             ) : (
-              <h3 className='text-center text-xl'>
+              <h3 className='w-full bg-white p-5 text-center text-xl'>
                 Aun no tenemos documentación de este Producto, Pronto lo
                 actualizaremos
               </h3>
