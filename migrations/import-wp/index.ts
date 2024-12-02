@@ -47,6 +47,9 @@ export default defineMigration({
     // Create an in-memory image cache to avoid re-uploading images
     const existingImages = await sanityFetchImages(client)
     const existingDocuments = await sanityFetchDocuments(client)
+    const existingProducts: Record<string, string>[] = await client.fetch(
+      `*[_type == "product"]{_id}`
+    )
 
     const { wpType } = getDataTypes(process.argv)
     // Define pages to skip
@@ -107,7 +110,8 @@ export default defineMigration({
                   wpDoc,
                   client,
                   existingImages,
-                  existingDocuments
+                  existingDocuments,
+                  existingProducts
                 )
                 return doc
               } else if (wpType === 'coupons') {

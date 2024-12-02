@@ -31,52 +31,54 @@ export default function CartPopup({ className }: { className?: string }) {
     <>
       <div
         style={{ boxShadow: ' 0px 15px 50px 0px rgba(0, 0, 0, 0.14)' }}
-        className={cn(
-          'cart-wrappwer w-[300px] border-t-[3px] bg-white',
-          className
-        )}
+        className={cn('w-[300px] border-t-[3px] bg-white', className)}
       >
         <div className='h-full w-full'>
           <div className='product-items h-[310px] overflow-y-scroll'>
             <ul>
-              {products.map(({ id, featuredMedia, title, price, sale }) => (
-                <li className='flex h-full w-full' key={id}>
-                  <div className='my-[20px] flex items-center justify-center space-x-[6px] px-4'>
-                    <div className='h-full w-[65px]'>
-                      <Image
-                        src={featuredMedia?.url || PlaceholderSquare}
-                        width={65}
-                        height={65}
-                        alt={title || 'Sin Nombre'}
-                        title={title || 'Sin Nombre'}
-                        className='h-full w-full object-contain'
-                      />
-                    </div>
-                    <div className='flex h-full flex-1 flex-col justify-center'>
-                      <p className='title font-600 text-qblack mb-2 line-clamp-2 text-[13px] leading-4 hover:text-blue-600'>
-                        {title || 'Sin Nombre'}
-                      </p>
+              {products.map(
+                ({ id, featuredMedia, title, price, sale, slug }) => (
+                  <li className='flex h-full w-full' key={id}>
+                    <div className='my-[20px] flex items-center justify-center space-x-[6px] px-4'>
+                      <div className='h-full w-[65px]'>
+                        <Image
+                          src={featuredMedia?.url || PlaceholderSquare}
+                          width={65}
+                          height={65}
+                          alt={title || 'Sin Nombre'}
+                          title={title || 'Sin Nombre'}
+                          className='h-full w-full object-contain'
+                        />
+                      </div>
+                      <div className='flex h-full flex-1 flex-col justify-center'>
+                        <Link
+                          href={`/productos/${slug}`}
+                          className='title font-600 hover-200 mb-2 line-clamp-2 text-[13px] leading-4 text-gray-900 hover:text-accent'
+                        >
+                          {title || 'Sin Nombre'}
+                        </Link>
 
-                      <p className='price'>
-                        <span className='offer-price font-600 ml-2 text-[15px] text-red-500'>
-                          {sale
-                            ? eurilize(sale.price || 0)
-                            : eurilize(price || 0)}
-                        </span>
-                      </p>
+                        <p className='price'>
+                          <span className='offer-price font-600 ml-2 text-[15px] text-red-500'>
+                            {sale
+                              ? eurilize(sale.price || 0)
+                              : eurilize(price || 0)}
+                          </span>
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <button
-                    className='mr-[15px] mt-[20px] inline-flex cursor-pointer'
-                    onClick={() => handleRemoveProduct(id)}
-                  >
-                    <X
-                      size={15}
-                      className='hover-200 text-gray-500 hover:text-accent'
-                    />
-                  </button>
-                </li>
-              ))}
+                    <button
+                      className='mr-[15px] mt-[20px] inline-flex cursor-pointer'
+                      onClick={() => handleRemoveProduct(id)}
+                    >
+                      <X
+                        size={15}
+                        className='hover-200 text-gray-500 hover:text-accent'
+                      />
+                    </button>
+                  </li>
+                )
+              )}
             </ul>
           </div>
           <div className='mb-[12px] mt-[20px] w-full px-4'>
@@ -84,7 +86,9 @@ export default function CartPopup({ className }: { className?: string }) {
           </div>
           <div className='product-actions mb-[30px] px-4'>
             <div className='total-equation mb-[28px] flex items-center justify-between'>
-              <span className='font-500 text-qblack text-[15px]'>Subtotal</span>
+              <span className='font-500 text-[15px] text-gray-900'>
+                Subtotal
+              </span>
               <span className='font-500 text-[15px] text-red-500'>$365</span>
             </div>
             <div className='product-action-btn'>
