@@ -61,7 +61,7 @@ const CompaireBtn = ({ product }: { product: ProductCardType }) => {
   return (
     <Button
       asChild
-      className={`rounded-none bg-accent p-0 transition-colors duration-100 ease-in hover:text-gray-100 ${compaireHasProduct ? 'text-gray-100' : ''}`}
+      className={`rounded-none bg-accent p-0 text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900 ${compaireHasProduct ? 'text-gray-900' : ''}`}
       onClick={handleAddToCompaireList}
     >
       <GitCompareArrows

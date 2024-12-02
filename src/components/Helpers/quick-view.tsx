@@ -10,6 +10,7 @@ import { useState } from 'react'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
   DialogHeader
@@ -39,12 +40,13 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
 
   return (
     <Dialog modal>
-      <DialogTrigger className='flex h-10 w-10 cursor-pointer items-center justify-center bg-accent p-1 transition-colors duration-100 ease-in hover:text-gray-100'>
+      <DialogTrigger className='flex h-10 w-10 cursor-pointer items-center justify-center bg-accent p-1 text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900'>
         <Expand />
       </DialogTrigger>
       <DialogContent className='overflow-hidden border-0 bg-gray-50 p-0 sm:max-w-[900px]'>
         <DialogHeader className='sr-only'>
           <DialogTitle>Quick View</DialogTitle>
+          <DialogDescription className='sr-only'>Quick View</DialogDescription>
         </DialogHeader>
         <div className='grid h-full gap-4 p-0 md:grid-cols-2'>
           <div className='flex h-full max-h-[80vh] gap-4 overflow-hidden'>

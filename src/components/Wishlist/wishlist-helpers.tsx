@@ -41,7 +41,7 @@ const WishlistBtn = ({ product }: { product: ProductCardType }) => {
   return (
     <Button
       asChild
-      className={`rounded-none bg-accent p-0 transition-colors duration-100 ease-in hover:text-gray-100 ${wishlistHasProduct ? 'fill-gray-100 text-gray-100' : ''}`}
+      className={`rounded-none bg-accent p-0 text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900 ${wishlistHasProduct ? 'fill-gray-900 text-gray-900' : ''}`}
       onClick={handleAddToWishlist}
     >
       <Heart className='h-10 w-10 cursor-pointer p-2' />
