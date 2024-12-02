@@ -48,6 +48,7 @@ const BlogCard = ({ className, data, priority, type }: BlogCardProps) => {
         <div className='details'>
           <Link
             href={`${type === 'blog' ? '/blog/articulos/' : '/noticias/'}${data.slug}`}
+            prefetch={true}
           >
             <h1 className='mb-1 line-clamp-2 text-[22px] font-semibold capitalize text-gray-900 transition-colors duration-150 ease-in group-hover:text-tertiary'>
               {data.title}

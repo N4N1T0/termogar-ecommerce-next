@@ -83,7 +83,7 @@ export default function ProductCardStyleOne<T>({
         <div className='absolute left-0 top-36 h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px]'>
           <AddToCart product={datas as ProductCardType} />
         </div>
-        <Link href={`/producto/${slug}`}>
+        <Link href={`/producto/${slug}`} prefetch={true}>
           <p className='title font-600 mb-1 line-clamp-2 text-[15px] leading-[24px] text-gray-900 transition-colors duration-150 ease-in-out hover:text-secondary'>
             {title}
           </p>

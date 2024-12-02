@@ -15,7 +15,11 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_MENU_CATEGORIES } from '@/sanity/lib/queries'
 
 const HeaderOne = async ({ className }: { className?: string }) => {
-  const navbarMenu = await sanityClientRead.fetch(GET_MENU_CATEGORIES)
+  const navbarMenu = await sanityClientRead.fetch(
+    GET_MENU_CATEGORIES,
+    {},
+    { cache: 'force-cache', next: { revalidate: 43200 } }
+  )
 
   return (
     <header className={cn('header-section-wrapper relative', className)}>
