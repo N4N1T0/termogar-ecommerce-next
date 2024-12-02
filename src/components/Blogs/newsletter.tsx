@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 // * UTILS IMPORTS
 import subscribeToNewsletter from '@/actions/newsletter-subscriber'
 import Form from 'next/form'
+import { Input } from '@/components/ui/input'
 
 const BlogNewsletter = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,10 +47,10 @@ const BlogNewsletter = () => {
         </div>
         <div>
           <div className='mb-3.5 w-full'>
-            <input
+            <Input
               type='email'
               name='email'
-              className='h-[60px] w-full bg-gray-200 pl-5 placeholder:text-gray-500 focus:outline-none focus:ring-0'
+              className='h-[60px] w-full rounded-none bg-gray-200 pl-5 placeholder:text-gray-500 focus:outline-none focus:ring-0'
               placeholder='Ingresa tu dirección de correo electrónico'
             />
           </div>
