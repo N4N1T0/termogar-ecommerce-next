@@ -18,6 +18,8 @@ import {
 } from '@/lib/utils'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult } from '@/types/sanity'
 
+export const dynamic = 'force-dynamic'
+
 // * METADATA
 export async function generateMetadata({
   params
@@ -45,9 +47,18 @@ const BrandsPage = async ({
   const { brand } = await params
   const { orderBy, min, max, subcat } = await searchParams
 
-  const searchedBrand = await sanityClientRead.fetch(GET_BRANDS_AND_PRODUCTS, {
-    slug: brand
-  })
+  const searchedBrand = await sanityClientRead.fetch(
+    GET_BRANDS_AND_PRODUCTS,
+    {
+      slug: brand
+    },
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 43200
+      }
+    }
+  )
 
   if (!searchedBrand) return notFound()
 

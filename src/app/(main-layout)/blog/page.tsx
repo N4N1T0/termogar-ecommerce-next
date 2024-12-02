@@ -30,17 +30,42 @@ const BlogPage = async ({
 }) => {
   const { lastId, currentPage } = await searchParams
   const blogPosts = lastId
-    ? await sanityClientRead.fetch(GET_CARD_BLOG_POST_PAGINATION, {
-        type: ['Blog'],
-        lastId
-      })
-    : await sanityClientRead.fetch(GET_CARD_BLOG_POST, {
-        type: ['Blog']
-      })
+    ? await sanityClientRead.fetch(
+        GET_CARD_BLOG_POST_PAGINATION,
+        {
+          type: ['Blog'],
+          lastId
+        },
+        {
+          cache: 'force-cache',
+          next: {
+            revalidate: 43200
+          }
+        }
+      )
+    : await sanityClientRead.fetch(
+        GET_CARD_BLOG_POST,
+        {
+          type: ['Blog']
+        },
+        {
+          cache: 'force-cache',
+          next: {
+            revalidate: 43200
+          }
+        }
+      )
 
-  const totalPages = await sanityClientRead
-    .withConfig({ useCdn: false })
-    .fetch(GET_TOTAL_BLOG_POST, { type: ['Blog'] })
+  const totalPages = await sanityClientRead.fetch(
+    GET_TOTAL_BLOG_POST,
+    { type: ['Blog'] },
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 43200
+      }
+    }
+  )
 
   return (
     <main>

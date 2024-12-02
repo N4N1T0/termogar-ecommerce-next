@@ -1,20 +1,16 @@
 // * NEXT.JS IMPORTS
 import Image from 'next/image'
-import { Suspense } from 'react'
+import Link from 'next/link'
 
 // * ASSETS IMPORTS
 import { ResetPasswordForm } from '@/components/Auth/ResetPassword/reset-form'
 import { notFound } from 'next/navigation'
 import { validateSecurityToken } from '@/lib/utils'
 import { bigLogo } from '@/assets'
-import LoaderStyleOne from '@/components/Helpers/Loaders/LoaderStyleOne'
 
 // * UTILS IMPORTS
 import { GET_USER_INFO } from '@/sanity/lib/queries'
 import { sanityClientRead } from '@/sanity/lib/client'
-import Link from 'next/link'
-
-export const experimental_ppr = true
 
 const ResetPasswordPage = async ({
   searchParams
@@ -55,9 +51,7 @@ const ResetPasswordPage = async ({
             Restablecer Contraseña
           </h1>
         </div>
-        <Suspense fallback={<LoaderStyleOne />}>
-          <ResetPasswordForm user={searchedUser} />
-        </Suspense>
+        <ResetPasswordForm user={searchedUser} />
       </div>
     </div>
   )

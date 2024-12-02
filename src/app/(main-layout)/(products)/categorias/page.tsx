@@ -19,7 +19,16 @@ export const metadata: Metadata = {
 }
 
 const CategoriesPage = async () => {
-  const navbarMenu = await sanityClientRead.fetch(GET_MENU_CATEGORIES)
+  const navbarMenu = await sanityClientRead.fetch(
+    GET_MENU_CATEGORIES,
+    {},
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 43200
+      }
+    }
+  )
   const refactoredMenu = navbarMenu.map((item) => {
     const refactoredChildren = [
       {

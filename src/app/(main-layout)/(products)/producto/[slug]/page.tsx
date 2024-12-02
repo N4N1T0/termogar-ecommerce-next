@@ -10,10 +10,7 @@ import ProductView from '@/components/SingleProductPage/ProductView'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
-import {
-  GET_WHOLE_PRODUCT_BY_SLUG,
-  GET_STATIC_PRODUCTS_SLUG
-} from '@/sanity/lib/queries'
+import { GET_WHOLE_PRODUCT_BY_SLUG } from '@/sanity/lib/queries'
 import { yoptop } from '@/lib/fetchers'
 import { auth } from '@/lib/auth'
 
@@ -77,15 +74,6 @@ export async function generateMetadata({
   }
 }
 
-// * ISR
-export const revalidate = 600
-export async function generateStaticParams() {
-  const products = await sanityClientRead.fetch(GET_STATIC_PRODUCTS_SLUG)
-  return products.map((post) => ({
-    slug: String(post.slug)
-  }))
-}
-
 const SingleProductPage = async ({
   params
 }: {
@@ -97,6 +85,12 @@ const SingleProductPage = async ({
     GET_WHOLE_PRODUCT_BY_SLUG,
     {
       slug
+    },
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 600
+      }
     }
   )
 

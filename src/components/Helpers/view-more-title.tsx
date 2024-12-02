@@ -26,7 +26,7 @@ export default function ViewMoreTitle({
           <div>
             <Link href={seeMoreUrl || '/categorias/calentadores'}>
               <div className='flex items-center space-x-2'>
-                <p className='font-600 text-qblack text-base'>View More</p>
+                <p className='font-600 text-qblack text-base'>Ver Mas</p>
                 <span className='animate-right-dir'>
                   <ArrowRight className='text-qblack h-4 w-4' />
                 </span>

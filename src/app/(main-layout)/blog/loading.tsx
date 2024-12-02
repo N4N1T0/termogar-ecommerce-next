@@ -2,7 +2,7 @@ import React from 'react'
 
 const BlogLoading = () => {
   return (
-    <div className='container mx-auto flex animate-pulse flex-col items-center justify-center px-4 py-8'>
+    <div className='container-x mx-auto flex animate-pulse flex-col items-center justify-center px-4 py-8'>
       <div className='flex w-full items-start justify-start'>
         <div className='my-3 h-8 w-1/5 bg-gray-200' />
       </div>

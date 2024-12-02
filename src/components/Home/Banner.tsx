@@ -93,7 +93,7 @@ const LinkOrDiv = ({
           height={isBig ? 600 : 285}
           blurDataURL={banner?.blur || tempBanners[0].blur}
           placeholder='blur'
-          className='h-full w-full object-cover'
+          className='h-auto w-auto object-cover'
           priority
           quality={isBig ? 100 : 70}
         />
@@ -108,7 +108,7 @@ const LinkOrDiv = ({
         height={isBig ? 600 : 285}
         blurDataURL={banner?.blur || tempBanners[0].blur}
         placeholder='blur'
-        className='h-full w-full object-cover'
+        className='h-auto w-auto object-cover'
         priority
         quality={isBig ? 100 : 70}
       />

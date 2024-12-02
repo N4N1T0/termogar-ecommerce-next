@@ -12,9 +12,6 @@ import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
 
-// * ISR
-export const revalidate = 43200
-
 // * METADATA
 export async function generateMetadata(): Promise<Metadata> {
   const searchedPage = await sanityClientRead.fetch(
@@ -39,6 +36,12 @@ const CostumerServicePageIndex = async () => {
     GET_COSTUMER_SERVICES_PAGE,
     {
       slug: ['servicio-de-atencion-al-cliente']
+    },
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 43200
+      }
     }
   )
 

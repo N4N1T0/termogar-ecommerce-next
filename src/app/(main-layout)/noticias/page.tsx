@@ -14,9 +14,6 @@ import {
   GET_TOTAL_BLOG_POST
 } from '@/sanity/lib/queries'
 
-// * ISR
-export const revalidate = 84600
-
 // * METADATA
 export const metadata: Metadata = {
   title: 'Noticias',
@@ -30,13 +27,31 @@ const NewsPage = async ({
 }) => {
   const { lastId, currentPage } = await searchParams
   const blogPosts = lastId
-    ? await sanityClientRead.fetch(GET_CARD_BLOG_POST_PAGINATION, {
-        type: ['Noticias'],
-        lastId
-      })
-    : await sanityClientRead.fetch(GET_CARD_BLOG_POST, {
-        type: ['Noticias']
-      })
+    ? await sanityClientRead.fetch(
+        GET_CARD_BLOG_POST_PAGINATION,
+        {
+          type: ['Noticias'],
+          lastId
+        },
+        {
+          cache: 'force-cache',
+          next: {
+            revalidate: 43200
+          }
+        }
+      )
+    : await sanityClientRead.fetch(
+        GET_CARD_BLOG_POST,
+        {
+          type: ['Noticias']
+        },
+        {
+          cache: 'force-cache',
+          next: {
+            revalidate: 43200
+          }
+        }
+      )
 
   const totalPages = await sanityClientRead
     .withConfig({ useCdn: false })

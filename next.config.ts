@@ -14,13 +14,6 @@ const nextConfig: NextConfig = {
         port: ''
       }
     ]
-  },
-  experimental: {
-    staleTimes: {
-      dynamic: 60,
-      static: 180
-    },
-    ppr: true
   }
 }
 

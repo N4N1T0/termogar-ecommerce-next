@@ -7,6 +7,8 @@ import { getPriceRange, matchCategories } from '@/lib/utils'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING } from '@/sanity/lib/queries'
 
+export const dynamic = 'force-dynamic'
+
 const ProductSidebar = async ({
   params
 }: {

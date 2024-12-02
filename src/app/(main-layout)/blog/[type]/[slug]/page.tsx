@@ -6,33 +6,11 @@ import { Metadata } from 'next'
 // * ASSETS IMPORTS
 import {
   GET_CARD_BLOG_POST_BY_CATEGORIES,
-  GET_CARD_BLOG_POST_BY_TAGS,
-  GET_STATIC_TAGS_SLUGS,
-  GET_STATIC_CATEGORIES_SLUGS
+  GET_CARD_BLOG_POST_BY_TAGS
 } from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
 import BlogCard from '@/components/Helpers/Cards/blog-card'
 import { sanityClientRead } from '@/sanity/lib/client'
-
-// * ISR
-export const revalidate = 86400
-
-export async function generateStaticParams() {
-  const categories = await sanityClientRead.fetch(GET_STATIC_CATEGORIES_SLUGS)
-  const tags = await sanityClientRead.fetch(GET_STATIC_TAGS_SLUGS)
-
-  const categoryParams = categories.map((category) => ({
-    type: 'categorias',
-    slug: category.slug
-  }))
-
-  const tagParams = tags.map((tag) => ({
-    type: 'etiquetas',
-    slug: tag.slug
-  }))
-
-  return [...categoryParams, ...tagParams]
-}
 
 // * METADATA
 export async function generateMetadata({
@@ -61,12 +39,30 @@ const CategoriesOrTagPage = async ({
 
   const blogPosts =
     type === 'categorias'
-      ? await sanityClientRead.fetch(GET_CARD_BLOG_POST_BY_CATEGORIES, {
-          slug: [slug]
-        })
-      : await sanityClientRead.fetch(GET_CARD_BLOG_POST_BY_TAGS, {
-          slug: [slug]
-        })
+      ? await sanityClientRead.fetch(
+          GET_CARD_BLOG_POST_BY_CATEGORIES,
+          {
+            slug: [slug]
+          },
+          {
+            cache: 'force-cache',
+            next: {
+              revalidate: 43200
+            }
+          }
+        )
+      : await sanityClientRead.fetch(
+          GET_CARD_BLOG_POST_BY_TAGS,
+          {
+            slug: [slug]
+          },
+          {
+            cache: 'force-cache',
+            next: {
+              revalidate: 43200
+            }
+          }
+        )
 
   return (
     <main>

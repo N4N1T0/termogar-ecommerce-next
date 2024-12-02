@@ -11,17 +11,6 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
-import siteData from '@/data/site-data.json'
-
-// * ISR
-export const revalidate = 86400
-export const dynamicParams = false
-
-export function generateStaticParams() {
-  return siteData.footerLinks['Paginas Legales'].map((post) => ({
-    slug: String(post.slug)
-  }))
-}
 
 // * METADATA
 export async function generateMetadata({
@@ -35,7 +24,12 @@ export async function generateMetadata({
     {
       slug: [slug]
     },
-    { next: { revalidate: 43200 } }
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 43200
+      }
+    }
   )
 
   return {

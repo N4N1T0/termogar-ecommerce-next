@@ -3,9 +3,11 @@
 // * NEXT.jS IMPORTS
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 // * ASSETS IMPORTS
-import { PlayCircle } from 'lucide-react'
+import { ArrowRight, PlayCircle } from 'lucide-react'
+
 const tempVideos = [
   {
     id: '1',
@@ -46,8 +48,9 @@ const YouTubeEmbed = ({
           <Image
             src={thumbnailUrl}
             alt={`Thumbnail for ${title}`}
-            fill
-            className='object-cover'
+            width={800}
+            height={800}
+            className='h-full w-full object-cover'
           />
           <div
             className='group absolute inset-0 flex cursor-pointer items-center justify-center bg-black bg-opacity-20'
@@ -84,9 +87,26 @@ const YouTubeVideoSection = ({
   return (
     <section id='youtube' className='container-x mx-auto bg-gray-50 py-8'>
       <div className='container mx-auto px-4'>
-        <h2 className='font-600 mb-5 text-xl leading-none text-gray-900 sm:text-3xl'>
-          Nuestros Videos
-        </h2>
+        <div className='section-title mb-5 flex items-center justify-between'>
+          <div>
+            <h1 className='font-600 text-xl leading-none text-gray-900 sm:text-3xl'>
+              Nuestros Videos
+            </h1>
+          </div>
+          <div>
+            <Link
+              href='https://www.youtube.com/@termogar.es-expertosenclim7158'
+              target='_blank'
+            >
+              <div className='flex items-center space-x-2'>
+                <p className='font-600 text-qblack text-base'>Ver Mas</p>
+                <span className='animate-right-dir'>
+                  <ArrowRight className='text-qblack h-4 w-4' />
+                </span>
+              </div>
+            </Link>
+          </div>
+        </div>
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
           {videos?.map((video) => (
             <div key={video.id} className='overflow-hidden bg-white shadow-lg'>

@@ -8,27 +8,9 @@ import { PortableText } from 'next-sanity'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
-import {
-  GET_COSTUMER_SERVICES_PAGE,
-  GET_STATIC_COSTUMER_SERVICES_PAGES_SUG
-} from '@/sanity/lib/queries'
+import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
-
-// * ISR
-export const revalidate = 43200
-export const dynamicParams = false
-
-export async function generateStaticParams() {
-  const pages = await sanityClientRead.fetch(
-    GET_STATIC_COSTUMER_SERVICES_PAGES_SUG,
-    {},
-    { cache: 'force-cache' }
-  )
-  return pages.map((page) => ({
-    slug: page.slug
-  }))
-}
 
 // * METADATA
 export async function generateMetadata({
@@ -42,8 +24,7 @@ export async function generateMetadata({
     GET_COSTUMER_SERVICES_PAGE,
     {
       slug: [slug]
-    },
-    { next: { revalidate: 43200 } }
+    }
   )
 
   return {
@@ -64,6 +45,12 @@ const CostumerServicePageSlug = async ({
     GET_COSTUMER_SERVICES_PAGE,
     {
       slug: [slug]
+    },
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 43200
+      }
     }
   )
   if (!searchedPage) return notFound()

@@ -19,6 +19,8 @@ import {
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult } from '@/types/sanity'
 import { PortableText } from 'next-sanity'
 
+export const dynamic = 'force-dynamic'
+
 // * METADATA
 export async function generateMetadata({
   params
@@ -49,6 +51,12 @@ const CategoriesPage = async ({
     GET_CATEGORY_AND_PRODUCTS,
     {
       slug: category
+    },
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 43200
+      }
     }
   )
 

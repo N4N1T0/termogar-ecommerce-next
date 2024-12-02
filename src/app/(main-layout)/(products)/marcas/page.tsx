@@ -18,7 +18,16 @@ export const metadata: Metadata = {
 }
 
 const BrandsPage = async () => {
-  const brands = await sanityClientRead.fetch(GET_BRANDS)
+  const brands = await sanityClientRead.fetch(
+    GET_BRANDS,
+    {},
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 43200
+      }
+    }
+  )
 
   return (
     <div className='container mx-auto px-4 py-8'>

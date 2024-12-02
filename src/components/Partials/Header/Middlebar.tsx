@@ -31,18 +31,20 @@ const Middlebar = async ({
             <div>
               <Link href='/' className='hidden sm:block'>
                 <Image
-                  width='152'
-                  height='36'
+                  width={152}
+                  height={36}
                   src={bigLogo}
                   alt='Termogar logo'
+                  className='h-auto w-auto'
                 />
               </Link>
               <Link href='/' className='block sm:hidden'>
                 <Image
-                  width='152'
-                  height='36'
+                  width={152}
+                  height={36}
                   src={smallLogo}
                   alt='Termogar logo'
+                  className='h-auto w-auto'
                 />
               </Link>
             </div>
