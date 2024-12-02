@@ -1,54 +1,16 @@
-'use client'
-
-// * ASSETS IMPORTS
-import BreadcrumbCom from '@/components/BreadcrumbCom'
-import EmptyCompaireError from '@/components/Compaire/empty'
-import CompaireProductTable from '@/components/Compaire/product-table'
-import LoaderStyleOne from '@/components/Helpers/Loaders/LoaderStyleOne'
+import CompaireProductsClientPage from '@/components/Compaire/client-page'
 import PageTitle from '@/components/Helpers/PageTitle'
+import { Metadata } from 'next'
 
-// * UTILS IMPORTS
-import { useCompare } from '@/stores'
+export const metadata: Metadata = {
+  title: 'Comparación de Productos',
+  description:
+    'Comparación de productos para ver las diferencias y similitudes entre ellos'
+}
 
 const CompaireProductsPage = () => {
-  const { products, rehydrated } = useCompare()
-
-  if (!rehydrated) {
-    return (
-      <section id='Empty-Cart' className='mt-10 w-full'>
-        <div className='mx-auto w-full max-w-screen-xl px-2 md:px-6'>
-          <BreadcrumbCom
-            paths={[
-              { name: 'P. Principal', path: '/' },
-              { name: 'Compara Productos', path: '/comparar-productos' }
-            ]}
-          />
-          <div className='grid h-full w-full place-content-center'>
-            <LoaderStyleOne />
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  if (products.length === 0) {
-    return (
-      <section id='Empty-Cart' className='my-10 w-full'>
-        <div className='mx-auto w-full max-w-screen-xl px-2 md:px-6'>
-          <BreadcrumbCom
-            paths={[
-              { name: 'P. Principal', path: '/' },
-              { name: 'Compara Productos', path: '/comparar-productos' }
-            ]}
-          />
-          <EmptyCompaireError />
-        </div>
-      </section>
-    )
-  }
-
   return (
-    <main className='w-full bg-white pb-[40px]'>
+    <main className='mx-auto w-full max-w-screen-2xl pb-[40px]'>
       <div className='mb-5 w-full'>
         <PageTitle
           breadcrumb={[
@@ -57,7 +19,7 @@ const CompaireProductsPage = () => {
           ]}
           title='Comparación de Productos'
         />
-        <CompaireProductTable products={products} />
+        <CompaireProductsClientPage />
       </div>
     </main>
   )

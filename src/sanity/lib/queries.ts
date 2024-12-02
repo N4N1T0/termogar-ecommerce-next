@@ -622,29 +622,3 @@ export const GET_ORDERS_BY_USER_ID =
       quantity
     }
 }`)
-
-// * STATICS AND ISR QUERIES
-export const GET_STATIC_BLOG_OR_NEWS_SLUG =
-  defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(date desc) {
-  "slug": slug.current
-  }`)
-
-export const GET_STATIC_TAGS_SLUGS =
-  defineQuery(`*[_type =='tag'] | order(date desc) {
-  "slug": slug.current
-  }`)
-
-export const GET_STATIC_CATEGORIES_SLUGS =
-  defineQuery(`*[_type =='category'] | order(date desc) {
-  "slug": slug.current
-  }`)
-
-export const GET_STATIC_COSTUMER_SERVICES_PAGES_SUG =
-  defineQuery(`*[_type =='page' && status == 'publish']{
-  "slug": slug.current,
-}`)
-
-export const GET_STATIC_PRODUCTS_SLUG =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price)]{
-  "slug": slug.current,
-}`)

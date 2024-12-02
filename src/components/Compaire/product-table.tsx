@@ -14,7 +14,7 @@ const CompaireProductTable = ({
   return (
     <section
       id='compaire-table'
-      className='m-10 flex items-start justify-start overflow-x-auto'
+      className='m-10 flex items-start justify-start overflow-x-auto bg-white'
     >
       <div className='border-gray-500-border w-full border'>
         <table className='w-full max-w-fit'>
@@ -48,7 +48,7 @@ const CompaireProductTable = ({
                     </div>
                   </div>
                   <Link
-                    href={`/productos/${slug}`}
+                    href={`/producto/${slug}`}
                     className='hover-200 mb-2 text-pretty text-center text-[15px] font-medium leading-6 text-accent hover:text-gray-900'
                   >
                     {title}

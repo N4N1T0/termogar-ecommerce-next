@@ -1,3 +1,4 @@
+// * ASSETS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS } from '@/sanity/lib/queries'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult } from '@/types/sanity'
@@ -13,7 +14,7 @@ const RelatedProducts = async ({ productsId }: { productsId: string[] }) => {
   return (
     <section
       id='related-products'
-      className='container-x mx-auto w-full bg-white py-5'
+      className='container-x mx-auto mb-10 w-full bg-white py-5'
     >
       <h3 className='font-600 text-xl leading-none text-gray-900 sm:text-3xl'>
         Productos Relacionados

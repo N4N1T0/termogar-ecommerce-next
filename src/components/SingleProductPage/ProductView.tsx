@@ -24,6 +24,8 @@ import { GET_WHOLE_PRODUCT_BY_SLUGResult } from '@/types/sanity'
 import { PortableText } from 'next-sanity'
 import { cn, eurilize, shareLink, calculateAverageRating } from '@/lib/utils'
 import { YoptopReviews } from '@/types'
+import { WishlistBtn } from '../Wishlist/wishlist-helpers'
+import { CompaireBtn } from '../Compaire/compaire-helpers'
 
 const ProductView = ({
   className = '',
@@ -230,6 +232,8 @@ const ProductView = ({
             className='quantity-card-wrapper mb-5 flex h-12 w-full items-center space-x-2'
           >
             <AddToCart showQuantity product={product} />
+            <WishlistBtn product={product} />
+            <CompaireBtn product={product} />
           </div>
 
           {/* INFO */}
@@ -284,7 +288,7 @@ const ProductView = ({
 
             <div className='flex items-center space-x-5'>
               <button
-                className='hover-200 aspect-square h-5 w-5 hover:text-accent'
+                className='hover-200 aspect-square size-5 hover:text-accent'
                 onClick={() =>
                   shareLink(
                     'facebook',
@@ -294,10 +298,14 @@ const ProductView = ({
                   )
                 }
               >
-                <Facebook color='currentColor' strokeWidth={1.4} />
+                <Facebook
+                  color='currentColor'
+                  strokeWidth={1.4}
+                  className='h-full w-full'
+                />
               </button>
               <button
-                className='hover-200 aspect-square h-5 w-5 hover:text-accent'
+                className='hover-200 aspect-square size-5 hover:text-accent'
                 onClick={() =>
                   shareLink(
                     'whatsapp',
@@ -307,10 +315,14 @@ const ProductView = ({
                   )
                 }
               >
-                <Phone color='currentColor' strokeWidth={1.4} />
+                <Phone
+                  color='currentColor'
+                  strokeWidth={1.4}
+                  className='h-full w-full'
+                />
               </button>
               <button
-                className='hover-200 aspect-square h-5 w-5 hover:text-accent'
+                className='hover-200 aspect-square size-5 hover:text-accent'
                 onClick={() =>
                   shareLink(
                     'twitter',
@@ -320,10 +332,14 @@ const ProductView = ({
                   )
                 }
               >
-                <Twitter color='currentColor' strokeWidth={1.4} />
+                <Twitter
+                  color='currentColor'
+                  strokeWidth={1.4}
+                  className='h-full w-full'
+                />
               </button>
               <button
-                className='hover-200 aspect-square h-5 w-5 hover:text-accent'
+                className='hover-200 aspect-square size-5 hover:text-accent'
                 onClick={() =>
                   shareLink(
                     'copy',
@@ -333,7 +349,11 @@ const ProductView = ({
                   )
                 }
               >
-                <Clipboard color='currentColor' strokeWidth={1.4} />
+                <Clipboard
+                  color='currentColor'
+                  strokeWidth={1.4}
+                  className='h-full w-full'
+                />
               </button>
             </div>
           </div>

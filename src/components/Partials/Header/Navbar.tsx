@@ -101,7 +101,7 @@ const MegaMenuLi = ({ menu }: { menu: GET_MENU_CATEGORIESResult[number] }) => {
         )}
       </span>
       {menu.children?.length > 0 ? (
-        <div className='sub-menu absolute left-0 top-[60px] w-full'>
+        <div className='sub-menu absolute left-0 top-[60px] z-50 w-full'>
           <div
             className='mega-menu-wrapper flex w-full items-center justify-between bg-white p-[30px]'
             style={{

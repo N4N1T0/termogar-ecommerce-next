@@ -504,6 +504,37 @@ export const isWithinSalePeriod = (
   return currentDate >= fromDate && currentDate <= toDate
 }
 
+export const getMostUsedCategory = (
+  products: ProductCardType[]
+): string | null => {
+  if (!products || products.length === 0) return null
+
+  // Create a map to count category occurrences
+  const categoryCount: Record<string, number> = {}
+
+  // Iterate over the products to aggregate category occurrences
+  products.forEach((product) => {
+    product.categories?.forEach((category) => {
+      if (category.name) {
+        categoryCount[category.name] = (categoryCount[category.name] || 0) + 1
+      }
+    })
+  })
+
+  // Find the category with the maximum count
+  let mostUsedCategory: string | null = null
+  let maxCount = 0
+
+  Object.entries(categoryCount).forEach(([categoryName, count]) => {
+    if (count > maxCount) {
+      maxCount = count
+      mostUsedCategory = categoryName
+    }
+  })
+
+  return mostUsedCategory
+}
+
 // * TYPES HELPERS
 type Category = {
   id: string
