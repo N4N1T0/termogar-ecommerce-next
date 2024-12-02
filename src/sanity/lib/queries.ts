@@ -309,6 +309,40 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
 }
 }`)
 
+export const GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS =
+  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && _id in $ids]{
+  "id": _id,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+  content,
+  price,
+  sale,
+  createdAt,
+  dimensions,
+  "stockQuantity": stock_quantity,
+  options,
+  date,
+  "tags": productTags[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+}
+}`)
+
 export const GET_BRANDS_AND_PRODUCTS =
   defineQuery(`*[_type=='brand' && link.current == $slug][0]{
   title, 
@@ -507,7 +541,11 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
 "downloads": downloads.asset->{
     title,
     url
-  }
+  },
+variations,
+"relatedProducts": relatedProducts[]->{
+  "id": _id,
+}
 }`)
 
 export const GET_COUPONS_FOR_VALIDATION =

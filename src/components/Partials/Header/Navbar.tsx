@@ -1,16 +1,18 @@
 'use client'
 
-// Next.js Imports
+// * NEXT IMPORTS
 import Image from 'next/image'
 import Link from 'next/link'
 
-// Assets Imports
+// * ASSETS IMPORTS
 import { ChevronDownIcon } from 'lucide-react'
 import MegaMenu from '@/assets/images/mega-menu-thumb.jpg'
-import { cn } from '@/lib/utils'
 import { GET_MENU_CATEGORIESResult } from '@/types/sanity'
 import { PortableText } from 'next-sanity'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
+
+// * UTILS IMPORTS
+import { cn } from '@/lib/utils'
 
 export default function Navbar({
   className,
@@ -19,57 +21,52 @@ export default function Navbar({
   className?: string
   navbarMenu: GET_MENU_CATEGORIESResult
 }) {
-  // REFACTORING
   return (
     <div
       className={cn(
-        'nav-widget-wrapper relative z-30 h-[60px] w-full bg-accent',
+        'nav-widget-wrapper top-0 z-30 h-[60px] w-full bg-accent',
         className
       )}
     >
-      <div className='container-x mx-auto h-full'>
-        <div className='relative h-full w-full'>
-          <div className='flex h-full w-full items-center justify-between'>
-            <div className='category-and-nav flex items-center space-x-3 xl:space-x-7'>
-              <div className='nav'>
-                <ul className='nav-wrapper flex space-x-5 xl:space-x-10'>
-                  {navbarMenu.map((menu) => (
-                    <MegaMenuLi key={menu.id} menu={menu} />
-                  ))}
-                  <li className='relative'>
-                    <div>
-                      <span className='font-600 flex cursor-pointer items-center text-sm text-white'>
-                        <span>Blog</span>
-                        <span className='ml-1.5'>
-                          <ChevronDownIcon className='fill-current' />
-                        </span>
-                      </span>
-                      <div className='sub-menu absolute -left-10 top-[60px] w-[150px]'>
-                        <div
-                          className='flex w-full flex-col items-center justify-between gap-3 bg-white py-3'
-                          style={{
-                            boxShadow: '0px 15px 50px 0px rgba(0, 0, 0, 0.14)'
-                          }}
-                        >
-                          <Link
-                            className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'
-                            href='/blog'
-                          >
-                            Artículos
-                          </Link>
-                          <Link
-                            className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'
-                            href='/noticias'
-                          >
-                            Noticias
-                          </Link>
-                        </div>
-                      </div>
+      <div className='container-x relative mx-auto flex h-full w-full items-center justify-between'>
+        <div className='category-and-nav flex items-center space-x-3 xl:space-x-7'>
+          <div className='nav'>
+            <ul className='nav-wrapper flex space-x-5 xl:space-x-10'>
+              {navbarMenu.map((menu) => (
+                <MegaMenuLi key={menu.id} menu={menu} />
+              ))}
+              <li className='relative'>
+                <div>
+                  <span className='font-600 flex cursor-pointer items-center text-sm text-white'>
+                    <span>Blog</span>
+                    <span className='ml-1.5'>
+                      <ChevronDownIcon className='fill-current' />
+                    </span>
+                  </span>
+                  <div className='sub-menu absolute -left-10 top-[60px] w-[150px]'>
+                    <div
+                      className='flex w-full flex-col items-center justify-between gap-3 bg-white py-3'
+                      style={{
+                        boxShadow: '0px 15px 50px 0px rgba(0, 0, 0, 0.14)'
+                      }}
+                    >
+                      <Link
+                        className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'
+                        href='/blog'
+                      >
+                        Artículos
+                      </Link>
+                      <Link
+                        className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'
+                        href='/noticias'
+                      >
+                        Noticias
+                      </Link>
                     </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

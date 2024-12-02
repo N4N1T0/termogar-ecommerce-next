@@ -1,12 +1,12 @@
 // * NEXT.JS IMPORTS
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 
 // * ASSETS IMPORTS
 import SingleProductTabs from '@/components/SingleProductPage/single-products-tab'
 import BreadcrumbCom from '@/components/BreadcrumbCom'
 import ProductView from '@/components/SingleProductPage/ProductView'
-// import ProductCardStyleOne from '@/components/Helpers/Cards/product-card-style-one'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
@@ -74,6 +74,27 @@ export async function generateMetadata({
   }
 }
 
+const RelatedProducts = dynamic(
+  () => import('@/components/SingleProductPage/related-products'),
+  {
+    loading: () => (
+      <div className='mt-10 w-full bg-white'>
+        <div className='mt-5 h-16 animate-pulse bg-gray-100' />
+        <div className='mb-10 grid grid-cols-1 gap-5 p-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+          {Array(8)
+            .fill('CategoriesPage')
+            .map((item, index) => (
+              <div
+                key={`${item}-${index}`}
+                className='h-64 w-full animate-pulse bg-gray-100'
+              />
+            ))}
+        </div>
+      </div>
+    )
+  }
+)
+
 const SingleProductPage = async ({
   params
 }: {
@@ -97,6 +118,10 @@ const SingleProductPage = async ({
   const reviews = await yoptop
     .fetchReviews(searchedProduct?.id.split('-').slice(-1)[0] || '')
     .then((res) => (res.status !== null ? res : null))
+
+  const refactoredRelatesProductsIds = searchedProduct?.relatedProducts
+    ? searchedProduct?.relatedProducts.map((product) => product.id)
+    : []
 
   if (!searchedProduct) return notFound()
 
@@ -125,23 +150,7 @@ const SingleProductPage = async ({
         user={session?.user}
       />
 
-      {/* <div className='container-x mx-auto w-full bg-white'>
-          <div className='w-full py-[60px]'>
-            <h2 className='font-600 mb-[30px] text-xl leading-none text-gray-900 sm:text-3xl'>
-              Productos Relacionados
-            </h2>
-            <div
-              data-aos='fade-up'
-              className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px]'
-            >
-              {data.products.slice(0, 4).map((product) => (
-                <div key={product.id} className='item'>
-                  <ProductCardStyleOne datas={product} />
-                </div>
-              ))}
-            </div>
-          </div>
-      </div> */}
+      <RelatedProducts productsId={refactoredRelatesProductsIds} />
     </main>
   )
 }
