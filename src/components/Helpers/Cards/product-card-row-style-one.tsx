@@ -3,21 +3,24 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 // * ASSETS IMPORTS
-import { ProductCardRowStyleTwoProps, ProductCardType } from '@/types'
 import ProductQuickViewDynamic from '@/components/Helpers/quick-view'
 import { WishlistBtn } from '@/components/Wishlist/wishlist-helpers'
 import AddToCart from '@/components/Helpers/quantity'
 import { CompaireBtn } from '@/components/Compaire/compaire-helpers'
+import { PlaceholderSquare } from '@/assets'
 
 // * UTILS IMPORTS
-import { cn, eurilize } from '@/lib/utils'
-import { PlaceholderSquare } from '@/assets'
+import { ProductCardRowStyleTwoProps, ProductCardType } from '@/types'
+import { cn, eurilize, isWithinSalePeriod } from '@/lib/utils'
 
 const ProductCardRowStyleOne = ({
   className,
   datas
 }: ProductCardRowStyleTwoProps<ProductCardType>) => {
   const { featuredMedia, title, slug, sale, price } = datas
+
+  const isOnSale = isWithinSalePeriod(sale)
+
   return (
     <div
       data-aos='fade-left'
@@ -49,13 +52,15 @@ const ProductCardRowStyleOne = ({
             <p className='price'>
               <span
                 className={`main-price font-600 text-[22px] ${
-                  sale ? 'text-gray-500 line-through' : 'text-secondary'
+                  sale && isOnSale
+                    ? 'text-gray-500 line-through'
+                    : 'text-secondary'
                 }`}
               >
                 {eurilize(price || 0)}
               </span>
               <span className='offer-price font-600 ml-2 text-[22px] text-secondary'>
-                {sale ? eurilize(sale?.price || 0) : ''}
+                {sale && isOnSale ? eurilize(sale?.price || 0) : ''}
               </span>
             </p>
             <AddToCart className='w-fit' product={datas as ProductCardType} />

@@ -379,6 +379,19 @@ export const matchCategories = (
   return matchedCategories
 }
 
+/**
+ * Filters an array of products by given price range and subcategory.
+ *
+ * @param products - An array of product objects to be filtered.
+ * @param min - The minimum price of the desired range. Can be a string or an array of strings.
+ *              If array, the first element will be used. If not a valid number, will be ignored.
+ * @param max - The maximum price of the desired range. Can be a string or an array of strings.
+ *              If array, the first element will be used. If not a valid number, will be ignored.
+ * @param subcat - The slug of the subcategory to filter by. Can be a string or an array of strings.
+ *                 If array, the first element will be used. If not provided or empty, will be ignored.
+ *
+ * @returns A new array of products that match the given filter criteria.
+ */
 export const filterProductsByFilter = (
   products: any[],
   min?: string | string[],
@@ -475,6 +488,20 @@ export const calculateAverageRating = (data: YoptopReviews | undefined) => {
   const averageRating = totalScore / data.length
 
   return Math.abs(averageRating) // Round to 2 decimal places
+}
+
+export const isWithinSalePeriod = (
+  sale: { price?: number; from?: string; to?: string } | null
+): boolean => {
+  if (!sale || !sale.from || !sale.to) {
+    return false // Return false if sale is null or missing date fields
+  }
+
+  const currentDate = new Date()
+  const fromDate = new Date(sale.from)
+  const toDate = new Date(sale.to)
+
+  return currentDate >= fromDate && currentDate <= toDate
 }
 
 // * TYPES HELPERS

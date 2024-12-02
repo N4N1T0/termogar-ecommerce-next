@@ -7,7 +7,7 @@ import { PlaceholderProductCard } from '@/assets'
 
 // * UTILS IMPORTS
 import { ProductCardStyleOneProps, ProductCardType } from '@/types'
-import { eurilize } from '@/lib/utils'
+import { eurilize, isWithinSalePeriod } from '@/lib/utils'
 
 // * COMPONENTS IMPORTS
 import ProductQuickViewDynamic from '@/components/Helpers/quick-view'
@@ -23,6 +23,8 @@ export default function ProductCardStyleOne<T>({
     datas as ProductCardType
   const refactorStock =
     stockQuantity && stockQuantity < 5 ? stockQuantity : null
+
+  const isOnSale = isWithinSalePeriod(sale)
 
   return (
     <div
@@ -68,7 +70,7 @@ export default function ProductCardStyleOne<T>({
         )}
 
         {/* SALE */}
-        {sale && (
+        {sale && isOnSale && (
           <div className='product-type absolute right-[14px] top-[17px]'>
             <span className='font-700 rounded-full bg-tertiary px-3 py-[6px] text-[9px] uppercase leading-none tracking-wider text-white'>
               Oferta
@@ -91,13 +93,13 @@ export default function ProductCardStyleOne<T>({
         <p className='price'>
           <span
             className={`main-price font-600 text-[22px] ${
-              sale ? 'text-gray-500 line-through' : 'text-secondary'
+              sale && isOnSale ? 'text-gray-500 line-through' : 'text-secondary'
             }`}
           >
             {eurilize(price || 0)}
           </span>
           <span className='offer-price font-600 ml-2 text-[22px] text-secondary'>
-            {sale ? eurilize(sale?.price || 0) : ''}
+            {sale && isOnSale ? eurilize(sale?.price || 0) : ''}
           </span>
         </p>
       </div>
