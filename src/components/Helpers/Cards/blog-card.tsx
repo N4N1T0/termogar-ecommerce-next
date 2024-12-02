@@ -58,7 +58,7 @@ const BlogCard = ({ className, data, priority, type }: BlogCardProps) => {
             {data.excerpt}
           </p>
           {/* view more btn */}
-          <Link href={`/blog/${data.slug}`} className='text-tertiary'>
+          <Link href={`/blog/articulos/${data.slug}`} className='text-tertiary'>
             <div className='flex items-center space-x-2'>
               <span className='text-base font-semibold'>Ver el Post</span>
               <ArrowRight className='h-6 w-6 transition-transform duration-150 ease-in group-hover:translate-x-2' />
