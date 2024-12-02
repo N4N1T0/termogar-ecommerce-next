@@ -9,7 +9,7 @@ const seoMetatags = (): Metadata => {
   return {
     title: {
       template: '%s  |  Termogar',
-      default: 'Termogar | Productos de Lavanda'
+      default: 'Termogar | Productos de Climatización'
     },
     description:
       'Venta de equipos de Climatización En España. Venta online de calentadores a gas, aire acondicionado, calderas, yunkers, estufas, termos.',

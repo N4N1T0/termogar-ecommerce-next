@@ -5,7 +5,7 @@ export default function Thumbnail() {
       width='550.59998'
       height='412.44495'
       viewBox='0 0 550.59998 412.44495'
-      className='h-full w-full'
+      className='h-full max-h-[500px] w-full'
     >
       <path
         d='m550.59998,411.25495c0,.65997-.53003,1.19-1.19,1.19H1.19c-.66,0-1.19-.53003-1.19-1.19s.53-1.19,1.19-1.19h548.21997c.65997,0,1.19.53003,1.19,1.19Z'

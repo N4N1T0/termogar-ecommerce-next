@@ -48,4 +48,12 @@ const logoutAction = async () => {
   await signOut()
 }
 
-export { loginAction, logoutAction }
+const loginGoogleAction = async (
+  e: FormData,
+  url: string | string[] | undefined
+) => {
+  const redirectTo = Array.isArray(url) || url === undefined ? '/' : url
+  await signIn('google', { redirectTo })
+}
+
+export { loginAction, logoutAction, loginGoogleAction }

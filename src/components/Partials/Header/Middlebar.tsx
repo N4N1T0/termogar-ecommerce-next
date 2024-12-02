@@ -23,6 +23,7 @@ const Middlebar = async ({
   categories: GET_MENU_CATEGORIESResult
 }) => {
   const session = await auth()
+  console.log('🚀 ~ session:', session)
 
   return (
     <div className={`h-[86px] w-full bg-white ${className}`}>
@@ -32,8 +33,8 @@ const Middlebar = async ({
             <div>
               <Link href='/' className='hidden sm:block'>
                 <Image
-                  width={152}
-                  height={36}
+                  width={102}
+                  height={26}
                   src={bigLogo}
                   alt='Termogar logo'
                   className='h-auto w-auto'
@@ -41,8 +42,8 @@ const Middlebar = async ({
               </Link>
               <Link href='/' className='block sm:hidden'>
                 <Image
-                  width={152}
-                  height={36}
+                  width={102}
+                  height={26}
                   src={smallLogo}
                   alt='Termogar logo'
                   className='h-auto w-auto'

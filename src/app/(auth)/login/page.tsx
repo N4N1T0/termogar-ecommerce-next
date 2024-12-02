@@ -14,19 +14,15 @@ const LoginPage = async ({
 }) => {
   const { redirectTo } = await searchParams
   return (
-    <main className='min-h-screen w-full py-10'>
-      <div className='container-x relative mx-auto h-screen items-center lg:flex'>
-        <div className='flex h-full w-full flex-col justify-center border border-[#E0E0E0] bg-white p-5 sm:p-10 lg:flex-1'>
-          <div className='mb-7 flex w-full flex-col items-center justify-center text-center'>
-            <h1 className='mb-1 border-b border-accent text-[30px] font-bold leading-[74px] text-gray-900'>
-              inicio de sesión
-            </h1>
-            <LoginForm redirectTo={redirectTo} />
-          </div>
-        </div>
-        <div className='hidden h-[80vh] flex-1 items-center lg:flex xl:justify-center'>
-          <Thumbnail />
-        </div>
+    <main className='container-x mx-auto h-full min-h-[90vh] w-full items-center gap-5 py-10 lg:flex'>
+      <div className='flex min-h-[500px] w-full flex-1 flex-col items-center justify-center bg-gray-100 text-center'>
+        <h1 className='mb-1 border-b border-accent text-[30px] font-bold leading-[74px] text-gray-900'>
+          inicio de sesión
+        </h1>
+        <LoginForm redirectTo={redirectTo} />
+      </div>
+      <div className='hidden h-full max-h-[500px] flex-1 items-center lg:block'>
+        <Thumbnail />
       </div>
     </main>
   )
