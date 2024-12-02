@@ -12,8 +12,6 @@ const reportProduct = async (values: ReportProductSchema) => {
     }
   }
 
-  console.log(values)
-
   // TODO: Send a email
 
   return {

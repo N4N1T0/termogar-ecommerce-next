@@ -17,7 +17,6 @@ const VoteReview = ({
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const vote = formData.get('vote')
-    console.log('🚀 ~ handleSubmit ~ vote:', vote)
 
     const values = {
       reviewId: reviewId.toString(),

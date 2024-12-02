@@ -57,7 +57,7 @@ const LegalPages = async ({
   const { title, content } = searchedPage
 
   return (
-    <main className='terms-condition-page w-full bg-white pb-[30px]'>
+    <main className='container-x mx-auto w-full bg-white pb-[30px]'>
       <div className='mb-[30px] w-full'>
         <PageTitle
           breadcrumb={[

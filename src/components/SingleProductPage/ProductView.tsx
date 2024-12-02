@@ -69,7 +69,6 @@ const ProductView = ({
     tags,
     dimensions
   } = product
-  console.log('🚀 ~ id:', id)
   return (
     <section
       id='product-view'
