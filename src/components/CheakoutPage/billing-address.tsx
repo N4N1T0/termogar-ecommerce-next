@@ -1,148 +1,327 @@
-import React from 'react'
-import InputCom from '../Helpers/InputCom'
+'use client'
 
-const BillingAddress = () => {
+// * NEXT.JS IMPORTS
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+
+// * ASSETS IMPORTS
+import FormFieldComponent from '@/components/Auth/ResetPassword/form-field'
+import { Form } from '@/components/ui/form'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Checkbox } from '@/components/ui/checkbox'
+import ShippingAddressForm from '@/components/CheakoutPage/shipping-address-form'
+import CheckoutPasswordCheck from '@/components/CheakoutPage/password-check'
+import { toast } from 'sonner'
+
+// * UTILS IMPORTS
+import { checkoutUser, CheckoutUser } from '@/lib/schemas'
+import { GET_USER_INFOResult } from '@/types/sanity'
+import checkoutLogic from '@/actions/checkout-logic'
+
+const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
+  const [isShippingAddress, setIsShippingAddress] = useState<boolean>(false)
+  const router = useRouter()
+
+  const form = useForm<CheckoutUser>({
+    resolver: zodResolver(checkoutUser),
+    defaultValues: {
+      email: user?.email || '',
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      userName: user?.userName || '',
+      password: '',
+      confirmPassword: '',
+      billingAddress: {
+        address1: user?.billingAddress?.address1 || '',
+        address2: user?.billingAddress?.address2 || '',
+        city: user?.billingAddress?.city || '',
+        postcode: user?.billingAddress?.postcode || '',
+        state: user?.billingAddress?.state || '',
+        email: user?.email || 'juan@example.com',
+        phone: user?.billingAddress?.phone || '',
+        firstName: user?.firstName || ''
+      },
+      shippingAddresses: {
+        address1: '',
+        address2: '',
+        city: '',
+        postcode: '',
+        state: '',
+        email: '',
+        phone: '',
+        firstName: ''
+      }
+    },
+    mode: 'onChange'
+  })
+
+  // IN CASE NEW USER
+  useEffect(() => {
+    form.setValue('password', user ? '12345678a' : '')
+    form.setValue('confirmPassword', user ? '12345678a' : '')
+  }, [user, form])
+
+  // IN CASE NEW ADDRESS
+  useEffect(() => {
+    const fields = [
+      {
+        key: 'shippingAddresses.address1',
+        value: !isShippingAddress ? 'Marbella 1' : ''
+      },
+      {
+        key: 'shippingAddresses.address2',
+        value: !isShippingAddress ? 'Marbella 2' : ''
+      },
+      {
+        key: 'shippingAddresses.city',
+        value: !isShippingAddress ? '12345' : ''
+      },
+      {
+        key: 'shippingAddresses.email',
+        value: !isShippingAddress ? 'juan@example.com' : form.getValues('email')
+      },
+      {
+        key: 'shippingAddresses.firstName',
+        value: !isShippingAddress ? 'Marbella 4' : form.getValues('firstName')
+      },
+      {
+        key: 'shippingAddresses.phone',
+        value: !isShippingAddress ? '12345' : ''
+      },
+      {
+        key: 'shippingAddresses.postcode',
+        value: !isShippingAddress ? '12345' : ''
+      },
+      {
+        key: 'shippingAddresses.state',
+        value: !isShippingAddress ? 'Marbella 4' : ''
+      }
+    ]
+
+    fields.forEach(({ key, value }) => {
+      // @ts-expect-error ignore
+      form.setValue(key, value)
+    })
+  }, [isShippingAddress, form])
+
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting, errors, dirtyFields },
+    reset
+  } = form
+
+  const isDirty = Object.values(dirtyFields).length > 0
+  const noErrors = Object.keys(errors).length === 0
+
+  const onSubmit = async (values: CheckoutUser) => {
+    if (!isDirty && noErrors && !isShippingAddress) {
+      router.replace(`/checkout?userId=${user?.id}&newAddress=false`, {
+        scroll: false
+      })
+      return
+    }
+
+    const response = await checkoutLogic(
+      values,
+      user ? false : true,
+      isShippingAddress
+    )
+
+    if (response?.success) {
+      toast.success(response.message, { duration: 4000 })
+      router.replace(
+        `/checkout?userId=${response.userId}&newAddress=${isShippingAddress}`,
+        {
+          scroll: false
+        }
+      )
+    } else {
+      toast.error(response?.message, { duration: 4000 })
+    }
+  }
+
+  console.log(form.formState.errors)
   return (
-    <section id='billing-address' className='w-full lg:w-1/2'>
-      <h1 className='text-qblack mb-5 text-xl font-medium sm:text-2xl'>
-        Billing Details
-      </h1>
-      <div className='form-area'>
-        <form>
-          <div className='mb-6 items-center sm:flex sm:space-x-5'>
-            <div className='mb-5 sm:mb-0 sm:w-1/2'>
-              <InputCom
+    <Form {...form}>
+      <form onSubmit={handleSubmit(onSubmit)} className='mt-5'>
+        <fieldset className='flex space-x-8'>
+          <div className='w-[570px]'>
+            {/* USER INFO */}
+            <div className='mb-4 flex space-x-2.5'>
+              <FormFieldComponent
+                className='w-full'
+                label='Nombre'
+                placeholder='Juan...'
                 type='text'
-                label='First Name*'
-                placeholder='Demo Name'
-                inputClasses='w-full h-[50px]'
+                control={control}
+                name='firstName'
+                isSubmitting={isSubmitting}
+                autocomplete='given-name'
+              />
+              <FormFieldComponent
+                className='w-full'
+                label='Apellidos'
+                placeholder='perez...'
+                type='text'
+                control={control}
+                name='lastName'
+                isSubmitting={isSubmitting}
+                autocomplete='family-name'
               />
             </div>
-            <div className='flex-1'>
-              <InputCom
+            <div className='input-item mb-4 flex space-x-2.5'>
+              <FormFieldComponent
+                className='w-full'
+                label='Email'
+                placeholder='juan@perez...'
+                type='email'
+                control={control}
+                name='email'
+                isSubmitting={isSubmitting}
+                autocomplete='email'
+              />
+              <FormFieldComponent
+                className='w-full'
+                label='Usuario'
+                placeholder='juanP11...'
                 type='text'
-                label='Last Name*'
-                placeholder='Demo Name'
-                inputClasses='w-full h-[50px]'
+                control={control}
+                name='userName'
+                isSubmitting={isSubmitting}
+                autocomplete='username'
               />
             </div>
-          </div>
-          <div className='mb-6 flex items-center space-x-5'>
-            <div className='w-1/2'>
-              <InputCom
-                type='text'
-                label='Email Address*'
-                placeholder='demoemial@gmail.com'
-                inputClasses='w-full h-[50px]'
-              />
-            </div>
-            <div className='flex-1'>
-              <InputCom
-                type='text'
-                label='Phone Number*'
-                placeholder='012 3  *******'
-                inputClasses='w-full h-[50px]'
-              />
-            </div>
-          </div>
-          <div className='mb-6'>
-            <h1 className='input-label mb-2 block text-[13px] font-normal capitalize text-gray-500'>
-              Country*
-            </h1>
-            <div className='mb-2 flex h-[50px] w-full items-center justify-between border border-[#EDEDED] px-5'>
-              <span className='text-gray-500two text-[13px]'>
-                Select Country
-              </span>
-              <span>
-                <svg
-                  width='11'
-                  height='7'
-                  viewBox='0 0 11 7'
-                  fill='none'
-                  xmlns='http://www.w3.org/2000/svg'
+            <fieldset className='border-t border-accent/20'>
+              {/* BILLING ADDRESS */}
+              <legend className='mb-2 mt-4 block pr-4 text-lg font-semibold leading-6 text-gray-900'>
+                Dirección de Facturación
+              </legend>
+              <div className='input-item mt-4 flex space-x-2.5'>
+                <FormFieldComponent
+                  className='w-full'
+                  label='Dirección'
+                  placeholder='Calle 123...'
+                  type='text'
+                  control={control}
+                  isSubmitting={isSubmitting}
+                  name='billingAddress.address1'
+                  autocomplete='address-line1'
+                />
+                <FormFieldComponent
+                  className='w-full'
+                  label='Dirección 2'
+                  placeholder='Piso 2...'
+                  type='text'
+                  control={control}
+                  isSubmitting={isSubmitting}
+                  name='billingAddress.address2'
+                  autocomplete='address-line2'
+                />
+              </div>
+              <div className='input-item mt-4 flex space-x-2.5'>
+                <FormFieldComponent
+                  className='w-full'
+                  label='Ciudad'
+                  placeholder='Malaga'
+                  type='text'
+                  control={control}
+                  name='billingAddress.city'
+                  isSubmitting={isSubmitting}
+                  autocomplete='address-level2'
+                />
+                <FormFieldComponent
+                  className='w-full'
+                  label='Código Postal'
+                  placeholder='1234'
+                  type='text'
+                  control={control}
+                  name='billingAddress.postcode'
+                  isSubmitting={isSubmitting}
+                  autocomplete='postal-code'
+                />
+              </div>
+              <div className='input-item mt-4 flex space-x-2.5'>
+                <FormFieldComponent
+                  className='w-full'
+                  label='Localidad'
+                  placeholder='Marbella'
+                  type='text'
+                  control={control}
+                  name='billingAddress.state'
+                  isSubmitting={isSubmitting}
+                  autocomplete='address-level1'
+                />
+                <FormFieldComponent
+                  className='w-full'
+                  label='Numero de Teléfono'
+                  placeholder='123456789'
+                  type='text'
+                  control={control}
+                  name='billingAddress.phone'
+                  isSubmitting={isSubmitting}
+                  autocomplete='tel'
+                />
+              </div>
+
+              {/* NEW USER PASSWORD CHECK */}
+              {!user && (
+                <fieldset className='mt-5 space-y-4'>
+                  <legend className='w-full border-b border-accent/20 text-sm text-tertiary'>
+                    Crea tu contraseña y date de alta en Termogar.es España.
+                  </legend>
+                  <CheckoutPasswordCheck form={form} />
+                </fieldset>
+              )}
+              <hr className='my-3 h-px border-none bg-accent/20' />
+
+              {/* NEW ADDRESS CHECKBOX */}
+              <div className='flex items-center space-x-2'>
+                <Checkbox
+                  id='useShippingAddress'
+                  checked={isShippingAddress}
+                  onCheckedChange={() =>
+                    setIsShippingAddress(!isShippingAddress)
+                  }
+                  className='h-4 w-4'
+                />
+                <label
+                  htmlFor='useShippingAddress'
+                  className='text-sm text-tertiary'
                 >
-                  <path
-                    d='M5.4 6.8L0 1.4L1.4 0L5.4 4L9.4 0L10.8 1.4L5.4 6.8Z'
-                    fill='#222222'
-                  ></path>
-                </svg>
-              </span>
-            </div>
-          </div>
-          <div className='mb-6'>
-            <div className='w-full'>
-              <InputCom
-                type='text'
-                label='Address*'
-                placeholder='your address here'
-                inputClasses='w-full h-[50px]'
-              />
-            </div>
-          </div>
-          <div className='mb-6 flex items-center space-x-5'>
-            <div className='w-1/2'>
-              <h1 className='input-label mb-2 block text-[13px] font-normal capitalize text-gray-500'>
-                Town / City*
-              </h1>
-              <div className='flex h-[50px] w-full items-center justify-between border border-[#EDEDED] px-5'>
-                <span className='text-gray-500two text-[13px]'>
-                  Miyami Town
-                </span>
-                <span>
-                  <svg
-                    width='11'
-                    height='7'
-                    viewBox='0 0 11 7'
-                    fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path
-                      d='M5.4 6.8L0 1.4L1.4 0L5.4 4L9.4 0L10.8 1.4L5.4 6.8Z'
-                      fill='#222222'
-                    ></path>
-                  </svg>
-                </span>
+                  Usar una dirección de envío diferente a la de facturación
+                </label>
               </div>
-            </div>
-            <div className='flex-1'>
-              <InputCom
-                type='text'
-                label='Postcode / ZIP*'
-                placeholder=''
-                inputClasses='w-full h-[50px]'
-              />
-            </div>
+
+              {/* SHIPPING ADDRESS */}
+              {isShippingAddress && <ShippingAddressForm form={form} />}
+            </fieldset>
           </div>
-          <div className='mb-10 flex items-center space-x-2'>
-            <div>
-              <input type='checkbox' name='' id='create' />
-            </div>
-            <label
-              htmlFor='create'
-              className='text-qblack select-none text-[15px]'
-            >
-              Create an account?
-            </label>
-          </div>
-          <div>
-            <h1 className='text-qblack mb-3 text-2xl font-medium'>
-              Billing Details
-            </h1>
-            <div className='mb-10 flex items-center space-x-2'>
-              <div>
-                <input type='checkbox' name='' id='address' />
-              </div>
-              <label
-                htmlFor='address'
-                className='text-qblack select-none text-[15px]'
-              >
-                Ship to a different address
-              </label>
-            </div>
-          </div>
-        </form>
-      </div>
-    </section>
+        </fieldset>
+        <div className='mt-4 flex items-center space-x-4 pt-4'>
+          <button
+            type='button'
+            aria-disabled={isSubmitting}
+            onClick={() => reset()}
+            className='hover-200 h-[50px] w-[164px] font-semibold text-red-500 hover:text-gray-900 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
+          >
+            Cancelar
+          </button>
+          <button
+            type='submit'
+            aria-disabled={isSubmitting}
+            className='hover-200 h-[50px] w-[164px] bg-accent text-gray-50 hover:text-gray-900 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
+          >
+            {isSubmitting
+              ? 'Actualizando...'
+              : isDirty
+                ? 'Actualizar'
+                : 'Aceptar'}
+          </button>
+        </div>
+      </form>
+    </Form>
   )
 }
 

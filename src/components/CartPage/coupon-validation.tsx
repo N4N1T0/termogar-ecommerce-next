@@ -2,11 +2,11 @@
 import React, { FormEvent } from 'react'
 
 // * ASSETS IMPORTS
-import InputCom from '@/components/Helpers/InputCom'
 import { toast } from 'sonner'
 import { CartItemType } from '@/types'
 import { Coupon } from '@/types/sanity'
 import { cn } from '@/lib/utils'
+import { Input } from '../ui/input'
 
 const CouponValidation = ({
   cart,
@@ -68,25 +68,25 @@ const CouponValidation = ({
   return (
     <form
       onSubmit={handleCouponValidationSubmit}
-      id='coupon'
+      id='coupon-form'
       className={cn(
         'discount-code mb-5 flex h-[50px] w-full sm:mb-0 sm:w-[270px]',
         className
       )}
     >
       <div className='h-full flex-1'>
-        <InputCom
+        <Input
           type='text'
           placeholder='Código de Cupón'
           name='coupon'
-          inputClasses='disabled:cursor-not-allowed disabled:opacity-50 border-gray-200'
-          isPending={isPending}
+          className='h-full rounded-none border-gray-200'
+          disabled={isPending}
         />
       </div>
       <button
         type='submit'
-        disabled={isPending}
-        className='black-btn hover-200 h-[50px] w-[90px] bg-accent text-gray-950 hover:text-gray-100 disabled:cursor-not-allowed disabled:opacity-50'
+        aria-disabled={isPending}
+        className='black-btn hover-200 text-gray-gray-50 h-[50px] w-[90px] bg-accent hover:text-gray-900 aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
       >
         {isPending ? (
           <span className='animate-pulse text-sm font-semibold'>

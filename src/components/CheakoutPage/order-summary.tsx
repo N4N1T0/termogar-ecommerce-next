@@ -1,12 +1,31 @@
 'use client'
-import { eurilize } from '@/lib/utils'
-import { useCart } from '@/stores'
-import React from 'react'
-import CouponValidation from '@/components/CartPage/coupon-validation'
-import { Coupon } from '@/types/sanity'
-import LoaderStyleOne from '@/components/Helpers/Loaders/LoaderStyleOne'
 
-const OrderSummary = () => {
+// * NEXT.JS IMPORTS
+import React, { MutableRefObject } from 'react'
+import { useRouter } from 'next/navigation'
+import Form from 'next/form'
+
+// * ASSETS IMPORTS
+import { useCart } from '@/stores'
+import LoaderStyleOne from '@/components/Helpers/Loaders/LoaderStyleOne'
+import CouponValidation from '@/components/CartPage/coupon-validation'
+
+// * UTILS IMPORTS
+import { calculateTotal, eurilize } from '@/lib/utils'
+import { Coupon } from '@/types/sanity'
+import paymentLogic from '@/actions/payment-logic'
+import { RedirectForm } from 'redsys-easy'
+import Image from 'next/image'
+import { PlaceholderSquare } from '@/assets'
+
+const OrderSummary = ({
+  userId,
+  newAddress
+}: {
+  userId: string | string[] | undefined
+  newAddress: string | string[] | undefined
+}) => {
+  // * HOOKS
   const { products, rehydrated } = useCart()
   const [coupon, setCoupon] = React.useState<{
     amount: number
@@ -15,22 +34,64 @@ const OrderSummary = () => {
     amount: 0,
     type: 'fixed_cart'
   })
+  const [paymentForm, setPaymentForm] = React.useState<RedirectForm | null>(
+    null
+  )
+  const router = useRouter()
 
-  console.log(coupon)
+  // * VARIABLES
+  const isDisabled = !userId && !newAddress
+  const [subtotal, total, iva, shipping] = calculateTotal(
+    products,
+    '33460',
+    coupon
+  )
+  const refactoredProductsForPayment = products
+    .map((product) => `${product.id}_${product.quantity}`)
+    .join(',')
 
-  const cartTotal = products.reduce((total, item) => {
-    const price = item.price || item.sale?.price || 1
-    return total + price * item.quantity
-  }, 0)
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const value = new FormData(event.currentTarget)
+    const paymentType = value.get('payment-type')
+
+    const response = await paymentLogic(
+      paymentType,
+      total,
+      userId,
+      refactoredProductsForPayment,
+      newAddress,
+      `${coupon.amount}_${coupon.type}`
+    )
+    console.log('🚀 ~ handleSubmit ~ response:', response)
+
+    if (
+      paymentType === 'transferencia-bancaria-directa' &&
+      response.success &&
+      response.data !== null
+    ) {
+      router.push(
+        `${process.env.NEXT_PUBLIC_URL}/exito?userId=${userId}&orderId=${response.data}&gateway=transferencia-bancaria-directa&newAddress=${newAddress}&discountCoupon=${coupon.amount}-${coupon.type}&total=${total}&products=${refactoredProductsForPayment}`
+      )
+    }
+
+    if (
+      paymentType === 'tarjeta' &&
+      response.success &&
+      response.data !== null
+    ) {
+      setPaymentForm(response.data as RedirectForm)
+    }
+  }
 
   return (
-    <section id='order-summary' className='flex-1'>
+    <section id='order-summary' className='top-2 h-fit flex-1 md:sticky'>
       <h2 className='mb-5 text-xl font-medium text-gray-900 sm:text-2xl'>
         Resumen de Orden
       </h2>
 
       <div className='w-full border border-gray-200 px-10 py-[30px]'>
-        <div className='mb-10 flex items-center justify-between border-b border-gray-200'>
+        <div className='mb-4 flex items-center justify-between border-b border-gray-200'>
           <p className='text-[13px] font-medium uppercase text-gray-900'>
             Productos
           </p>
@@ -38,12 +99,32 @@ const OrderSummary = () => {
             total
           </p>
         </div>
-        <div className='mb-7 w-full border-b border-gray-200 pb-3'>
-          <ul className='flex flex-col space-y-5'>
-            {rehydrated ? (
-              products.map(
-                ({ title, quantity, categories, price, sale, id }) => (
-                  <li key={id} className='flex items-center justify-between'>
+        <ul className='mb-4 flex w-full flex-col space-y-5 border-b border-gray-200 pb-3'>
+          {rehydrated ? (
+            products.map(
+              ({
+                title,
+                quantity,
+                categories,
+                price,
+                sale,
+                id,
+                featuredMedia
+              }) => (
+                <li key={id} className='flex items-center justify-between'>
+                  <div className='flex items-center justify-center gap-3'>
+                    <Image
+                      src={featuredMedia?.url || PlaceholderSquare}
+                      width={50}
+                      height={50}
+                      priority
+                      placeholder='blur'
+                      blurDataURL={
+                        featuredMedia?.blur || PlaceholderSquare.blurDataURL
+                      }
+                      alt={title || 'Sin Nombre'}
+                      className='border-px h-[50px] w-[50px] border border-gray-200 object-cover'
+                    />
                     <div>
                       <h4 className='mb-2.5 text-[15px] text-gray-900'>
                         {title}
@@ -61,91 +142,152 @@ const OrderSummary = () => {
                         ))}
                       </p>
                     </div>
-                    <div>
-                      <span className='text-[15px] font-medium text-gray-900'>
-                        {eurilize((sale && sale.price) || price || 0)}
-                      </span>
-                    </div>
-                  </li>
-                )
+                  </div>
+                  <div>
+                    <span className='text-[15px] font-medium text-gray-900'>
+                      {eurilize((sale && sale.price) || price || 0)}
+                    </span>
+                  </div>
+                </li>
               )
-            ) : (
-              <div className='grid w-full place-content-center'>
-                <LoaderStyleOne />
-              </div>
-            )}
-          </ul>
+            )
+          ) : (
+            <li className='grid w-full place-content-center'>
+              <LoaderStyleOne />
+            </li>
+          )}
+        </ul>
+        <div className='mb-5 mt-2 flex justify-between'>
+          <p className='text-[13px] font-medium uppercase text-gray-900'>
+            SUBTOTAL
+          </p>
+          <p className='text-[15px] font-medium uppercase text-accent'>
+            {eurilize(subtotal)}
+          </p>
         </div>
-        <div className='mt-[30px]'>
-          <div className='mb-5 flex justify-between'>
-            <p className='text-[13px] font-medium uppercase text-gray-900'>
-              SUBTOTAL
-            </p>
-            <p className='text-[15px] font-medium uppercase text-accent'>
-              {eurilize(cartTotal)}
-            </p>
-          </div>
+        <div className='mb-5 mt-2 flex justify-between'>
+          <p className='text-[13px] font-medium uppercase text-gray-900'>IVA</p>
+          <p className='text-[15px] font-medium uppercase text-accent'>
+            {eurilize(iva)}
+          </p>
         </div>
-
-        <div className='mt-8 w-full border-b border-gray-200 pb-3'>
-          <div className='mb-2 flex justify-between border-b border-gray-200 pb-2'>
-            <div>
-              <span className='mb-3 block text-xs text-gray-600'>Envío</span>
+        <div className='mb-2 flex justify-between border-b border-gray-200 pb-2'>
+          <div>
+            <span className='mb-3 block text-xs text-gray-600'>Envío</span>
+            {shipping === 0 ? (
               <p className='text-base font-medium text-gray-900'>
                 Envío Gratis
               </p>
-            </div>
-            <p className='text-[15px] font-medium text-gray-900'>+$0</p>
+            ) : (
+              <p className='text-base font-medium text-gray-900'>
+                Gastos de Envío
+              </p>
+            )}
           </div>
-          <CouponValidation
-            cart={products}
-            setCoupon={setCoupon}
-            className='mt-3 sm:w-full'
-          />
+          <p className='text-[15px] font-medium text-gray-900'>
+            +{eurilize(shipping)}
+          </p>
         </div>
+        <CouponValidation
+          cart={products}
+          setCoupon={setCoupon}
+          className='mt-3 sm:w-full'
+        />
 
-        <div className='mb-5 mt-9 flex justify-between'>
+        <div className='border-px mb-2 mt-4 flex justify-between border-y border-gray-200 py-5'>
           <p className='text-2xl font-medium text-gray-900'>Total</p>
-          <p className='text-2xl font-medium text-accent'>$365</p>
+          <p className='text-2xl font-medium text-accent'>
+            {eurilize(total + iva)}
+          </p>
         </div>
-        <ul className='mt-9 flex flex-col space-y-1'>
-          {['Transferencia bancaria directa', 'PayPal', 'Tarjeta'].map(
-            (paymentType) => (
-              <li className='mb-5' key={paymentType}>
-                <div className='mb-4 flex items-center space-x-2.5'>
-                  <div className='input-radio'>
-                    <input
-                      type='radio'
-                      name='payment-type'
-                      value={paymentType.replace(' ', '-')}
-                      className='accent-accent'
-                      id={paymentType.replace(' ', '-')}
-                    />
+        <Form onSubmit={handleSubmit} action=''>
+          <ul className='mt-4 flex flex-col space-y-1'>
+            {['Transferencia bancaria directa', 'PayPal', 'Tarjeta'].map(
+              (paymentType) => (
+                <li className='mb-5' key={paymentType}>
+                  <div className='mb-4 flex items-center space-x-2.5'>
+                    <div className='input-radio'>
+                      <input
+                        type='radio'
+                        name='payment-type'
+                        required
+                        value={paymentType.replace(/ /g, '-').toLowerCase()}
+                        className='accent-accent'
+                        id={paymentType.replace(/ /g, '-').toLowerCase()}
+                      />
+                    </div>
+                    <label
+                      htmlFor={paymentType.replace(/ /g, '-').toLowerCase()}
+                      className='text-normal text-[18px] text-gray-900'
+                    >
+                      {paymentType}
+                    </label>
                   </div>
-                  <label
-                    htmlFor={paymentType.replace(' ', '-')}
-                    className='text-normal text-[18px] text-gray-900'
-                  >
-                    {paymentType}
-                  </label>
-                </div>
-                {paymentType === 'Transferencia bancaria directa' && (
-                  <p className='ml-6 text-[15px] text-gray-600'>
-                    Realiza tu pago directamente en nuestra cuenta bancaria. Por
-                    favor, utiliza tu ID de pedido como referencia de pago.
-                  </p>
-                )}
-              </li>
-            )
+                  {paymentType === 'Transferencia bancaria directa' && (
+                    <small className='-mt-4 block text-gray-600'>
+                      Realiza tu pago directamente en nuestra cuenta bancaria.
+                      Por favor, utiliza tu ID de pedido como referencia de
+                      pago.
+                    </small>
+                  )}
+                </li>
+              )
+            )}
+          </ul>
+          <button
+            type='submit'
+            className='hover-200 flex h-[50px] w-full items-center justify-center bg-accent text-gray-50 hover:text-gray-900 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
+            aria-disabled={isDisabled}
+            disabled={isDisabled}
+          >
+            <span className='text-sm font-semibold uppercase'>
+              Realizar pedido ahora
+            </span>
+          </button>
+          {isDisabled && (
+            <small className='mt-2 block w-full text-center text-gray-600'>
+              Debe completar el formulario para seguir con la compra
+            </small>
           )}
-        </ul>
+        </Form>
       </div>
-      <a href='#'>
-        <div className='hover-200 flex h-[50px] w-full items-center justify-center bg-accent hover:text-gray-100'>
-          <span className='text-sm font-semibold'>Realizar pedido ahora</span>
-        </div>
-      </a>
+      <PaymentForm form={paymentForm} />
     </section>
+  )
+}
+
+const PaymentForm = ({ form }: { form: RedirectForm | null }) => {
+  const formRef: MutableRefObject<HTMLFormElement | null> = React.useRef(null)
+
+  React.useEffect(() => {
+    // Enviar automáticamente el formulario cuando el componente se monta
+    if (formRef.current && form !== null) {
+      formRef.current.submit()
+    }
+  }, [form])
+
+  if (!form) {
+    return null
+  }
+
+  return (
+    <form id='paymentForm' ref={formRef} action={form?.url} method='POST'>
+      <input
+        type='hidden'
+        name='Ds_SignatureVersion'
+        value={form?.body.Ds_SignatureVersion}
+      />
+      <input
+        type='hidden'
+        name='Ds_MerchantParameters'
+        value={form?.body.Ds_MerchantParameters}
+      />
+      <input
+        type='hidden'
+        name='Ds_Signature'
+        value={form?.body.Ds_Signature}
+      />
+    </form>
   )
 }
 
