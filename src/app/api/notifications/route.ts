@@ -21,8 +21,8 @@ export const POST = async (req: NextRequest) => {
     Ds_MerchantParameters: req.headers.get('Ds_MerchantParameters') as string
   }
 
-  const userId = req.nextUrl.searchParams.get('userId')
-  const products = req.nextUrl.searchParams.get('products')
+  // const userId = req.nextUrl.searchParams.get('userId')
+  // const products = req.nextUrl.searchParams.get('products')
 
   const {
     Ds_Order: orderId,
@@ -43,10 +43,12 @@ export const POST = async (req: NextRequest) => {
 
     // TODO: Send email to user
 
-     return NextResponse.json({ success: true, message: 'Payment completed' });
+    return NextResponse.json({ success: true, message: 'Payment completed' })
   } else {
     console.error('Payment failed')
-    return NextResponse.json({ success: false, message: 'Payment failed' }, { status: 400 });
+    return NextResponse.json(
+      { success: false, message: 'Payment failed' },
+      { status: 400 }
+    )
   }
-})
-
+}
