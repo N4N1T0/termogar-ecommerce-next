@@ -99,7 +99,7 @@ export default function CartPopup({ className }: { className?: string }) {
               </Link>
               <Link href='/checkout'>
                 <div className='h-[50px] w-full'>
-                  <div className='yellow-btn'>
+                  <div className='flex h-full w-full items-center justify-center bg-accent text-center text-green-50 hover:text-gray-900'>
                     <span className='text-sm'>Pagar</span>
                   </div>
                 </div>

@@ -17,25 +17,22 @@ export const addressSchema = z.object({
 })
 
 export const costumerSchema = z.object({
-  email: z.string().email('Correo Electrónico no es válido.'),
+  email: z.string().email('Correo Electrónico no es válido.').optional(),
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   userName: z.string().optional(),
   billingAddress: addressSchema,
-  shippingAddresses: z.array(addressSchema).optional(),
+  shippingAddresses: addressSchema,
   isPayingCustomer: z.boolean().optional()
 })
 
 export const passwordReset = z
   .object({
-    password: z
-      .string()
-      .regex(/^(?=.*\d).{8,}$/, {
-        message:
-          'La contraseña debe tener al menos 8 caracteres e incluir al menos un dígito.'
-      })
-      .optional(),
-    confirmPassword: z.string().optional()
+    password: z.string().regex(/^(?=.*\d).{8,}$/, {
+      message:
+        'La contraseña debe tener al menos 8 caracteres e incluir al menos un dígito.'
+    }),
+    confirmPassword: z.string()
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
@@ -115,6 +112,25 @@ export const rateReviewSchema = z.object({
   voteType: z.union([z.literal('up'), z.literal('down')])
 })
 
+export const checkoutUser = z
+  .object({
+    ...costumerSchema.shape,
+    password: z.string().regex(/^(?=.*\d).{8,}$/, {
+      message:
+        'La contraseña debe tener al menos 8 caracteres e incluir al menos un dígito.'
+    }),
+    confirmPassword: z.string()
+  })
+  .superRefine(({ confirmPassword, password }, ctx) => {
+    if (confirmPassword !== password) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'las contraseñas no coinciden',
+        path: ['confirmPassword']
+      })
+    }
+  })
+
 // * TYPES
 export type RateReviewSchema = z.infer<typeof rateReviewSchema>
 export type ReviewSchema = z.infer<typeof reviewSchema>
@@ -124,3 +140,4 @@ export type AddressSchema = z.infer<typeof addressSchema>
 export type CostumerSchema = z.infer<typeof costumerSchema>
 export type PasswordSchema = z.infer<typeof passwordReset>
 export type SignupSchema = z.infer<typeof signupSchema>
+export type CheckoutUser = z.infer<typeof checkoutUser>

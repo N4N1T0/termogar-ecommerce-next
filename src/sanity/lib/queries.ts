@@ -569,21 +569,22 @@ export const GET_COUPONS_FOR_VALIDATION =
 
 // * USER QUERIES
 export const GET_USER_INFO =
-  defineQuery(`*[_type =='costumer' && _id == $id][0]{
+  defineQuery(`*[_type == 'costumer' && _id == $id][0]{
   "id": _id,
   "active": isPayingCustomer,
   userName,
   lastName,
   firstName,
   password,
-    email,
+  email,
   "avatar": avatarUrl.asset->{
     "url": url,
     "blur": metadata.lqip
   },
- "billingAddress": billingAddress[0],
-  shippingAddresses
-}`)
+  "billingAddress": billingAddress[0],
+  "shippingAddresses": shippingAddresses | order(createdAt desc)
+}
+`)
 
 export const GET_USER_FOR_AUTH =
   defineQuery(`*[_type =='costumer' && email == $email][0]{

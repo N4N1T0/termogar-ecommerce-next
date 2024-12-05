@@ -97,6 +97,7 @@ export type Address = {
   state?: string
   email?: string
   phone?: string
+  createdAt?: string
 }
 
 export type Costumer = {
@@ -2234,7 +2235,7 @@ export type GET_COUPONS_FOR_VALIDATIONResult = {
   usage_limit_per_user: number | null
 } | null
 // Variable: GET_USER_INFO
-// Query: *[_type =='costumer' && _id == $id][0]{  "id": _id,  "active": isPayingCustomer,  userName,  lastName,  firstName,  password,    email,  "avatar": avatarUrl.asset->{    "url": url,    "blur": metadata.lqip  }, "billingAddress": billingAddress[0],  shippingAddresses}
+// Query: *[_type == 'costumer' && _id == $id][0]{  "id": _id,  "active": isPayingCustomer,  userName,  lastName,  firstName,  password,  email,  "avatar": avatarUrl.asset->{    "url": url,    "blur": metadata.lqip  },  "billingAddress": billingAddress[0],  "shippingAddresses": shippingAddresses | order(createdAt desc)}
 export type GET_USER_INFOResult = {
   id: string
   active: boolean | null
@@ -2311,31 +2312,6 @@ export type GET_ORDERS_BY_USER_IDResult = Array<{
     quantity: number | null
   }> | null
 }>
-// Variable: GET_STATIC_BLOG_OR_NEWS_SLUG
-// Query: *[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(date desc) {  "slug": slug.current  }
-export type GET_STATIC_BLOG_OR_NEWS_SLUGResult = Array<{
-  slug: string | null
-}>
-// Variable: GET_STATIC_TAGS_SLUGS
-// Query: *[_type =='tag'] | order(date desc) {  "slug": slug.current  }
-export type GET_STATIC_TAGS_SLUGSResult = Array<{
-  slug: string | null
-}>
-// Variable: GET_STATIC_CATEGORIES_SLUGS
-// Query: *[_type =='category'] | order(date desc) {  "slug": slug.current  }
-export type GET_STATIC_CATEGORIES_SLUGSResult = Array<{
-  slug: string | null
-}>
-// Variable: GET_STATIC_COSTUMER_SERVICES_PAGES_SUG
-// Query: *[_type =='page' && status == 'publish']{  "slug": slug.current,}
-export type GET_STATIC_COSTUMER_SERVICES_PAGES_SUGResult = Array<{
-  slug: string | null
-}>
-// Variable: GET_STATIC_PRODUCTS_SLUG
-// Query: *[_type=='product' && status=='publish' && defined(price)]{  "slug": slug.current,}
-export type GET_STATIC_PRODUCTS_SLUGResult = Array<{
-  slug: string | null
-}>
 
 // Query TypeMap
 import '@sanity/client'
@@ -2364,13 +2340,8 @@ declare module '@sanity/client' {
     '*[_type==\'productTag\' && slug.current == $slug][0]{\n  name, \n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  createdAt,\n  dimensions,\n  "stockQuantity": stock_quantity,\n  options,\n  date,\n  "tags": productTags[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}\n  }': GET_TAG_AND_PRODUCTSResult
     '*[_type==\'product\' && status==\'publish\' && defined(price) && slug.current == $slug][0]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  createdAt,\n  dimensions,\n  "stockQuantity": stock_quantity,\n  options,\n  date,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n},\n"downloads": downloads.asset->{\n    title,\n    url\n  },\nvariations,\n"relatedProducts": relatedProducts[]->{\n  "id": _id,\n}\n}': GET_WHOLE_PRODUCT_BY_SLUGResult
     '*[_type==\'coupon\' && code == $code][0] {\n   amount,\n    date_expires,\n    discount_type,\n    limit_usage_to_x_items,\n    maximum_amount,\n    minimum_amount,\n    "product_categories": product_categories[]->{\n     "id": _id\n    },\n    "product_ids": product_ids[]->{\n     "id": _id  \n   },\n    usage_limit,\n    usage_count,\n    usage_limit_per_user\n}': GET_COUPONS_FOR_VALIDATIONResult
-    '*[_type ==\'costumer\' && _id == $id][0]{\n  "id": _id,\n  "active": isPayingCustomer,\n  userName,\n  lastName,\n  firstName,\n  password,\n    email,\n  "avatar": avatarUrl.asset->{\n    "url": url,\n    "blur": metadata.lqip\n  },\n "billingAddress": billingAddress[0],\n  shippingAddresses\n}': GET_USER_INFOResult
+    '*[_type == \'costumer\' && _id == $id][0]{\n  "id": _id,\n  "active": isPayingCustomer,\n  userName,\n  lastName,\n  firstName,\n  password,\n  email,\n  "avatar": avatarUrl.asset->{\n    "url": url,\n    "blur": metadata.lqip\n  },\n  "billingAddress": billingAddress[0],\n  "shippingAddresses": shippingAddresses | order(createdAt desc)\n}\n': GET_USER_INFOResult
     '*[_type ==\'costumer\' && email == $email][0]{\n  "id": _id,\n   userName,\n  lastName,\n  firstName,\n  password,\n    email,\n   "avatar": avatarUrl.asset->{\n    "url": url,\n  },\n}': GET_USER_FOR_AUTHResult
     '*[_type ==\'order\' && userEmail._ref == $id ]{\n  "id": _id,\n  purchaseDate,\n  currierCode,\n  status,\n  expectedDeliveryDate,\n  paymentMethod,\n  "shippingAddress": shippingAddress[0],\n  totalAmount,\n  products[]{\n      product-> {\n        "id": _id,\n        title,\n        price,\n        "featuredMedia": {\n          "url": featuredMedia.asset->url,\n            "blur": featuredMedia.asset->metadata.lqip\n        },\n        sale\n      },\n      quantity\n    }\n}': GET_ORDERS_BY_USER_IDResult
-    "*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(date desc) {\n  \"slug\": slug.current\n  }": GET_STATIC_BLOG_OR_NEWS_SLUGResult
-    '*[_type ==\'tag\'] | order(date desc) {\n  "slug": slug.current\n  }': GET_STATIC_TAGS_SLUGSResult
-    '*[_type ==\'category\'] | order(date desc) {\n  "slug": slug.current\n  }': GET_STATIC_CATEGORIES_SLUGSResult
-    "*[_type =='page' && status == 'publish']{\n  \"slug\": slug.current,\n}": GET_STATIC_COSTUMER_SERVICES_PAGES_SUGResult
-    "*[_type=='product' && status=='publish' && defined(price)]{\n  \"slug\": slug.current,\n}": GET_STATIC_PRODUCTS_SLUGResult
   }
 }

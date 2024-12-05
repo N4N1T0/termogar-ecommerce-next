@@ -147,6 +147,7 @@ const FormFieldComponent = <T extends FieldValues>({
                 type='file'
                 onChange={(e) => field.onChange(e.target.files)} // Handle file input change
                 disabled={isSubmitting}
+                autoComplete={autocomplete || type || ''}
                 className='rounded-none border border-gray-200'
               />
             ) : type === 'textarea' ? (
@@ -196,7 +197,7 @@ const FormFieldComponent = <T extends FieldValues>({
               />
             )}
           </FormControl>
-          <FormMessage />
+          <FormMessage className='font-bold text-accent' />
         </FormItem>
       )}
     />

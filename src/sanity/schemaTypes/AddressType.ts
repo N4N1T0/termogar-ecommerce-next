@@ -44,6 +44,14 @@ export const addressType = defineType({
       name: 'phone',
       title: 'Teléfono',
       type: 'string'
+    },
+    {
+      name: 'createdAt',
+      title: 'Fecha de Creación',
+      type: 'datetime',
+      options: {
+        readOnly: true
+      }
     }
   ],
   preview: {

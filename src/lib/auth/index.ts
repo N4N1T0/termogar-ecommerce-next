@@ -97,7 +97,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         // Create a new user in Sanity
         await sanityClientWrite.createIfNotExists({
           _type: 'costumer',
-          _id: `customer-${profile?.id || user?.id}`,
+          _id: `customer-${user?.id}`,
           email: profile?.email || user.email || '',
           _createdAt: new Date().toISOString(),
           _updatedAt: new Date().toISOString(),
@@ -121,11 +121,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return false
       }
     },
-    jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
+    async jwt({ token, user, account, profile }) {
+      if (account?.provider === 'google') {
+        const searchedUser = await sanityClientWrite.fetch(GET_USER_FOR_AUTH, {
+          email: profile?.email
+        })
+
+        if (user) {
+          token.id = searchedUser?.id
+        }
+        return token
+      } else {
+        if (user) {
+          token.id = user.id
+        }
+        return token
       }
-      return token
     },
     session({ session, token }) {
       session.user.id = token.id as string

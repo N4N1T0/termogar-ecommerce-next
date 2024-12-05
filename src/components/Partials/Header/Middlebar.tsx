@@ -23,7 +23,6 @@ const Middlebar = async ({
   categories: GET_MENU_CATEGORIESResult
 }) => {
   const session = await auth()
-  console.log('🚀 ~ session:', session)
 
   return (
     <div className={`h-[86px] w-full bg-white ${className}`}>

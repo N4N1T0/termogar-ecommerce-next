@@ -1,9 +1,12 @@
 // * NEXT.JS IMPORTS
 import { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
 // * ASSETS IMPORTS
 import ProfileDashboard from '@/components/Auth/Profile/profile-dashboard'
 import BreadcrumbCom from '@/components/BreadcrumbCom'
+
+// * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_ORDERS_BY_USER_ID, GET_USER_INFO } from '@/sanity/lib/queries'
 
@@ -17,8 +20,12 @@ export async function generateMetadata({
   const searchesUser = await sanityClientRead.fetch(GET_USER_INFO, { id })
 
   return {
-    title: searchesUser?.firstName || 'Sin Titulo',
-    description: `Perfil de Usuario de ${searchesUser?.firstName}`
+    title:
+      searchesUser?.firstName ||
+      searchesUser?.lastName ||
+      searchesUser?.userName ||
+      'Usuario',
+    description: `Perfil de Usuario de ${searchesUser?.firstName || searchesUser?.lastName || searchesUser?.userName || searchesUser?.email || 'Usuario'}`
   }
 }
 
@@ -36,6 +43,8 @@ const ProfilePage = async ({
   const searchedOrders = await sanityClientRead.fetch(GET_ORDERS_BY_USER_ID, {
     id
   })
+
+  if (!searchesUser) return redirect('/')
 
   return (
     <main className='w-full'>

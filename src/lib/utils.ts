@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ProductCardType, YoptopReviews } from '@/types'
+import { CartItemType, ProductCardType, YoptopReviews } from '@/types'
 import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import crypto from 'crypto'
 import { randomBytes, pbkdf2Sync } from 'crypto'
-import { GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult } from '@/types/sanity'
+import {
+  Coupon,
+  GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
+} from '@/types/sanity'
 import { toast } from 'sonner'
 
 const SALT_LENGTH = 16 // Length of the salt
@@ -426,6 +429,13 @@ export const filterProductsByFilter = (
   })
 }
 
+/**
+ * Extracts an array of unique categories from the given data.
+ *
+ * @param data - The data to extract categories from.
+ *
+ * @returns An array of unique categories.
+ */
 export const getUniqueCategories = (data: Data): Category[] => {
   const categoryMap = new Map<string, Category>()
 
@@ -442,6 +452,18 @@ export const getUniqueCategories = (data: Data): Category[] => {
   return Array.from(categoryMap.values())
 }
 
+/**
+ * Shares a given URL on a specified social media platform or copies it to the clipboard.
+ *
+ * @param platform - The platform to share the URL on. Can be 'facebook', 'whatsapp', 'twitter', or 'copy'.
+ * @param url - The URL to be shared.
+ * @param text - Optional text to include with the share. Defaults to an empty string.
+ * @param hashtags - Optional hashtags to include with the share, applicable only for Twitter. Defaults to an empty string.
+ *
+ * Constructs the appropriate sharing URL for the specified platform and opens it in a new browser tab.
+ * If the platform is 'copy', the URL is copied to the clipboard instead, and a toast notification is displayed.
+ * Displays an error notification if the platform is unsupported or if copying the link fails.
+ */
 export const shareLink = (
   platform: 'facebook' | 'whatsapp' | 'twitter' | 'copy',
   url: string,
@@ -479,6 +501,14 @@ export const shareLink = (
   window.open(intentUrl, '_blank')
 }
 
+/**
+ * Calculates the average rating from a collection of reviews.
+ *
+ * @param data - An optional array of YoptopReviews objects, where each review contains a score.
+ *               If the array is undefined or empty, the function returns 0.
+ *
+ * @returns The average score of the reviews as a number. If no reviews are provided, returns 0.
+ */
 export const calculateAverageRating = (data: YoptopReviews | undefined) => {
   if (!data || !data || data.length === 0) {
     return 0 // Return 0 if no reviews are present
@@ -490,6 +520,14 @@ export const calculateAverageRating = (data: YoptopReviews | undefined) => {
   return Math.abs(averageRating) // Round to 2 decimal places
 }
 
+/**
+ * Checks if the current date is within a given sale period.
+ *
+ * @param sale - An object containing the sale's price, from date, and to date.
+ *               The from and to dates must be in ISO format.
+ *
+ * @returns true if the current date is within the sale period, false otherwise.
+ */
 export const isWithinSalePeriod = (
   sale: { price?: number; from?: string; to?: string } | null
 ): boolean => {
@@ -504,6 +542,16 @@ export const isWithinSalePeriod = (
   return currentDate >= fromDate && currentDate <= toDate
 }
 
+/**
+ * Finds the most used category in a given array of products.
+ *
+ * @param products - An array of product objects with a categories property.
+ *                   Each product's categories property must be an array of
+ *                   objects with a name string property.
+ *
+ * @returns The name of the most used category, or null if the input array is
+ *          empty or if no products have categories.
+ */
 export const getMostUsedCategory = (
   products: ProductCardType[]
 ): string | null => {
@@ -533,6 +581,98 @@ export const getMostUsedCategory = (
   })
 
   return mostUsedCategory
+}
+
+/**
+ * Calculates the total cost of an order, including the subtotal, total, IVA
+ * (21% of total), and shipping cost.
+ *
+ * @param count - An array of products with their respective quantities.
+ * @param discount - An optional discount percentage to apply to the subtotal.
+ * @param postalCode - The postal code of the shipping address.
+ * @param cuponDiscount - The discount percentage of the coupon code.
+ *
+ * @returns An array of strings containing the subtotal, total, IVA, and shipping
+ *          cost, all formatted as euros.
+ */
+export const calculateTotal = (
+  count: CartItemType[],
+  postalCode: string | null | undefined,
+  cupon: {
+    amount: number
+    type: Coupon['discount_type']
+  }
+): [number, number, number, number] => {
+  let subTotal = 0
+
+  for (const item of count) {
+    subTotal += Number(item.sale ? item.sale.price : item.price) * item.quantity
+  }
+
+  subTotal = Math.max(subTotal, 0)
+
+  const shippingCost = getShippingCost(postalCode)
+
+  const total = subTotal + shippingCost
+  const iva = total * 0.21
+
+  return [subTotal, total - total * (cupon.amount / 100), iva, shippingCost]
+}
+
+/**
+ * Checks if a given postal code is within the range of the Canary Islands.
+ *
+ * @param postalCode - The postal code to check.
+ *
+ * @returns True if the postal code is within the Canary Islands, false otherwise.
+ */
+const isCanaryIslands = (postalCode: number) => {
+  return postalCode >= 35001 && postalCode <= 35211 ? true : false
+}
+
+/**
+ * Calculates the shipping cost based on the given postal code.
+ *
+ * If the postal code is null or undefined, the function returns 0.
+ *
+ * If the postal code is within the Canary Islands, the function returns 10.
+ * Otherwise, the function returns 0.
+ *
+ * @param postalCode - The postal code to calculate the shipping cost for.
+ * @returns The shipping cost, in euros.
+ */
+export const getShippingCost = (postalCode: string | null | undefined) => {
+  if (!postalCode) return 0
+
+  const canaryIslands = isCanaryIslands(Number(postalCode))
+
+  let shippingCost = 0
+
+  if (canaryIslands) {
+    shippingCost = 10
+  } else {
+    shippingCost = 0
+  }
+
+  return shippingCost
+}
+
+/**
+ * Generates a random order ID with fewer than 7 characters.
+ * @returns A random alphanumeric string of 6 characters.
+ */
+export const generateOrderId = (): string => {
+  const characters =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const length = 6 // Maximum length of the order ID
+  let orderId = ''
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length)
+    orderId += characters[randomIndex]
+  }
+
+  return orderId
 }
 
 // * TYPES HELPERS
