@@ -31,6 +31,8 @@ const WishlistFooterBtn = () => {
       }
     })
 
+    removeAllProducts()
+
     toast.success('Todos los productos se han añadido al carrito', {
       duration: 2000
     })
@@ -40,7 +42,7 @@ const WishlistFooterBtn = () => {
     <div className='mt-[30px] flex w-full justify-start sm:justify-end'>
       <div className='items-center sm:flex sm:space-x-[30px]'>
         <button type='button' onClick={handleCleanWishlist}>
-          <div className='mb-5 w-full text-sm font-semibold text-red-500 transition-colors duration-150 ease-in-out hover:text-black sm:mb-0'>
+          <div className='mb-5 w-full text-sm font-medium text-accent transition-colors duration-150 ease-in-out hover:text-black sm:mb-0'>
             Borrar la Lista
           </div>
         </button>
@@ -50,7 +52,7 @@ const WishlistFooterBtn = () => {
             className='yellow-btn'
             onClick={handleAddAllToTheCart}
           >
-            <div className='w-full text-sm font-semibold'>
+            <div className='hover-200 w-full bg-accent text-sm font-medium text-gray-100 hover:text-gray-900'>
               Agregar todos al Carrito
             </div>
           </button>

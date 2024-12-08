@@ -47,9 +47,9 @@ export default function RootLayout({
             unstyled: true,
             classNames: {
               toast:
-                'bg-white border border-gray-200 text-gray-900 flex items-center justify-between text-sm py-3 px-5 gap-5',
+                'bg-white border border-gray-200 text-gray-900 flex items-center justify-between text-xs py-3 px-5 gap-5',
               actionButton:
-                'bg-accent text-gray-100 hover:text-gray-900 hover-200 px-3 py-1.5 rounded-xs',
+                'bg-accent text-gray-100 hover:text-gray-900 hover-200 px-3 py-1.5 rounded-xs w-1/4',
               error:
                 'bg-red-200 text-gray-100 hover:text-gray-900 hover-200 px-3 py-1.5 rounded-xs',
               warning:

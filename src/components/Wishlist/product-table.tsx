@@ -27,7 +27,7 @@ const WishlistProductRow = ({ product }: { product: ProductCardType }) => {
           </div>
           <div className='flex flex-1 flex-col'>
             <Link
-              href={`/productos/${slug}`}
+              href={`/producto/${slug}`}
               className='text-qblack text-[15px] font-medium transition-colors duration-150 ease-in-out hover:text-accent'
             >
               {title || 'Sin Nombre'}
