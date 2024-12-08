@@ -53,10 +53,10 @@ const CategoriesPage = async () => {
           { name: 'Categorias', path: '/categorias' }
         ]}
       />
-      <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
+      <div className='grid grid-cols-1 gap-8 pt-10 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>
         {refactoredMenu.map((category) => (
           <div key={category.id} className='overflow-hidden bg-white shadow-lg'>
-            <div className='relative h-56'>
+            <div className='relative h-56 p-5'>
               <Image
                 src={category.featuredImage?.url || PlaceholderSquare}
                 alt={category.name || 'Sin Nombre'}
@@ -65,7 +65,9 @@ const CategoriesPage = async () => {
                 blurDataURL={
                   category.featuredImage?.blur || PlaceholderSquare.blurDataURL
                 }
-                fill
+                className='aspect-square h-full w-full object-fill'
+                width={300}
+                height={300}
               />
               <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-20'>
                 <h2 className='text-2xl font-bold text-white'>
