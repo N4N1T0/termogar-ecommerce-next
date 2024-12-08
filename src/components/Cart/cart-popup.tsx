@@ -52,7 +52,7 @@ export default function CartPopup({ className }: { className?: string }) {
                       </div>
                       <div className='flex h-full flex-1 flex-col justify-center'>
                         <Link
-                          href={`/productos/${slug}`}
+                          href={`/producto/${slug}`}
                           className='title font-600 hover-200 mb-2 line-clamp-2 text-[13px] leading-4 text-gray-900 hover:text-accent'
                         >
                           {title || 'Sin Nombre'}
