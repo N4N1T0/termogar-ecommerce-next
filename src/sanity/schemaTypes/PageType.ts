@@ -68,7 +68,11 @@ export const pageType = defineType({
       of: [
         { type: 'block' },
         { type: 'image' },
-        { type: 'reference', to: [{ type: 'externalImage' }] }
+        {
+          type: 'reference',
+          to: [{ type: 'externalImage' }],
+          name: 'externalImage'
+        },
       ]
     }),
     defineField({

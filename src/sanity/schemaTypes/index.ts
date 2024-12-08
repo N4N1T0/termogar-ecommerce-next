@@ -17,6 +17,7 @@ import { brandType } from './BrandType'
 import { costumerType } from './CostumerType'
 import { addressType } from './AddressType'
 import { orderType } from './OrderType'
+import { link } from './LinkType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -35,6 +36,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     brandType,
     costumerType,
     addressType,
+    link,
     // @ts-expect-error ignore
     orderType
   ]

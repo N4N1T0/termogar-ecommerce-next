@@ -343,7 +343,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && _id in $ids]{
+  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && _id in $ids][0...4]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
