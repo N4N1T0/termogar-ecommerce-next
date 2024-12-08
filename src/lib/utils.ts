@@ -429,27 +429,80 @@ export const filterProductsByFilter = (
   })
 }
 
-/**
- * Extracts an array of unique categories from the given data.
- *
- * @param data - The data to extract categories from.
- *
- * @returns An array of unique categories.
- */
-export const getUniqueCategories = (data: Data): Category[] => {
-  const categoryMap = new Map<string, Category>()
+export const groupCategoriesWithExtras = (data: Data) => {
+  const firstLevelCategories = new Map<string, Category>()
+  const childCategoryIds = new Set<string>()
 
+  // Collect all first-level categories
   data?.products.forEach((product) => {
     product?.categories?.forEach((category) => {
-      // Use the category `id` as a unique key
-      if (!categoryMap.has(category.id)) {
-        categoryMap.set(category.id, category)
-      }
+      firstLevelCategories.set(category.id, category)
+
+      // Collect child category IDs for filtering
+      category.children?.forEach((child) => {
+        childCategoryIds.add(child.id)
+      })
     })
   })
 
-  // Convert the Map values back to an array
-  return Array.from(categoryMap.values())
+  const result = new Map<
+    string,
+    { main: Omit<Category, 'children'>; children: Category[] }
+  >()
+  const extraCategories: Category[] = []
+
+  // Iterate through first-level categories
+  firstLevelCategories.forEach((category) => {
+    if (category.main) {
+      // If it's a main category, initialize its group
+      if (!result.has(category.id)) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { children, ...mainWithoutChildren } = category
+        result.set(category.id, { main: mainWithoutChildren, children: [] })
+      }
+    } else {
+      // If it's not a main category, check if it belongs to any main's children
+      let addedToMain = false
+
+      firstLevelCategories.forEach((possibleMainCategory) => {
+        if (possibleMainCategory.main) {
+          // If the main category references this category as a child
+          const isChildOfMain = possibleMainCategory.children?.some(
+            (child) => child.id === category.id
+          )
+
+          if (isChildOfMain) {
+            const parent = result.get(possibleMainCategory.id)
+            if (parent) {
+              parent.children.push(category)
+              addedToMain = true
+            }
+          }
+        }
+      })
+
+      // If not added to any main, add to extras
+      if (!addedToMain) {
+        extraCategories.push(category)
+      }
+    }
+  })
+
+  // Add the "Otras" group for extra categories
+  const finalResult = Array.from(result.values())
+  if (extraCategories.length > 0) {
+    finalResult.push({
+      main: {
+        id: 'otras',
+        name: 'Otras',
+        slug: 'otras',
+        main: false
+      },
+      children: extraCategories
+    })
+  }
+
+  return finalResult
 }
 
 /**
@@ -676,10 +729,16 @@ export const generateOrderId = (): string => {
 }
 
 // * TYPES HELPERS
-type Category = {
+export type Category = {
   id: string
   name: string | null
   slug: string | null
+  main: boolean | null
+  children: Array<{
+    id: string
+    name: string | null
+    slug: string | null
+  }>
 }
 
 type Product = {

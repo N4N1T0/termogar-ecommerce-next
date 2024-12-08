@@ -392,8 +392,15 @@ export const GET_PRODUCTS_AND_BRAND_FOR_FILTERING =
     "id": _id,
     name,
     "slug": slug.current,
+    main,
+    "children": *[_type=='productCategory' && references(^._id)]
+   {
+      "id": _id,
+    name, 
+    "slug": slug.current, 
+   },
   },
-    price
+    price,
   }
   }`)
 
