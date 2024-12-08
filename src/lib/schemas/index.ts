@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 // * SCHEMAS
 export const subscribeSchema = z.object({
-  email: z.string().email('Invalid email format').nonempty('Email is required')
+  email: z.string().email('Email invalido, por favor ingrese un email valido.')
 })
 
 export const addressSchema = z.object({
