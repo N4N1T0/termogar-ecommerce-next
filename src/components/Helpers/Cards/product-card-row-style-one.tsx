@@ -25,7 +25,7 @@ const ProductCardRowStyleOne = ({
     <div
       data-aos='fade-left'
       className={cn(
-        'product-row-card-style-one group relative h-[250px] w-full overflow-hidden bg-white',
+        'product-row-card-style-one group relative h-[200px] w-full overflow-hidden bg-white',
         className
       )}
     >
@@ -49,26 +49,39 @@ const ProductCardRowStyleOne = ({
                 {title}
               </p>
             </Link>
-            <p className='price'>
+            <div className='price'>
               <span
-                className={`main-price font-600 text-[22px] ${
+                className={`${
                   sale && isOnSale
-                    ? 'text-gray-500 line-through'
-                    : 'text-secondary'
+                    ? 'font-400 block text-[14px] text-gray-500 line-through'
+                    : 'font-600 text-[22px] text-secondary'
                 }`}
               >
-                {eurilize(price || 0)}
+                {eurilize(price || 0)} {sale && isOnSale && 'Precio Normal'}
               </span>
-              <span className='offer-price font-600 ml-2 text-[22px] text-secondary'>
-                {sale && isOnSale ? eurilize(sale?.price || 0) : ''}
+              {sale && isOnSale && (
+                <span className='offer-price font-600 text-[24px] text-secondary'>
+                  {eurilize(sale?.price || 0)}
+                </span>
+              )}
+              <span className='iva-price font-600 text-[18px] text-gray-800'>
+                {eurilize(
+                  sale && isOnSale
+                    ? (sale?.price || 0) + (sale?.price || 0) * 0.21
+                    : (price || 0) + (price || 0) * 0.21
+                )}
+                <small className='ml-1 font-normal underline'>IVA incl.</small>
               </span>
-            </p>
-            <AddToCart className='w-fit' product={datas as ProductCardType} />
+            </div>
+            <AddToCart
+              className='mt-2 w-fit'
+              product={datas as ProductCardType}
+            />
           </div>
         </div>
       </div>
       {/* quick-access-btns */}
-      <div className='quick-access-btns absolute -right-10 top-[30px] flex flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:right-4'>
+      <div className='quick-access-btns absolute -left-10 top-[30px] flex flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:left-4'>
         <ProductQuickViewDynamic data={datas as ProductCardType} />
         <WishlistBtn product={datas as ProductCardType} />
         <CompaireBtn product={datas as ProductCardType} />

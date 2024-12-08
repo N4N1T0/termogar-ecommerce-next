@@ -584,8 +584,12 @@ export const calculateAverageRating = (data: YoptopReviews | undefined) => {
 export const isWithinSalePeriod = (
   sale: { price?: number; from?: string; to?: string } | null
 ): boolean => {
-  if (!sale || !sale.from || !sale.to) {
-    return false // Return false if sale is null or missing date fields
+  if (!sale) {
+    return false
+  }
+
+  if (!sale.from || !sale.to) {
+    return true
   }
 
   const currentDate = new Date()

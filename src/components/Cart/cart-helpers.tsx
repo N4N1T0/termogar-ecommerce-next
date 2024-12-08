@@ -68,7 +68,7 @@ const CartProductTableQuantity = ({ id }: { id: string }) => {
         variant='outline'
         size='icon'
         aria-label='decrease'
-        className='rounded-none bg-accent transition-colors duration-150 ease-in hover:text-white'
+        className='rounded-none bg-accent text-gray-100 transition-colors duration-150 ease-in hover:text-gray-900'
         disabled={quantity === 1}
         onClick={decrement}
       >
@@ -79,7 +79,7 @@ const CartProductTableQuantity = ({ id }: { id: string }) => {
         variant='outline'
         size='icon'
         aria-label='increase'
-        className='rounded-none bg-accent transition-colors duration-150 ease-in hover:text-white'
+        className='rounded-none bg-accent text-gray-100 transition-colors duration-150 ease-in hover:text-gray-900'
         onClick={increment}
       >
         <Plus className='h-4 w-4' />

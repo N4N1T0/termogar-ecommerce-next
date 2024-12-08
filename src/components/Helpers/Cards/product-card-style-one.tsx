@@ -25,6 +25,7 @@ export default function ProductCardStyleOne<T>({
     stockQuantity && stockQuantity < 5 ? stockQuantity : null
 
   const isOnSale = isWithinSalePeriod(sale)
+  console.log('🚀 ~ isOnSale:', isOnSale)
 
   return (
     <div
@@ -71,8 +72,8 @@ export default function ProductCardStyleOne<T>({
 
         {/* SALE */}
         {sale && isOnSale && (
-          <div className='product-type absolute right-[14px] top-[17px]'>
-            <span className='font-700 rounded-full bg-tertiary px-3 py-[6px] text-[9px] uppercase leading-none tracking-wider text-white'>
+          <div className='absolute right-[14px] top-[17px]'>
+            <span className='font-700 rounded-full bg-accent px-3 py-[6px] text-xs uppercase leading-none tracking-wider text-white'>
               Oferta
             </span>
           </div>
@@ -80,7 +81,7 @@ export default function ProductCardStyleOne<T>({
       </div>
 
       {/* DETAILS */}
-      <div className='product-card-details relative px-[30px] pb-[30px]'>
+      <div className='product-card-details relative px-[30px] pb-[20px]'>
         {/* add to card button */}
         <div className='absolute left-0 top-36 h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px]'>
           <AddToCart product={datas as ProductCardType} />
@@ -90,18 +91,30 @@ export default function ProductCardStyleOne<T>({
             {title}
           </p>
         </Link>
-        <p className='price'>
+        <div className='price'>
           <span
-            className={`main-price font-600 text-[22px] ${
-              sale && isOnSale ? 'text-gray-500 line-through' : 'text-secondary'
+            className={`${
+              sale && isOnSale
+                ? 'font-400 block text-[14px] text-gray-500 line-through'
+                : 'font-600 text-[22px] text-secondary'
             }`}
           >
-            {eurilize(price || 0)}
+            {eurilize(price || 0)} {sale && isOnSale && 'Precio Normal'}
           </span>
-          <span className='offer-price font-600 ml-2 text-[22px] text-secondary'>
-            {sale && isOnSale ? eurilize(sale?.price || 0) : ''}
+          {sale && isOnSale && (
+            <span className='offer-price font-600 text-[24px] text-secondary'>
+              {eurilize(sale?.price || 0)}
+            </span>
+          )}
+          <span className='iva-price font-600 ml-2 text-[18px] text-gray-800'>
+            {eurilize(
+              sale && isOnSale
+                ? (sale?.price || 0) + (sale?.price || 0) * 0.21
+                : (price || 0) + (price || 0) * 0.21
+            )}
+            <small className='ml-1 font-normal underline'>IVA incl.</small>
           </span>
-        </p>
+        </div>
       </div>
 
       {/* quick-access-btns */}
