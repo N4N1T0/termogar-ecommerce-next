@@ -42,7 +42,7 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
       </td>
       <td className='px-2 py-4 text-center'>
         <div className='flex items-center justify-center'>
-          ${eurilize(price || 0)}
+          {eurilize(price || 0)}
         </div>
       </td>
       <td className='px-2 py-4 text-center'>
@@ -57,7 +57,7 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
       </td>
       <td className='py-4 text-center'>
         <span className='text-[15px] font-normal'>
-          ${eurilize((sale?.price || price || 1) * quantity)}
+          {eurilize((sale?.price || price || 1) * quantity)}
         </span>
       </td>
       <td className='py-4'>

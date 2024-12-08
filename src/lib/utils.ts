@@ -651,10 +651,10 @@ export const getMostUsedCategory = (
 export const calculateTotal = (
   count: CartItemType[],
   postalCode: string | null | undefined,
-  cupon: {
+  cupon?: {
     amount: number
     type: Coupon['discount_type']
-  }
+  } | null
 ): [number, number, number, number] => {
   let subTotal = 0
 
@@ -669,7 +669,7 @@ export const calculateTotal = (
   const total = subTotal + shippingCost
   const iva = total * 0.21
 
-  return [subTotal, total - total * (cupon.amount / 100), iva, shippingCost]
+  return [subTotal, total - total * (cupon?.amount || 0), iva, shippingCost]
 }
 
 /**
