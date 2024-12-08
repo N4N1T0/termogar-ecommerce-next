@@ -6,6 +6,7 @@ import {
   SanityImageCrop,
   SanityImageHotspot
 } from './sanity'
+import { Category } from '@/lib/utils'
 
 //* SECTION STYLES
 export interface SectionStyleOneProps {
@@ -143,6 +144,11 @@ export interface ProductCardRowStyleTwo<T> extends ProductCardStyleOneProps<T> {
 export interface ProductCardRowStyleTwoProps<T>
   extends ProductCardStyleOneProps<T> {
   className?: string
+}
+
+export interface GroupedCategory {
+  main: Omit<Category, 'children'> // Main category without the `children` field
+  children: Category[] // Array of child categories
 }
 
 export interface BlogSideBarProps {
