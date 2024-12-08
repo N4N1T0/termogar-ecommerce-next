@@ -142,7 +142,6 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
     }
   }
 
-  console.log(form.formState.errors)
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)} className='mt-5'>

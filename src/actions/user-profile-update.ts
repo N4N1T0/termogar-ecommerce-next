@@ -36,7 +36,6 @@ const userProfileUpdate = async (
     const mimeType = avatarUrl?.split(',')[0]?.match(/:(.*?);/)?.[1]
 
     if (!base64Data || !mimeType) {
-      console.error('Invalid Base64 image string')
       return
     }
 

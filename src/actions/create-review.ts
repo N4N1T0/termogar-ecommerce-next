@@ -47,7 +47,6 @@ const createReview = async (values: ReviewSchema) => {
     const response = await yoptop.createReviews(options)
 
     if (response.data !== 'ok') {
-      console.error('Error with the response:', response.status)
       return {
         success: false,
         message: 'Error en el registro de la reseña, por favor trate de nuevo'
@@ -59,8 +58,6 @@ const createReview = async (values: ReviewSchema) => {
       message: 'Reseña registrada y enviada, gracias por su colaboración'
     }
   } catch (error) {
-    console.error('Error submitting review:', error)
-
     return {
       success: false,
       message:

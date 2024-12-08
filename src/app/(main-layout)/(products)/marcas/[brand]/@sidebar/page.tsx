@@ -23,7 +23,6 @@ const ProductSidebar = async ({
 
   const { maxPrice, minPrice } = getPriceRange(searchedData?.products)
   const categoriesFilter = groupCategoriesWithExtras(searchedData)
-  console.log('🚀 ~ categoriesFilter:', categoriesFilter)
 
   return (
     <aside className='sticky top-0 m-4 h-screen w-72 divide-y-[1px] overflow-y-auto text-balance bg-white px-4 pt-10'>

@@ -24,7 +24,6 @@ const rateReview = async (values: RateReviewSchema) => {
     const response = await yoptop.rateReview(options, reviewId, voteType)
 
     if (response.data !== 'OK') {
-      console.error('Error with the response:', response)
       return {
         success: false,
         message:
@@ -37,8 +36,6 @@ const rateReview = async (values: RateReviewSchema) => {
       message: 'valoración registrada y enviada, gracias por su colaboración'
     }
   } catch (error) {
-    console.error('Error submitting review:', error)
-
     return {
       success: false,
       message:

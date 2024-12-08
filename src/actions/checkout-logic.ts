@@ -119,7 +119,6 @@ const checkoutLogic = async (
       userId
     }
   } catch (error) {
-    console.error('Error in checkoutLogic:', error)
     return {
       success: false,
       message:

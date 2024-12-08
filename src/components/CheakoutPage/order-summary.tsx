@@ -63,7 +63,6 @@ const OrderSummary = ({
       newAddress,
       `${coupon.amount}_${coupon.type}`
     )
-    console.log('🚀 ~ handleSubmit ~ response:', response)
 
     if (
       paymentType === 'transferencia-bancaria-directa' &&

@@ -28,8 +28,6 @@ const paymentLogic = async (
   // Random ID for the transaction
   const orderId = randomTransactionId()
 
-  console.log(paymentType)
-
   if (paymentType === 'tarjeta') {
     // Get the currency information
     const currencyInfo = CURRENCIES[currency]

@@ -148,7 +148,7 @@ const ReviewForm = ({
             aria-disabled={isSubmitting}
             className='hover-200 bg-accent px-10 py-1 text-white hover:text-gray-500 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
           >
-            {isSubmitting ? 'Submitting...' : 'Submit Review'}
+            {isSubmitting ? 'Enviando...' : 'Enviar Reseña'}
           </button>
         )}
       </form>

@@ -25,7 +25,6 @@ export default function ProductCardStyleOne<T>({
     stockQuantity && stockQuantity < 5 ? stockQuantity : null
 
   const isOnSale = isWithinSalePeriod(sale)
-  console.log('🚀 ~ isOnSale:', isOnSale)
 
   return (
     <div
