@@ -3,9 +3,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 // * ASSETS IMPORTS
-import Facebook from '@/components/Helpers/icons/Facebook'
-import Instagram from '@/components/Helpers/icons/Instagram'
-import Youtube from '@/components/Helpers/icons/Youtube'
 import { bigLogo } from '@/assets'
 import Gateways from '@/assets/images/payment-getways.png'
 
@@ -13,6 +10,9 @@ import Gateways from '@/assets/images/payment-getways.png'
 import siteData from '@/data/site-data.json'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_MENU_CATEGORIES } from '@/sanity/lib/queries'
+import Instagram from '@/components/Helpers/icons/Instagram'
+import Facebook from '@/components/Helpers/icons/Facebook'
+import Youtube from '@/components/Helpers/icons/Youtube'
 
 const Footer = async () => {
   const { footerLinks } = siteData
@@ -40,21 +40,27 @@ const Footer = async () => {
                 <span className='text-[15px] text-gray-500'>{item}</span>
               </li>
             ))}
-            <li className='flex items-center space-x-5 text-gray-600'>
+            <li className='flex items-center space-x-2 text-gray-600'>
               <Link
                 href='https://www.instagram.com/termogar.es/'
                 target='_blank'
+                className='flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
               >
-                <Instagram className='fill-current hover:text-gray-900' />
+                <Instagram className='hover-200 fill-gray-100 hover:fill-gray-900' />
               </Link>
-              <Link href='https://es-es.facebook.com/termogar' target='_blank'>
-                <Facebook className='fill-current hover:text-gray-900' />
+              <Link
+                href='https://es-es.facebook.com/termogar'
+                target='_blank'
+                className='flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
+              >
+                <Facebook className='hover-200 fill-gray-100 hover:fill-gray-900' />
               </Link>
               <Link
                 href='https://www.youtube.com/channel/UC2bX_gn3IX27PP2fyDpbhbg'
                 target='_blank'
+                className='flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
               >
-                <Youtube className='fill-current hover:text-gray-900' />
+                <Youtube className='hover-200 fill-gray-100 hover:fill-gray-900' />
               </Link>
             </li>
           </ul>

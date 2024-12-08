@@ -243,7 +243,7 @@ export const GET_BRANDS = defineQuery(`*[_type=='brand']{
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && (title match $search || excerpt match $search)]{
+  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && (title match $search || excerpt match $search) && count((productCategories[]->slug.current)[@ in $category]) > 0]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,

@@ -43,7 +43,7 @@ export default function Navbar({
                       <ChevronDownIcon className='fill-current' />
                     </span>
                   </span>
-                  <div className='sub-menu absolute -left-10 top-[60px] w-[150px]'>
+                  <div className='sub-menu absolute -left-10 top-[60px] z-50 w-[150px]'>
                     <div
                       className='flex w-full flex-col items-center justify-between gap-3 bg-white py-3'
                       style={{

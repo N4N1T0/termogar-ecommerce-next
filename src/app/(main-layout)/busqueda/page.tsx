@@ -17,8 +17,8 @@ export async function generateMetadata({
   const { search, category } = await searchParams
 
   return {
-    title: `Resultados de la busqueda para "${search}"`,
-    description: `Busqueda de producto en la categoría de ${category}`
+    title: `Resultados para "${search}"`,
+    description: `Busqueda de Resultados para "${search}" de productos en la categoría de ${category}`
   }
 }
 

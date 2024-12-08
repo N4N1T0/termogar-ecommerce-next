@@ -733,8 +733,8 @@ export type Category = {
   id: string
   name: string | null
   slug: string | null
-  main: boolean | null
-  children: Array<{
+  main?: boolean | null
+  children?: Array<{
     id: string
     name: string | null
     slug: string | null
