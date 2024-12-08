@@ -42,7 +42,23 @@ export default function RootLayout({
         className={`overflow-x-hidden bg-gray-50 antialiased ${korbFonts.className}`}
       >
         {children}
-        <Toaster richColors />
+        <Toaster
+          toastOptions={{
+            unstyled: true,
+            classNames: {
+              toast:
+                'bg-white border border-gray-200 text-gray-900 flex items-center justify-between text-sm py-3 px-5 gap-5',
+              actionButton:
+                'bg-accent text-gray-100 hover:text-gray-900 hover-200 px-3 py-1.5 rounded-xs',
+              error:
+                'bg-red-200 text-gray-100 hover:text-gray-900 hover-200 px-3 py-1.5 rounded-xs',
+              warning:
+                'bg-yellow-200 text-gray-100 hover:text-gray-900 hover-200 px-3 py-1.5 rounded-xs',
+              success:
+                'bg-green-200 text-gray-100 hover:text-gray-900 hover-200 px-3 py-1.5 rounded-xs'
+            }
+          }}
+        />
       </body>
     </html>
   )
