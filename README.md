@@ -2,15 +2,11 @@
 
 ## TODOS
 
-- [ ] Categorias Hijas
 - [ ] SKU
 - [ ] Delete Globally at the end
 - [ ] Delete Dependencies from Migration (SANITY)
 - [ ] TIPSA Envió
-- [ ] Delete unused UI components
 
-## PAYMENT METHODS
+## Tell to Jorge
 
-- [ ] Redsys
-- [ ] Paypal
-- [ ] Bank Tranfer
+- [ ] Brand Problem

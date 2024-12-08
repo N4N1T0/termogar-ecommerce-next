@@ -9,6 +9,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "prepare": "husky",
+    "email": "email dev --port 4000 --dir ./src/emails",
     "typegen": "pnpm dlx sanity@latest schema extract && pnpm dlx sanity@latest typegen generate"
   },
   "lint-staged": {
@@ -30,6 +31,7 @@
     "@radix-ui/react-slider": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.1",
+    "@react-email/components": "^0.0.29",
     "@sanity/client": "^6.24.1",
     "@sanity/schema": "^3.65.1",
     "@sanity/uuid": "^3.0.2",
