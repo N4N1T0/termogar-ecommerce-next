@@ -5,8 +5,8 @@ import { defineMigration } from 'sanity/migrate'
 
 // * UTILS
 import { getDataTypes } from '../import-wp/lib/utils/getDataTypes'
-import { sanityFetchImages } from '../import-wp/lib/utils/wpImageFetch'
-import { sanityFetchDocuments } from '../import-wp/lib/utils/wpDocumentsFetch'
+// import { sanityFetchImages } from '../import-wp/lib/utils/wpImageFetch'
+// import { sanityFetchDocuments } from '../import-wp/lib/utils/wpDocumentsFetch'
 
 // * TRANSFORMERS
 import { transformToProduct } from '../import-wp/lib'
@@ -22,11 +22,11 @@ export default defineMigration({
 
   async *migrate(docs, context) {
     const client = createClient(context.client.config())
-    const existingImages = await sanityFetchImages(client)
-    const existingDocuments = await sanityFetchDocuments(client)
-    const existingProducts: Record<string, string>[] = await client.fetch(
-      `*[_type == "product"]{_id}`
-    )
+    // const existingImages = await sanityFetchImages(client)
+    // const existingDocuments = await sanityFetchDocuments(client)
+    // const existingProducts: Record<string, string>[] = await client.fetch(
+    //   `*[_type == "product"]{_id}`
+    // )
 
     const { wpType } = getDataTypes(process.argv)
     // const skipPages = [25, 50, 74]
@@ -56,11 +56,11 @@ export default defineMigration({
               if (wpType === 'products') {
                 product = product as WP_REST_API_Product
                 const doc = await transformToProduct(
-                  product,
-                  client,
-                  existingImages,
-                  existingDocuments,
-                  existingProducts
+                  product
+                  // client,
+                  // existingImages,
+                  // existingDocuments,
+                  // existingProducts
                 )
                 return doc
               }
@@ -78,11 +78,10 @@ export default defineMigration({
               if (doc._id !== 'product-21367') {
                 return client
                   .patch(doc._id)
-                  .setIfMissing({ variations: [] })
-                  .insert('after', 'variations[-1]', doc.variations || [])
-                  .commit({
-                    autoGenerateArrayKeys: true
+                  .set({
+                    sale: doc.sale
                   })
+                  .commit()
               }
               return Promise.resolve() // Ensure `map` returns a promise even if condition is false
             })

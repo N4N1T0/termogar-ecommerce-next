@@ -29,6 +29,15 @@ const ProductCardRowStyleOne = ({
         className
       )}
     >
+      {/* SALE */}
+      {sale && isOnSale && (
+        <div className='absolute left-[14px] top-[17px]'>
+          <span className='font-700 rounded-full bg-accent px-3 py-[6px] text-xs uppercase leading-none tracking-wider text-white'>
+            Oferta
+          </span>
+        </div>
+      )}
+
       <div className='flex h-full w-full items-center space-x-5 p-2 sm:p-5 lg:p-[30px]'>
         <div className='h-full w-1/3 lg:w-1/2'>
           <Image
@@ -81,7 +90,7 @@ const ProductCardRowStyleOne = ({
         </div>
       </div>
       {/* quick-access-btns */}
-      <div className='quick-access-btns absolute -left-10 top-[30px] flex flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:left-4'>
+      <div className='quick-access-btns absolute -left-10 top-[60px] flex flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:left-4'>
         <ProductQuickViewDynamic data={datas as ProductCardType} />
         <WishlistBtn product={datas as ProductCardType} />
         <CompaireBtn product={datas as ProductCardType} />
