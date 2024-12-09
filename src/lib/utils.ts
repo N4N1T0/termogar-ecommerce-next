@@ -562,7 +562,9 @@ export const shareLink = (
  *
  * @returns The average score of the reviews as a number. If no reviews are provided, returns 0.
  */
-export const calculateAverageRating = (data: YoptopReviews | undefined) => {
+export const calculateAverageRating = (
+  data: YoptopReviews | undefined
+): number => {
   if (!data || !data || data.length === 0) {
     return 0 // Return 0 if no reviews are present
   }
@@ -570,7 +572,7 @@ export const calculateAverageRating = (data: YoptopReviews | undefined) => {
   const totalScore = data.reduce((sum, review) => sum + review.score, 0)
   const averageRating = totalScore / data.length
 
-  return Math.abs(averageRating) // Round to 2 decimal places
+  return Number(Math.abs(averageRating).toFixed(0))
 }
 
 /**

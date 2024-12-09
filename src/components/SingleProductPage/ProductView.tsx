@@ -77,7 +77,7 @@ const ProductView = ({
       {/* MAIN IMAGE */}
       <div data-aos='fade-right' className='lg:mr-12 lg:w-1/2 xl:mr-16'>
         <div className='w-full'>
-          <div className='relative mb-3 flex h-[600px] w-full items-center justify-center overflow-hidden border border-gray-200 p-3'>
+          <div className='relative mb-3 flex h-[600px] w-full items-center justify-center overflow-hidden border border-gray-300 p-3'>
             <Image
               src={imgUrl.url || PlaceholderSquare}
               alt={title || 'Sin Nombre'}
@@ -105,16 +105,21 @@ const ProductView = ({
                     setImgUrl({ url: img?.url || '', blur: img?.blur || '' })
                   }
                   key={img?.url}
-                  className='w-h-28 h-28 cursor-pointer border border-gray-500 p-4'
+                  className={`w-h-28 h-28 cursor-pointer border p-4 ${
+                    imgUrl.url !== img?.url
+                      ? 'border-gray-500 opacity-50'
+                      : 'pointer-events-none border-accent'
+                  }`}
                 >
                   <Image
                     src={img?.url || PlaceholderSquare}
                     alt={`${title}-${index}` || 'Sin Nombre'}
-                    className={`h-full w-full object-contain ${
-                      imgUrl.url !== img?.url
-                        ? 'opacity-50'
-                        : 'pointer-events-none'
-                    } `}
+                    className='h-full w-full object-contain'
+                    width={100}
+                    height={100}
+                    placeholder='blur'
+                    blurDataURL={PlaceholderSquare.blurDataURL}
+                    quality={100}
                   />
                 </div>
               ))}

@@ -50,6 +50,12 @@ const LegalPages = async ({
     GET_COSTUMER_SERVICES_PAGE,
     {
       slug: [slug]
+    },
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 43200
+      }
     }
   )
   if (!searchedPage) return notFound()

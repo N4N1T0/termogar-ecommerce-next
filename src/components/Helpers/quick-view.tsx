@@ -1,10 +1,6 @@
-'use client'
-
 // * NEXTJS IMPORTS
-import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { useState } from 'react'
 
 // * ASSETS IMPORTS
 import {
@@ -15,28 +11,24 @@ import {
   DialogTrigger,
   DialogHeader
 } from '@/components/ui/dialog'
-import { Expand } from 'lucide-react'
+import { Expand, Star } from 'lucide-react'
 import AddToCart from '@/components/Helpers/quantity'
-import { PlaceholderProductCard } from '@/assets'
+import ImagesState from '@/components/Helpers/images-state'
 
 // * UTILS IMPORTS
 import { ProductQuickViewProps } from '@/types'
-import { cn, eurilize } from '@/lib/utils'
+import { calculateAverageRating, eurilize } from '@/lib/utils'
 import { PortableText } from 'next-sanity'
+import { yoptop } from '@/lib/fetchers'
 
-const ProductQuickView = ({ data }: ProductQuickViewProps) => {
-  const {
-    featuredMedia,
-    title,
-    sale,
-    price,
-    categories,
-    otherImages,
-    content,
-    excerpt
-  } = data
+const ProductQuickView = async ({ data }: ProductQuickViewProps) => {
+  const { sale, price, categories, content, excerpt, tags } = data
 
-  const [selectedImage, setSelectedImage] = useState(0)
+  const reviews = await yoptop
+    .fetchReviews(data?.id.split('-').slice(-1)[0] || '')
+    .then((res) => (res.status !== null ? res : null))
+
+  const score = calculateAverageRating(reviews?.reviews)
 
   return (
     <Dialog modal>
@@ -49,40 +41,7 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
           <DialogDescription className='sr-only'>Quick View</DialogDescription>
         </DialogHeader>
         <div className='grid h-full gap-4 p-0 md:grid-cols-2'>
-          <div className='flex h-full max-h-[80vh] gap-4 overflow-hidden'>
-            {otherImages && otherImages.length > 1 && (
-              <div className='flex flex-col gap-4 overflow-y-auto px-2 py-4'>
-                {otherImages.map((image, index) => (
-                  <button
-                    key={image?.url}
-                    onClick={() => setSelectedImage(index)}
-                    className={cn(
-                      'h-20 w-16 overflow-hidden border',
-                      selectedImage === index ? 'ring-2 ring-accent' : ''
-                    )}
-                  >
-                    <Image
-                      src={image?.url || PlaceholderProductCard}
-                      alt={`Product ${index + 1}`}
-                      className='h-full w-full object-cover'
-                      width={100}
-                      height={100}
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
-            <div className='aspect-[3/4] h-full flex-1 overflow-hidden p-4'>
-              <Image
-                src={featuredMedia?.url || PlaceholderProductCard}
-                alt={title || 'Product'}
-                title={title || 'Product'}
-                className='h-full w-full object-cover'
-                width={300}
-                height={400}
-              />
-            </div>
-          </div>
+          <ImagesState data={data} />
           <div className='flex h-full max-h-[80vh] flex-col overflow-hidden'>
             <div className='flex-1 space-y-4 overflow-y-auto p-4 md:p-6'>
               <div className='space-y-2'>
@@ -98,25 +57,48 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
                     ))}
                   </ul>
                 )}
-                <div className='flex items-center gap-4'>
-                  {/* TODO: ADD RATING */}
-                  {/* <div className='flex'>
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className={cn(
-                          'h-4 w-4',
-                          i < 3
-                            ? 'fill-primary'
-                            : 'fill-muted stroke-muted-foreground'
-                        )}
-                      />
+                <hr />
+                {tags?.length !== undefined && tags?.length > 0 && (
+                  <ul className='flex gap-2'>
+                    {tags.map(({ id, name, slug }) => (
+                      <li
+                        key={id}
+                        className='text-muted-foreground hover-200 text-sm underline hover:text-accent'
+                      >
+                        <Link href={`/categorias/${slug}`}>{name}</Link>
+                      </li>
                     ))}
-                  </div> */}
-                  <span className='text-muted-foreground text-sm'>
-                    Sin Reseñas
-                  </span>
-                </div>
+                  </ul>
+                )}
+                {reviews !== undefined &&
+                reviews?.reviews !== undefined &&
+                reviews.reviews.length > 0 ? (
+                  <div
+                    data-aos='fade-up'
+                    className='mb-6 flex items-center space-x-[10px]'
+                  >
+                    <div className='flex text-yellow-300'>
+                      {Array(score)
+                        .fill('reviews')
+                        .map((star, index) => (
+                          <Star
+                            key={`${star}-${index}`}
+                            className={
+                              index < score ? 'fill-yellow-300' : 'fill-white'
+                            }
+                            stroke='currentColor'
+                          />
+                        ))}
+                    </div>
+                    <span className='text-sm font-normal text-gray-900'>
+                      {reviews?.reviews?.length} Reviews
+                    </span>
+                  </div>
+                ) : (
+                  <small className='mb-6'>
+                    Sin Reseñas, Puedes colaborar con la tuya
+                  </small>
+                )}
                 <div className='flex items-baseline gap-2 border-b pb-3'>
                   {sale ? (
                     <>
@@ -156,11 +138,6 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
   )
 }
 
-const ProductQuickViewDynamic = dynamic(
-  () => Promise.resolve(ProductQuickView),
-  {
-    ssr: false
-  }
-)
+const ProductQuickViewDynamic = dynamic(() => Promise.resolve(ProductQuickView))
 
 export default ProductQuickViewDynamic

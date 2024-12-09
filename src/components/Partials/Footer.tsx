@@ -17,7 +17,11 @@ import Youtube from '@/components/Helpers/icons/Youtube'
 const Footer = async () => {
   const { footerLinks } = siteData
 
-  const searchedCategories = await sanityClientRead.fetch(GET_MENU_CATEGORIES)
+  const searchedCategories = await sanityClientRead.fetch(
+    GET_MENU_CATEGORIES,
+    {},
+    { cache: 'force-cache', next: { revalidate: 43200 } }
+  )
   return (
     <footer className='footer-section-wrapper bg-white print:hidden'>
       <div className='container-x mx-auto block pt-5'>

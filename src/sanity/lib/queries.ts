@@ -72,15 +72,11 @@ export const GET_COSTUMER_SERVICES_SIDEBAR_MENU =
   "id": _id,
   "slug": slug.current,
   title,
-  "link": link.current
 }`)
 
 export const GET_COSTUMER_SERVICES_PAGE =
   defineQuery(`*[_type =='page' && status == 'publish' && slug.current in $slug][0]{
-  "id": _id,
-  "slug": slug.current,
   title,
-  "link": link.current,
   excerpt,
   content
 }`)
@@ -260,11 +256,8 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
   content,
   price,
   sale,
-  dimensions,
   "stockQuantity": stock_quantity,
-  options,
-  date,
-  "tags": productTags[]->{
+  "tags": productTag[]->{
     "id": _id,
     name,
     "slug": slug.current
@@ -293,11 +286,8 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
   content,
   price,
   sale,
-  dimensions,
   "stockQuantity": stock_quantity,
-  options,
-  date,
-  "tags": productTags[]->{
+  "tags": productTag[]->{
     "id": _id,
     name,
     "slug": slug.current
@@ -326,12 +316,8 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
   content,
   price,
   sale,
-  createdAt,
-  dimensions,
   "stockQuantity": stock_quantity,
-  options,
-  date,
-  "tags": productTags[]->{
+  "tags": productTag[]->{
     "id": _id,
     name,
     "slug": slug.current
@@ -360,12 +346,8 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS =
   content,
   price,
   sale,
-  createdAt,
-  dimensions,
   "stockQuantity": stock_quantity,
-  options,
-  date,
-  "tags": productTags[]->{
+  "tags": productTag[]->{
     "id": _id,
     name,
     "slug": slug.current
@@ -401,12 +383,8 @@ export const GET_BRANDS_AND_PRODUCTS =
   content,
   price,
   sale,
-  createdAt,
-  dimensions,
   "stockQuantity": stock_quantity,
-  options,
-  date,
-  "tags": productTags[]->{
+  "tags": productTag[]->{
     "id": _id,
     name,
     "slug": slug.current
@@ -469,12 +447,8 @@ export const GET_CATEGORY_AND_PRODUCTS =
   content,
   price,
   sale,
-  createdAt,
-  dimensions,
   "stockQuantity": stock_quantity,
-  options,
-  date,
-  "tags": productTags[]->{
+  "tags": productTag[]->{
     "id": _id,
     name,
     "slug": slug.current
@@ -529,12 +503,8 @@ export const GET_TAG_AND_PRODUCTS =
   content,
   price,
   sale,
-  createdAt,
-  dimensions,
   "stockQuantity": stock_quantity,
-  options,
-  date,
-  "tags": productTags[]->{
+  "tags": productTag[]->{
     "id": _id,
     name,
     "slug": slug.current
@@ -611,7 +581,6 @@ export const GET_COUPONS_FOR_VALIDATION =
 export const GET_USER_INFO =
   defineQuery(`*[_type == 'costumer' && _id == $id][0]{
   "id": _id,
-  "active": isPayingCustomer,
   userName,
   lastName,
   firstName,

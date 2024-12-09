@@ -49,8 +49,6 @@ const CostumerServicePageIndex = async () => {
 
   const { content } = searchedPage
 
-  // TODO: FIX THE LINKS IN THE CONTENT
-
   return (
     <section
       id='costumer-service-page-index'

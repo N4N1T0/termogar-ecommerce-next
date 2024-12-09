@@ -16,7 +16,8 @@ const SectionStyleOne = async ({
 }: SectionStyleOneProps) => {
   const searchedProducts = await sanityClientRead.fetch(
     GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY,
-    { type: sectionTitle === null ? ['Calentadores'] : [sectionTitle] }
+    { type: sectionTitle === null ? ['Calentadores'] : [sectionTitle] },
+    { cache: 'force-cache', next: { revalidate: 600 } }
   )
   return (
     <section
