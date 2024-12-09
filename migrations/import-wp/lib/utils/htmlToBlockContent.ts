@@ -53,33 +53,12 @@ export async function htmlToBlockContent(
 
           return undefined
         }
-      },
-      {
-        deserialize(node, next, block) {
-          const el = node as HTMLElement
-
-          if (node.nodeName.toLowerCase() === 'a') {
-            const url = el.getAttribute('href')
-
-            if (!url) {
-              return undefined
-            }
-
-            const refactoredUrl = url.split('/').filter(Boolean).pop()
-
-            return block({
-              _type: 'link',
-              text: el.textContent || '',
-              link: refactoredUrl
-            })
-          }
-        }
       }
     ]
   })
 
   // Note: Multiple documents may be running this same function concurrently
-  const limit = pLimit(1)
+  const limit = pLimit(5)
 
   const blocksWithUploads = blocks.map((block) =>
     limit(async () => {
@@ -97,6 +76,8 @@ export async function htmlToBlockContent(
         ?.shift()
         ?.replace(dimensions, '')
         .toLocaleLowerCase()
+
+      console.log(slug)
 
       const imageId = await fetch(`${BASE_URL}/media?search=${slug}`)
         .then((res) => (res.ok ? res.json() : null))

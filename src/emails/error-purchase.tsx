@@ -3,16 +3,15 @@ import * as React from 'react'
 import TailwindWrapper from './utils/tailwind-wrapper'
 import { eurilize } from '@/lib/utils'
 import { CartItemType } from '@/types'
-import { Address, Costumer } from '@/types/sanity'
+import { Address, GET_USER_INFOResult } from '@/types/sanity'
 
 interface ErrorPurchaseProps {
-  customerName: string
   orderNumber: string
   totalAmount: string
   purchaseDate: string
   products: CartItemType[]
   gateway: string
-  user: Costumer
+  user: GET_USER_INFOResult
   iva: string
   shippingAddress: Address
   billingAddress: Address
@@ -20,7 +19,6 @@ interface ErrorPurchaseProps {
 }
 
 export const ErrorPurchase = ({
-  customerName,
   orderNumber,
   totalAmount,
   purchaseDate,
@@ -32,7 +30,7 @@ export const ErrorPurchase = ({
   billingAddress,
   discountCoupon
 }: ErrorPurchaseProps) => {
-  const previewText = `Problema en la compra de ${customerName}`
+  const previewText = `Problema en la compra de ${user?.firstName} ${user?.lastName}`
 
   return (
     <TailwindWrapper previewText={previewText}>
@@ -44,10 +42,11 @@ export const ErrorPurchase = ({
       </Text>
       <Text className='mb-6 text-base text-gray-700'>
         Se ha producido un error inesperado durante la creación de la compra
-        para el cliente {customerName}. La compra se ha completado con éxito,
-        pero los detalles no se han registrado correctamente en nuestro sistema.
-        Por favor, revisen el dashboard del gateway de pagos ({gateway}) para
-        verificar la confirmación de la compra.
+        para el cliente {user?.firstName} {user?.lastName}. La compra se ha
+        completado con éxito, pero los detalles no se han registrado
+        correctamente en nuestro sistema. Por favor, revisen el dashboard del
+        gateway de pagos ({gateway}) para verificar la confirmación de la
+        compra.
       </Text>
       {/* ORDER SUMMARY */}
       <Section

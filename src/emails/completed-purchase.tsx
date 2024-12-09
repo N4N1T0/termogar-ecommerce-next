@@ -3,16 +3,15 @@ import * as React from 'react'
 import TailwindWrapper from './utils/tailwind-wrapper'
 import { eurilize } from '@/lib/utils'
 import { CartItemType } from '@/types'
-import { Address, Costumer } from '@/types/sanity'
+import { Address, GET_USER_INFOResult } from '@/types/sanity'
 
 interface CompletedPurchaseProps {
-  customerName: string
   orderNumber: string
   totalAmount: string
   purchaseDate: string
   products: CartItemType[]
   gateway: string
-  user: Costumer
+  user: GET_USER_INFOResult
   iva: string
   shippingAddress: Address
   billingAddress: Address
@@ -20,7 +19,6 @@ interface CompletedPurchaseProps {
 }
 
 export const CompletedPurchase = ({
-  customerName,
   orderNumber,
   totalAmount,
   purchaseDate,
@@ -32,7 +30,7 @@ export const CompletedPurchase = ({
   billingAddress,
   discountCoupon
 }: CompletedPurchaseProps) => {
-  const previewText = `hola ${customerName}! su compra ha sido realizada con exito`
+  const previewText = `hola ${user?.firstName} ${user?.lastName}! su compra ha sido realizada con exito`
 
   return (
     <TailwindWrapper previewText={previewText}>
@@ -40,7 +38,9 @@ export const CompletedPurchase = ({
         Confirmación de Pago via{' '}
         <span className='font-bold uppercase'>{gateway}</span>
       </Heading>
-      <Text className='mb-4 text-base text-gray-700'>Hola {customerName},</Text>
+      <Text className='mb-4 text-base text-gray-700'>
+        Hola {user?.firstName},
+      </Text>
       <Text className='mb-6 text-base text-gray-700'>
         Gracias por tu compra. Estamos emocionados de confirmar que tu pedido ha
         sido procesado con éxito.
@@ -194,7 +194,6 @@ export const CompletedPurchase = ({
 }
 
 CompletedPurchase.PreviewProps = {
-  customerName: 'Cliente Valorado',
   orderNumber: '12345',
   totalAmount: 'N/A',
   purchaseDate: new Date().toLocaleString('es-ES'),

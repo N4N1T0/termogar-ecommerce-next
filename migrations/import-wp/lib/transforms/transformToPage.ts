@@ -25,6 +25,8 @@ export async function transformToPage(
     _type: 'page'
   }
 
+  console.log(wpDoc.id)
+
   if (pageSlugArray.includes(wpDoc.link) && wpDoc.status === 'publish') {
     doc.title = decode(wpDoc.title.rendered).trim()
 

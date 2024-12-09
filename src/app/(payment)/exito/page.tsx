@@ -1,30 +1,30 @@
 // * NEXT.JS IMPORTS
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 // * ASSETS IMPORTS
-import NotificationsPageButton from '@/components/Payment/notification-buttons'
 import SuccessContent from '@/components/Payment/success'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
+import SuccessIlustration from '@/components/Payment/success-ilustration'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 // * UTILS IMPORTS
 import { sanityClientWrite } from '@/sanity/lib/client'
 import { GET_USER_INFO } from '@/sanity/lib/queries'
-import SuccessIlustration from '@/components/Payment/success-ilustration'
 import { processRestNotification } from '@/lib/clients'
 import { Order } from '@/types/sanity'
 import { uuid } from '@sanity/uuid'
 
-export default async function SuccessPage({
+export const metadata: Metadata = {
+  title: 'Pago Realizado con Exito',
+  description:
+    'Pago realizado con exito. En breve te llegara un correo con los detalles de tu pedido.'
+}
+
+const SuccessPage = async ({
   searchParams
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}) {
+}) => {
   const {
     userId,
     orderId,
@@ -103,13 +103,6 @@ export default async function SuccessPage({
             orderData={{ user, orderId, newAddress, discountCoupon, gateway }}
           />
         </CardContent>
-        <CardFooter className='flex items-center justify-between gap-5 px-5'>
-          <NotificationsPageButton
-            user={user}
-            status='success'
-            newAddress={newAddress}
-          />
-        </CardFooter>
       </Card>
       <div className='top-2 flex h-full w-auto flex-1 items-center justify-center bg-gray-100 p-6 md:sticky'>
         <SuccessIlustration />
@@ -117,3 +110,5 @@ export default async function SuccessPage({
     </div>
   )
 }
+
+export default SuccessPage

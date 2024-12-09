@@ -2,20 +2,23 @@ import { Section, Text, Heading, Container } from '@react-email/components'
 import * as React from 'react'
 import TailwindWrapper from './utils/tailwind-wrapper'
 import { eurilize } from '@/lib/utils'
-import { CartItemType } from '@/types'
-import { Costumer } from '@/types/sanity'
+import {
+  GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATIONResult,
+  GET_USER_INFOResult
+} from '@/types/sanity'
 
 interface ErrorPaymentProps {
-  totalAmount: string
   purchaseDate: string
-  products: CartItemType[]
-  user: Costumer
+  products: {
+    product: GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATIONResult[number]
+    quantity: string | number
+  }[]
+  user: GET_USER_INFOResult
   errorDetails: string
   orderId: string
 }
 
 export const ErrorPayment = ({
-  totalAmount,
   user,
   errorDetails,
   orderId,
@@ -53,9 +56,6 @@ export const ErrorPayment = ({
             <strong>Número de Pedido:</strong> #
             {orderId || 'Sin Número de Orden'}
           </Text>
-          <Text className='mb-2 text-sm text-gray-700'>
-            <strong>Total:</strong> {eurilize(Number(totalAmount))}
-          </Text>
         </Section>
 
         {/* User Data Section */}
@@ -71,27 +71,27 @@ export const ErrorPayment = ({
           </Text>
           <Text className='text-sm text-gray-700'>
             <strong>Teléfono:</strong>{' '}
-            {(user?.billingAddress && user?.billingAddress[0].phone) ||
+            {(user?.billingAddress && user?.billingAddress.phone) ||
               'No disponible'}
           </Text>
           <Text className='text-sm text-gray-700'>
             <strong>Calle:</strong>{' '}
-            {(user?.billingAddress && user?.billingAddress[0].address1) ||
+            {(user?.billingAddress && user?.billingAddress.address1) ||
               'No disponible'}
           </Text>
           <Text className='text-sm text-gray-700'>
             <strong>Piso:</strong>{' '}
-            {(user?.billingAddress && user?.billingAddress[0].address2) ||
+            {(user?.billingAddress && user?.billingAddress.address2) ||
               'No disponible'}
           </Text>
           <Text className='text-sm text-gray-700'>
             <strong>Código Postal:</strong>{' '}
-            {(user?.billingAddress && user?.billingAddress[0].postcode) ||
+            {(user?.billingAddress && user?.billingAddress.postcode) ||
               'No disponible'}
           </Text>
           <Text className='text-sm text-gray-700'>
             <strong>Localidad:</strong>{' '}
-            {(user?.billingAddress && user?.billingAddress[0].state) ||
+            {(user?.billingAddress && user?.billingAddress.state) ||
               'No disponible'}
           </Text>
         </Section>
@@ -111,8 +111,11 @@ export const ErrorPayment = ({
               </tr>
             </thead>
             <tbody>
-              {products.map(({ id, title, quantity, price }) => (
-                <tr key={id} style={{ borderBottom: '1px solid #dddddd' }}>
+              {products.map(({ product, quantity }) => (
+                <tr
+                  key={product.id}
+                  style={{ borderBottom: '1px solid #dddddd' }}
+                >
                   <td
                     style={{
                       padding: '10px',
@@ -122,13 +125,17 @@ export const ErrorPayment = ({
                       gap: '10px'
                     }}
                   >
-                    <p>{title}</p>
+                    <p>{product.title}</p>
                   </td>
                   <td style={{ padding: '10px', textAlign: 'center' }}>
                     {quantity}
                   </td>
                   <td style={{ padding: '10px', textAlign: 'right' }}>
-                    {eurilize(price ? quantity * price : quantity * 1)}
+                    {eurilize(
+                      product.price
+                        ? Number(quantity) * product.price
+                        : Number(quantity) * 1
+                    )}
                   </td>
                 </tr>
               ))}

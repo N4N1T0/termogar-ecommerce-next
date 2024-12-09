@@ -1,5 +1,7 @@
 'use server'
 
+import NewsletterRegistration from '@/emails/newsletter-registration'
+import { resend } from '@/lib/clients'
 // * UTILS IMPORTS
 import { subscribeSchema } from '@/lib/schemas'
 import { sanityClientWrite } from '@/sanity/lib/client'
@@ -40,6 +42,18 @@ const subscribeToNewsletter = async ({ email }: { email: string }) => {
       _createdAt: new Date().toISOString(),
       _updatedAt: new Date().toISOString(),
       _rev: `subscriber-${uuid()}`
+    })
+
+    // TODO: Change the email address
+    await resend.emails.send({
+      from: 'registro-newsletter@termogar.es',
+      bcc: ['adrian.alvarezalonso1991@gmail.com'],
+      to: ['adrian.alvarezalonso1991@gmail.com'],
+      subject: 'Suscripción al Newsletter',
+      react: NewsletterRegistration({
+        email: validatedData.data.email,
+        registrationDate: new Date().toISOString()
+      })
     })
 
     return {

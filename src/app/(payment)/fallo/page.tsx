@@ -1,22 +1,22 @@
 // * NEXT.JS IMPORTS
 import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 
 // * ASSETS IMPORTS
-import NotificationsPageButton from '@/components/Payment/notification-buttons'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import FailedIlustration from '@/components/Payment/failed-ilustration'
+import { AlertCircle } from 'lucide-react'
+import FailedPaymentContent from '@/components/Payment/failed'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_USER_INFO } from '@/sanity/lib/queries'
-import FailedIlustration from '@/components/Payment/failed-ilustration'
-import FailedPaymentContent from '@/components/Payment/failed'
-import { AlertCircle } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Pago Fallido',
+  description:
+    'Pago realizado con exito. En breve te llegara un correo con los detalles de tu pedido.'
+}
 
 export default async function FailedPage({
   searchParams
@@ -52,15 +52,8 @@ export default async function FailedPage({
             }}
           />
         </CardContent>
-        <CardFooter className='flex items-center justify-between px-5'>
-          <NotificationsPageButton
-            user={user}
-            status='failed'
-            newAddress={newAddress}
-          />
-        </CardFooter>
       </Card>
-      <div className='top-2 flex flex-1 items-center justify-center bg-gray-100 p-6 md:sticky'>
+      <div className='top-2 flex h-full w-auto flex-1 items-center justify-center bg-gray-100 p-6 md:sticky'>
         <FailedIlustration />
       </div>
     </div>

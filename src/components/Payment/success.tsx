@@ -2,24 +2,18 @@
 
 // * NEXT.JS IMPORTS
 import Image from 'next/image'
+import React from 'react'
 
 // * ASSETS IMPORTS
 import { PlaceholderSquare } from '@/assets'
 import AddressDisplay from '@/components/Payment/address-card'
 import LoaderStyleOne from '@/components/Helpers/Loaders/LoaderStyleOne'
+import NotificationsPageButton from './notification-buttons'
 
 // * UTILS IMPORTS
 import { useCart } from '@/stores'
-import { GET_USER_INFOResult } from '@/types/sanity'
 import { calculateTotal, eurilize } from '@/lib/utils'
-
-interface OrderData {
-  user: GET_USER_INFOResult
-  orderId: string | string[]
-  newAddress: string | string[] | undefined
-  gateway: string | string[] | undefined
-  discountCoupon: string | string[] | undefined
-}
+import { OrderData } from '@/types'
 
 const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
   const { products, rehydrated } = useCart()
@@ -29,20 +23,25 @@ const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
   const refactoredShippingAddress = newAddress
     ? user?.shippingAddresses && user.shippingAddresses[0]
     : user?.billingAddress
-  const refactoredCoupon =
-    discountCoupon && !Array.isArray(discountCoupon)
+  const refactoredCoupon = React.useMemo(() => {
+    return discountCoupon && !Array.isArray(discountCoupon)
       ? discountCoupon.split('-')
       : ['0', '0']
+  }, [discountCoupon])
 
-  const [subtotal, total, iva, shipping] = calculateTotal(products, '33460', {
-    amount: Number(refactoredCoupon[0]),
-    type: refactoredCoupon[1] as
-      | 'percent'
-      | 'fixed_cart'
-      | 'fixed_product'
-      | 'sign_up_fee'
-      | undefined
-  })
+  const [subtotal, total, iva, shipping] = calculateTotal(
+    products,
+    refactoredShippingAddress?.postcode,
+    {
+      amount: Number(refactoredCoupon[0]),
+      type: refactoredCoupon[1] as
+        | 'percent'
+        | 'fixed_cart'
+        | 'fixed_product'
+        | 'sign_up_fee'
+        | undefined
+    }
+  )
 
   return (
     <div className='w-full space-y-4 p-6'>
@@ -164,6 +163,17 @@ const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
       <AddressDisplay
         address={refactoredShippingAddress}
         title='Dirección de Envío'
+      />
+      <NotificationsPageButton
+        orderData={{
+          ...orderData,
+          status: 'success',
+          products,
+          iva,
+          refactoredCoupon,
+          refactoredShippingAddress,
+          total
+        }}
       />
     </div>
   )

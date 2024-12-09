@@ -34,7 +34,7 @@ import {
   WP_REST_API_Product
 } from './types'
 
-const limit = pLimit(2)
+const limit = pLimit(5)
 
 // Add image imports, parallelized and limited
 export default defineMigration({
@@ -53,18 +53,18 @@ export default defineMigration({
 
     const { wpType } = getDataTypes(process.argv)
     // Define pages to skip
-    // const skipPages = [25, 50, 74]
+    const skipPages = [25, 50, 74]
     let page = 1
     let hasMore = true
 
     while (hasMore) {
       try {
         // Check if the current page is in the skip list
-        // if (skipPages.includes(page)) {
-        //   console.log(`Skipping page ${page}`)
-        //   page++
-        //   continue
-        // }
+        if (skipPages.includes(page)) {
+          console.log(`Skipping page ${page}`)
+          page++
+          continue
+        }
 
         const wpData = await wpDataTypeFetch(wpType, page)
 

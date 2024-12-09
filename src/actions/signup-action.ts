@@ -11,6 +11,8 @@ import { hashPassword } from '@/lib/utils'
 import { GET_USER_FOR_AUTH } from '@/sanity/lib/queries'
 import { Costumer } from '@/types/sanity'
 import { signIn } from '@/lib/auth'
+import { resend } from '@/lib/clients'
+import NewUser from '@/emails/new-user'
 
 const signupAction = async (values: SignupSchema) => {
   try {
@@ -53,6 +55,19 @@ const signupAction = async (values: SignupSchema) => {
           _type: 'reference'
         }
       }
+    })
+
+    // TODO: Change the email address
+    await resend.emails.send({
+      from: 'usario-nuevo@termogar.es',
+      bcc: ['adrian.alvarezalonso1991@gmail.com'],
+      to: ['adrian.alvarezalonso1991@gmail.com'],
+      subject: 'Nuevo Usuario',
+      react: NewUser({
+        email: parsed.data.email,
+        registrationDate: new Date().toISOString(),
+        link: `${process.env.NEXT_PUBLIC_SITE_URL}/studio/structure/comercio;costumer;${id}`
+      })
     })
 
     await signIn('credentials', {

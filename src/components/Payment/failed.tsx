@@ -7,24 +7,17 @@ import Image from 'next/image'
 import { PlaceholderSquare } from '@/assets'
 import AddressDisplay from '@/components/Payment/address-card'
 import LoaderStyleOne from '@/components/Helpers/Loaders/LoaderStyleOne'
+import NotificationsPageButton from '@/components/Payment/notification-buttons'
 
 // * UTILS IMPORTS
 import { useCart } from '@/stores'
-import { GET_USER_INFOResult } from '@/types/sanity'
 import { calculateTotal, eurilize } from '@/lib/utils'
-
-interface FailedPaymentData {
-  user: GET_USER_INFOResult
-  orderId: string | string[]
-  newAddress: string | string[] | undefined
-  gateway: string | string[] | undefined
-  discountCoupon: string | string[] | undefined
-}
+import { OrderData } from '@/types'
 
 export default function FailedPaymentContent({
   failedPaymentData
 }: {
-  failedPaymentData: FailedPaymentData
+  failedPaymentData: OrderData
 }) {
   const { products, rehydrated } = useCart()
   const { user, orderId, gateway, discountCoupon, newAddress } =
@@ -39,21 +32,25 @@ export default function FailedPaymentContent({
       ? discountCoupon.split('-')
       : ['0', '0']
 
-  const [subtotal, total, shipping] = calculateTotal(products, '33460', {
-    amount: Number(refactoredCoupon[0]),
-    type: refactoredCoupon[1] as
-      | 'percent'
-      | 'fixed_cart'
-      | 'fixed_product'
-      | 'sign_up_fee'
-      | undefined
-  })
+  const [subtotal, total, iva, shipping] = calculateTotal(
+    products,
+    refactoredShippingAddress?.postcode,
+    {
+      amount: Number(refactoredCoupon[0]),
+      type: refactoredCoupon[1] as
+        | 'percent'
+        | 'fixed_cart'
+        | 'fixed_product'
+        | 'sign_up_fee'
+        | undefined
+    }
+  )
 
   return (
-    <div className='grid w-full grid-cols-1 gap-6 md:grid-cols-2'>
+    <div className='w-full space-y-4 p-6'>
       <div className='space-y-6'>
         <h2 className='text-2xl font-bold'>
-          We&apos;re sorry, {user?.firstName}. Your payment was unsuccessful.
+          Lo sentimos, {user?.firstName}. Tu pago no ha sido procesado.
         </h2>
         <div
           className='border-l-4 border-red-500 bg-red-100 p-4 text-red-700'
@@ -65,13 +62,13 @@ export default function FailedPaymentContent({
           className='border-l-4 border-red-500 bg-red-100 p-4 text-red-700'
           role='alert'
         >
-          <p className='font-bold'>Payment Failed</p>
+          <p className='font-bold'>Pago Fallido</p>
           <p>
-            Unfortunately, we were unable to process your payment. Please try
-            again or contact support for assistance.
+            Lo sentimos, no hemos podido procesar tu pago. Por favor, intenta de
+            nuevo o contacta con el soporte para obtener ayuda.
           </p>
         </div>
-        <div className='border-px grid grid-cols-2 border-t border-gray-200 pt-2 lg:grid-cols-3'>
+        <div className='border-px grid grid-cols-2 gap-3 border-t border-gray-200 pt-2 lg:grid-cols-3'>
           <div>
             <h3 className='font-semibold'>ID de la orden:</h3>
             <p>{orderId}</p>
@@ -126,7 +123,10 @@ export default function FailedPaymentContent({
                   id,
                   featuredMedia
                 }) => (
-                  <li key={id} className='flex items-center justify-between'>
+                  <li
+                    key={id}
+                    className='border-px mb-2 flex items-center justify-between border-b border-gray-100 pb-2'
+                  >
                     <div className='flex items-center justify-center gap-3'>
                       <Image
                         src={featuredMedia?.url || PlaceholderSquare}
@@ -181,6 +181,17 @@ export default function FailedPaymentContent({
       <AddressDisplay
         address={refactoredShippingAddress}
         title='Dirección de Envío'
+      />
+      <NotificationsPageButton
+        orderData={{
+          ...failedPaymentData,
+          status: 'failed',
+          products,
+          iva,
+          refactoredCoupon,
+          refactoredShippingAddress,
+          total
+        }}
       />
     </div>
   )

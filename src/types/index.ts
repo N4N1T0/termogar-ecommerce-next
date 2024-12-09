@@ -1,7 +1,9 @@
 import React from 'react'
 import {
+  Address,
   ExternalImage,
   GET_CARD_BLOG_POSTResult,
+  GET_USER_INFOResult,
   internalGroqTypeReferenceTo,
   SanityImageCrop,
   SanityImageHotspot
@@ -212,6 +214,27 @@ export interface PaginationBlogProps {
   totalPages: number
   lastId: string
   type: 'blog' | 'noticias'
+}
+
+export interface OrderData {
+  user: GET_USER_INFOResult
+  orderId: string | string[]
+  newAddress: string | string[] | undefined
+  gateway: string | string[] | undefined
+  discountCoupon: string | string[] | undefined
+}
+
+export interface OrderDataNotificationsButtons {
+  status: 'success' | 'failed'
+  user: GET_USER_INFOResult
+  newAddress: string | string[] | undefined
+  products: CartItemType[]
+  orderId: string | string[]
+  total: number
+  gateway: string | string[] | undefined
+  iva: number
+  refactoredCoupon: string[]
+  refactoredShippingAddress: (Address & { _key: string }) | null | undefined
 }
 
 // * PRODUCTS

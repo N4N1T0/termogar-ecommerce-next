@@ -1,19 +1,20 @@
 // * MIGRATION
 import { createClient } from '@sanity/client'
 import pLimit from 'p-limit'
-import { defineMigration } from 'sanity/migrate'
+import { createOrReplace, defineMigration } from 'sanity/migrate'
 
 // * UTILS
 import { getDataTypes } from '../import-wp/lib/utils/getDataTypes'
-// import { sanityFetchImages } from '../import-wp/lib/utils/wpImageFetch'
+import { sanityFetchImages } from '../import-wp/lib/utils/wpImageFetch'
 // import { sanityFetchDocuments } from '../import-wp/lib/utils/wpDocumentsFetch'
 
 // * TRANSFORMERS
-import { transformToProduct } from '../import-wp/lib'
+import { transformToPage } from '../import-wp/lib'
 
 // * TYPES IMPORTS
 import { WP_REST_API_Product } from '../import-wp/types'
 import { wcAPI } from '@/lib/clients'
+import { WP_REST_API_Page, WP_REST_API_Pages } from 'wp-types'
 
 const limit = pLimit(2)
 
@@ -22,7 +23,7 @@ export default defineMigration({
 
   async *migrate(docs, context) {
     const client = createClient(context.client.config())
-    // const existingImages = await sanityFetchImages(client)
+    const existingImages = await sanityFetchImages(client)
     // const existingDocuments = await sanityFetchDocuments(client)
     // const existingProducts: Record<string, string>[] = await client.fetch(
     //   `*[_type == "product"]{_id}`
@@ -42,25 +43,20 @@ export default defineMigration({
         //   continue
         // }
 
-        const products: { data: WP_REST_API_Product[] } = await wcAPI.get(
-          'products',
-          {
-            per_page: 10,
-            page
-          }
-        )
+        const products: { data: WP_REST_API_Pages } = await wcAPI.get('pages', {
+          per_page: 10,
+          page
+        })
 
         if (Array.isArray(products.data) && products.data.length) {
           const docs = products.data.map((product) =>
             limit(async () => {
-              if (wpType === 'products') {
-                product = product as WP_REST_API_Product
-                const doc = await transformToProduct(
-                  product
-                  // client,
-                  // existingImages,
-                  // existingDocuments,
-                  // existingProducts
+              if (wpType === 'pages') {
+                product = product as WP_REST_API_Page
+                const doc = await transformToPage(
+                  product,
+                  client,
+                  existingImages
                 )
                 return doc
               }
@@ -70,22 +66,16 @@ export default defineMigration({
             })
           )
 
-          // Resolve all documents concurrently, throttled by p-limit
-          const resolvedDocs = await Promise.all(docs)
-
-          await Promise.all(
-            resolvedDocs.map((doc) => {
-              if (doc._id !== 'product-21367') {
-                return client
-                  .patch(doc._id)
-                  .set({
-                    sale: doc.sale
-                  })
-                  .commit()
-              }
-              return Promise.resolve() // Ensure `map` returns a promise even if condition is false
+          // Filter out null documents and resolve all valid documents concurrently
+          const resolvedDocs = await Promise.all(
+            docs.map(async (docPromise) => {
+              const doc = await docPromise
+              return doc !== null ? createOrReplace(doc) : null
             })
           )
+
+          // Yield only the non-null results
+          yield resolvedDocs.filter((doc) => doc !== null)
 
           page++
         } else {

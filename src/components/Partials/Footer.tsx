@@ -76,7 +76,7 @@ const Footer = async () => {
               <ul className='flex flex-col space-y-1'>
                 {searchedCategories.map(({ id, slug, name }) => (
                   <li key={id}>
-                    <Link href={`/categoria/${slug}`}>
+                    <Link href={`/categorias/${slug}`}>
                       <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                         {name}
                       </span>

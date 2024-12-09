@@ -1,5 +1,6 @@
 import WooCommerceRestApi from '@woocommerce/woocommerce-rest-api'
 import { createRedsysAPI, SANDBOX_URLS } from 'redsys-easy'
+import { Resend } from 'resend'
 
 export const wcAPI = new WooCommerceRestApi({
   url: 'https://termogar.es',
@@ -12,3 +13,5 @@ export const { createRedirectForm, processRestNotification } = createRedsysAPI({
   secretKey: process.env.REDSYS_SECRET_KEY!,
   urls: SANDBOX_URLS
 })
+
+export const resend = new Resend(process.env.RESEND_API_KEY)

@@ -269,6 +269,36 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
 }
 }`)
 
+export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION =
+  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && _id in $ids]{
+  "id": _id,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+  content,
+  price,
+  sale,
+  "stockQuantity": stock_quantity,
+  "tags": productTag[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+},
+}`)
+
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
   defineQuery(`*[_type=='product' && status=='publish' && defined(price) && (title match $search || excerpt match $search)]{
   "id": _id,

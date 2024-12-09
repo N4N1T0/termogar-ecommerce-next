@@ -2,18 +2,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 // * UTILS IMPORTS
-import { processRestNotification } from '@/lib/clients'
+import { processRestNotification, resend } from '@/lib/clients'
 import type { ResponseJSONSuccess } from 'redsys-easy'
 import { sanityClientWrite } from '@/sanity/lib/client'
 import { Order } from '@/types/sanity'
+import ErrorPayment from '@/emails/error-payment'
+import {
+  GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION,
+  GET_USER_INFO
+} from '@/sanity/lib/queries'
 
 export const runtime = 'nodejs'
 
-/**
- * Procesa la notificación de pago de Redsys.
- * @param req Solicitud de Next.js.
- * @returns Respuesta de Next.js con el estado de la solicitud.
- */
 export const POST = async (req: NextRequest) => {
   const notificationParams: ResponseJSONSuccess = {
     Ds_SignatureVersion: req.headers.get('Ds_SignatureVersion') as string,
@@ -21,8 +21,27 @@ export const POST = async (req: NextRequest) => {
     Ds_MerchantParameters: req.headers.get('Ds_MerchantParameters') as string
   }
 
-  // const userId = req.nextUrl.searchParams.get('userId')
-  // const products = req.nextUrl.searchParams.get('products')
+  const userId = req.nextUrl.searchParams.get('userId')
+  const products = req.nextUrl.searchParams.get('products')
+
+  const user = await sanityClientWrite.fetch(GET_USER_INFO, { id: userId })
+  const errorProducts = await sanityClientWrite.fetch(
+    GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION,
+    {
+      id: products?.split(',').map((product) => {
+        return product.split('_')[0]
+      })
+    }
+  )
+
+  const refactoredProducts = errorProducts.map((product) => ({
+    product: product,
+    quantity:
+      products
+        ?.split(',')
+        .map((p) => ({ id: p.split('_')[0], quantity: p.split('_')[1] }))
+        .find((p) => p.id === product.id)?.quantity || 0
+  }))
 
   const {
     Ds_Order: orderId,
@@ -41,11 +60,22 @@ export const POST = async (req: NextRequest) => {
       console.error('Failed to update order status') // Log error for order update failure
     }
 
-    // TODO: Send email to user
-
     return NextResponse.json({ success: true, message: 'Payment completed' })
   } else {
-    console.error('Payment failed')
+    // TODO: Change the email address
+    await resend.emails.send({
+      from: 'registro-newsletter@termogar.es',
+      bcc: ['adrian.alvarezalonso1991@gmail.com'],
+      to: ['adrian.alvarezalonso1991@gmail.com'],
+      subject: 'Suscripción al Newsletter',
+      react: ErrorPayment({
+        errorDetails: `Error al procesar el pago. Codigo de respuesta: ${responseCode}`,
+        orderId,
+        products: refactoredProducts,
+        purchaseDate: new Date().toISOString(),
+        user
+      })
+    })
     return NextResponse.json(
       { success: false, message: 'Payment failed' },
       { status: 400 }

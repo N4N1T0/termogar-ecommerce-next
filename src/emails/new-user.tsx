@@ -4,17 +4,11 @@ import TailwindWrapper from './utils/tailwind-wrapper'
 
 interface NewUserProps {
   email: string
-  name: string
   registrationDate: string
   link: string
 }
 
-export const NewUser = ({
-  email,
-  name,
-  registrationDate,
-  link
-}: NewUserProps) => {
+export const NewUser = ({ email, registrationDate, link }: NewUserProps) => {
   const previewText = `Nuevo Usuario Registrado`
 
   return (
@@ -29,15 +23,6 @@ export const NewUser = ({
       <Section className='mb-6'>
         <table className='w-full border-collapse'>
           <tbody>
-            <tr>
-              <td
-                className='border border-gray-300 px-4 py-2 font-bold'
-                style={{ border: '1px solid #e5e7eb' }}
-              >
-                Nombre del usuario
-              </td>
-              <td className='border border-gray-300 px-4 py-2'>{name}</td>
-            </tr>
             <tr>
               <td
                 className='border border-gray-300 px-4 py-2 font-bold'
