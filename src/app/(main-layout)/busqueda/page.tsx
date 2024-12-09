@@ -9,7 +9,7 @@ import {
   GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY,
   GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY
 } from '@/sanity/lib/queries'
-import { GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCHResult } from '@/types/sanity'
+import { GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult } from '@/types/sanity'
 import EmptySearch from '@/components/Shared/empty-search'
 
 export async function generateMetadata({
@@ -31,7 +31,7 @@ const SearchPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { search, category } = await searchParams
-  let searchedProducts: GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCHResult | null =
+  let searchedProducts: GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult | null =
     null
 
   if (!category || Array.isArray(category)) {
@@ -88,7 +88,7 @@ const SearchPage = async ({
         {searchedProducts?.map((product, index) => (
           <div data-aos='fade-up' key={product?.id} className='item'>
             <ProductCardStyleOne<
-              GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCHResult[number]
+              GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult[number]
             >
               datas={product}
               priority={index < 6}
