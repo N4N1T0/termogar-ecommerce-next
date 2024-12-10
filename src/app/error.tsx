@@ -32,6 +32,9 @@ export default function Error({
           <small className='mb-3 max-w-[500px] text-center'>
             {error.message}
           </small>
+          <small className='mb-3 max-w-[500px] text-center'>
+            {error.digest}
+          </small>
           <div className='flex gap-10'>
             <Link
               href='/'

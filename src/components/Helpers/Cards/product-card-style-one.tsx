@@ -101,17 +101,19 @@ export default function ProductCardStyleOne<T>({
             {eurilize(price || 0)} {sale && isOnSale && 'Precio Normal'}
           </span>
           {sale && isOnSale && (
-            <span className='offer-price font-600 text-[24px] text-secondary'>
+            <span className='offer-price font-600 text-[22px] text-secondary'>
               {eurilize(sale?.price || 0)}
             </span>
           )}
-          <span className='iva-price font-600 ml-2 text-[18px] text-gray-800'>
+          <span className='iva-price font-600 ml-2 text-[16px] text-gray-800'>
             {eurilize(
               sale && isOnSale
                 ? (sale?.price || 0) + (sale?.price || 0) * 0.21
                 : (price || 0) + (price || 0) * 0.21
             )}
-            <small className='ml-1 font-normal underline'>IVA incl.</small>
+            <small className='ml-1 text-[11px] font-normal underline'>
+              IVA incl.
+            </small>
           </span>
         </div>
       </div>
