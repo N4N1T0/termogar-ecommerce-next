@@ -1,65 +1,63 @@
-import { defineType } from 'sanity'
+import { defineType, defineField } from 'sanity'
 
 export const costumerType = defineType({
   name: 'costumer',
   title: 'Cliente',
   type: 'document',
   fields: [
-    {
+    defineField({
       name: 'email',
       title: 'Correo Electrónico',
       type: 'string',
       validation: (Rule) => Rule.required().email()
-    },
-    {
+    }),
+    defineField({
       name: 'firstName',
       title: 'Nombre',
       type: 'string'
-    },
-    {
+    }),
+    defineField({
       name: 'lastName',
       title: 'Apellido',
       type: 'string'
-    },
-    {
+    }),
+    defineField({
       name: 'password',
       title: 'Contraseña',
       type: 'string',
-      options: {
-        type: 'password'
-      }
-    },
-    {
+      readOnly: true
+    }),
+    defineField({
       name: 'userName',
       title: 'Nombre de Usuario',
       type: 'string'
-    },
-    {
+    }),
+    defineField({
       name: 'billingAddress',
       title: 'Dirección de Facturación',
       type: 'array',
       of: [{ type: 'address' }],
       validation: (Rule) => Rule.max(1)
-    },
-    {
+    }),
+    defineField({
       name: 'shippingAddresses',
       title: 'Direcciones de Envío',
       type: 'array',
       of: [{ type: 'address' }]
-    },
-    {
+    }),
+    defineField({
       name: 'isPayingCustomer',
       title: '¿Cliente a Comprado antes?',
       type: 'boolean'
-    },
-    {
+    }),
+    defineField({
       name: 'avatarUrl',
       title: 'Avatar',
       type: 'image',
       options: {
         hotspot: true
       }
-    }
+    })
   ],
   preview: {
     select: {

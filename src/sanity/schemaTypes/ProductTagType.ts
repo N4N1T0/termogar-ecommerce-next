@@ -1,4 +1,3 @@
-import { Tag } from 'lucide-react'
 import { defineField, defineType } from 'sanity'
 
 export const productTagType = defineType({
@@ -7,7 +6,6 @@ export const productTagType = defineType({
   description:
     'Una etiqueta de producto es un tipo de documento que se utiliza para agrupar productos.',
   type: 'document',
-  icon: Tag,
   fields: [
     defineField({
       name: 'description',

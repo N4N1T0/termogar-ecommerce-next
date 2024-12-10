@@ -1,11 +1,9 @@
-import { UserRoundPen } from 'lucide-react'
 import { defineField, defineType } from 'sanity'
 
 export const authorType = defineType({
   name: 'author',
   title: 'Autor',
   type: 'document',
-  icon: UserRoundPen,
   fields: [
     defineField({
       name: 'name',

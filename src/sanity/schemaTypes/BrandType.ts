@@ -1,11 +1,11 @@
-import { defineType } from 'sanity'
+import { defineType, defineField } from 'sanity'
 
 export const brandType = defineType({
   name: 'brand',
   type: 'document',
   title: 'Marca',
   fields: [
-    {
+    defineField({
       name: 'image',
       type: 'image',
       title: 'Imagen del logotipo',
@@ -13,14 +13,14 @@ export const brandType = defineType({
         hotspot: true
       },
       validation: (Rule) => Rule.required()
-    },
-    {
+    }),
+    defineField({
       name: 'title',
       type: 'string',
       title: 'Título',
       validation: (Rule) => Rule.required()
-    },
-    {
+    }),
+    defineField({
       name: 'link',
       type: 'slug',
       title: 'Enlace',
@@ -28,7 +28,7 @@ export const brandType = defineType({
       options: {
         source: 'title'
       }
-    }
+    })
   ],
   preview: {
     select: {

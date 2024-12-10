@@ -1,5 +1,4 @@
 import { defineField, defineType } from 'sanity'
-import { BookOpenText } from 'lucide-react'
 
 export const pageType = defineType({
   name: 'page',
@@ -7,7 +6,6 @@ export const pageType = defineType({
   description:
     'Una página es un tipo de documento que se utiliza para crear contenido en el sitio web.',
   type: 'document',
-  icon: BookOpenText,
   fields: [
     defineField({
       name: 'title',
@@ -72,7 +70,7 @@ export const pageType = defineType({
           type: 'reference',
           to: [{ type: 'externalImage' }],
           name: 'externalImage'
-        },
+        }
       ]
     }),
     defineField({

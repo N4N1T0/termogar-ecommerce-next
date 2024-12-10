@@ -1,4 +1,3 @@
-import { StickyNote } from 'lucide-react'
 import { defineField, defineType } from 'sanity'
 
 export const postType = defineType({
@@ -7,7 +6,6 @@ export const postType = defineType({
     'Una entrada del blog es un tipo de documento que se utiliza para crear contenido en el sitio web.',
   name: 'post',
   type: 'document',
-  icon: StickyNote,
   fields: [
     defineField({
       name: 'title',

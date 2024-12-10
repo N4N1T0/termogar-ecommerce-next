@@ -1,11 +1,9 @@
-import { Filter } from 'lucide-react'
 import { defineField, defineType } from 'sanity'
 
 export const categoryType = defineType({
   name: 'category',
   title: 'Categoría',
   type: 'document',
-  icon: Filter,
   fields: [
     defineField({
       name: 'name',

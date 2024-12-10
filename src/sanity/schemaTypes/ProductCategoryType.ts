@@ -1,4 +1,3 @@
-import { Filter } from 'lucide-react'
 import { defineField, defineType } from 'sanity'
 
 export const productCategoryType = defineType({
@@ -7,7 +6,6 @@ export const productCategoryType = defineType({
   description:
     'Una categoría de producto es un tipo de documento que se utiliza para agrupar productos.',
   type: 'document',
-  icon: Filter,
   fields: [
     defineField({
       name: 'description',

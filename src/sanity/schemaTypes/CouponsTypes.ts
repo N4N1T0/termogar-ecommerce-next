@@ -1,11 +1,9 @@
-import { Tags } from 'lucide-react'
 import { defineField, defineType } from 'sanity'
 
 export const couponsType = defineType({
   name: 'coupon',
   title: 'Cupones',
   type: 'document',
-  icon: Tags,
   fields: [
     defineField({
       name: 'code',

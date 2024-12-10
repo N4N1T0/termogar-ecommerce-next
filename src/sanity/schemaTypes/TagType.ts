@@ -1,11 +1,9 @@
-import { Tag } from 'lucide-react'
 import { defineField, defineType } from 'sanity'
 
 export const tagType = defineType({
   name: 'tag',
   title: 'Tag',
   type: 'document',
-  icon: Tag,
   fields: [
     defineField({
       name: 'name',

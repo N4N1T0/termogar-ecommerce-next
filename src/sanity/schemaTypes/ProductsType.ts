@@ -1,4 +1,3 @@
-import { ShoppingBasket } from 'lucide-react'
 import { defineField, defineType } from 'sanity'
 
 export const productType = defineType({
@@ -7,7 +6,6 @@ export const productType = defineType({
   description:
     'Un producto es un tipo de documento que se utiliza para crear contenido en el sitio web.',
   type: 'document',
-  icon: ShoppingBasket,
   fields: [
     defineField({
       name: 'title',
