@@ -8,6 +8,8 @@ import {
 } from 'redsys-easy'
 import { createRedirectForm } from '@/lib/clients'
 import Decimal from 'decimal.js'
+import { paypal } from '@/lib/fetchers'
+import { CartItemType } from '@/types'
 
 const merchantInfo = {
   DS_MERCHANT_MERCHANTCODE: process.env.REDSYS_MERCHANT_CODE!, // Merchant code
@@ -21,12 +23,17 @@ const paymentLogic = async (
   paymentType: FormDataEntryValue | null,
   totalAmount: number,
   userId: string | string[] | undefined,
-  products: string,
+  products: CartItemType[],
   newAddress: string | string[] | undefined,
   discountCoupon: string
 ) => {
-  // Random ID for the transaction
   const orderId = randomTransactionId()
+  const refactoredProductsForPayment = products
+    .map((product) => `${product.id}_${product.quantity}`)
+    .join(',')
+  const templateRedirectUrl = (page: string) => {
+    return `${process.env.NEXT_PUBLIC_URL}/${page}?userId=${userId}&orderId=${orderId}&gateway=RedSys&newAddress=${newAddress}&discountCoupon=${discountCoupon}&total=${totalAmount}&products=${refactoredProductsForPayment}`
+  }
 
   if (paymentType === 'tarjeta') {
     // Get the currency information
@@ -41,9 +48,9 @@ const paymentLogic = async (
       DS_MERCHANT_ORDER: orderId,
       DS_MERCHANT_AMOUNT: redsysAmount,
       DS_MERCHANT_CURRENCY: redsysCurrency,
-      DS_MERCHANT_MERCHANTURL: `${process.env.NEXT_PUBLIC_URL}/api/notifications?&userId=${userId}&orderId=${orderId}&gateway=RedSys&products=${products}`, // Notification URL
-      DS_MERCHANT_URLOK: `${process.env.NEXT_PUBLIC_URL}/exito?userId=${userId}&orderId=${orderId}&gateway=RedSys&newAddress=${newAddress}&discountCoupon=${discountCoupon}&total=${totalAmount}&products=${products}`, // Success URL
-      DS_MERCHANT_URLKO: `${process.env.NEXT_PUBLIC_URL}/exito?userId=${userId}&orderId=${orderId}&gateway=RedSys&newAddress=${newAddress}&discountCoupon=${discountCoupon}&total=${totalAmount}&products=${products}`, // Error URL
+      DS_MERCHANT_MERCHANTURL: templateRedirectUrl('api/notifications'), // Notification URL
+      DS_MERCHANT_URLOK: templateRedirectUrl('exito'), // Success URL
+      DS_MERCHANT_URLKO: templateRedirectUrl('fallo'), // Error URL
       DS_MERCHANT_TRANSACTIONDATE: new Date().toISOString(),
       DS_MERCHANT_CONSUMERLANGUAGE: LANGUAGES.es,
       DS_MERCHANT_SHIPPINGADDRESSPYP: 'S',
@@ -59,7 +66,20 @@ const paymentLogic = async (
   if (paymentType === 'transferencia-bancaria-directa') {
     return {
       success: true,
-      data: orderId
+      data: templateRedirectUrl('exito')
+    }
+  }
+
+  if (paymentType === 'paypal') {
+    const redirectUrl = await paypal.createOrder(
+      products,
+      templateRedirectUrl,
+      totalAmount
+    )
+
+    return {
+      success: true,
+      data: redirectUrl
     }
   }
 

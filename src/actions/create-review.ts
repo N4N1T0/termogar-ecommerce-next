@@ -3,7 +3,7 @@
 import { yoptop } from '@/lib/fetchers'
 import { reviewSchema, ReviewSchema } from '@/lib/schemas'
 
-const appKey = process.env.YOTPO_APP_KEY
+const appKey = process.env.NEXT_PUBLIC_YOTPO_APP_KEY
 
 const createReview = async (values: ReviewSchema) => {
   const parsedValues = reviewSchema.safeParse(values)

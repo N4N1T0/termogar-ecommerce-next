@@ -1,6 +1,6 @@
-import { YoptopReviews } from '@/types'
+import { CartItemType, YoptopReviews } from '@/types'
 
-const appKey = process.env.YOTPO_APP_KEY
+const appKey = process.env.NEXT_PUBLIC_YOTPO_APP_KEY
 
 const yoptop = {
   fetchReviews: async (
@@ -54,4 +54,83 @@ const yoptop = {
   }
 }
 
-export { yoptop }
+const paypal = {
+  generateAccessToken: async (): Promise<string> => {
+    const response = await fetch(
+      `${process.env.PAYPAL_BASE_URL}/v1/oauth2/token`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Basic ${btoa(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`)}`
+        },
+        body: new URLSearchParams({
+          grant_type: 'client_credentials'
+        }).toString()
+      }
+    )
+    const data = await response.json()
+    return data.access_token
+  },
+  createOrder: async function (
+    products: CartItemType[],
+    redirectUrl: (page: string) => string,
+    totalAmount: number
+  ): Promise<string> {
+    const accessToken = await this.generateAccessToken()
+    const response = await fetch(
+      `${process.env.PAYPAL_BASE_URL}/v2/checkout/orders`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+          intent: 'CAPTURE',
+          purchase_units: [
+            {
+              items: [
+                {
+                  name: 'Node.js Complete Course',
+                  description:
+                    'Node.js Complete Course with Express and MongoDB',
+                  quantity: 1,
+                  unit_amount: {
+                    currency_code: 'EUR',
+                    value: '100.00'
+                  }
+                }
+              ],
+
+              amount: {
+                currency_code: 'EUR',
+                value: Number(totalAmount).toFixed(2),
+                breakdown: {
+                  item_total: {
+                    currency_code: 'EUR',
+                    value: Number(totalAmount).toFixed(2)
+                  }
+                }
+              }
+            }
+          ],
+
+          application_context: {
+            return_url: redirectUrl('exito'),
+            cancel_url: redirectUrl('fallo'),
+            shipping_preference: 'NO_SHIPPING',
+            user_action: 'PAY_NOW',
+            brand_name: 'Termogar'
+          }
+        })
+      }
+    )
+    const data = await response.json()
+    return data.links.find(
+      (link: Record<string, string>) => link.rel === 'approve'
+    ).href
+  }
+}
+
+export { yoptop, paypal }
