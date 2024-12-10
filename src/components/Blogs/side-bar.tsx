@@ -97,7 +97,7 @@ const BlogSideBar = async ({ categories, tags, type }: BlogSideBarProps) => {
             </div>
           )}
           {tags && (
-            <div data-aos='fade-up' className='mb-6 w-full bg-gray-50 p-8'>
+            <div data-aos='fade-up' className='mb-6 w-full bg-white p-8'>
               <h3 className='mb-4 border-b border-gray-200 text-[22px] font-bold text-gray-900'>
                 Etiquetas Populares
               </h3>

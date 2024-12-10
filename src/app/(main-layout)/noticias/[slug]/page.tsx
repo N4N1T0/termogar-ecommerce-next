@@ -69,16 +69,15 @@ const NewsArticlePage = async ({
 
   return (
     <main className='w-full'>
-      <div className='mb-[60px]'>
-        <PageTitle
-          title={title || 'Sin Titulo'}
-          breadcrumb={[
-            { name: 'P. Principal', path: '/' },
-            { name: 'Noticias', path: '/noticias' },
-            { name: title || 'Sin Titulo', path: `/noticias/${blogSlug}` }
-          ]}
-        />
-      </div>
+      <PageTitle
+        className='mb-14'
+        title={title || 'Sin Titulo'}
+        breadcrumb={[
+          { name: 'P. Principal', path: '/' },
+          { name: 'Noticias', path: '/noticias' },
+          { name: title || 'Sin Titulo', path: `/noticias/${blogSlug}` }
+        ]}
+      />
       <div className='container-x mx-auto w-full'>
         <div className='mb-7 lg:flex lg:space-x-8'>
           <div className='flex-1'>
@@ -97,7 +96,7 @@ const NewsArticlePage = async ({
                 className='h-full w-full object-cover'
               />
             </div>
-            <div className='blog pl-6 pt-6'>
+            <div className='bg-white py-6 pt-6'>
               <div className='short-data mb-3 flex items-center space-x-9'>
                 <div className='flex items-center space-x-1.5'>
                   <UserCircle className='h-5 w-5 text-tertiary' />

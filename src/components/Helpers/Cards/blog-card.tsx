@@ -12,10 +12,13 @@ import { ArrowRight, Calendar, UserCircle } from 'lucide-react'
 
 const BlogCard = ({ className, data, priority, type }: BlogCardProps) => {
   return (
-    <div className={cn('group w-full border border-gray-200', className)}>
+    <div
+      className={cn('group w-full border border-gray-200', className)}
+      data-aos='fade-up'
+    >
       <Link
         href={`${type === 'blog' ? '/blog/articulos/' : '/noticias/'}${data.slug}`}
-        className='h-[340px] w-full'
+        className='block h-1/2 w-full'
       >
         <Image
           src={data.featuredMedia.url || PlaceholderSquare}
@@ -28,7 +31,7 @@ const BlogCard = ({ className, data, priority, type }: BlogCardProps) => {
           priority={priority}
         />
       </Link>
-      <div className='p-[24px]'>
+      <div className='p-5'>
         <div className='short-data mb-3 flex items-center space-x-9'>
           <div className='flex items-center space-x-1.5'>
             <UserCircle className='h-5 w-5 text-tertiary' />

@@ -59,83 +59,79 @@ const BogArticlePage = async ({
     return null
   }
 
-  const {
-    title,
-    slug: blogSlug,
-    featuredMedia,
-    author,
-    date,
-    content
-  } = searchedPostArticule
-
   return (
     <main className='w-full'>
-      <div className='mb-[60px]'>
-        <PageTitle
-          title={title || 'Sin Titulo'}
-          breadcrumb={[
-            { name: 'P. Principal', path: '/' },
-            { name: 'Blog', path: '/blog' },
-            { name: title || 'Sin Titulo', path: `/blogs/${blogSlug}` }
-          ]}
-        />
-      </div>
-      <div className='container-x mx-auto w-full'>
-        <div className='mb-7 lg:flex lg:space-x-8'>
-          <div className='flex-1'>
-            <div className='h-[457px] w-full'>
-              <Image
-                src={featuredMedia.url || PlaceholderBlogPost}
-                alt={title || 'Sin Titulo'}
-                title={title || 'Sin Titulo'}
-                placeholder='blur'
-                width={740}
-                height={600}
-                priority
-                blurDataURL={
-                  featuredMedia.blur || PlaceholderBlogPost.blurDataURL
-                }
-                className='h-full w-full object-cover'
-              />
-            </div>
-            <div className='blog pl-6 pt-6'>
-              <div className='short-data mb-3 flex items-center space-x-9'>
-                <div className='flex items-center space-x-1.5'>
-                  <UserCircle className='h-5 w-5 text-tertiary' />
-                  <span className='text-base capitalize text-gray-700'>
-                    {author?.name}
-                  </span>
-                </div>
-                <div className='flex items-center space-x-1.5'>
-                  <Calendar className='h-5 w-5 text-tertiary' />
-                  <span className='text-base text-gray-700'>
-                    {date
-                      ? new Date(date).toLocaleDateString('es-es')
-                      : new Date().toLocaleDateString('es-es')}
-                  </span>
-                </div>
-              </div>
-              {content ? (
-                <section
-                  id='content'
-                  className='prose w-full max-w-none text-pretty'
-                >
-                  <PortableText
-                    value={content}
-                    components={portableTextComponents}
-                  />
-                </section>
-              ) : (
-                <p className='text-xl text-gray-700'>Sin Contenido</p>
-              )}
-            </div>
+      <PageTitle
+        title={searchedPostArticule.title || 'Sin Titulo'}
+        className='mb-14'
+        breadcrumb={[
+          { name: 'P. Principal', path: '/' },
+          { name: 'Blog', path: '/blog' },
+          {
+            name: searchedPostArticule.title || 'Sin Titulo',
+            path: `/blog/${searchedPostArticule.slug}`
+          }
+        ]}
+      />
+      <div className='container-x mx-auto mb-7 w-full lg:flex lg:space-x-8'>
+        <div className='flex-1 bg-white'>
+          <div className='h-[457px] w-full'>
+            <Image
+              src={
+                searchedPostArticule.featuredMedia.url || PlaceholderBlogPost
+              }
+              alt={searchedPostArticule.title || 'Sin Titulo'}
+              title={searchedPostArticule.title || 'Sin Titulo'}
+              placeholder='blur'
+              width={740}
+              height={600}
+              priority
+              blurDataURL={
+                searchedPostArticule.featuredMedia.blur ||
+                PlaceholderBlogPost.blurDataURL
+              }
+              className='h-full w-full object-cover'
+            />
           </div>
-          <BlogSideBar
-            categories={searchedPostArticule.categories}
-            tags={searchedPostArticule.tags}
-            type='blog'
-          />
+          <div className='px-6 pt-6'>
+            <div className='mb-3 flex items-center space-x-9'>
+              <div className='flex items-center space-x-1.5'>
+                <UserCircle className='h-5 w-5 text-tertiary' />
+                <span className='text-base capitalize text-gray-700'>
+                  {searchedPostArticule.author?.name}
+                </span>
+              </div>
+              <div className='flex items-center space-x-1.5'>
+                <Calendar className='h-5 w-5 text-tertiary' />
+                <span className='text-base text-gray-700'>
+                  {searchedPostArticule.date
+                    ? new Date(searchedPostArticule.date).toLocaleDateString(
+                        'es-es'
+                      )
+                    : new Date().toLocaleDateString('es-es')}
+                </span>
+              </div>
+            </div>
+            {searchedPostArticule.content ? (
+              <section
+                id='content'
+                className='prose w-full max-w-none text-pretty'
+              >
+                <PortableText
+                  value={searchedPostArticule.content}
+                  components={portableTextComponents}
+                />
+              </section>
+            ) : (
+              <p className='text-xl text-gray-700'>Sin Contenido</p>
+            )}
+          </div>
         </div>
+        <BlogSideBar
+          categories={searchedPostArticule.categories}
+          tags={searchedPostArticule.tags}
+          type='blog'
+        />
       </div>
       {jldBlogArticle(searchedPostArticule)}
     </main>
