@@ -15,10 +15,18 @@ const BlogNewsletter = () => {
     const response = await subscribeToNewsletter({ email })
 
     if (response.success) {
-      toast.success(response.message, { duration: 3000 })
+      toast.success(response.message, {
+        duration: 3000,
+        classNames: {
+          toast: 'text-green-500 border-green-500'
+        }
+      })
     } else {
       toast.error(response.message, {
-        duration: 3000
+        duration: 3000,
+        classNames: {
+          toast: 'bg-red-500 text-white'
+        }
       })
     }
   }

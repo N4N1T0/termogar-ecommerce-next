@@ -22,12 +22,18 @@ const WishlistBtn = ({ product }: { product: ProductCardType }) => {
     if (wishlistHasProduct) {
       removeProduct(product.id)
       toast.info('El producto se eliminó de la lista de deseos', {
-        duration: 2000
+        duration: 2000,
+        classNames: {
+          toast: 'text-accent border-accent'
+        }
       })
     } else {
       addProduct(product)
       toast.success('Se agregó correctamente a la lista de deseos', {
         duration: 2000,
+        classNames: {
+          toast: 'text-green-500 border-green-500'
+        },
         action: {
           label: 'lista',
           onClick: () => {
@@ -77,7 +83,10 @@ const WishlistProductTableRemover = ({ id }: { id: string }) => {
   const handleRemoveProduct = () => {
     removeProduct(id)
     toast.info('El producto se eliminó de la lista de deseos', {
-      duration: 2000
+      duration: 2000,
+      classNames: {
+        toast: 'text-accent border-accent'
+      }
     })
   }
 

@@ -50,10 +50,20 @@ const CouponValidation = ({
       const data = await response.json()
 
       if (!data.success) {
-        toast.error(data.message, { duration: 2000 })
+        toast.error(data.message, {
+          duration: 2000,
+          classNames: {
+            toast: 'bg-red-500 text-white'
+          }
+        })
       } else {
         setIsPending(false)
-        toast.success(data.message, { duration: 3000 })
+        toast.success(data.message, {
+          duration: 3000,
+          classNames: {
+            toast: 'text-green-500 border-green-500'
+          }
+        })
 
         setCoupon({
           amount: data.data.amount as number,

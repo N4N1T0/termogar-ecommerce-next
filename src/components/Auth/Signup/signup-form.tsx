@@ -38,11 +38,21 @@ const SignupForm = ({
     const response = await signupAction(values)
 
     if (response.success) {
-      toast.success(response.message, { duration: 4000 })
+      toast.success(response.message, {
+        duration: 4000,
+        classNames: {
+          toast: 'text-green-500 border-green-500'
+        }
+      })
       form.reset()
       setTimeout(() => router.push(tempUrl), 4500)
     } else {
-      toast.error(response.message, { duration: 5000 })
+      toast.error(response.message, {
+        duration: 5000,
+        classNames: {
+          toast: 'bg-red-500 text-white'
+        }
+      })
     }
   }
 

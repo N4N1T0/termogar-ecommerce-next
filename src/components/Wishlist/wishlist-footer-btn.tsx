@@ -10,7 +10,12 @@ const WishlistFooterBtn = () => {
 
   const handleCleanWishlist = () => {
     removeAllProducts()
-    toast.info('Lista de deseos limpiada', { duration: 2000 })
+    toast.info('Lista de deseos limpiada', {
+      duration: 2000,
+      classNames: {
+        toast: 'text-accent border-accent'
+      }
+    })
   }
 
   const handleAddAllToTheCart = () => {
@@ -34,7 +39,10 @@ const WishlistFooterBtn = () => {
     removeAllProducts()
 
     toast.success('Todos los productos se han añadido al carrito', {
-      duration: 2000
+      duration: 3000,
+      classNames: {
+        toast: 'text-green-500 border-green-500'
+      }
     })
   }
 

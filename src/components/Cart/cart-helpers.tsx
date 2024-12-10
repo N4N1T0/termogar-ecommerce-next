@@ -38,7 +38,10 @@ const CartProductTableRemover = ({ id }: { id: string }) => {
   const handleRemoveProduct = () => {
     removeProduct(id)
     toast.info('El producto se eliminó de la lista de deseos', {
-      duration: 2000
+      duration: 2000,
+      classNames: {
+        toast: 'text-accent border-accent'
+      }
     })
   }
 
