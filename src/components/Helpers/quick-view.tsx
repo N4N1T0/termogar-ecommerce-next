@@ -1,6 +1,9 @@
+'use client'
+
 // * NEXTJS IMPORTS
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import React from 'react'
 
 // * ASSETS IMPORTS
 import {
@@ -16,20 +19,31 @@ import AddToCart from '@/components/Helpers/quantity'
 import ImagesState from '@/components/Helpers/images-state'
 
 // * UTILS IMPORTS
-import { ProductQuickViewProps } from '@/types'
+import { ProductQuickViewProps, YoptopReviews } from '@/types'
 import { calculateAverageRating, eurilize } from '@/lib/utils'
 import { PortableText } from 'next-sanity'
 import { yoptop } from '@/lib/fetchers'
 
-const ProductQuickView = async ({ data }: ProductQuickViewProps) => {
+const ProductQuickView = ({ data }: ProductQuickViewProps) => {
   const { sale, price, categories, content, excerpt, tags } = data
 
-  const reviews = await yoptop
-    .fetchReviews(data?.id.split('-').slice(-1)[0] || '')
-    .then((res) => (res.status !== null ? res : null))
+  const [reviews, setReviews] = React.useState<
+    YoptopReviews | null | undefined
+  >(null)
+  const [score, setScore] = React.useState(0)
 
-  const score = calculateAverageRating(reviews?.reviews)
+  React.useEffect(() => {
+    const fetchReviews = async () => {
+      const fetchedReviews = await yoptop
+        .fetchReviews(data?.id.split('-').slice(-1)[0] || '')
+        .then((res) => (res.status !== null ? res : null))
 
+      setReviews(fetchedReviews?.reviews)
+      setScore(calculateAverageRating(fetchedReviews?.reviews))
+    }
+
+    fetchReviews()
+  }, [data?.id])
   return (
     <Dialog modal>
       <DialogTrigger className='flex h-10 w-10 cursor-pointer items-center justify-center bg-accent p-1 text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900'>
@@ -71,8 +85,8 @@ const ProductQuickView = async ({ data }: ProductQuickViewProps) => {
                   </ul>
                 )}
                 {reviews !== undefined &&
-                reviews?.reviews !== undefined &&
-                reviews.reviews.length > 0 ? (
+                reviews?.length &&
+                reviews?.length > 0 ? (
                   <div
                     data-aos='fade-up'
                     className='mb-6 flex items-center space-x-[10px]'
@@ -91,7 +105,7 @@ const ProductQuickView = async ({ data }: ProductQuickViewProps) => {
                         ))}
                     </div>
                     <span className='text-sm font-normal text-gray-900'>
-                      {reviews?.reviews?.length} Reviews
+                      {reviews?.length} Reviews
                     </span>
                   </div>
                 ) : (

@@ -30,11 +30,19 @@ const PasswordTab = ({ user }: { user: GET_USER_INFOResult }) => {
     const response = await resetPassword(refactoredValues)
 
     if (response.success) {
-      toast.success(response.message, { duration: 4000 })
+      toast.success(response.message, {
+        duration: 4000,
+        classNames: {
+          toast: 'text-green-500 border-green-500'
+        }
+      })
       reset()
     } else {
       toast.error(response.message, {
-        duration: 4000
+        duration: 4000,
+        classNames: {
+          toast: 'bg-red-500 text-white'
+        }
       })
     }
   }

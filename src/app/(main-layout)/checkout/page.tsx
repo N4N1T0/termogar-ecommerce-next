@@ -31,10 +31,12 @@ const CheckoutPage = async ({
     searchesUser = await sanityClientRead.fetch(GET_USER_INFO, {
       id: session?.user?.id
     })
-  } else {
+  } else if (userId) {
     searchesUser = searchesUser = await sanityClientRead.fetch(GET_USER_INFO, {
       id: userId
     })
+  } else {
+    searchesUser = null
   }
 
   return (

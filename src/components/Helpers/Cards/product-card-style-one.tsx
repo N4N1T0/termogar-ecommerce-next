@@ -112,7 +112,7 @@ export default function ProductCardStyleOne<T>({
                 : (price || 0) + (price || 0) * 0.21
             )}
             <small className='ml-1 text-[11px] font-normal underline'>
-              IVA incl.
+              IVA.
             </small>
           </span>
         </div>

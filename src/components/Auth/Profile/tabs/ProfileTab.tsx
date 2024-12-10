@@ -1,7 +1,7 @@
 'use client'
 
 // * NEXT.JS IMPORTS
-import { ChangeEvent, useRef, useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
@@ -20,15 +20,15 @@ import { GET_USER_INFOResult } from '@/types/sanity'
 import userProfileUpdate from '@/actions/user-profile-update'
 
 export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
-  const [profileImg, setProfileImg] = useState<string | null>(null)
-  const profileImgInput = useRef<HTMLInputElement>(null)
+  const [profileImg, setProfileImg] = React.useState<string | null>(null)
+  const profileImgInput = React.useRef<HTMLInputElement>(null)
   const router = useRouter()
 
   const browseProfileImg = () => {
     profileImgInput?.current?.click()
   }
 
-  const profileImgChangHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const profileImgChangHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value !== '') {
       const imgReader = new FileReader()
       imgReader.onload = (event) => {
@@ -56,6 +56,16 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
         email: user?.email || '',
         phone: user?.billingAddress?.phone || '',
         firstName: user?.firstName || ''
+      },
+      shippingAddresses: {
+        address1: user?.billingAddress?.address1 || '',
+        address2: user?.billingAddress?.address2 || '',
+        city: user?.billingAddress?.city || '',
+        postcode: user?.billingAddress?.postcode || '',
+        state: user?.billingAddress?.state || '',
+        email: user?.email || '',
+        phone: user?.billingAddress?.phone || '',
+        firstName: user?.firstName || ''
       }
     }
   })
@@ -67,14 +77,42 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
     reset
   } = form
 
+  React.useEffect(() => {
+    if (!isDirty) return
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      return (event.returnValue = '')
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload, {
+      capture: true
+    })
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload, {
+        capture: true
+      })
+    }
+  }, [isDirty])
+
   const onSubmit = async (values: CostumerSchema) => {
     const refactoredValues = { ...values, id: user?.id, avatarUrl: profileImg }
-    const response = await userProfileUpdate(refactoredValues)
+    const isEmailDirty = form.getFieldState('email', form.formState).isDirty
+    const response = await userProfileUpdate(refactoredValues, isEmailDirty)
 
     if (!response?.success) {
-      toast.error(response?.message, { duration: 4000 })
+      toast.error(response?.message, {
+        duration: 4000,
+        classNames: {
+          toast: 'bg-red-500 text-white'
+        }
+      })
     } else {
-      toast.success(response?.message, { duration: 4000 })
+      toast.success(response?.message, {
+        duration: 4000,
+        classNames: {
+          toast: 'text-green-500 border-green-500'
+        }
+      })
       reset()
       router.refresh()
     }
@@ -129,30 +167,33 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
                 autocomplete='username'
               />
             </div>
-            <fieldset className='border-t border-gray-200'>
-              <legend className='my-4 block pr-4 text-lg font-medium leading-6 text-gray-900'>
+            <fieldset className='border-t border-accent/20'>
+              {/* BILLING ADDRESS */}
+              <legend className='mb-2 mt-4 block pr-4 text-lg font-semibold leading-6 text-gray-900'>
                 Dirección de Facturación
               </legend>
-              <FormFieldComponent
-                className='w-full'
-                label='Dirección'
-                placeholder='Calle 123...'
-                type='text'
-                control={control}
-                isSubmitting={isSubmitting}
-                name='billingAddress.address1'
-                autocomplete='address1'
-              />
-              <FormFieldComponent
-                className='mt-4 w-full'
-                label='Dirección 2'
-                placeholder='Piso 2...'
-                type='text'
-                control={control}
-                isSubmitting={isSubmitting}
-                name='billingAddress.address2'
-                autocomplete='address2'
-              />
+              <div className='input-item mt-2 flex space-x-2.5'>
+                <FormFieldComponent
+                  className='w-full'
+                  label='Dirección'
+                  placeholder='Calle 123...'
+                  type='text'
+                  control={control}
+                  isSubmitting={isSubmitting}
+                  name='billingAddress.address1'
+                  autocomplete='address-line1'
+                />
+                <FormFieldComponent
+                  className='w-full'
+                  label='Dirección 2'
+                  placeholder='Piso 2...'
+                  type='text'
+                  control={control}
+                  isSubmitting={isSubmitting}
+                  name='billingAddress.address2'
+                  autocomplete='address-line2'
+                />
+              </div>
               <div className='input-item mt-4 flex space-x-2.5'>
                 <FormFieldComponent
                   className='w-full'
@@ -162,7 +203,7 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
                   control={control}
                   name='billingAddress.city'
                   isSubmitting={isSubmitting}
-                  autocomplete='city'
+                  autocomplete='address-level2'
                 />
                 <FormFieldComponent
                   className='w-full'
@@ -172,7 +213,7 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
                   control={control}
                   name='billingAddress.postcode'
                   isSubmitting={isSubmitting}
-                  autocomplete='postalCode'
+                  autocomplete='postal-code'
                 />
               </div>
               <div className='input-item mt-4 flex space-x-2.5'>
@@ -184,7 +225,7 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
                   control={control}
                   name='billingAddress.state'
                   isSubmitting={isSubmitting}
-                  autocomplete='state'
+                  autocomplete='address-level1'
                 />
                 <FormFieldComponent
                   className='w-full'
@@ -194,7 +235,7 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
                   control={control}
                   name='billingAddress.phone'
                   isSubmitting={isSubmitting}
-                  autocomplete='phone'
+                  autocomplete='tel'
                 />
               </div>
             </fieldset>
@@ -254,7 +295,7 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
           {isDirty && (
             <button
               type='submit'
-              className='hover-200 h-[50px] w-[164px] bg-accent text-gray-900 hover:text-gray-50'
+              className='hover-200 h-[50px] w-[164px] bg-accent text-gray-50 hover:text-gray-900'
             >
               Actualizar
             </button>

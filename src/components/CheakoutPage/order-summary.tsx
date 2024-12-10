@@ -3,6 +3,7 @@
 // * NEXT.JS IMPORTS
 import React, { MutableRefObject } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import Form from 'next/form'
 
 // * ASSETS IMPORTS
@@ -15,7 +16,6 @@ import { calculateTotal, eurilize } from '@/lib/utils'
 import { Coupon } from '@/types/sanity'
 import paymentLogic from '@/actions/payment-logic'
 import { RedirectForm } from 'redsys-easy'
-import Image from 'next/image'
 import { PlaceholderSquare } from '@/assets'
 
 const OrderSummary = ({
@@ -46,9 +46,6 @@ const OrderSummary = ({
     '33460',
     coupon
   )
-  const refactoredProductsForPayment = products
-    .map((product) => `${product.id}_${product.quantity}`)
-    .join(',')
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -59,7 +56,7 @@ const OrderSummary = ({
       paymentType,
       total,
       userId,
-      refactoredProductsForPayment,
+      products,
       newAddress,
       `${coupon.amount}_${coupon.type}`
     )
@@ -69,9 +66,7 @@ const OrderSummary = ({
       response.success &&
       response.data !== null
     ) {
-      router.push(
-        `${process.env.NEXT_PUBLIC_URL}/exito?userId=${userId}&orderId=${response.data}&gateway=transferencia-bancaria-directa&newAddress=${newAddress}&discountCoupon=${coupon.amount}-${coupon.type}&total=${total}&products=${refactoredProductsForPayment}`
-      )
+      router.push(response.data as unknown as string)
     }
 
     if (
@@ -80,6 +75,14 @@ const OrderSummary = ({
       response.data !== null
     ) {
       setPaymentForm(response.data as RedirectForm)
+    }
+
+    if (
+      paymentType === 'paypal' &&
+      response.success &&
+      response.data !== null
+    ) {
+      router.push(response.data as unknown as string)
     }
   }
 
@@ -200,30 +203,26 @@ const OrderSummary = ({
           </p>
         </div>
         <Form onSubmit={handleSubmit} action=''>
-          <ul className='mt-4 flex flex-col space-y-1'>
+          <ul className='mt-4'>
             {['Transferencia bancaria directa', 'PayPal', 'Tarjeta'].map(
               (paymentType) => (
                 <li className='mb-5' key={paymentType}>
-                  <div className='mb-4 flex items-center space-x-2.5'>
-                    <div className='input-radio'>
-                      <input
-                        type='radio'
-                        name='payment-type'
-                        required
-                        value={paymentType.replace(/ /g, '-').toLowerCase()}
-                        className='accent-accent'
-                        id={paymentType.replace(/ /g, '-').toLowerCase()}
-                      />
-                    </div>
-                    <label
-                      htmlFor={paymentType.replace(/ /g, '-').toLowerCase()}
-                      className='text-normal text-[18px] text-gray-900'
-                    >
-                      {paymentType}
-                    </label>
-                  </div>
+                  <input
+                    type='radio'
+                    name='payment-type'
+                    required
+                    value={paymentType.replace(/ /g, '-').toLowerCase()}
+                    className='mr-2 cursor-pointer accent-accent'
+                    id={paymentType.replace(/ /g, '-').toLowerCase()}
+                  />
+                  <label
+                    htmlFor={paymentType.replace(/ /g, '-').toLowerCase()}
+                    className='text-normal cursor-pointer text-[18px] text-gray-900'
+                  >
+                    {paymentType}
+                  </label>
                   {paymentType === 'Transferencia bancaria directa' && (
-                    <small className='-mt-4 block text-gray-600'>
+                    <small className='block text-gray-600'>
                       Realiza tu pago directamente en nuestra cuenta bancaria.
                       Por favor, utiliza tu ID de pedido como referencia de
                       pago.

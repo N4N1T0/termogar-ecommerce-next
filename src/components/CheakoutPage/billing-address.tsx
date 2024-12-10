@@ -1,8 +1,9 @@
 'use client'
 
 // * NEXT.JS IMPORTS
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import React from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 // * ASSETS IMPORTS
 import FormFieldComponent from '@/components/Auth/ResetPassword/form-field'
@@ -20,8 +21,10 @@ import { GET_USER_INFOResult } from '@/types/sanity'
 import checkoutLogic from '@/actions/checkout-logic'
 
 const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
-  const [isShippingAddress, setIsShippingAddress] = useState<boolean>(false)
+  const [isShippingAddress, setIsShippingAddress] =
+    React.useState<boolean>(false)
   const router = useRouter()
+  const path = usePathname()
 
   const form = useForm<CheckoutUser>({
     resolver: zodResolver(checkoutUser),
@@ -56,14 +59,24 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
     mode: 'onChange'
   })
 
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting, errors, dirtyFields },
+    reset
+  } = form
+
+  const isDirty = Object.values(dirtyFields).length > 0
+  const noErrors = Object.keys(errors).length === 0
+
   // IN CASE NEW USER
-  useEffect(() => {
+  React.useEffect(() => {
     form.setValue('password', user ? '12345678a' : '')
     form.setValue('confirmPassword', user ? '12345678a' : '')
   }, [user, form])
 
   // IN CASE NEW ADDRESS
-  useEffect(() => {
+  React.useEffect(() => {
     const fields = [
       {
         key: 'shippingAddresses.address1',
@@ -105,15 +118,22 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
     })
   }, [isShippingAddress, form])
 
-  const {
-    control,
-    handleSubmit,
-    formState: { isSubmitting, errors, dirtyFields },
-    reset
-  } = form
+  React.useEffect(() => {
+    if (!isDirty) return
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault()
+      return (event.returnValue = '')
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload, {
+      capture: true
+    })
 
-  const isDirty = Object.values(dirtyFields).length > 0
-  const noErrors = Object.keys(errors).length === 0
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload, {
+        capture: true
+      })
+    }
+  }, [path, isDirty])
 
   const onSubmit = async (values: CheckoutUser) => {
     if (!isDirty && noErrors && !isShippingAddress) {
@@ -130,7 +150,12 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
     )
 
     if (response?.success) {
-      toast.success(response.message, { duration: 4000 })
+      toast.success(response.message, {
+        duration: 4000,
+        classNames: {
+          toast: 'text-green-500 border-green-500'
+        }
+      })
       router.replace(
         `/checkout?userId=${response.userId}&newAddress=${isShippingAddress}`,
         {
@@ -138,7 +163,12 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
         }
       )
     } else {
-      toast.error(response?.message, { duration: 4000 })
+      toast.error(response?.message, {
+        duration: 4000,
+        classNames: {
+          toast: 'bg-red-500 text-white'
+        }
+      })
     }
   }
 
@@ -266,8 +296,8 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
 
               {/* NEW USER PASSWORD CHECK */}
               {!user && (
-                <fieldset className='mt-5 space-y-4'>
-                  <legend className='w-full border-b border-accent/20 text-sm text-tertiary'>
+                <fieldset className='mt-5 space-y-4 border-t border-accent/20'>
+                  <legend className='pr-4 text-sm text-tertiary'>
                     Crea tu contraseña y date de alta en Termogar.es España.
                   </legend>
                   <CheckoutPasswordCheck form={form} />
@@ -279,6 +309,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
               <div className='flex items-center space-x-2'>
                 <Checkbox
                   id='useShippingAddress'
+                  name='useShippingAddress'
                   checked={isShippingAddress}
                   onCheckedChange={() =>
                     setIsShippingAddress(!isShippingAddress)
@@ -318,6 +349,15 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
                 ? 'Actualizar'
                 : 'Aceptar'}
           </button>
+          {!user && (
+            <Link
+              href={`/login?redirectTo=${path}`}
+              aria-disabled={isSubmitting}
+              className='hover-200 flex h-[50px] w-[164px] items-center justify-center bg-tertiary text-gray-50 hover:text-gray-900 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
+            >
+              Inicia Session
+            </Link>
+          )}
         </div>
       </form>
     </Form>

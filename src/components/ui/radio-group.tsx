@@ -3,7 +3,7 @@
 import * as React from 'react'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 import { cn } from '@/lib/utils'
-import { Dot } from 'lucide-react'
+import { Check } from 'lucide-react'
 
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
@@ -33,7 +33,7 @@ const RadioGroupItem = React.forwardRef<
       {...props}
     >
       <RadioGroupPrimitive.Indicator className='flex items-center justify-center'>
-        <Dot className='fill-accent' size={16} />
+        <Check className='text-accent' size={16} />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   )
