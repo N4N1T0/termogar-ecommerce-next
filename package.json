@@ -1,6 +1,6 @@
 {
   "name": "next.js_termogar",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -42,7 +42,7 @@
     "clsx": "^2.1.1",
     "decimal.js": "^10.4.3",
     "lucide-react": "^0.468.0",
-    "next": "15.0.4",
+    "next": "15.1.0",
     "next-auth": "5.0.0-beta.25",
     "next-sanity": "^9.8.25",
     "react": "19.0.0",
@@ -71,7 +71,7 @@
     "@types/react-dom": "^19.0.2",
     "@types/woocommerce__woocommerce-rest-api": "^1.0.5",
     "eslint": "^9.16.0",
-    "eslint-config-next": "15.0.4",
+    "eslint-config-next": "15.1.0",
     "eslint-config-prettier": "^9.1.0",
     "html-entities": "^2.5.2",
     "husky": "^9.1.7",
@@ -87,14 +87,16 @@
     "wp-types": "^4.67.0"
   },
   "pnpm": {
-    "pnpm": {
-      "peerDependencyRules": {
-        "allowAny": [
-          "react",
-          "react-dom"
-        ]
+    "peerDependencyRules": {
+      "allowAny": [
+        "react",
+        "react-dom"
+      ],
+      "allowedVersions": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
       }
     }
   },
-  "packageManager": "pnpm@9.12.3"
+  "packageManager": "pnpm@9.15.0"
 }
