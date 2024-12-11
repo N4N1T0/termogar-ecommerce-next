@@ -6,7 +6,9 @@ import PriceRangeSlider from '@/components/AllProductPage/price-range-slider'
 import { getPriceRange, groupCategoriesWithExtras } from '@/lib/utils'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_PRODUCTS_AND_BRAND_FOR_FILTERING } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 export const dynamic = 'force-dynamic'
 
 const ProductSidebar = async ({
@@ -20,6 +22,10 @@ const ProductSidebar = async ({
     GET_PRODUCTS_AND_BRAND_FOR_FILTERING,
     { slug: brand }
   )
+
+  if (!searchedData) {
+    log.error('Brand not found', { searchedData })
+  }
 
   const { maxPrice, minPrice } = getPriceRange(searchedData?.products)
   const categoriesFilter = groupCategoriesWithExtras(searchedData)

@@ -2,11 +2,17 @@
 import BlogCard from '@/components/Helpers/Cards/blog-card'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_CARD_BLOG_POST } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 const FeaturedBlog = async () => {
   const blogPosts = await sanityClientRead.fetch(GET_CARD_BLOG_POST, {
     type: ['Blog']
   })
+
+  if (!blogPosts) {
+    log.error('No blog posts found')
+  }
   return (
     <div className='container-x mx-auto mb-[60px]'>
       <h3 className='font-600 mb-5 text-xl leading-none text-gray-900 sm:text-3xl'>

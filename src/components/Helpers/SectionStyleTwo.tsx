@@ -8,7 +8,9 @@ import ViewMoreTitle from './view-more-title'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY } from '@/sanity/lib/queries'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult } from '@/types/sanity'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 const SectionStyleTwo = async ({
   className,
   sectionTitle,
@@ -19,6 +21,10 @@ const SectionStyleTwo = async ({
     { type: sectionTitle === null ? ['Calentadores'] : [sectionTitle] },
     { cache: 'force-cache', next: { revalidate: 600 } }
   )
+
+  if (!searchedProducts) {
+    log.error('No products found')
+  }
   return (
     <section id='section-5' className={cn('section-style-one', className)}>
       <ViewMoreTitle

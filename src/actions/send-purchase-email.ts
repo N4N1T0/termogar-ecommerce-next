@@ -8,6 +8,9 @@ import ErrorPurchase from '@/emails/error-purchase'
 import { resend } from '@/lib/clients'
 import { CartItemType } from '@/types'
 import { Address, GET_USER_INFOResult } from '@/types/sanity'
+import { Logger } from 'next-axiom'
+
+const log = new Logger()
 
 const sendPurchaseEmail = async (
   user: GET_USER_INFOResult,
@@ -28,6 +31,9 @@ const sendPurchaseEmail = async (
 ) => {
   try {
     if (status === 'failed') {
+      log.info(
+        `Sending order failed email to ${user?.email} with order number ${orderNumber}`
+      )
       // TODO: Change the email address
       await resend.emails.send({
         from: 'compra-error@termogar.es',
@@ -48,6 +54,9 @@ const sendPurchaseEmail = async (
         })
       })
     } else {
+      log.info(
+        `Sending order completed email to ${user?.email} with order number ${orderNumber}`
+      )
       // TODO: Change the email address
       await resend.emails.send({
         from: 'compra-realizada@termogar.es',
@@ -69,7 +78,7 @@ const sendPurchaseEmail = async (
       })
     }
   } catch (error) {
-    console.error('Error sending purchase email:', error)
+    log.error('Error sending purchase email:', { error: error })
   }
 }
 

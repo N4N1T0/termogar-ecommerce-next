@@ -1,11 +1,13 @@
 'use server'
 
+// * ASSETS IMPORTS
 import { auth } from '@/lib/auth'
 import { CheckoutUser, checkoutUser } from '@/lib/schemas'
 import { hashPassword } from '@/lib/utils'
 import { sanityClientWrite } from '@/sanity/lib/client'
 import { Address, Costumer } from '@/types/sanity'
 import { uuid } from '@sanity/uuid'
+import { Logger } from 'next-axiom'
 
 // * Utility function to create an address object.
 const createAddress = (
@@ -25,6 +27,8 @@ const createAddress = (
   createdAt: new Date().toISOString()
 })
 
+const log = new Logger()
+
 const checkoutLogic = async (
   values: CheckoutUser,
   newUser: boolean,
@@ -34,6 +38,9 @@ const checkoutLogic = async (
     const session = await auth()
 
     if (!session?.user?.id && !newUser) {
+      log.error('User session is invalid or expired.', {
+        where: 'checkoutLogic'
+      })
       return {
         success: false,
         message: 'User session is invalid or expired.'
@@ -45,6 +52,10 @@ const checkoutLogic = async (
     // * VALIDATION
     const parsedValue = checkoutUser.safeParse(values)
     if (!parsedValue.success) {
+      log.error('Validation failed.', {
+        where: 'checkoutLogic',
+        error: parsedValue.error.issues[0]?.message
+      })
       return {
         success: false,
         message: parsedValue.error.issues[0]?.message || 'Validation failed.'
@@ -63,6 +74,9 @@ const checkoutLogic = async (
 
     if (newUser) {
       if (customerAlreadyExist) {
+        log.error('the user already exist', {
+          where: 'checkoutLogic'
+        })
         return {
           success: false,
           message:
@@ -113,12 +127,17 @@ const checkoutLogic = async (
         .commit()
     }
 
+    log.info('data updated', { where: 'checkoutLogic' })
     return {
       success: true,
       message: 'Datos actualizados',
       userId
     }
   } catch (error) {
+    log.error('An error occurred while processing the request.', {
+      where: 'checkoutLogic',
+      data: error
+    })
     return {
       success: false,
       message:

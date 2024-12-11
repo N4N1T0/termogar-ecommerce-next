@@ -13,6 +13,9 @@ import TopBar from './TopBar'
 import { cn } from '@/lib/utils'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_MENU_CATEGORIES } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
+
+const log = new Logger()
 
 const HeaderOne = async ({ className }: { className?: string }) => {
   const navbarMenu = await sanityClientRead.fetch(
@@ -21,6 +24,9 @@ const HeaderOne = async ({ className }: { className?: string }) => {
     { cache: 'force-cache', next: { revalidate: 43200 } }
   )
 
+  if (!navbarMenu) {
+    log.error('No categories found')
+  }
   return (
     <header className={cn('header-section-wrapper relative', className)}>
       <TopBar />

@@ -18,7 +18,9 @@ import {
 } from '@/lib/utils'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult } from '@/types/sanity'
 import { PortableText } from 'next-sanity'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 export const dynamic = 'force-dynamic'
 
 // * METADATA
@@ -60,7 +62,10 @@ const CategoriesPage = async ({
     }
   )
 
-  if (!searchedCategory) return notFound()
+  if (!searchedCategory) {
+    log.error('Category not found', { searchedCategory })
+    return notFound()
+  }
 
   // * BY ORDER
   const orderProducts = filteredProductsByOrder(

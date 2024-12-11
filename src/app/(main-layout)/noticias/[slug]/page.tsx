@@ -1,6 +1,7 @@
 // * NEXT.JS IMPORTS
 import Image from 'next/image'
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 // * ASSETS IMPORTS
 import { PlaceholderBlogPost } from '@/assets'
@@ -13,7 +14,9 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_BLOG_ARTICLE_BY_SLUG } from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 // * METADATA
 export async function generateMetadata({
   params
@@ -55,7 +58,8 @@ const NewsArticlePage = async ({
   )
 
   if (!searchedPostArticule) {
-    return null
+    log.error('Blog posts not found', { searchedPostArticule })
+    return notFound()
   }
 
   const {

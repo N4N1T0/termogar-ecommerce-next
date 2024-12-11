@@ -1,14 +1,19 @@
 'use server'
 
+// * ASSETS IMPORTS
 import { LoginSchema, loginSchema } from '@/lib/schemas'
 import { signIn, signOut } from '@/lib/auth'
 import { AuthError } from 'next-auth'
+import { Logger } from 'next-axiom'
+
+const log = new Logger()
 
 const loginAction = async (values: LoginSchema) => {
   try {
     const parsed = loginSchema.safeParse(values)
 
     if (!parsed.success) {
+      log.error('Las credenciales no coinciden')
       return {
         success: false,
         message: 'Las credenciales no coinciden'
@@ -32,11 +37,16 @@ const loginAction = async (values: LoginSchema) => {
     }
   } catch (error) {
     if (error instanceof AuthError) {
+      log.error(
+        error.cause?.err?.message ||
+          'Ocurrido un error durante el inicio de sesión'
+      )
       return {
         success: false,
         message: error.cause?.err?.message
       }
     }
+    log.error('Ocurrió un error durante el inicio de sesión')
     return {
       success: false,
       message: 'Ocurrió un error durante el inicio de sesión'

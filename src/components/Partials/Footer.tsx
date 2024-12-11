@@ -13,7 +13,9 @@ import { GET_MENU_CATEGORIES } from '@/sanity/lib/queries'
 import Instagram from '@/components/Helpers/icons/Instagram'
 import Facebook from '@/components/Helpers/icons/Facebook'
 import Youtube from '@/components/Helpers/icons/Youtube'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 const Footer = async () => {
   const { footerLinks } = siteData
 
@@ -22,6 +24,11 @@ const Footer = async () => {
     {},
     { cache: 'force-cache', next: { revalidate: 43200 } }
   )
+
+  if (!searchedCategories) {
+    log.error('No categories found')
+  }
+
   return (
     <footer className='footer-section-wrapper bg-white print:hidden'>
       <div className='container-x mx-auto block pt-5'>

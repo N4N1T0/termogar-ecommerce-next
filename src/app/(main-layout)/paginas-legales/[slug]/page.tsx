@@ -11,7 +11,9 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 // * METADATA
 export async function generateMetadata({
   params
@@ -58,7 +60,10 @@ const LegalPages = async ({
       }
     }
   )
-  if (!searchedPage) return notFound()
+  if (!searchedPage) {
+    log.error(`The page with slug ${slug} was not found`)
+    return notFound()
+  }
 
   const { title, content } = searchedPage
 

@@ -9,7 +9,9 @@ import BreadcrumbCom from '@/components/BreadcrumbCom'
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_ORDERS_BY_USER_ID, GET_USER_INFO } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 export async function generateMetadata({
   params
 }: {
@@ -44,7 +46,10 @@ const ProfilePage = async ({
     id
   })
 
-  if (!searchesUser) return redirect('/')
+  if (!searchesUser) {
+    log.error(`The user with id ${id} was not found`)
+    return redirect('/')
+  }
 
   return (
     <main className='w-full'>

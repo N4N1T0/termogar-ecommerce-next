@@ -14,9 +14,14 @@ import { jldHomePage } from '@/components/seo'
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_MAIN_PAGE } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
+
+const log = new Logger()
 
 export default async function Home() {
   const searchedMainPage = await sanityClientRead.fetch(GET_MAIN_PAGE)
+
+  if (!searchedMainPage) return log.error('No se encontraron datos')
   return (
     <main>
       <Banner

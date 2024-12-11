@@ -17,7 +17,9 @@ import {
   filterProductsByFilter
 } from '@/lib/utils'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult } from '@/types/sanity'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 export const dynamic = 'force-dynamic'
 
 // * METADATA
@@ -57,7 +59,10 @@ const CategoriesPage = async ({
     }
   )
 
-  if (!searchedTag) return notFound()
+  if (!searchedTag) {
+    log.error('Tag not found', { searchedTag })
+    return notFound()
+  }
 
   // * BY ORDER
   const orderProducts = filteredProductsByOrder(searchedTag.products, orderBy)

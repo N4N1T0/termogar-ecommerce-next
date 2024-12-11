@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next'
+import { withAxiom } from 'next-axiom'
 
-const nextConfig: NextConfig = {
+const nextConfig: NextConfig = withAxiom({
   output: 'standalone',
   images: {
     remotePatterns: [
@@ -16,6 +17,6 @@ const nextConfig: NextConfig = {
       }
     ]
   }
-}
+})
 
 export default nextConfig

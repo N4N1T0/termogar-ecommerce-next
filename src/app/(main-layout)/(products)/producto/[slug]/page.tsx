@@ -13,7 +13,9 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_WHOLE_PRODUCT_BY_SLUG } from '@/sanity/lib/queries'
 import { yoptop } from '@/lib/fetchers'
 import { auth } from '@/lib/auth'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 // * METADATA
 export async function generateMetadata({
   params
@@ -123,7 +125,10 @@ const SingleProductPage = async ({
     ? searchedProduct?.relatedProducts.map((product) => product.id)
     : []
 
-  if (!searchedProduct) return notFound()
+  if (!searchedProduct) {
+    log.error('Product not found', { slug })
+    return notFound()
+  }
 
   return (
     <main id='w-full'>

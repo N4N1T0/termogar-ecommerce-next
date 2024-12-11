@@ -3,6 +3,7 @@ import './globals.css'
 import localFont from 'next/font/local'
 import { seoMetatags } from '@/components/seo'
 import { Toaster } from 'sonner'
+import { AxiomWebVitals } from 'next-axiom'
 
 export const metadata: Metadata = seoMetatags()
 
@@ -59,6 +60,7 @@ export default function RootLayout({
             }
           }}
         />
+        <AxiomWebVitals />
       </body>
     </html>
   )

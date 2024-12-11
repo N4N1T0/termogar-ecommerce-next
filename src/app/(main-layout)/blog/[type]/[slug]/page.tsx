@@ -11,7 +11,9 @@ import {
 import PageTitle from '@/components/Helpers/PageTitle'
 import BlogCard from '@/components/Helpers/Cards/blog-card'
 import { sanityClientRead } from '@/sanity/lib/client'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 // * METADATA
 export async function generateMetadata({
   params
@@ -63,6 +65,10 @@ const CategoriesOrTagPage = async ({
             }
           }
         )
+
+  if (!blogPosts) {
+    log.error('Blog posts not found', { blogPosts })
+  }
 
   return (
     <main>

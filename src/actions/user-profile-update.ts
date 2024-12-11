@@ -1,9 +1,13 @@
 'use server'
 
+// * ASSETS IMPORTS
 import { CostumerSchema, costumerSchema } from '@/lib/schemas'
 import { sanityClientWrite } from '@/sanity/lib/client'
 import { GET_USER_FOR_AUTH } from '@/sanity/lib/queries'
 import { AuthError } from 'next-auth'
+import { Logger } from 'next-axiom'
+
+const log = new Logger()
 
 const userProfileUpdate = async (
   values: CostumerSchema & { id: string | undefined; avatarUrl: string | null },
@@ -15,6 +19,7 @@ const userProfileUpdate = async (
     const result = costumerSchema.safeParse(dataToValidate)
 
     if (!result.success) {
+      log.error('Validation failed', { error: result.error.issues })
       return {
         success: false,
         message: 'Los datos no son Validos'
@@ -27,6 +32,7 @@ const userProfileUpdate = async (
       })
 
       if (exitingEmail?.id === id) {
+        log.info('Email already exists', { email: dataToValidate.email })
         return {
           success: false,
           message:
@@ -40,6 +46,7 @@ const userProfileUpdate = async (
       const mimeType = avatarUrl?.split(',')[0]?.match(/:(.*?);/)?.[1]
 
       if (!base64Data || !mimeType) {
+        log.error('Invalid image format or missing image data')
         return {
           success: false,
           message:
@@ -114,17 +121,20 @@ const userProfileUpdate = async (
       })
       .commit()
 
+    log.info('User profile updated successfully', { id })
     return {
       success: true,
       message: 'Registro Exitoso'
     }
   } catch (error) {
     if (error instanceof AuthError) {
+      log.error('Auth error during profile update', { error: error.cause?.err })
       return {
         success: false,
         message: error.cause?.err?.message
       }
     }
+    log.error('Unexpected error during profile update', { error })
     return {
       success: false,
       message: 'Ocurrió un error durante el inicio de sesión'

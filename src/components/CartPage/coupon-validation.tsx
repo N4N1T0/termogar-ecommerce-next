@@ -6,7 +6,9 @@ import { toast } from 'sonner'
 import { CartItemType } from '@/types'
 import { Coupon } from '@/types/sanity'
 import { cn } from '@/lib/utils'
-import { Input } from '../ui/input'
+import { Input } from '@/components/ui/input'
+import Form from 'next/form'
+import { couponValidation } from '@/actions/coupon-validation'
 
 const CouponValidation = ({
   cart,
@@ -32,25 +34,12 @@ const CouponValidation = ({
     setIsPending(true)
 
     const formData = new FormData(e.currentTarget)
-    const body = Object.fromEntries(formData.entries())
-    const refactoredBody = {
-      ...body,
-      cart
-    }
 
     try {
-      const response = await fetch('/api/coupon-validation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(refactoredBody)
-      })
+      const response = await couponValidation(formData, cart)
 
-      const data = await response.json()
-
-      if (!data.success) {
-        toast.error(data.message, {
+      if (!response.success) {
+        toast.error(response.message, {
           duration: 2000,
           classNames: {
             toast: 'bg-red-500 text-white'
@@ -58,7 +47,7 @@ const CouponValidation = ({
         })
       } else {
         setIsPending(false)
-        toast.success(data.message, {
+        toast.success(response.message, {
           duration: 3000,
           classNames: {
             toast: 'text-green-500 border-green-500'
@@ -66,8 +55,8 @@ const CouponValidation = ({
         })
 
         setCoupon({
-          amount: data.data.amount as number,
-          type: data.data.discount_type as Coupon['discount_type']
+          amount: response?.data?.amount as unknown as number,
+          type: response?.data?.discount_type as Coupon['discount_type']
         })
       }
     } catch (error) {
@@ -76,7 +65,8 @@ const CouponValidation = ({
   }
 
   return (
-    <form
+    <Form
+      action=''
       onSubmit={handleCouponValidationSubmit}
       id='coupon-form'
       className={cn(
@@ -96,7 +86,7 @@ const CouponValidation = ({
       <button
         type='submit'
         aria-disabled={isPending}
-        className='black-btn hover-200 text-gray-gray-50 h-[50px] w-[90px] bg-accent hover:text-gray-900 aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
+        className='hover-200 text-gray-gray-50 h-[50px] w-[90px] bg-accent hover:text-gray-900 aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
       >
         {isPending ? (
           <span className='animate-pulse text-sm font-semibold'>
@@ -106,7 +96,7 @@ const CouponValidation = ({
           <span className='text-sm font-semibold'>Validar</span>
         )}
       </button>
-    </form>
+    </Form>
   )
 }
 

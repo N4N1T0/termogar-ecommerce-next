@@ -11,6 +11,9 @@ import BlogNewsletter from './newsletter'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { BlogSideBarProps } from '@/types'
 import { GET_LATEST_BLOG_POSTS_BY_CATEGORIES } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
+
+const log = new Logger()
 
 const BlogSideBar = async ({ categories, tags, type }: BlogSideBarProps) => {
   const latestPosts = await sanityClientRead.fetch(
@@ -19,6 +22,10 @@ const BlogSideBar = async ({ categories, tags, type }: BlogSideBarProps) => {
       type: [categories?.[0]?.name || 'Blog']
     }
   )
+
+  if (!latestPosts) {
+    log.error('Blog posts not found', { latestPosts })
+  }
 
   return (
     <div className='w-full lg:w-[370px]'>

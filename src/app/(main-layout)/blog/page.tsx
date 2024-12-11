@@ -13,7 +13,9 @@ import {
   GET_CARD_BLOG_POST_PAGINATION,
   GET_TOTAL_BLOG_POST
 } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 // * METADATA
 export const metadata: Metadata = {
   title: 'Blog',
@@ -63,6 +65,10 @@ const BlogPage = async ({
       }
     }
   )
+
+  if (!blogPosts) {
+    log.error('Blog posts not found', { blogPosts })
+  }
 
   return (
     <main>

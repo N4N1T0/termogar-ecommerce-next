@@ -14,7 +14,10 @@ import { GET_BLOG_ARTICLE_BY_SLUG } from '@/sanity/lib/queries'
 import { PortableText } from 'next-sanity'
 import { jldBlogArticle } from '@/components/seo'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
+import { notFound } from 'next/navigation'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 // * METADATA
 export async function generateMetadata({
   params
@@ -56,7 +59,8 @@ const BogArticlePage = async ({
   )
 
   if (!searchedPostArticule) {
-    return null
+    log.error('Blog posts not found', { searchedPostArticule })
+    return notFound()
   }
 
   return (

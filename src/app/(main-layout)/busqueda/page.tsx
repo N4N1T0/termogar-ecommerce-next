@@ -11,7 +11,9 @@ import {
 } from '@/sanity/lib/queries'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult } from '@/types/sanity'
 import EmptySearch from '@/components/Shared/empty-search'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 export async function generateMetadata({
   searchParams
 }: {
@@ -49,6 +51,10 @@ const SearchPage = async ({
         search
       }
     )
+  }
+
+  if (!searchedProducts) {
+    log.error('Products not found', { searchedProducts })
   }
 
   if (searchedProducts?.length === 0) {

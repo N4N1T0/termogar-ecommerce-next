@@ -13,12 +13,16 @@ import { Costumer } from '@/types/sanity'
 import { signIn } from '@/lib/auth'
 import { resend } from '@/lib/clients'
 import NewUser from '@/emails/new-user'
+import { Logger } from 'next-axiom'
+
+const log = new Logger()
 
 const signupAction = async (values: SignupSchema) => {
   try {
     const parsed = signupSchema.safeParse(values)
 
     if (!parsed.success) {
+      log.error('Signup validation failed', { error: parsed.error.issues })
       return {
         success: false,
         message: 'Las credenciales no coinciden'
@@ -30,6 +34,7 @@ const signupAction = async (values: SignupSchema) => {
     })
 
     if (existingUser) {
+      log.info('User already exists', { email: parsed.data.email })
       return {
         success: false,
         message:
@@ -76,17 +81,22 @@ const signupAction = async (values: SignupSchema) => {
       redirect: false
     })
 
+    log.info('User signup successful', { email: parsed.data.email })
+
     return {
       success: true,
       message: 'Registro Completo, Redirigiendo a la pagina principal'
     }
   } catch (error) {
     if (error instanceof AuthError) {
+      log.error('Authentication error', { message: error.cause?.err?.message })
       return {
         success: false,
         message: error.cause?.err?.message
       }
     }
+    // @ts-expect-error unknown
+    log.error('Signup error', { error: error.message || error })
     return {
       success: false,
       message: 'Ocurrió un error durante el inicio de sesión'

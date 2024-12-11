@@ -1,5 +1,5 @@
 // * NEXT.JS IMPORTS
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 // * UTILS IMPORTS
 import { processRestNotification, resend } from '@/lib/clients'
@@ -11,10 +11,14 @@ import {
   GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION,
   GET_USER_INFO
 } from '@/sanity/lib/queries'
+import { withAxiom, AxiomRequest } from 'next-axiom'
 
 export const runtime = 'nodejs'
 
-export const POST = async (req: NextRequest) => {
+export const POST = withAxiom(async (req: AxiomRequest) => {
+  const log = req.log.with({ scope: 'notifications-checkout' })
+
+  log.info('Starting notification process')
   const notificationParams: ResponseJSONSuccess = {
     Ds_SignatureVersion: req.headers.get('Ds_SignatureVersion') as string,
     Ds_Signature: req.headers.get('Ds_Signature') as string,
@@ -49,6 +53,8 @@ export const POST = async (req: NextRequest) => {
     Ds_ProcessedPayMethod
   } = processRestNotification(notificationParams)
 
+  log.info('Notification parameters', { notificationParams })
+
   if (responseCode === '0000') {
     // Verificar el código de respuesta (0000 es éxito)
     const response: Order = await sanityClientWrite
@@ -56,13 +62,22 @@ export const POST = async (req: NextRequest) => {
       .set({ status: 'completado', paymentMethod: Ds_ProcessedPayMethod })
       .commit()
 
+    log.info('Updated order status', { orderId, responseCode })
+
     if (!response) {
-      console.error('Failed to update order status') // Log error for order update failure
+      log.error('Failed to update order status') // Log error for order update failure
     }
 
     return NextResponse.json({ success: true, message: 'Payment completed' })
   } else {
     // TODO: Change the email address
+    log.error('Payment failed', {
+      orderId,
+      responseCode,
+      products: refactoredProducts,
+      user
+    })
+
     await resend.emails.send({
       from: 'registro-newsletter@termogar.es',
       bcc: ['adrian.alvarezalonso1991@gmail.com'],
@@ -76,9 +91,10 @@ export const POST = async (req: NextRequest) => {
         user
       })
     })
+
     return NextResponse.json(
       { success: false, message: 'Payment failed' },
       { status: 400 }
     )
   }
-}
+})

@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 // * ASSETS IMPORTS
 import { PlaceholderSquare } from '@/assets'
@@ -10,7 +11,11 @@ import PageTitle from '@/components/Helpers/PageTitle'
 // * UTILS IMPORTS
 import { GET_BRANDS } from '@/sanity/lib/queries'
 import { sanityClientRead } from '@/sanity/lib/client'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
+
+// * METADATA
 export const metadata: Metadata = {
   title: 'Marcas',
   description:
@@ -28,6 +33,11 @@ const BrandsPage = async () => {
       }
     }
   )
+
+  if (!brands) {
+    log.error('Brands not found', { brands })
+    return notFound()
+  }
 
   return (
     <div className='container-x mx-auto px-4 py-8'>

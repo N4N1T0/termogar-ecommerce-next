@@ -11,7 +11,9 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 // * METADATA
 export async function generateMetadata(): Promise<Metadata> {
   const searchedPage = await sanityClientRead.fetch(
@@ -45,7 +47,12 @@ const CostumerServicePageIndex = async () => {
     }
   )
 
-  if (!searchedPage) return notFound()
+  if (!searchedPage) {
+    log.error(
+      `The page with slug 'servicio-de-atencion-al-cliente' was not found`
+    )
+    return notFound()
+  }
 
   const { content } = searchedPage
 

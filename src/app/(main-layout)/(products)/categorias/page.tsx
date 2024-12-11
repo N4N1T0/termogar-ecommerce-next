@@ -11,12 +11,15 @@ import { ChevronRight, Layers, ShoppingBag } from 'lucide-react'
 import { GET_MENU_CATEGORIES } from '@/sanity/lib/queries'
 import { sanityClientRead } from '@/sanity/lib/client'
 import PageTitle from '@/components/Helpers/PageTitle'
+import { Logger } from 'next-axiom'
 
 export const metadata: Metadata = {
   title: 'Categorias',
   description:
     'Encuentra el artículo que mejor se adapte a tus necesidades según las categorías dentro de la web de termogar.'
 }
+
+const log = new Logger()
 
 const CategoriesPage = async () => {
   const navbarMenu = await sanityClientRead.fetch(
@@ -29,6 +32,9 @@ const CategoriesPage = async () => {
       }
     }
   )
+
+  if (!navbarMenu) return log.error('No se encontraron categorias')
+
   const refactoredMenu = navbarMenu.map((item) => {
     const refactoredChildren = [
       {

@@ -3,7 +3,9 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS } from '@/sanity/lib/queries'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult } from '@/types/sanity'
 import ProductCardStyleOne from '@/components/Helpers/Cards/product-card-style-one'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 const RelatedProducts = async ({ productsId }: { productsId: string[] }) => {
   const searchedProducts = await sanityClientRead.fetch(
     GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS,
@@ -11,6 +13,11 @@ const RelatedProducts = async ({ productsId }: { productsId: string[] }) => {
       ids: productsId
     }
   )
+
+  if (!searchedProducts) {
+    log.error('No related products found')
+  }
+  
   return (
     <section
       id='related-products'

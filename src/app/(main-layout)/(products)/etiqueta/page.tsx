@@ -1,5 +1,6 @@
 // * NEXT.JS IMPORTS
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 
 // * ASSETS IMPORTS
@@ -10,6 +11,9 @@ import { GET_ALL_TAGS } from '@/sanity/lib/queries'
 import { sanityClientRead } from '@/sanity/lib/client'
 import Form from 'next/form'
 import { Input } from '@/components/ui/input'
+import { Logger } from 'next-axiom'
+
+const log = new Logger()
 
 export const metadata: Metadata = {
   title: 'Categorias',
@@ -33,6 +37,11 @@ const TagsPage = async ({
       }
     }
   )
+
+  if (!searchedTags) {
+    log.error('Tags not found', { searchedTags })
+    return notFound()
+  }
 
   const refactoredTags = searchedTags.filter((tag) => {
     return tag.name

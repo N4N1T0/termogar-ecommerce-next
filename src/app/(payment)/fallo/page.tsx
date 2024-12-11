@@ -11,7 +11,10 @@ import FailedPaymentContent from '@/components/Payment/failed'
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_USER_INFO } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
+// * METADATA
 export const metadata: Metadata = {
   title: 'Pago Fallido',
   description:
@@ -27,6 +30,7 @@ export default async function FailedPage({
     await searchParams
 
   if (!userId || !orderId) {
+    log.error('User id or order id not found', { userId, orderId })
     notFound()
   }
 

@@ -8,7 +8,9 @@ import { SectionStyleThreeProps } from '@/types'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY } from '@/sanity/lib/queries'
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult } from '@/types/sanity'
 import { cn } from '@/lib/utils'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 const SectionStyleThree = async ({
   className,
   sectionTitle,
@@ -19,6 +21,11 @@ const SectionStyleThree = async ({
     { type: sectionTitle === null ? ['Calentadores'] : [sectionTitle] },
     { cache: 'force-cache', next: { revalidate: 600 } }
   )
+
+  if (!searchedProducts) {
+    log.error('No se encontraron productos')
+  }
+
   return (
     <section id='section-5' className={cn('section-style-one', className)}>
       <ViewMoreTitle

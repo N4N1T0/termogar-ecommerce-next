@@ -12,7 +12,9 @@ import {
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_COSTUMER_SERVICES_SIDEBAR_MENU } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 const MATCH_URL_SERVICE = 'servicio-de-atencion-al-cliente'
 const MATCH_URL_PROFILE = 'mi-cuenta'
 
@@ -26,6 +28,10 @@ const CostumerServiceSidebar = async ({
   const searchedPages = await sanityClientRead.fetch(
     GET_COSTUMER_SERVICES_SIDEBAR_MENU
   )
+
+  if (!searchedPages) {
+    log.error('The sidebar menu was not found')
+  }
 
   const costumerServicesPages = searchedPages?.filter((page) => {
     return page.link?.split('/').includes(MATCH_URL_SERVICE)

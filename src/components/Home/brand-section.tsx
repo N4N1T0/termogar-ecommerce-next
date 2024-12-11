@@ -10,11 +10,15 @@ import { BrandSectionProps } from '@/types'
 import { cn } from '@/lib/utils'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_BRANDS } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
 
+const log = new Logger()
 const BrandSection = async ({ className, sectionTitle }: BrandSectionProps) => {
   const brands = await sanityClientRead.fetch(GET_BRANDS)
 
-  // TODO: Refactor to have less DOM Elements
+  if (!brands) {
+    log.error('Brands not found', { brands })
+  }
 
   return (
     <section id='brands' data-aos='fade-up' className={cn('w-full', className)}>

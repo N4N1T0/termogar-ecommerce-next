@@ -6,8 +6,10 @@ import { RadiogroupFilter } from '@/components/AllProductPage/radiogroup-filter'
 import { getPriceRange, matchCategories } from '@/lib/utils'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING } from '@/sanity/lib/queries'
+import { Logger } from 'next-axiom'
 
 export const dynamic = 'force-dynamic'
+const log = new Logger()
 
 const ProductSidebar = async ({
   params
@@ -20,6 +22,8 @@ const ProductSidebar = async ({
     GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING,
     { slug: category }
   )
+
+  if (!searchedData) return log.error('No se encontraron categorias')
 
   const { maxPrice, minPrice } = getPriceRange(searchedData?.products)
   const categoriesFilter = matchCategories(searchedData)
