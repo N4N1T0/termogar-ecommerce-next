@@ -19,6 +19,7 @@ import {
 import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult } from '@/types/sanity'
 import { PortableText } from 'next-sanity'
 import { Logger } from 'next-axiom'
+import { jldProductList } from '@/components/seo'
 
 const log = new Logger()
 export const dynamic = 'force-dynamic'
@@ -152,6 +153,7 @@ const CategoriesPage = async ({
           </section>
         )}
       </div>
+      {jldProductList(products)}
     </main>
   )
 }
