@@ -30,10 +30,11 @@ const ImagesState = ({ data }: { data: ProductCardType }) => {
               >
                 <Image
                   src={image?.url || PlaceholderProductCard}
-                  alt={`Product ${index + 1}`}
+                  alt={`Product-${index + 1}-${image?.url}`}
                   className='h-full w-full object-cover'
                   width={100}
                   height={100}
+                  quality={70}
                 />
               </button>
             ))}
@@ -46,6 +47,7 @@ const ImagesState = ({ data }: { data: ProductCardType }) => {
               className='h-full w-full object-cover'
               width={300}
               height={400}
+              quality={100}
             />
           </div>
         </>

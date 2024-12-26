@@ -51,8 +51,10 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
       </DialogTrigger>
       <DialogContent className='overflow-hidden border-0 bg-gray-50 p-0 sm:max-w-[900px]'>
         <DialogHeader className='sr-only'>
-          <DialogTitle>Quick View</DialogTitle>
-          <DialogDescription className='sr-only'>Quick View</DialogDescription>
+          <DialogTitle>Vista Rápida</DialogTitle>
+          <DialogDescription className='sr-only'>
+            Vista Rápida
+          </DialogDescription>
         </DialogHeader>
         <div className='grid h-full gap-4 p-0 md:grid-cols-2'>
           <ImagesState data={data} />
@@ -64,7 +66,7 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
                     {categories.map(({ id, name, slug }) => (
                       <li
                         key={id}
-                        className='text-muted-foreground hover-200 text-sm underline hover:text-accent'
+                        className='text-muted-foreground hover-200 text-xs underline hover:text-accent'
                       >
                         <Link href={`/categorias/${slug}`}>{name}</Link>
                       </li>
@@ -77,7 +79,7 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
                     {tags.map(({ id, name, slug }) => (
                       <li
                         key={id}
-                        className='text-muted-foreground hover-200 text-sm underline hover:text-accent'
+                        className='text-muted-foreground hover-200 text-xs underline hover:text-accent'
                       >
                         <Link href={`/categorias/${slug}`}>{name}</Link>
                       </li>
