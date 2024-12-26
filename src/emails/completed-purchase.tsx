@@ -180,7 +180,7 @@ export const CompletedPurchase = ({
           <Text className='font-bold'>IBAN: ES04 0182 4136 9102 0178 4853</Text>
           <Text className='font-bold'>BIC: BBVAESMMXXX</Text>
           <Text className='font-bold'>
-            con el concepto: &quot;lavandadellago-{orderNumber}&quot;
+            con el concepto: &quot;termogar-{orderNumber}&quot;
           </Text>
           <Text>
             Después de recibir la confirmación de la transferencia, nosotros nos
