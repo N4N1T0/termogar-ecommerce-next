@@ -79,5 +79,12 @@
     { "label": "Precio Mas Alto", "value": "higherPrice" },
     { "label": "Nuevo", "value": "new" },
     { "label": "Antiguo", "value": "old" }
-  ]
+  ],
+  "colors": [
+    "text-[#EB5757]",
+    "text-[#2F80ED]",
+    "text-[#27AE60]",
+    "text-[#F2994A]"
+  ],
+  "labels": ["Dias", "Horas", "Minutos", "Segundos"]
 }
