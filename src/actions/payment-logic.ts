@@ -34,8 +34,8 @@ const paymentLogic = async (
   const refactoredProductsForPayment = products
     .map((product) => `${product.id}_${product.quantity}`)
     .join(',')
-  const templateRedirectUrl = (page: string) => {
-    return `${process.env.NEXT_PUBLIC_URL}/${page}?userId=${userId}&orderId=${orderId}&gateway=RedSys&newAddress=${newAddress}&discountCoupon=${discountCoupon}&total=${totalAmount}&products=${refactoredProductsForPayment}`
+  const templateRedirectUrl = (page: string, gateway: string = 'RedSys') => {
+    return `${process.env.NEXT_PUBLIC_URL}/${page}?userId=${userId}&orderId=${orderId}&gateway=${gateway}&newAddress=${newAddress}&discountCoupon=${discountCoupon}&total=${totalAmount}&products=${refactoredProductsForPayment}`
   }
 
   log.info('Payment logic initiated', {
@@ -79,7 +79,7 @@ const paymentLogic = async (
     log.info('Transferencia bancaria directa selected', { orderId })
     return {
       success: true,
-      data: templateRedirectUrl('exito')
+      data: templateRedirectUrl('exito', 'transferencia-bancaria-directa')
     }
   }
 
@@ -107,4 +107,3 @@ const paymentLogic = async (
 }
 
 export default paymentLogic
-
