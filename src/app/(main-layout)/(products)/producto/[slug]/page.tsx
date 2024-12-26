@@ -17,6 +17,7 @@ import { Logger } from 'next-axiom'
 import { jldProduct } from '@/components/seo'
 
 const log = new Logger()
+
 // * METADATA
 export async function generateMetadata({
   params

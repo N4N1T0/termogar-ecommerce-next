@@ -382,8 +382,37 @@ export const matchCategories = (
   return matchedCategories
 }
 
+export const matchBrands = (
+  data: GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
+) => {
+  if (!data || !data.products) return []
+
+  // Extract brand details from products
+  const uniqueBrands = Array.from(
+    new Map(
+      data.products
+        .map((product) => product.brand) // Get the brand object
+        .filter(
+          (
+            brand
+          ): brand is {
+            id: string
+            title: string | null
+            link: string | null
+          } => brand !== null && brand.id !== undefined
+        ) // Filter out nulls and invalid brands
+        .map((brand) => [
+          brand.id,
+          { id: brand.id, title: brand.title, link: brand.link }
+        ]) // Map by brand id for uniqueness
+    ).values() // Extract unique brand objects
+  )
+
+  return uniqueBrands
+}
+
 /**
- * Filters an array of products by given price range and subcategory.
+ * Filters an array of products by given price range, subcategory, and brand.
  *
  * @param products - An array of product objects to be filtered.
  * @param min - The minimum price of the desired range. Can be a string or an array of strings.
@@ -392,6 +421,8 @@ export const matchCategories = (
  *              If array, the first element will be used. If not a valid number, will be ignored.
  * @param subcat - The slug of the subcategory to filter by. Can be a string or an array of strings.
  *                 If array, the first element will be used. If not provided or empty, will be ignored.
+ * @param brand - The slug or title of the brand to filter by. Can be a string or an array of strings.
+ *                If array, the first element will be used. If not provided or empty, will be ignored.
  *
  * @returns A new array of products that match the given filter criteria.
  */
@@ -399,14 +430,16 @@ export const filterProductsByFilter = (
   products: any[],
   min?: string | string[],
   max?: string | string[],
-  subcat?: string | string[]
+  subcat?: string | string[],
+  brand?: string | string[]
 ): any[] => {
   // Convert min and max to numbers (if possible)
   const minValue = Array.isArray(min) ? Number(min[0]) : Number(min)
   const maxValue = Array.isArray(max) ? Number(max[0]) : Number(max)
 
-  // Extract subcat as a single string if it's an array
+  // Extract subcat and brand as single strings if they are arrays
   const subcatSlug = Array.isArray(subcat) ? subcat[0] : subcat
+  const brandSlug = Array.isArray(brand) ? brand[0] : brand
 
   return products.filter((product) => {
     const productPrice = product.sale?.price ?? product.price // Use sale price if available, otherwise regular price
@@ -425,7 +458,10 @@ export const filterProductsByFilter = (
       ) ??
         false)
 
-    return isWithinPriceRange && isInSubcategory
+    // Filter by brand
+    const matchesBrand = !brandSlug || product.brand?.link === brandSlug
+
+    return isWithinPriceRange && isInSubcategory && matchesBrand
   })
 }
 

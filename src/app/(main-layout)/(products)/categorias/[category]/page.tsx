@@ -49,7 +49,7 @@ const CategoriesPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { category } = await params
-  const { orderBy, min, max, subcat } = await searchParams
+  const { orderBy, min, max, subcat, brand } = await searchParams
   const searchedCategory = await sanityClientRead.fetch(
     GET_CATEGORY_AND_PRODUCTS,
     {
@@ -75,7 +75,13 @@ const CategoriesPage = async ({
   )
 
   // * BY FILTER
-  const products = filterProductsByFilter(orderProducts, min, max, subcat)
+  const products = filterProductsByFilter(
+    orderProducts,
+    min,
+    max,
+    subcat,
+    brand
+  )
 
   const middlePart =
     products.length > 8 ? Math.floor(products.length / 2) : null

@@ -9,16 +9,16 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
 
 // * UTILS IMPORTS
-import { RadiogroupFilterProps } from '@/types'
+import { BrandFilterProps } from '@/types'
 
-export function RadiogroupFilter({ categories, label }: RadiogroupFilterProps) {
+const BrandFilter = ({ brands }: BrandFilterProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const handleCategoryChange = React.useCallback(
+  const handleBrandChange = React.useCallback(
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString())
-      params.set('subcat', value)
+      params.set('brand', value)
       router.push(`?${params}`, { scroll: false })
     },
     [router, searchParams]
@@ -26,17 +26,17 @@ export function RadiogroupFilter({ categories, label }: RadiogroupFilterProps) {
 
   return (
     <div className='space-y-4 py-4'>
-      <h3 className='text-lg font-medium'>{label}</h3>
+      <h3 className='text-lg font-medium'>Marcas</h3>
       <RadioGroup
-        defaultValue={searchParams.get('subcat') || ''}
-        onValueChange={handleCategoryChange}
+        defaultValue={searchParams.get('brand') || ''}
+        onValueChange={handleBrandChange}
         className='space-y-2'
       >
-        {categories.map(({ id, slug, name }) => (
+        {brands.map(({ id, link, title }) => (
           <div key={id} className='flex items-center space-x-2'>
-            <RadioGroupItem value={slug || ''} id={id} />
+            <RadioGroupItem value={link || ''} id={id} />
             <Label htmlFor={id} className='cursor-pointer'>
-              {name}
+              {title}
             </Label>
           </div>
         ))}
@@ -44,3 +44,5 @@ export function RadiogroupFilter({ categories, label }: RadiogroupFilterProps) {
     </div>
   )
 }
+
+export default BrandFilter

@@ -597,7 +597,12 @@ export const GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING =
     name,
     "slug": slug.current,
   },
-    price
+    price,
+    "brand": *[_type == 'brand' && ^.title match title][0] {
+      "id": _id,
+      title,
+      "link": link.current
+    },
   }
   }`)
 

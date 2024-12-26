@@ -79,6 +79,14 @@ export interface RadiogroupFilterProps {
   label: string
 }
 
+export interface BrandFilterProps {
+  brands: {
+    id: string
+    title: string | null
+    link: string | null
+  }[]
+}
+
 export interface PriceRangeSliderProps {
   min: number
   max: number
