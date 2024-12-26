@@ -254,6 +254,9 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
     name,
     "slug": slug.current
   },
+  "brand": *[_type == 'brand' && ^.title match title] {
+    title
+  },
   content,
   price,
   sale,
@@ -308,6 +311,9 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
   },
   title,
   "slug": slug.current,
+  "brand": *[_type == 'brand' && ^.title match title] {
+    title
+  },
   excerpt,
   "categories": productCategories[]->{
     "id": _id,
@@ -338,6 +344,11 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
   },
   title,
   "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
   excerpt,
   "categories": productCategories[]->{
     "id": _id,
@@ -368,6 +379,11 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS =
   },
   title,
   "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
   excerpt,
   "categories": productCategories[]->{
     "id": _id,
@@ -405,6 +421,11 @@ export const GET_BRANDS_AND_PRODUCTS =
   },
   title,
   "slug": slug.current,
+  "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
   excerpt,
   "categories": productCategories[]->{
     "id": _id,
@@ -469,6 +490,11 @@ export const GET_CATEGORY_AND_PRODUCTS =
   },
   title,
   "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
   excerpt,
   "categories": productCategories[]->{
     "id": _id,
@@ -487,8 +513,74 @@ export const GET_CATEGORY_AND_PRODUCTS =
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
+},
 }
-}
+  }`)
+
+export const GET_PRODUCTS_BY_OFFER = defineQuery(`{
+  "banner": *[_type =='homePage'][0]{
+      "url": productListBanner.banner.asset->url,
+      "blur": productListBanner.banner.asset->metadata.lqip,
+      "link": productListBanner.link
+  },
+   "offer": *[_type =='homePage'][0]{
+    "date": offer.date,
+    "active": offer.active,
+    "media": {
+      "url": offer.banner.assets->url,
+      "blur": offer.banner.assets->metadata.lqip
+    }
+  },
+  "products": *[_type=='product' && status=='publish' && defined(sale)][0...24]{
+  "id": _id,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+  content,
+  price,
+  sale,
+  "stockQuantity": stock_quantity,
+  "tags": productTag[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+},
+}}`)
+
+export const GET_PRODUCTS_WITH_OFFER_FOR_FILTERING = defineQuery(`{
+  "products": *[_type=='product' && status=='publish' && defined(sale)][0...24]{
+     "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current,
+    main,
+    "children": *[_type=='productCategory' && references(^._id)]
+   {
+      "id": _id,
+    name, 
+    "slug": slug.current, 
+   },
+  },
+    price,
+  }
   }`)
 
 export const GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING =
@@ -525,6 +617,11 @@ export const GET_TAG_AND_PRODUCTS =
   },
   title,
   "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
   excerpt,
   "categories": productCategories[]->{
     "id": _id,
@@ -550,12 +647,18 @@ export const GET_TAG_AND_PRODUCTS =
 export const GET_WHOLE_PRODUCT_BY_SLUG =
   defineQuery(`*[_type=='product' && status=='publish' && defined(price) && slug.current == $slug][0]{
   "id": _id,
+  sku,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
       "blur": featuredMedia.asset->metadata.lqip
   },
   title,
   "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
   excerpt,
   "categories": productCategories[]->{
     "id": _id,
