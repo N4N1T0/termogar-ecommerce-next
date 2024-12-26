@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Types Imports
 import type { Metadata } from 'next'
 
 // Assets Imports
 import { smallLogo } from '@/assets'
-import { GET_BLOG_ARTICLE_BY_SLUGResult } from '@/types/sanity'
+import {
+  GET_BLOG_ARTICLE_BY_SLUGResult,
+  GET_WHOLE_PRODUCT_BY_SLUGResult
+} from '@/types/sanity'
+import { eurilize } from '@/lib/utils'
 
 const seoMetatags = (): Metadata => {
   return {
@@ -73,52 +78,59 @@ const seoMetatags = (): Metadata => {
   }
 }
 
-// export const jldProduct = (product: Product | null) => {
-//   const jsonLd = {
-//     '@context': 'https://schema.org/',
-//     '@type': 'Product',
-//     'name': product?.nombre || 'Product Name',
-//     'image':
-//       product?.fotosVarias && product?.fotosVarias.length > 0
-//         ? product?.fotosVarias.map((img) => img.image)
-//         : [product?.image],
+export const jldProduct = (product: GET_WHOLE_PRODUCT_BY_SLUGResult) => {
+  const jsonLd = {
+    '@context': 'https://schema.org/',
+    '@type': 'Product',
+    'name': product?.title || 'Product Name',
+    'image':
+      product?.otherImages && product?.otherImages.length > 0
+        ? product?.otherImages.map((img) => img?.url)
+        : [product?.featuredMedia?.url],
 
-//     'description': product?.descripcion,
-//     'brand': {
-//       '@type': 'Brand',
-//       'name': 'Lavanda del Lago'
-//     }
-//   }
+    'description': product?.excerpt,
+    'sku': product?.sku,
+    'offers': product?.sale && {
+      '@type': 'Offer',
+      'priceCurrency': 'EUR',
+      'price': eurilize(product?.sale.price || 0),
+      'availability': 'https://schema.org/InStock'
+    },
+    'brand': product?.brand && {
+      '@type': 'Brand',
+      'name': product?.brand.title
+    }
+  }
 
-//   return (
-//     <script
-//       type='application/ld+json'
-//       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-//     />
-//   )
-// }
+  return (
+    <script
+      type='application/ld+json'
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  )
+}
 
-// export const jldProductList = (products: Product[]) => {
-//   const jsonLd = {
-//     '@context': 'https://schema.org',
-//     '@type': 'ItemList',
-//     'itemListElement': [
-//       ...products.map((product) => ({
-//         '@type': 'Product',
-//         'name': product?.nombre || 'Product Name',
-//         'image': [product.image],
-//         'description': product?.descripcion
-//       }))
-//     ]
-//   }
+export const jldProductList = (products: any[]) => {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'itemListElement': [
+      ...products.map((product) => ({
+        '@type': 'Product',
+        'name': product?.nombre || 'Product Name',
+        'image': [product.image],
+        'description': product?.descripcion
+      }))
+    ]
+  }
 
-//   return (
-//     <script
-//       type='application/ld+json'
-//       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-//     />
-//   )
-// }
+  return (
+    <script
+      type='application/ld+json'
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  )
+}
 
 const jldBlogArticle = (article: GET_BLOG_ARTICLE_BY_SLUGResult) => {
   const jsonLd = {
