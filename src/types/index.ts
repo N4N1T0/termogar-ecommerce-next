@@ -91,7 +91,7 @@ export interface ProductCardType {
   sku: string | null
   brand: {
     title: string | null
-    slug: string | null
+    link: string | null
     featuredMedia: string | null
   } | null
   featuredMedia: {
