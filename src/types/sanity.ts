@@ -182,6 +182,7 @@ export type HomePage = {
       _type: 'image'
     }
     link?: Slug
+    _type: 'banner'
     _key: string
   }>
   mainCategory?: {
@@ -224,6 +225,7 @@ export type HomePage = {
       _type: 'image'
     }
     link?: string
+    _type: 'banner'
     _key: string
   }>
   tertiaryCategory?: {
@@ -235,6 +237,7 @@ export type HomePage = {
   youtubeVideos?: Array<{
     title?: string
     videoId?: string
+    _type: 'video'
     _key: string
   }>
   productListBanner?: {
@@ -372,6 +375,8 @@ export type Product = {
   _updatedAt: string
   _rev: string
   title?: string
+  sku?: string
+  ean?: string
   status?: 'publish' | 'draft' | 'pending' | 'private'
   slug?: Slug
   link?: Slug
@@ -1233,7 +1238,7 @@ export type GET_BRANDSResult = Array<{
   title: string | null
 }>
 // Variable: GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY
-// Query: *[_type=='product' && status=='publish' && defined(price) && (title match $search || excerpt match $search) && count((productCategories[]->slug.current)[@ in $category]) > 0]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}
+// Query: *[_type=='product' && status=='publish' && defined(price) && (title match $search || excerpt match $search) && count((productCategories[]->slug.current)[@ in $category]) > 0]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  "brand": *[_type == 'brand' && ^.title match title] {    title  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}
 export type GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORYResult = Array<{
   id: string
   featuredMedia: {
@@ -1248,6 +1253,9 @@ export type GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORYResult = Array<{
     name: string | null
     slug: string | null
   }> | null
+  brand: Array<{
+    title: string | null
+  }>
   content: Array<
     | ({
         _key: string
@@ -1385,7 +1393,7 @@ export type GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATIONResult = Array<{
   } | null> | null
 }>
 // Variable: GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY
-// Query: *[_type=='product' && status=='publish' && defined(price) && (title match $search || excerpt match $search)]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}
+// Query: *[_type=='product' && status=='publish' && defined(price) && (title match $search || excerpt match $search)]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  "brand": *[_type == 'brand' && ^.title match title] {    title  },  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}
 export type GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult =
   Array<{
     id: string
@@ -1395,6 +1403,9 @@ export type GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult =
     }
     title: string | null
     slug: string | null
+    brand: Array<{
+      title: string | null
+    }>
     excerpt: string | null
     categories: Array<{
       id: string
@@ -1462,7 +1473,7 @@ export type GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult =
     } | null> | null
   }>
 // Variable: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY
-// Query: *[_type=='product' && status=='publish' && defined(price) && count((productCategories[]->name)[@ in $type]) > 0]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}
+// Query: *[_type=='product' && status=='publish' && defined(price) && count((productCategories[]->name)[@ in $type]) > 0]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current, "brand": *[_type == 'brand' && ^.title match title][0] {      title,      "link": link.current,      "featuredMedia": image.asset->url,    },  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}
 export type GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult = Array<{
   id: string
   featuredMedia: {
@@ -1471,6 +1482,11 @@ export type GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult = Array<{
   }
   title: string | null
   slug: string | null
+  brand: {
+    title: string | null
+    link: string | null
+    featuredMedia: string | null
+  } | null
   excerpt: string | null
   categories: Array<{
     id: string
@@ -1538,7 +1554,7 @@ export type GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult = Array<{
   } | null> | null
 }>
 // Variable: GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS
-// Query: *[_type=='product' && status=='publish' && defined(price) && _id in $ids][0...4]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}
+// Query: *[_type=='product' && status=='publish' && defined(price) && _id in $ids][0...4]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current, "brand": *[_type == 'brand' && ^.title match title][0] {      title,      "link": link.current,      "featuredMedia": image.asset->url,    },  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}
 export type GET_CARD_STYLE_ONE_PRODUCTS_BY_IDSResult = Array<{
   id: string
   featuredMedia: {
@@ -1547,6 +1563,11 @@ export type GET_CARD_STYLE_ONE_PRODUCTS_BY_IDSResult = Array<{
   }
   title: string | null
   slug: string | null
+  brand: {
+    title: string | null
+    link: string | null
+    featuredMedia: string | null
+  } | null
   excerpt: string | null
   categories: Array<{
     id: string
@@ -1614,7 +1635,7 @@ export type GET_CARD_STYLE_ONE_PRODUCTS_BY_IDSResult = Array<{
   } | null> | null
 }>
 // Variable: GET_BRANDS_AND_PRODUCTS
-// Query: *[_type=='brand' && link.current == $slug][0]{  title,   "banner": *[_type =='homePage'][0]{      "url": productListBanner.banner.asset->url,      "blur": productListBanner.banner.asset->metadata.lqip,      "link": productListBanner.link  },  "products": *[_type=='product' && status=='publish' && defined(price) && title match ^.title]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}  }
+// Query: *[_type=='brand' && link.current == $slug][0]{  title,   "banner": *[_type =='homePage'][0]{      "url": productListBanner.banner.asset->url,      "blur": productListBanner.banner.asset->metadata.lqip,      "link": productListBanner.link  },  "products": *[_type=='product' && status=='publish' && defined(price) && title match ^.title]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  "brand": *[_type == 'brand' && ^.title match title][0] {      title,      "link": link.current,      "featuredMedia": image.asset->url,    },  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}  }
 export type GET_BRANDS_AND_PRODUCTSResult = {
   title: string | null
   banner: {
@@ -1630,6 +1651,11 @@ export type GET_BRANDS_AND_PRODUCTSResult = {
     }
     title: string | null
     slug: string | null
+    brand: {
+      title: string | null
+      link: string | null
+      featuredMedia: string | null
+    } | null
     excerpt: string | null
     categories: Array<{
       id: string
@@ -1716,7 +1742,7 @@ export type GET_PRODUCTS_AND_BRAND_FOR_FILTERINGResult = {
   }>
 } | null
 // Variable: GET_CATEGORY_AND_PRODUCTS
-// Query: *[_type=='productCategory' && slug.current == $slug][0]{  name,   description,  "banner": *[_type =='homePage'][0]{      "url": productListBanner.banner.asset->url,      "blur": productListBanner.banner.asset->metadata.lqip,      "link": productListBanner.link  },  "children": *[_type=='productCategory' && references(^._id)]   {    "id": _id,    name,     link   },  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}  }
+// Query: *[_type=='productCategory' && slug.current == $slug][0]{  name,   description,  "banner": *[_type =='homePage'][0]{      "url": productListBanner.banner.asset->url,      "blur": productListBanner.banner.asset->metadata.lqip,      "link": productListBanner.link  },  "children": *[_type=='productCategory' && references(^._id)]   {    "id": _id,    name,     link   },  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current, "brand": *[_type == 'brand' && ^.title match title][0] {      title,      "link": link.current,      "featuredMedia": image.asset->url,    },  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip},}  }
 export type GET_CATEGORY_AND_PRODUCTSResult = {
   name: string | null
   description: Array<{
@@ -1755,6 +1781,11 @@ export type GET_CATEGORY_AND_PRODUCTSResult = {
     }
     title: string | null
     slug: string | null
+    brand: {
+      title: string | null
+      link: string | null
+      featuredMedia: string | null
+    } | null
     excerpt: string | null
     categories: Array<{
       id: string
@@ -1822,6 +1853,120 @@ export type GET_CATEGORY_AND_PRODUCTSResult = {
     } | null> | null
   }>
 } | null
+// Variable: GET_PRODUCTS_BY_OFFER
+// Query: {  "banner": *[_type =='homePage'][0]{      "url": productListBanner.banner.asset->url,      "blur": productListBanner.banner.asset->metadata.lqip,      "link": productListBanner.link  },   "offer": *[_type =='homePage'][0]{    "date": offer.date,    "active": offer.active,    "media": {      "url": offer.banner.assets->url,      "blur": offer.banner.assets->metadata.lqip    }  },  "products": *[_type=='product' && status=='publish' && defined(sale)][0...24]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current, "brand": *[_type == 'brand' && ^.title match title][0] {      title,      "link": link.current,      "featuredMedia": image.asset->url,    },  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip},}}
+export type GET_PRODUCTS_BY_OFFERResult = {
+  banner: {
+    url: string | null
+    blur: string | null
+    link: string | null
+  } | null
+  offer: {
+    date: string | null
+    active: boolean | null
+    media: {
+      url: null
+      blur: null
+    }
+  } | null
+  products: Array<{
+    id: string
+    featuredMedia: {
+      url: string | null
+      blur: string | null
+    }
+    title: string | null
+    slug: string | null
+    brand: {
+      title: string | null
+      link: string | null
+      featuredMedia: string | null
+    } | null
+    excerpt: string | null
+    categories: Array<{
+      id: string
+      name: string | null
+      slug: string | null
+    }> | null
+    content: Array<
+      | ({
+          _key: string
+        } & ExternalImage)
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?:
+            | 'blockquote'
+            | 'h1'
+            | 'h2'
+            | 'h3'
+            | 'h4'
+            | 'h5'
+            | 'h6'
+            | 'normal'
+          listItem?: 'bullet' | 'number'
+          markDefs?: Array<{
+            href?: string
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+          _key: string
+        }
+    > | null
+    price: number | null
+    sale: {
+      price?: number
+      from?: string
+      to?: string
+    } | null
+    stockQuantity: null
+    tags: Array<{
+      id: string
+      name: string | null
+      slug: string | null
+    }> | null
+    otherImages: Array<{
+      url: string | null
+      blur: string | null
+    } | null> | null
+  }>
+}
+// Variable: GET_PRODUCTS_WITH_OFFER_FOR_FILTERING
+// Query: {  "products": *[_type=='product' && status=='publish' && defined(sale)][0...24]{     "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current,    main,    "children": *[_type=='productCategory' && references(^._id)]   {      "id": _id,    name,     "slug": slug.current,    },  },    price,  }  }
+export type GET_PRODUCTS_WITH_OFFER_FOR_FILTERINGResult = {
+  products: Array<{
+    categories: Array<{
+      id: string
+      name: string | null
+      slug: string | null
+      main: boolean | null
+      children: Array<{
+        id: string
+        name: string | null
+        slug: string | null
+      }>
+    }> | null
+    price: number | null
+  }>
+}
 // Variable: GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING
 // Query: *[_type=='productCategory' && slug.current == $slug][0] {  "children": *[_type=='productCategory' && references(^._id)]   {      "id": _id,    name,     "slug": slug.current,    },  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{     "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current,  },    price  }  }
 export type GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult = {
@@ -1840,7 +1985,7 @@ export type GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult = {
   }>
 } | null
 // Variable: GET_TAG_AND_PRODUCTS
-// Query: *[_type=='productTag' && slug.current == $slug][0]{  name,   "banner": *[_type =='homePage'][0]{      "url": productListBanner.banner.asset->url,      "blur": productListBanner.banner.asset->metadata.lqip,      "link": productListBanner.link  },  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}  }
+// Query: *[_type=='productTag' && slug.current == $slug][0]{  name,   "banner": *[_type =='homePage'][0]{      "url": productListBanner.banner.asset->url,      "blur": productListBanner.banner.asset->metadata.lqip,      "link": productListBanner.link  },  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current, "brand": *[_type == 'brand' && ^.title match title][0] {      title,      "link": link.current,      "featuredMedia": image.asset->url,    },  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  "stockQuantity": stock_quantity,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip}}  }
 export type GET_TAG_AND_PRODUCTSResult = {
   name: string | null
   banner: {
@@ -1856,6 +2001,11 @@ export type GET_TAG_AND_PRODUCTSResult = {
     }
     title: string | null
     slug: string | null
+    brand: {
+      title: string | null
+      link: string | null
+      featuredMedia: string | null
+    } | null
     excerpt: string | null
     categories: Array<{
       id: string
@@ -1924,15 +2074,21 @@ export type GET_TAG_AND_PRODUCTSResult = {
   }>
 } | null
 // Variable: GET_WHOLE_PRODUCT_BY_SLUG
-// Query: *[_type=='product' && status=='publish' && defined(price) && slug.current == $slug][0]{  "id": _id,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current,  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  createdAt,  dimensions,  "stockQuantity": stock_quantity,  options,  date,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip},"downloads": downloads.asset->{    title,    url  },variations,"relatedProducts": relatedProducts[]->{  "id": _id,}}
+// Query: *[_type=='product' && status=='publish' && defined(price) && slug.current == $slug][0]{  "id": _id,  sku,  "featuredMedia": {    "url": featuredMedia.asset->url,      "blur": featuredMedia.asset->metadata.lqip  },  title,  "slug": slug.current, "brand": *[_type == 'brand' && ^.title match title][0] {      title,      "link": link.current,      "featuredMedia": image.asset->url,    },  excerpt,  "categories": productCategories[]->{    "id": _id,    name,    "slug": slug.current  },  content,  price,  sale,  createdAt,  dimensions,  "stockQuantity": stock_quantity,  options,  date,  "tags": productTag[]->{    "id": _id,    name,    "slug": slug.current  }, "otherImages": relatedImages[].asset->{  "url": url,  "blur": metadata.lqip},"downloads": downloads.asset->{    title,    url  },variations,"relatedProducts": relatedProducts[]->{  "id": _id,}}
 export type GET_WHOLE_PRODUCT_BY_SLUGResult = {
   id: string
+  sku: string | null
   featuredMedia: {
     url: string | null
     blur: string | null
   }
   title: string | null
   slug: string | null
+  brand: {
+    title: string | null
+    link: string | null
+    featuredMedia: string | null
+  } | null
   excerpt: string | null
   categories: Array<{
     id: string
@@ -2187,17 +2343,19 @@ declare module '@sanity/client' {
     '*[_type ==\'post\' && status == \'publish\' && count((categories[]->name)[@ in $type]) > 0 && _id > $lastId][0...12] | order(date desc) {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POST_PAGINATIONResult
     "count(*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0])": GET_TOTAL_BLOG_POSTResult
     '*[_type==\'brand\']{\n  "id": _id,\n  "slug": link.current,\n  "media": {\n    "url": image.asset->url,\n    "blur": image.asset->metadata.lqip\n  },\n  title\n}': GET_BRANDSResult
-    '*[_type==\'product\' && status==\'publish\' && defined(price) && (title match $search || excerpt match $search) && count((productCategories[]->slug.current)[@ in $category]) > 0]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}': GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORYResult
+    '*[_type==\'product\' && status==\'publish\' && defined(price) && (title match $search || excerpt match $search) && count((productCategories[]->slug.current)[@ in $category]) > 0]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  "brand": *[_type == \'brand\' && ^.title match title] {\n    title\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}': GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORYResult
     '*[_type==\'product\' && status==\'publish\' && defined(price) && _id in $ids]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n},\n}': GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATIONResult
-    '*[_type==\'product\' && status==\'publish\' && defined(price) && (title match $search || excerpt match $search)]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}': GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult
-    '*[_type==\'product\' && status==\'publish\' && defined(price) && count((productCategories[]->name)[@ in $type]) > 0]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}': GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult
-    '*[_type==\'product\' && status==\'publish\' && defined(price) && _id in $ids][0...4]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}': GET_CARD_STYLE_ONE_PRODUCTS_BY_IDSResult
-    '*[_type==\'brand\' && link.current == $slug][0]{\n  title, \n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && title match ^.title]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}\n  }': GET_BRANDS_AND_PRODUCTSResult
+    '*[_type==\'product\' && status==\'publish\' && defined(price) && (title match $search || excerpt match $search)]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  "brand": *[_type == \'brand\' && ^.title match title] {\n    title\n  },\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}': GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult
+    '*[_type==\'product\' && status==\'publish\' && defined(price) && count((productCategories[]->name)[@ in $type]) > 0]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n "brand": *[_type == \'brand\' && ^.title match title][0] {\n      title,\n      "link": link.current,\n      "featuredMedia": image.asset->url,\n    },\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}': GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult
+    '*[_type==\'product\' && status==\'publish\' && defined(price) && _id in $ids][0...4]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n "brand": *[_type == \'brand\' && ^.title match title][0] {\n      title,\n      "link": link.current,\n      "featuredMedia": image.asset->url,\n    },\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}': GET_CARD_STYLE_ONE_PRODUCTS_BY_IDSResult
+    '*[_type==\'brand\' && link.current == $slug][0]{\n  title, \n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && title match ^.title]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  "brand": *[_type == \'brand\' && ^.title match title][0] {\n      title,\n      "link": link.current,\n      "featuredMedia": image.asset->url,\n    },\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}\n  }': GET_BRANDS_AND_PRODUCTSResult
     '*[_type==\'brand\' && link.current == $slug][0] {\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && title match ^.title]{\n     "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current,\n    main,\n    "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n      "id": _id,\n    name, \n    "slug": slug.current, \n   },\n  },\n    price,\n  }\n  }': GET_PRODUCTS_AND_BRAND_FOR_FILTERINGResult
-    '*[_type==\'productCategory\' && slug.current == $slug][0]{\n  name, \n  description,\n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n    "id": _id,\n    name, \n    link\n   },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}\n  }': GET_CATEGORY_AND_PRODUCTSResult
+    '*[_type==\'productCategory\' && slug.current == $slug][0]{\n  name, \n  description,\n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n    "id": _id,\n    name, \n    link\n   },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n "brand": *[_type == \'brand\' && ^.title match title][0] {\n      title,\n      "link": link.current,\n      "featuredMedia": image.asset->url,\n    },\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n},\n}\n  }': GET_CATEGORY_AND_PRODUCTSResult
+    '{\n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n   "offer": *[_type ==\'homePage\'][0]{\n    "date": offer.date,\n    "active": offer.active,\n    "media": {\n      "url": offer.banner.assets->url,\n      "blur": offer.banner.assets->metadata.lqip\n    }\n  },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(sale)][0...24]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n "brand": *[_type == \'brand\' && ^.title match title][0] {\n      title,\n      "link": link.current,\n      "featuredMedia": image.asset->url,\n    },\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n},\n}}': GET_PRODUCTS_BY_OFFERResult
+    '{\n  "products": *[_type==\'product\' && status==\'publish\' && defined(sale)][0...24]{\n     "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current,\n    main,\n    "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n      "id": _id,\n    name, \n    "slug": slug.current, \n   },\n  },\n    price,\n  }\n  }': GET_PRODUCTS_WITH_OFFER_FOR_FILTERINGResult
     '*[_type==\'productCategory\' && slug.current == $slug][0] {\n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n      "id": _id,\n    name, \n    "slug": slug.current, \n   },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n     "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current,\n  },\n    price\n  }\n  }': GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
-    '*[_type==\'productTag\' && slug.current == $slug][0]{\n  name, \n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}\n  }': GET_TAG_AND_PRODUCTSResult
-    '*[_type==\'product\' && status==\'publish\' && defined(price) && slug.current == $slug][0]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  createdAt,\n  dimensions,\n  "stockQuantity": stock_quantity,\n  options,\n  date,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n},\n"downloads": downloads.asset->{\n    title,\n    url\n  },\nvariations,\n"relatedProducts": relatedProducts[]->{\n  "id": _id,\n}\n}': GET_WHOLE_PRODUCT_BY_SLUGResult
+    '*[_type==\'productTag\' && slug.current == $slug][0]{\n  name, \n  "banner": *[_type ==\'homePage\'][0]{\n      "url": productListBanner.banner.asset->url,\n      "blur": productListBanner.banner.asset->metadata.lqip,\n      "link": productListBanner.link\n  },\n  "products": *[_type==\'product\' && status==\'publish\' && defined(price) && references(^._id)]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n "brand": *[_type == \'brand\' && ^.title match title][0] {\n      title,\n      "link": link.current,\n      "featuredMedia": image.asset->url,\n    },\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stock_quantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n}\n}\n  }': GET_TAG_AND_PRODUCTSResult
+    '*[_type==\'product\' && status==\'publish\' && defined(price) && slug.current == $slug][0]{\n  "id": _id,\n  sku,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n "brand": *[_type == \'brand\' && ^.title match title][0] {\n      title,\n      "link": link.current,\n      "featuredMedia": image.asset->url,\n    },\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  createdAt,\n  dimensions,\n  "stockQuantity": stock_quantity,\n  options,\n  date,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n},\n"downloads": downloads.asset->{\n    title,\n    url\n  },\nvariations,\n"relatedProducts": relatedProducts[]->{\n  "id": _id,\n}\n}': GET_WHOLE_PRODUCT_BY_SLUGResult
     '*[_type==\'coupon\' && code == $code][0] {\n   amount,\n    date_expires,\n    discount_type,\n    limit_usage_to_x_items,\n    maximum_amount,\n    minimum_amount,\n    "product_categories": product_categories[]->{\n     "id": _id\n    },\n    "product_ids": product_ids[]->{\n     "id": _id  \n   },\n    usage_limit,\n    usage_count,\n    usage_limit_per_user\n}': GET_COUPONS_FOR_VALIDATIONResult
     '*[_type == \'costumer\' && _id == $id][0]{\n  "id": _id,\n  userName,\n  lastName,\n  firstName,\n  password,\n  email,\n  "avatar": avatarUrl.asset->{\n    "url": url,\n    "blur": metadata.lqip\n  },\n  "billingAddress": billingAddress[0],\n  "shippingAddresses": shippingAddresses | order(createdAt desc)\n}\n': GET_USER_INFOResult
     '*[_type ==\'costumer\' && email == $email][0]{\n  "id": _id,\n   userName,\n  lastName,\n  firstName,\n  password,\n    email,\n   "avatar": avatarUrl.asset->{\n    "url": url,\n  },\n}': GET_USER_FOR_AUTHResult

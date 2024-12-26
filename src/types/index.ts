@@ -53,16 +53,14 @@ export interface BrandSectionProps {
 
 export interface CampaignCountDownProps {
   className?: string
-  data?:
-    | {
-        date: string
-        active: boolean
-        media: {
-          url: string
-          blur: string
-        }
-      }
-    | undefined
+  data?: {
+    date: string | null
+    active: boolean | null
+    media: {
+      url: null
+      blur: null
+    }
+  } | null
 }
 
 export interface BlogCardProps {
@@ -90,6 +88,12 @@ export interface PriceRangeSliderProps {
 //* PRODUCT CARDS
 export interface ProductCardType {
   id: string
+  sku: string | null
+  brand: {
+    title: string | null
+    slug: string | null
+    featuredMedia: string | null
+  } | null
   featuredMedia: {
     url: string | null
     blur: string | null
