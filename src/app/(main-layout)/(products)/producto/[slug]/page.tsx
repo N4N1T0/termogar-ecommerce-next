@@ -14,6 +14,7 @@ import { GET_WHOLE_PRODUCT_BY_SLUG } from '@/sanity/lib/queries'
 import { yoptop } from '@/lib/fetchers'
 import { auth } from '@/lib/auth'
 import { Logger } from 'next-axiom'
+import { jldProduct } from '@/components/seo'
 
 const log = new Logger()
 // * METADATA
@@ -149,13 +150,12 @@ const SingleProductPage = async ({
           product={{ ...searchedProduct, reviews: reviews?.reviews }}
         />
       </div>
-
       <SingleProductTabs
         product={{ ...searchedProduct, reviews: reviews?.reviews }}
         user={session?.user}
       />
-
       <RelatedProducts productsId={refactoredRelatesProductsIds} />
+      {jldProduct(searchedProduct)}
     </main>
   )
 }
