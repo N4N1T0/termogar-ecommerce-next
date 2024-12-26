@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 // * ASSETS IMPORTS
-import Logo3 from '@/assets/images/logo-3.svg'
+import { smallLogo } from '@/assets'
 import { ShoppingBag } from 'lucide-react'
 import Middlebar from './Middlebar'
 import Navbar from './Navbar'
@@ -56,7 +56,7 @@ const HeaderOne = async ({ className }: { className?: string }) => {
               <Image
                 width={152}
                 height={36}
-                src={Logo3}
+                src={smallLogo}
                 alt='Termogar Logo'
                 title='Termogar Logo'
                 priority
