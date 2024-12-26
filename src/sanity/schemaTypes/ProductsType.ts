@@ -14,6 +14,20 @@ export const productType = defineType({
       description: 'El título del producto.'
     }),
     defineField({
+      name: 'sku',
+      type: 'string',
+      title: 'SKU',
+      description: 'El SKU del producto.',
+      hidden: true
+    }),
+    defineField({
+      name: 'ean',
+      type: 'string',
+      title: 'EAN',
+      description: 'El EAN del producto.',
+      hidden: true
+    }),
+    defineField({
       name: 'status',
       type: 'string',
       title: 'Estado',
