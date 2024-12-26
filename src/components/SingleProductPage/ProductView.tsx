@@ -91,7 +91,7 @@ const ProductView = ({
               className='object-contain'
             />
             {sale && (
-              <div className='top-left-7 h-w-20 absolute left-7 flex w-20 items-center justify-center rounded-full bg-accent text-xl font-medium text-gray-50'>
+              <div className='h-w-20 absolute left-7 top-7 flex w-20 items-center justify-center rounded-full bg-accent text-xl font-medium text-gray-50'>
                 <span>Oferta</span>
               </div>
             )}
