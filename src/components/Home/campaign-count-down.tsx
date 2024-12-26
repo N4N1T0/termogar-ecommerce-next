@@ -12,18 +12,10 @@ import { ArrowRight } from 'lucide-react'
 
 // * UTILS
 import { cn } from '@/lib/utils'
-const color = [
-  'text-[#EB5757]',
-  'text-[#2F80ED]',
-  'text-[#27AE60]',
-  'text-[#F2994A]'
-]
-const labels = ['Dias', 'Horas', 'Minutos', 'Segundos']
+import saleData from '@/data/site-data.json'
 
 const CampaignCountDown = ({ className, data }: CampaignCountDownProps) => {
   const countdown = CountDown(data?.date || '2025-10-04 4:00:00')
-
-  // TODO: Refactor to have less DOM Elements
 
   return (
     <section id='offers' className={cn('w-full lg:h-[460px]', className)}>
@@ -41,13 +33,13 @@ const CampaignCountDown = ({ className, data }: CampaignCountDownProps) => {
                       >
                         <div className='countdown-number flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white sm:h-[100px] sm:w-[100px]'>
                           <span
-                            className={`font-700 text-[14px] sm:text-[30px] ${color[index]}`}
+                            className={`font-700 text-[14px] sm:text-[30px] ${saleData.colors[index]}`}
                           >
                             {item}
                           </span>
                         </div>
                         <p className='font-500 text-center text-[12px] leading-8 sm:text-[18px]'>
-                          {labels[index]}
+                          {saleData.labels[index]}
                         </p>
                       </div>
                     ))}
