@@ -932,6 +932,13 @@
                   "name": "slug"
                 },
                 "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "banner"
+                }
               }
             },
             "rest": {
@@ -1169,6 +1176,13 @@
                   "type": "string"
                 },
                 "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "banner"
+                }
               }
             },
             "rest": {
@@ -1236,6 +1250,13 @@
                   "type": "string"
                 },
                 "optional": true
+              },
+              "_type": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string",
+                  "value": "video"
+                }
               }
             },
             "rest": {
@@ -2182,6 +2203,20 @@
         }
       },
       "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "sku": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "ean": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
