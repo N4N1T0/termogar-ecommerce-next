@@ -69,7 +69,7 @@ const ProductCardRowStyleOne = ({
                 {eurilize(price || 0)} {sale && isOnSale && 'Precio Normal'}
               </span>
               {sale && isOnSale && (
-                <span className='offer-price font-600 text-[24px] text-secondary'>
+                <span className='offer-price font-600 block text-[24px] text-secondary'>
                   {eurilize(sale?.price || 0)}
                 </span>
               )}

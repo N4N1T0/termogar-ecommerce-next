@@ -70,9 +70,10 @@ const AddToCart = ({
         </div>
       )}
       <Button
-        className={`${
-          showQuantity ? 'w-3/4' : 'w-full'
-        } rounded-none bg-accent text-gray-100 transition-colors duration-150 ease-in hover:text-gray-900`}
+        className={cn(
+          showQuantity ? 'w-3/4' : 'w-full',
+          'rounded-none bg-accent text-gray-100 transition-colors duration-150 ease-in hover:text-gray-900'
+        )}
         onClick={handleAddToCart}
       >
         <ShoppingBag size={18} />
