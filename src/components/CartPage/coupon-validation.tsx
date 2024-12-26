@@ -86,14 +86,14 @@ const CouponValidation = ({
       <button
         type='submit'
         aria-disabled={isPending}
-        className='hover-200 text-gray-gray-50 h-[50px] w-[90px] bg-accent hover:text-gray-900 aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
+        className='hover-200 text-gray-gray-50 h-[50px] w-[90px] bg-accent text-gray-100 hover:text-gray-900 aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
       >
         {isPending ? (
-          <span className='animate-pulse text-sm font-semibold'>
+          <span className='animate-pulse text-sm font-medium'>
             Validando...
           </span>
         ) : (
-          <span className='text-sm font-semibold'>Validar</span>
+          <span className='text-sm font-medium'>Validar</span>
         )}
       </button>
     </Form>

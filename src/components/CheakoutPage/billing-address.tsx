@@ -345,7 +345,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
           >
             {isSubmitting
               ? 'Actualizando...'
-              : isDirty
+              : isDirty && user
                 ? 'Actualizar'
                 : 'Aceptar'}
           </button>
@@ -355,7 +355,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
               aria-disabled={isSubmitting}
               className='hover-200 flex h-[50px] w-[164px] items-center justify-center bg-tertiary text-gray-50 hover:text-gray-900 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
             >
-              Inicia Session
+              inicia sesión
             </Link>
           )}
         </div>
