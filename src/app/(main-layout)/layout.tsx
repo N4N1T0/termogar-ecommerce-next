@@ -10,12 +10,6 @@ export default function MainLayout({
 }>) {
   return (
     <>
-      {process.env.NODE_ENV === 'development' && (
-        <script
-          src='https://unpkg.com/react-scan/dist/auto.global.js'
-          async
-        ></script>
-      )}
       {/* <Drawer /> */}
       <Header />
       {children}
