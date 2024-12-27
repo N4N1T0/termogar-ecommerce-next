@@ -139,7 +139,6 @@ const CategoriesPage = async ({
             )}
           </div>
         )}
-        )
       </div>
       {jldProductList(products)}
     </main>
