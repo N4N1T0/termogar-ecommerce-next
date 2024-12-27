@@ -8,11 +8,11 @@ import Image from 'next/image'
 import CountDown from '../Helpers/CountDown'
 import { CampaignCountDownProps } from '@/types'
 import { PlaceholderSquare } from '@/assets'
+import saleData from '@/data/site-data.json'
 import { ArrowRight } from 'lucide-react'
 
 // * UTILS
 import { cn } from '@/lib/utils'
-import saleData from '@/data/site-data.json'
 
 const CampaignCountDown = ({ className, data }: CampaignCountDownProps) => {
   const countdown = CountDown(data?.date || '2025-10-04 4:00:00')

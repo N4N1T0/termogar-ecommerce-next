@@ -81,64 +81,62 @@ const MegaMenuLi = React.memo(
 
     return (
       <li>
-        <Link href={`/categorias/${menu.slug}`}>
-          <span className='font-600 flex cursor-pointer items-center text-sm text-white'>
-            <span>{menu.name}</span>
-            {hasChildren && (
-              <span className='ml-1.5'>
-                <ChevronDownIcon className='fill-current' />
-              </span>
-            )}
-          </span>
+        <span className='font-600 flex cursor-pointer items-center text-sm text-white'>
+          <Link href={`/categorias/${menu.slug}`}>{menu.name}</Link>
           {hasChildren && (
-            <div className='sub-menu absolute left-0 top-[60px] z-50 w-full'>
-              <div
-                className='flex h-[295px] w-full items-center justify-between bg-white p-[30px]'
-                style={{
-                  boxShadow: '0px 15px 50px 0px rgba(0, 0, 0, 0.14)'
-                }}
-              >
-                <div className='flex h-full justify-start pr-3'>
-                  <ul className='flex flex-col space-y-2'>
-                    {menu.children.map((child) => (
-                      <li key={child.id}>
-                        <Link href={`/categorias/${child.slug}`}>
-                          <span className='font-400 border-b border-transparent text-gray-500 hover:border-accent hover:text-accent'>
-                            {child.name}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+            <span className='ml-1.5'>
+              <ChevronDownIcon className='fill-current' />
+            </span>
+          )}
+        </span>
+        {hasChildren && (
+          <div className='sub-menu absolute left-0 top-[60px] z-50 w-full'>
+            <div
+              className='flex h-[295px] w-full items-center justify-between bg-white p-[30px]'
+              style={{
+                boxShadow: '0px 15px 50px 0px rgba(0, 0, 0, 0.14)'
+              }}
+            >
+              <div className='flex h-full justify-start pr-3'>
+                <ul className='flex flex-col space-y-2'>
+                  {menu.children.map((child) => (
+                    <li key={child.id}>
+                      <Link href={`/categorias/${child.slug}`}>
+                        <span className='font-400 border-b border-transparent text-gray-500 hover:border-accent hover:text-accent'>
+                          {child.name}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {menu.description && (
+                <div className='categories-wrapper prose h-full flex-1 overflow-hidden pr-3'>
+                  <PortableText
+                    value={menu.description}
+                    components={portableTextComponents}
+                  />
                 </div>
-                {menu.description && (
-                  <div className='categories-wrapper prose h-full flex-1 overflow-hidden pr-3'>
-                    <PortableText
-                      value={menu.description}
-                      components={portableTextComponents}
-                    />
-                  </div>
-                )}
-                <div className='h-full w-[348px]'>
-                  <div className='h-[235px] w-full'>
-                    <Image
-                      src={menu.featuredImage?.url || MegaMenu}
-                      alt='Mega Menu'
-                      className='h-full w-full object-contain'
-                      width={348}
-                      height={235}
-                      quality={70}
-                      placeholder='blur'
-                      blurDataURL={
-                        menu.featuredImage?.blur || MegaMenu.blurDataURL
-                      }
-                    />
-                  </div>
+              )}
+              <div className='h-full w-[348px]'>
+                <div className='h-[235px] w-full'>
+                  <Image
+                    src={menu.featuredImage?.url || MegaMenu}
+                    alt='Mega Menu'
+                    className='h-full w-full object-contain'
+                    width={348}
+                    height={235}
+                    quality={70}
+                    placeholder='blur'
+                    blurDataURL={
+                      menu.featuredImage?.blur || MegaMenu.blurDataURL
+                    }
+                  />
                 </div>
               </div>
             </div>
-          )}
-        </Link>
+          </div>
+        )}
       </li>
     )
   }

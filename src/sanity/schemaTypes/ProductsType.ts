@@ -231,6 +231,34 @@ export const productType = defineType({
       title: 'Productos Relacionados',
       description: 'Los productos relacionados del Producto.',
       of: [{ type: 'reference', to: [{ type: 'product' }] }]
+    }),
+    defineField({
+      name: 'lastMinute',
+      title: 'Articulos de Ultima Hora',
+      description: 'Articulos de Ultima Hora del Producto.',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'products',
+          type: 'array',
+          title: 'Productos',
+          of: [{ type: 'reference', to: [{ type: 'product' }] }],
+          validation: (Rule) =>
+            Rule.required().max(4).error('Máximo 4 productos')
+        }),
+        defineField({
+          name: 'time',
+          type: 'number',
+          title: 'Tiempo limitado en minutos',
+          validation: (Rule) => Rule.required()
+        }),
+        defineField({
+          name: 'discount',
+          type: 'number',
+          title: 'Descuento',
+          validation: (Rule) => Rule.required()
+        })
+      ]
     })
   ],
   preview: {

@@ -136,6 +136,7 @@ export interface ProductCardType {
   date: string | null
   tags: { id: string; name: string | null; slug: string | null }[] | null
   otherImages: ({ url: string | null; blur: string | null } | null)[] | null
+  hasLastMinute: boolean
 }
 
 export interface CartItemType extends ProductCardType {
@@ -149,6 +150,7 @@ export interface ProductQuickViewProps {
 export interface ProductCardStyleOneProps<T> {
   datas: T
   priority: boolean
+  discounts?: number | null | undefined
 }
 
 export interface ProductCardRowStyleTwo<T> extends ProductCardStyleOneProps<T> {

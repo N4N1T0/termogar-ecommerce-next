@@ -1,3 +1,5 @@
+'use client'
+
 // * NEXTJS IMPORTS
 import Image from 'next/image'
 import Link from 'next/link'
@@ -17,20 +19,40 @@ import { CompaireBtn } from '@/components/Compaire/compaire-helpers'
 
 export default function ProductCardStyleOne<T>({
   datas,
-  priority
+  priority,
+  discounts
 }: ProductCardStyleOneProps<T>) {
+  const refactoredDatas = datas as ProductCardType
   const { featuredMedia, title, stockQuantity, sale, slug, price } =
-    datas as ProductCardType
-  const refactorStock =
+    refactoredDatas
+
+  const isOnSale = sale && isWithinSalePeriod(sale)
+  const remainingStock =
     stockQuantity && stockQuantity < 5 ? stockQuantity : null
 
-  const isOnSale = isWithinSalePeriod(sale)
+  // Calculate Prices
+  const getDiscountedPrice = (basePrice: number): number =>
+    discounts ? basePrice * (1 - discounts / 100) : basePrice
+
+  const finalPrice =
+    sale && isOnSale
+      ? getDiscountedPrice(sale.price || 0)
+      : getDiscountedPrice(price || 0)
+  const finalPriceWithIVA = finalPrice * 1.21
+
+  const updatedDatas = {
+    ...datas,
+    ...(isOnSale && sale
+      ? { sale: { ...sale, price: finalPrice } }
+      : { price: finalPrice })
+  } as unknown as ProductCardType
 
   return (
     <div
       className='product-card-one group relative h-full w-full overflow-hidden bg-white'
       style={{ boxShadow: '0px 15px 64px 0px rgba(0, 0, 0, 0.05)' }}
     >
+      {/* Image */}
       <div className='h-[300px] w-full p-5'>
         <Image
           src={featuredMedia?.url || PlaceholderProductCard}
@@ -44,32 +66,26 @@ export default function ProductCardStyleOne<T>({
           width={500}
           height={500}
         />
-
-        {/* FEW */}
-        {refactorStock && (
-          <>
-            <div className='absolute left-0 top-3 w-full px-[30px]'>
-              <div className='progress-title flex justify-between'>
-                <p className='text-qblack font-400 text-xs leading-6'>
-                  Quedan Pocos
-                </p>
-                <span className='text-qblack font-600 text-sm leading-6'>
-                  {refactorStock}
-                </span>
-              </div>
-              <div className='progress bg-primarygray relative h-[5px] w-full overflow-hidden rounded-[22px]'>
-                <div
-                  style={{
-                    width: `${refactorStock * 20}%`
-                  }}
-                  className='absolute left-0 top-0 h-full bg-secondary'
-                ></div>
-              </div>
+        {/* Stock Alert */}
+        {remainingStock && (
+          <div className='absolute left-0 top-3 w-full px-[30px]'>
+            <div className='progress-title flex justify-between'>
+              <p className='text-qblack font-400 text-xs leading-6'>
+                Quedan Pocos
+              </p>
+              <span className='text-qblack font-600 text-sm leading-6'>
+                {remainingStock}
+              </span>
             </div>
-          </>
+            <div className='progress bg-primarygray relative h-[5px] w-full overflow-hidden rounded-[22px]'>
+              <div
+                style={{ width: `${remainingStock * 20}%` }}
+                className='absolute left-0 top-0 h-full bg-secondary'
+              ></div>
+            </div>
+          </div>
         )}
-
-        {/* SALE */}
+        {/* Sale Badge */}
         {sale && isOnSale && (
           <div className='absolute right-[14px] top-[17px]'>
             <span className='font-700 rounded-full bg-accent px-3 py-[6px] text-xs uppercase leading-none tracking-wider text-white'>
@@ -79,38 +95,32 @@ export default function ProductCardStyleOne<T>({
         )}
       </div>
 
-      {/* DETAILS */}
+      {/* Details */}
       <div className='product-card-details relative px-[30px] pb-[20px]'>
-        {/* add to card button */}
+        {/* Add to Cart Button */}
         <div className='absolute left-0 top-36 h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px]'>
-          <AddToCart product={datas as ProductCardType} />
+          <AddToCart product={updatedDatas} />
         </div>
         <Link href={`/producto/${slug}`} prefetch={true}>
           <p className='title font-600 mb-1 line-clamp-2 text-[15px] leading-[24px] text-gray-900 transition-colors duration-150 ease-in-out hover:text-secondary'>
             {title}
           </p>
         </Link>
+        {/* Price Section */}
         <div className='price'>
-          <span
-            className={`${
-              sale && isOnSale
-                ? 'font-400 block text-[14px] text-gray-500 line-through'
-                : 'font-600 text-[22px] text-secondary'
-            }`}
-          >
-            {eurilize(price || 0)} {sale && isOnSale && 'Precio Normal'}
-          </span>
-          {sale && isOnSale && (
-            <span className='offer-price font-600 text-[22px] text-secondary'>
-              {eurilize(sale?.price || 0)}
+          {/* Original Price */}
+          {(sale && isOnSale) || discounts ? (
+            <span className='font-400 block text-[14px] text-gray-500 line-through'>
+              {eurilize(sale?.price || price || 0)} Precio Normal
             </span>
-          )}
+          ) : null}
+          {/* Discounted Price */}
+          <span className='offer-price font-600 text-[22px] text-secondary'>
+            {eurilize(finalPrice)}
+          </span>
+          {/* Price with IVA */}
           <span className='iva-price font-600 ml-2 text-[16px] text-gray-800'>
-            {eurilize(
-              sale && isOnSale
-                ? (sale?.price || 0) + (sale?.price || 0) * 0.21
-                : (price || 0) + (price || 0) * 0.21
-            )}
+            {eurilize(finalPriceWithIVA)}
             <small className='ml-1 text-[11px] font-normal underline'>
               IVA.
             </small>
@@ -118,11 +128,11 @@ export default function ProductCardStyleOne<T>({
         </div>
       </div>
 
-      {/* quick-access-btns */}
+      {/* Quick Access Buttons */}
       <div className='quick-access-btns absolute -right-10 top-20 flex flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:right-4'>
-        <ProductQuickViewDynamic data={datas as ProductCardType} />
-        <WishlistBtn product={datas as ProductCardType} />
-        <CompaireBtn product={datas as ProductCardType} />
+        <ProductQuickViewDynamic data={updatedDatas} />
+        <WishlistBtn product={updatedDatas} />
+        <CompaireBtn product={updatedDatas} />
       </div>
     </div>
   )

@@ -269,7 +269,8 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
-}
+},
+"hasLastMinute": defined(lastMinute)
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION =
@@ -300,6 +301,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION =
   "url": url,
   "blur": metadata.lqip
 },
+"hasLastMinute": defined(lastMinute)
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
@@ -332,7 +334,8 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
-}
+},
+"hasLastMinute": defined(lastMinute)
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
@@ -367,7 +370,8 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
-}
+},
+"hasLastMinute": defined(lastMinute)
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS =
@@ -402,7 +406,8 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS =
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
-}
+},
+"hasLastMinute": defined(lastMinute)
 }`)
 
 export const GET_BRANDS_AND_PRODUCTS =
@@ -444,7 +449,8 @@ export const GET_BRANDS_AND_PRODUCTS =
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
-}
+},
+"hasLastMinute": defined(lastMinute)
 }
   }`)
 
@@ -514,6 +520,7 @@ export const GET_CATEGORY_AND_PRODUCTS =
   "url": url,
   "blur": metadata.lqip
 },
+"hasLastMinute": defined(lastMinute)
 }
   }`)
 
@@ -563,6 +570,7 @@ export const GET_PRODUCTS_BY_OFFER = defineQuery(`{
   "url": url,
   "blur": metadata.lqip
 },
+"hasLastMinute": defined(lastMinute)
 }}`)
 
 export const GET_PRODUCTS_WITH_OFFER_FOR_FILTERING = defineQuery(`{
@@ -650,7 +658,8 @@ export const GET_TAG_AND_PRODUCTS =
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
-}
+},
+"hasLastMinute": defined(lastMinute)
 }
   }`)
 
@@ -700,7 +709,8 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
 variations,
 "relatedProducts": relatedProducts[]->{
   "id": _id,
-}
+},
+"hasLastMinute": defined(lastMinute)
 }`)
 
 export const GET_COUPONS_FOR_VALIDATION =
@@ -721,6 +731,46 @@ export const GET_COUPONS_FOR_VALIDATION =
     usage_count,
     usage_limit_per_user
 }`)
+
+export const GET_LAST_MINUTE_PRODUCTS_FROM_ID =
+  defineQuery(`*[_type=='product' && status=='publish' && _id == $id][0]{
+    "products": lastMinute.products[]->{
+  "id": _id,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+  content,
+  price,
+  sale,
+  "stockQuantity": stock_quantity,
+  "tags": productTag[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+},
+"hasLastMinute": defined(lastMinute)
+},
+"time": lastMinute.time,
+ "discount": lastMinute.discount,
+  }`)
 
 // * USER QUERIES
 export const GET_USER_INFO =
