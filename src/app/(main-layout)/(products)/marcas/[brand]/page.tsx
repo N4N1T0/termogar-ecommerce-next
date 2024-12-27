@@ -48,7 +48,7 @@ const BrandsPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { brand } = await params
-  const { orderBy, min, max, subcat } = await searchParams
+  const { orderBy, min, max, subcat, search } = await searchParams
 
   const searchedBrand = await sanityClientRead.fetch(
     GET_BRANDS_AND_PRODUCTS,
@@ -72,7 +72,14 @@ const BrandsPage = async ({
   const orderProducts = filteredProductsByOrder(searchedBrand.products, orderBy)
 
   // * BY FILTER
-  const products = filterProductsByFilter(orderProducts, min, max, subcat)
+  const products = filterProductsByFilter(
+    orderProducts,
+    min,
+    max,
+    subcat,
+    undefined,
+    search
+  )
 
   const middlePart =
     products.length > 8 ? Math.floor(products.length / 2) : null

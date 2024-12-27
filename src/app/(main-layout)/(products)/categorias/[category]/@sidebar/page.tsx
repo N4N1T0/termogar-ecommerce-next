@@ -3,6 +3,7 @@ import BrandFilter from '@/components/AllProductPage/brand-filter'
 import PriceRangeSlider from '@/components/AllProductPage/price-range-slider'
 import { RadiogroupFilter } from '@/components/AllProductPage/radiogroup-filter'
 import ResetFilters from '@/components/AllProductPage/reset-filters'
+import SearchFilter from '@/components/AllProductPage/search-filter'
 
 // * UTILS IMPORTS
 import { getPriceRange, matchCategories, matchBrands } from '@/lib/utils'
@@ -36,7 +37,8 @@ const ProductSidebar = async ({
       <h2 className='mb-2 text-xl font-semibold uppercase text-accent'>
         Filtrar por...
       </h2>
-      <nav aria-label='Categories filters'>
+      <nav aria-label='Categories filters' className='divide-y-[1px]'>
+        <SearchFilter />
         <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
         <RadiogroupFilter
           categories={categoriesFilter}

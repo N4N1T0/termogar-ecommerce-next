@@ -49,7 +49,7 @@ const CategoriesPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { category } = await params
-  const { orderBy, min, max, subcat, brand } = await searchParams
+  const { orderBy, min, max, subcat, brand, search } = await searchParams
   const searchedCategory = await sanityClientRead.fetch(
     GET_CATEGORY_AND_PRODUCTS,
     {
@@ -80,7 +80,8 @@ const CategoriesPage = async ({
     min,
     max,
     subcat,
-    brand
+    brand,
+    search
   )
 
   const middlePart =

@@ -6,7 +6,8 @@ import crypto from 'crypto'
 import { randomBytes, pbkdf2Sync } from 'crypto'
 import {
   Coupon,
-  GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
+  GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult,
+  GET_PRODUCTS_WITH_OFFER_FOR_FILTERINGResult
 } from '@/types/sanity'
 import { toast } from 'sonner'
 
@@ -383,7 +384,9 @@ export const matchCategories = (
 }
 
 export const matchBrands = (
-  data: GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
+  data:
+    | GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
+    | GET_PRODUCTS_WITH_OFFER_FOR_FILTERINGResult
 ) => {
   if (!data || !data.products) return []
 
@@ -431,7 +434,8 @@ export const filterProductsByFilter = (
   min?: string | string[],
   max?: string | string[],
   subcat?: string | string[],
-  brand?: string | string[]
+  brand?: string | string[],
+  search?: string | string[]
 ): any[] => {
   // Convert min and max to numbers (if possible)
   const minValue = Array.isArray(min) ? Number(min[0]) : Number(min)
@@ -440,6 +444,7 @@ export const filterProductsByFilter = (
   // Extract subcat and brand as single strings if they are arrays
   const subcatSlug = Array.isArray(subcat) ? subcat[0] : subcat
   const brandSlug = Array.isArray(brand) ? brand[0] : brand
+  const searchSlug = Array.isArray(search) ? search[0] : search
 
   return products.filter((product) => {
     const productPrice = product.sale?.price ?? product.price // Use sale price if available, otherwise regular price
@@ -461,7 +466,13 @@ export const filterProductsByFilter = (
     // Filter by brand
     const matchesBrand = !brandSlug || product.brand?.link === brandSlug
 
-    return isWithinPriceRange && isInSubcategory && matchesBrand
+    // Filter by search
+    const matchesSearch =
+      !searchSlug || product.title.includes(searchSlug.toUpperCase())
+
+    return (
+      isWithinPriceRange && isInSubcategory && matchesBrand && matchesSearch
+    )
   })
 }
 
@@ -529,9 +540,9 @@ export const groupCategoriesWithExtras = (data: Data) => {
   if (extraCategories.length > 0) {
     finalResult.push({
       main: {
-        id: 'otras',
-        name: 'Otras',
-        slug: 'otras',
+        id: 'sub-categorias',
+        name: 'Sub Categorias',
+        slug: 'sub-categorias',
         main: false
       },
       children: extraCategories

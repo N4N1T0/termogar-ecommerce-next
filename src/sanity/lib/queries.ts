@@ -580,6 +580,11 @@ export const GET_PRODUCTS_WITH_OFFER_FOR_FILTERING = defineQuery(`{
    },
   },
     price,
+    "brand": *[_type == 'brand' && ^.title match title][0] {
+      "id": _id,
+      title,
+      "link": link.current
+    },
   }
   }`)
 

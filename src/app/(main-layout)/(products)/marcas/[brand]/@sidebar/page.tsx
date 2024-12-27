@@ -1,6 +1,8 @@
 // * ASSETS IMPORTS
 import BrandAccordion from '@/components/AllProductPage/brand-accordion'
 import PriceRangeSlider from '@/components/AllProductPage/price-range-slider'
+import ResetFilters from '@/components/AllProductPage/reset-filters'
+import SearchFilter from '@/components/AllProductPage/search-filter'
 
 // * UTILS IMPORTS
 import { getPriceRange, groupCategoriesWithExtras } from '@/lib/utils'
@@ -35,9 +37,11 @@ const ProductSidebar = async ({
       <h2 className='mb-2 text-xl font-semibold uppercase text-accent'>
         Filtrar por...
       </h2>
-      <nav aria-label='Brands filters'>
+      <nav aria-label='Brands filters' className='divide-y-[1px]'>
+        <SearchFilter />
         <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
         <BrandAccordion categories={categoriesFilter} label='Categorias' />
+        <ResetFilters url={`/marcas/${brand}`} />
       </nav>
     </aside>
   )
