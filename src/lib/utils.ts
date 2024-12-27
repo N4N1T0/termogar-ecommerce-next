@@ -7,7 +7,8 @@ import { randomBytes, pbkdf2Sync } from 'crypto'
 import {
   Coupon,
   GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult,
-  GET_PRODUCTS_WITH_OFFER_FOR_FILTERINGResult
+  GET_PRODUCTS_WITH_OFFER_FOR_FILTERINGResult,
+  GET_WHOLE_PRODUCT_BY_SLUGResult
 } from '@/types/sanity'
 import { toast } from 'sonner'
 
@@ -791,6 +792,23 @@ export const generateOrderId = (): string => {
   }
 
   return orderId
+}
+
+export const getMainCategoryBreadcrumb = (
+  searchedProduct: GET_WHOLE_PRODUCT_BY_SLUGResult
+) => {
+  const mainCategory = searchedProduct?.categories?.find(({ main }) => main)
+
+  return mainCategory
+    ? [
+        { name: 'P. Principal', path: '/' },
+        { name: mainCategory.name, path: `/categorias/${mainCategory.slug}` },
+        {
+          name: searchedProduct?.title || 'Sin Nombre',
+          path: `/producto/${searchedProduct?.slug}`
+        }
+      ]
+    : null
 }
 
 // * TYPES HELPERS

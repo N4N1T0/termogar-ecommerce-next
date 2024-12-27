@@ -21,7 +21,6 @@ import { Clipboard, Twitter, Facebook, Phone, Star } from 'lucide-react'
 
 // * UTILS IMPORTS
 import { GET_WHOLE_PRODUCT_BY_SLUGResult } from '@/types/sanity'
-import { PortableText } from 'next-sanity'
 import { cn, eurilize, shareLink, calculateAverageRating } from '@/lib/utils'
 import { YoptopReviews } from '@/types'
 import { WishlistBtn } from '../Wishlist/wishlist-helpers'
@@ -67,8 +66,7 @@ const ProductView = ({
     excerpt,
     options,
     id,
-    tags,
-    dimensions
+    tags
   } = product
 
   return (
@@ -158,9 +156,10 @@ const ProductView = ({
 
           {/* REVIEWS STAR */}
           {product.reviews !== undefined && product.reviews?.length > 0 ? (
-            <div
+            <Link
+              href='#tabs'
               data-aos='fade-up'
-              className='mb-6 flex items-center space-x-[10px]'
+              className='mb-4 flex items-center space-x-[10px]'
             >
               <div className='flex text-yellow-300'>
                 {Array(score)
@@ -178,7 +177,7 @@ const ProductView = ({
               <span className='text-sm font-normal text-gray-900'>
                 {product.reviews?.length} Reviews
               </span>
-            </div>
+            </Link>
           ) : (
             <small className='mb-6'>
               Sin Reseñas, Puedes colaborar con la tuya
@@ -260,19 +259,6 @@ const ProductView = ({
             <p className='text-sm leading-7 text-gray-500'>
               <span className='text-gray-900'>SKU :</span> {id}
             </p>
-            {dimensions && (
-              <div className='text-sm leading-7 text-gray-500'>
-                <span className='text-gray-900'>Dimensiones :</span>{' '}
-                {dimensions.alt ? (
-                  <PortableText value={dimensions.alt} />
-                ) : (
-                  <span className='flex w-full gap-2'>
-                    {dimensions?.height} X {dimensions?.width} X{' '}
-                    {dimensions?.length}
-                  </span>
-                )}
-              </div>
-            )}
           </div>
 
           {/* REPORT */}

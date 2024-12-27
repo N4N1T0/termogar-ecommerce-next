@@ -15,6 +15,7 @@ import { yoptop } from '@/lib/fetchers'
 import { auth } from '@/lib/auth'
 import { Logger } from 'next-axiom'
 import { jldProduct } from '@/components/seo'
+import { getMainCategoryBreadcrumb } from '@/lib/utils'
 
 const log = new Logger()
 
@@ -136,13 +137,7 @@ const SingleProductPage = async ({
     <main id='w-full'>
       <div className='container-x mx-auto my-10 w-full bg-white py-5'>
         <BreadcrumbCom
-          paths={[
-            { name: 'P. Principal', path: '/' },
-            {
-              name: searchedProduct.title || 'Sin Nombre',
-              path: `/producto/${searchedProduct.slug}`
-            }
-          ]}
+          paths={getMainCategoryBreadcrumb(searchedProduct)}
           className='mb-0'
         />
       </div>

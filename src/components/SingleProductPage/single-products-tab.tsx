@@ -69,7 +69,7 @@ const SingleProductTabs = ({
   if (!product) return null
 
   return (
-    <Tabs defaultValue='des' className='mt-10 w-full pb-[60px]'>
+    <Tabs defaultValue='des' className='mt-10 w-full pb-[60px]' id='tabs'>
       {/* Tab Buttons */}
       <div className='tab-buttons mb-10 mt-5 w-full sm:mt-0'>
         <div className='container-x mx-auto'>
@@ -81,16 +81,28 @@ const SingleProductTabs = ({
               Descripción
             </TabsTrigger>
             <TabsTrigger
-              value='review'
+              value='sizes'
               className='rounded-none py-3 text-sm font-medium text-gray-500 data-[state=active]:border-b-2 data-[state=active]:border-accent data-[state=active]:text-gray-900 sm:text-sm'
             >
-              Reseñas
+              Medidas
+            </TabsTrigger>
+            <TabsTrigger
+              value='tech'
+              className='rounded-none py-3 text-sm font-medium text-gray-500 data-[state=active]:border-b-2 data-[state=active]:border-accent data-[state=active]:text-gray-900 sm:text-sm'
+            >
+              Datos Técnicos
             </TabsTrigger>
             <TabsTrigger
               value='info'
               className='rounded-none py-3 text-sm font-medium text-gray-500 data-[state=active]:border-b-2 data-[state=active]:border-accent data-[state=active]:text-gray-900 sm:text-sm'
             >
               Documentación
+            </TabsTrigger>
+            <TabsTrigger
+              value='review'
+              className='rounded-none py-3 text-sm font-medium text-gray-500 data-[state=active]:border-b-2 data-[state=active]:border-accent data-[state=active]:text-gray-900 sm:text-sm'
+            >
+              Reseñas
             </TabsTrigger>
           </TabsList>
         </div>
@@ -110,17 +122,29 @@ const SingleProductTabs = ({
           )}
         </TabsContent>
 
-        {/* Reviews Tab */}
-        <TabsContent value='review' className='tab-content-item w-full'>
-          <Reviews
-            reviews={product.reviews}
-            user={user}
-            product={{
-              id: product.id,
-              title: product.title || 'Sin nombre',
-              url: `${process.env.NEXT_PUBLIC_URL}producto/${product.slug}`
-            }}
-          />
+        {/* Sizes Tab */}
+        <TabsContent value='sizes' className='tab-content-item w-full'>
+          <div data-aos='fade-up'>
+            {product.dimensions ? (
+              <>
+                <span className='text-3xl text-gray-900'>Dimensiones :</span>
+                {product?.dimensions?.alt ? (
+                  <PortableText value={product?.dimensions?.alt} />
+                ) : (
+                  <span className='flex w-full gap-2'>
+                    {product?.dimensions?.height || 'N/D'} X{' '}
+                    {product?.dimensions?.width || 'N/D'} X{' '}
+                    {product?.dimensions?.length || 'N/D'}
+                  </span>
+                )}
+              </>
+            ) : (
+              <h3 className='w-full bg-white p-5 text-center text-xl'>
+                Aun no tenemos Medidas de este Producto, Pronto lo
+                actualizaremos
+              </h3>
+            )}
+          </div>
         </TabsContent>
 
         {/* Documentation Tab */}
@@ -135,6 +159,28 @@ const SingleProductTabs = ({
               </h3>
             )}
           </div>
+        </TabsContent>
+
+        {/* Technical Tab */}
+        <TabsContent value='tech' className='tab-content-item w-full'>
+          <div data-aos='fade-up'>
+            <h3 className='w-full bg-white p-5 text-center text-xl'>
+              Aun no tenemos Técnicos de este Producto, Pronto lo actualizaremos
+            </h3>
+          </div>
+        </TabsContent>
+
+        {/* Reviews Tab */}
+        <TabsContent value='review' className='tab-content-item w-full'>
+          <Reviews
+            reviews={product.reviews}
+            user={user}
+            product={{
+              id: product.id,
+              title: product.title || 'Sin nombre',
+              url: `${process.env.NEXT_PUBLIC_URL}producto/${product.slug}`
+            }}
+          />
         </TabsContent>
       </div>
     </Tabs>

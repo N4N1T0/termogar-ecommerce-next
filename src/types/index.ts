@@ -203,10 +203,10 @@ export interface PageTitleProps {
   className?: string
 }
 
-export interface BreadcrumbProps {
-  name: string
+export type BreadcrumbProps = {
+  name: string | null
   path: string
-}
+} | null
 
 export interface InputComProps {
   label?: string

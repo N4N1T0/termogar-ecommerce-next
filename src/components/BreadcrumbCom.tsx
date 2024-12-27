@@ -6,7 +6,7 @@ export default function BreadcrumbCom({
   paths = [{ name: 'home', path: '/' }],
   className = ''
 }: {
-  paths: BreadcrumbProps[]
+  paths: BreadcrumbProps[] | null
   className?: string
 }) {
   return (
@@ -18,16 +18,19 @@ export default function BreadcrumbCom({
             className
           )}
         >
-          {paths.map((path) => (
-            <span key={path.name}>
-              <Link href={path.path}>
-                <span className='mx-1 capitalize hover:underline'>
-                  {path.name}
-                </span>
-              </Link>
-              <span className='sperator'>/</span>
-            </span>
-          ))}
+          {paths.map((path) => {
+            if (!path?.name || !path.path) return null
+            return (
+              <span key={path.name}>
+                <Link href={path.path}>
+                  <span className='mx-1 capitalize hover:underline'>
+                    {path.name}
+                  </span>
+                </Link>
+                <span className='sperator'>/</span>
+              </span>
+            )
+          })}
         </div>
       )}
     </>

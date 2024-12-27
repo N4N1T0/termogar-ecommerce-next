@@ -673,7 +673,8 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
   "categories": productCategories[]->{
     "id": _id,
     name,
-    "slug": slug.current
+    "slug": slug.current,
+    main
   },
   content,
   price,
