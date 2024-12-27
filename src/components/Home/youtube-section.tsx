@@ -1,7 +1,7 @@
 'use client'
 
 // * NEXT.jS IMPORTS
-import { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -31,50 +31,46 @@ const tempVideos = [
   }
 ]
 
-const YouTubeEmbed = ({
-  videoId,
-  title
-}: {
-  videoId: string
-  title: string
-}) => {
-  const [isLoaded, setIsLoaded] = useState(false)
-  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
+const YouTubeEmbed = React.memo(
+  ({ videoId, title }: { videoId: string; title: string }) => {
+    const [isLoaded, setIsLoaded] = React.useState(false)
+    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
 
-  return (
-    <div className='relative aspect-video bg-gray-200'>
-      {!isLoaded && (
-        <>
-          <Image
-            src={thumbnailUrl}
-            alt={`Thumbnail for ${title}`}
-            width={800}
-            height={800}
-            className='h-full w-full object-cover'
-          />
-          <div
-            className='group absolute inset-0 flex cursor-pointer items-center justify-center bg-black bg-opacity-20'
-            onClick={() => setIsLoaded(true)}
-          >
-            <div className='flex h-14 w-14 items-center justify-center rounded-full bg-white/80 transition-colors group-hover:bg-white'>
-              <PlayCircle className='h-6 w-6 text-accent' />
-              <span className='sr-only'>Play video</span>
+    return (
+      <div className='relative aspect-video bg-gray-200'>
+        {!isLoaded && (
+          <>
+            <Image
+              src={thumbnailUrl}
+              alt={`Thumbnail for ${title}`}
+              width={800}
+              height={800}
+              className='h-full w-full object-cover'
+            />
+            <div
+              className='group absolute inset-0 flex cursor-pointer items-center justify-center bg-black bg-opacity-20'
+              onClick={() => setIsLoaded(true)}
+            >
+              <div className='flex h-14 w-14 items-center justify-center rounded-full bg-white/80 transition-colors group-hover:bg-white'>
+                <PlayCircle className='h-6 w-6 text-accent' />
+                <span className='sr-only'>Play video</span>
+              </div>
             </div>
-          </div>
-        </>
-      )}
-      {isLoaded && (
-        <iframe
-          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
-          title={title}
-          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-          allowFullScreen
-          className='absolute left-0 top-0 h-full w-full rounded-t-lg'
-        />
-      )}
-    </div>
-  )
-}
+          </>
+        )}
+        {isLoaded && (
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
+            title={title}
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+            allowFullScreen
+            className='absolute left-0 top-0 h-full w-full rounded-t-lg'
+          />
+        )}
+      </div>
+    )
+  }
+)
 
 const YouTubeVideoSection = ({
   videos = tempVideos

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import React from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 import 'react-pdf/dist/esm/Page/TextLayer.css'
@@ -8,9 +8,9 @@ import 'react-pdf/dist/esm/Page/TextLayer.css'
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
 
 export default function PDFViewer({ pdfUrl }: { pdfUrl: string }) {
-  const [numPages, setNumPages] = useState<number | null>(null)
+  const [numPages, setNumPages] = React.useState<number | null>(null)
 
-  const options = useMemo(
+  const options = React.useMemo(
     () => ({
       cMapUrl: 'https://unpkg.com/pdfjs-dist@3.4.120/cmaps/',
       cMapPacked: true

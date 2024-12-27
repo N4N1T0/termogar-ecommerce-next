@@ -57,6 +57,7 @@ const ProductView = ({
     )
   }
 
+  // * VARIABLES
   const {
     title,
     otherImages,
@@ -69,6 +70,7 @@ const ProductView = ({
     tags,
     dimensions
   } = product
+
   return (
     <section
       id='product-view'

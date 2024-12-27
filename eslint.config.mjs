@@ -16,5 +16,10 @@ export default [
   {
     ignores: ['sanity/schemas/*.ts']
   },
-  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier')
+  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
+  {
+    rules: {
+      'react/display-name': 'off'
+    }
+  }
 ]

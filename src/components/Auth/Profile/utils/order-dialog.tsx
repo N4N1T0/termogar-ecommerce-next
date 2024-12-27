@@ -1,5 +1,3 @@
-'use client'
-
 // * NEXT.JS IMPORTS
 import Image from 'next/image'
 

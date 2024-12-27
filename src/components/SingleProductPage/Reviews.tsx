@@ -1,7 +1,7 @@
 'use client'
 
 // * NEXT.JS IMPORTS
-import { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 
 // * ASSETS IMPORTS
@@ -21,7 +21,7 @@ export default function Reviews({
   user: User | undefined
   product: { id: string; title: string; url: string }
 }) {
-  const [visibleReviews, setVisibleReviews] = useState(3)
+  const [visibleReviews, setVisibleReviews] = React.useState(3)
 
   const loadMoreReviews = () => {
     setVisibleReviews((prev) => prev + 3)

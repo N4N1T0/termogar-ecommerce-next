@@ -1,7 +1,7 @@
 'use client'
 
 // * NEXT.JS IMPORTS
-import { useEffect, useState } from 'react'
+import React from 'react'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
@@ -17,11 +17,11 @@ const RelatedProducts = ({
   amount?: number
 }) => {
   const [searchedProducts, setSearchedProducts] =
-    useState<GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+    React.useState<GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult | null>(null)
+  const [loading, setLoading] = React.useState(true)
+  const [error, setError] = React.useState<string | null>(null)
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchProducts = async () => {
       try {
         const data = await sanityClientRead.fetch(

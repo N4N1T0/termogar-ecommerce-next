@@ -2,6 +2,7 @@
 
 // * NEXT.JS IMPORTS
 import Link from 'next/link'
+import React from 'react'
 
 // * ASSETS IMPORTS
 import { Control, FieldValues, Path } from 'react-hook-form'
@@ -24,7 +25,6 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
 import { Eye, EyeOff } from 'lucide-react'
-import { useState } from 'react'
 
 interface FormFieldComponentProps<T extends FieldValues> {
   control: Control<T>
@@ -59,12 +59,12 @@ const FormFieldComponent = <T extends FieldValues>({
   autocomplete = ''
 }: FormFieldComponentProps<T>) => {
   // State to show or hide the password
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = React.useState(false)
 
   // Function to toggle password visibility
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility = React.useCallback(() => {
     setShowPassword((prev) => !prev)
-  }
+  }, [])
   return (
     <FormField
       control={control}

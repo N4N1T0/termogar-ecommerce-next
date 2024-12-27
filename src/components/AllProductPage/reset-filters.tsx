@@ -1,13 +1,15 @@
 'use client'
 
+// * NEXT.JS IMPORTS
 import { useRouter } from 'next/navigation'
+import React from 'react'
 
 const ResetFilters = ({ url }: { url: string }) => {
   const router = useRouter()
 
-  const handleReset = () => {
+  const handleReset = React.useCallback(() => {
     router.push(url, { scroll: false })
-  }
+  }, [router, url])
 
   return (
     <button

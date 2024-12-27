@@ -1,9 +1,12 @@
 'use client'
 
-import { PaginationBlogProps } from '@/types'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+// * NEXT.JS IMPORTS
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+
+// * UTILS IMPORTS
+import { PaginationBlogProps } from '@/types'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const PaginationBlog = ({
   currentPage,
@@ -12,6 +15,7 @@ const PaginationBlog = ({
   type = 'blog'
 }: PaginationBlogProps) => {
   const router = useRouter()
+
   return (
     <div className='flex items-center justify-center space-x-4 py-4'>
       <button

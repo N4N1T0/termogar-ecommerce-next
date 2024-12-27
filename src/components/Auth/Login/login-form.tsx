@@ -2,7 +2,7 @@
 
 // * NEXT.JS IMPORTS
 import Link from 'next/link'
-import { useState } from 'react'
+import React from 'react'
 import { useRouter } from 'next/navigation'
 
 // * ASSETS IMPORTS
@@ -23,7 +23,7 @@ const LoginForm = ({
   redirectTo: string | string[] | undefined
 }) => {
   const router = useRouter()
-  const [forgotPassword, setForgotPassword] = useState(false)
+  const [forgotPassword, setForgotPassword] = React.useState(false)
   const tempUrl =
     redirectTo === undefined || Array.isArray(redirectTo) ? '/' : redirectTo
 
@@ -35,6 +35,7 @@ const LoginForm = ({
     }
   })
 
+  // TODO: Add forgot password
   const handleForgotPassword = () => {}
 
   const onSubmit = async (values: LoginSchema) => {

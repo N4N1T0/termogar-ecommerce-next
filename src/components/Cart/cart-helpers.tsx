@@ -1,9 +1,12 @@
 'use client'
 
+// * NEXT.JS IMPORTS
+import React from 'react'
+import Link from 'next/link'
+
+// * ASSETS IMPORTS
 import { useCart } from '@/stores'
 import { Minus, Plus, ShoppingBag, X } from 'lucide-react'
-import Link from 'next/link'
-import React from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 
@@ -32,33 +35,27 @@ const CartLink = () => {
   )
 }
 
-const CartProductTableRemover = ({ id }: { id: string }) => {
+const CartProductTableRemover = React.memo(({ id }: { id: string }) => {
   const { removeProduct } = useCart()
-
   const handleRemoveProduct = () => {
     removeProduct(id)
     toast.info('El producto se eliminó de la lista de deseos', {
-      duration: 2000,
-      classNames: {
-        toast: 'text-accent border-accent'
-      }
+      duration: 2000
     })
   }
 
   return (
-    <div className='grid h-full place-content-center'>
-      <button
-        className='text-[#AAAAAA]'
-        aria-label='Remove product'
-        onClick={handleRemoveProduct}
-      >
-        <X className='h-5 w-5 transition-colors duration-150 ease-in hover:text-black' />
-      </button>
-    </div>
+    <button
+      className='text-[#AAAAAA]'
+      aria-label='Remove product'
+      onClick={handleRemoveProduct}
+    >
+      <X className='h-5 w-5 transition-colors duration-150 ease-in hover:text-black' />
+    </button>
   )
-}
+})
 
-const CartProductTableQuantity = ({ id }: { id: string }) => {
+const CartProductTableQuantity = React.memo(({ id }: { id: string }) => {
   const { products, updateProductQuantity } = useCart()
   const quantity = products.find((product) => product.id === id)?.quantity || 1
 
@@ -89,6 +86,6 @@ const CartProductTableQuantity = ({ id }: { id: string }) => {
       </Button>
     </div>
   )
-}
+})
 
 export { CartLink, CartProductTableRemover, CartProductTableQuantity }

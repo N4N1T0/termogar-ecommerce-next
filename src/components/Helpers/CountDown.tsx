@@ -6,7 +6,7 @@ function CountDown(lastDate: string) {
   const [showDate, setDate] = useState(0)
   const [showHour, setHour] = useState(0)
   const [showMinute, setMinute] = useState(0)
-  const [showSecound, setDateSecound] = useState(0)
+  const [showSecond, setDateSecond] = useState(0)
   // count Down
   const provideDate = new Date(lastDate)
   // format date
@@ -37,7 +37,7 @@ function CountDown(lastDate: string) {
       setDate(Math.floor(distance / _date))
       setMinute(Math.floor((distance % _hours) / _minutes))
       setHour(Math.floor((distance % _date) / _hours))
-      setDateSecound(Math.floor((distance % _minutes) / _seconds))
+      setDateSecond(Math.floor((distance % _minutes) / _seconds))
     }, 1000)
   }
 
@@ -47,7 +47,7 @@ function CountDown(lastDate: string) {
       startInterval()
     }
   })
-  return [showDate, showHour, showMinute, showSecound]
+  return [showDate, showHour, showMinute, showSecond]
 }
 
 export default CountDown

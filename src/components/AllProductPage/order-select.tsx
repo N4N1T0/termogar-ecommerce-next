@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import React from 'react'
 import { useRouter } from 'next/navigation'
 
 // * UTILS IMPORTS
@@ -20,9 +21,13 @@ const OrderSelect = ({
   orderBy: string | string[] | undefined
 }) => {
   const router = useRouter()
-  const handleChange = (url: string, value: string) => {
-    router.push(`${url}?orderBy=${value}`, { scroll: false })
-  }
+
+  const handleChange = React.useCallback(
+    (url: string, value: string) => {
+      router.push(`${url}?orderBy=${value}`, { scroll: false })
+    },
+    [router]
+  )
 
   return (
     <Select name='orderBy' onValueChange={(e) => handleChange(url, e)}>

@@ -13,6 +13,7 @@ import { portableTextComponents } from '@/components/Helpers/PortableText'
 
 // * UTILS IMPORTS
 import { cn } from '@/lib/utils'
+import React from 'react'
 
 export default function Navbar({
   className,
@@ -74,51 +75,41 @@ export default function Navbar({
   )
 }
 
-const MegaMenuLi = ({ menu }: { menu: GET_MENU_CATEGORIESResult[number] }) => {
-  const refactorChildren = [
-    {
-      id: 'all',
-      name: 'Todos',
-      slug: menu.slug
-    },
-    ...menu.children
-  ]
+const MegaMenuLi = React.memo(
+  ({ menu }: { menu: GET_MENU_CATEGORIESResult[number] }) => {
+    const hasChildren = menu.children?.length > 0
 
-  return (
-    <li>
-      <span className='font-600 flex cursor-pointer items-center text-sm text-white'>
-        {menu.children?.length === 0 || !menu.children ? (
-          <Link href={`/categorias/${menu.slug}`}>
+    return (
+      <li>
+        <span className='font-600 flex cursor-pointer items-center text-sm text-white'>
+          {hasChildren ? (
             <span>{menu.name}</span>
-          </Link>
-        ) : (
-          <span>{menu.name}</span>
-        )}
-        {menu.children?.length > 0 && (
-          <span className='ml-1.5'>
-            <ChevronDownIcon className='fill-current' />
-          </span>
-        )}
-      </span>
-      {menu.children?.length > 0 ? (
-        <div className='sub-menu absolute left-0 top-[60px] z-50 w-full'>
-          <div
-            className='mega-menu-wrapper flex w-full items-center justify-between bg-white p-[30px]'
-            style={{
-              minHeight: '295px',
-              boxShadow: '0px 15px 50px 0px rgba(0, 0, 0, 0.14)'
-            }}
-          >
-            <div className='categories-wrapper -ml-[70px] flex h-full flex-1 justify-around'>
-              <div>
+          ) : (
+            <Link href={`/categorias/${menu.slug}`}>
+              <span>{menu.name}</span>
+            </Link>
+          )}
+          {hasChildren && (
+            <span className='ml-1.5'>
+              <ChevronDownIcon className='fill-current' />
+            </span>
+          )}
+        </span>
+        {hasChildren && (
+          <div className='sub-menu absolute left-0 top-[60px] z-50 w-full'>
+            <div
+              className='mega-menu-wrapper flex h-[295px] w-full items-center justify-between bg-white p-[30px]'
+              style={{
+                boxShadow: '0px 15px 50px 0px rgba(0, 0, 0, 0.14)'
+              }}
+            >
+              <div className='categories-wrapper flex h-full flex-1 justify-around'>
                 <div className='category'>
                   <h1 className='font-700 text-qblack mb-[13px] text-[13px] uppercase'>
                     lista de {menu.name}
                   </h1>
-                </div>
-                <div className='category-items'>
                   <ul className='flex flex-col space-y-2'>
-                    {refactorChildren.map((child) => (
+                    {menu.children.map((child) => (
                       <li key={child.id}>
                         <Link href={`/categorias/${child.slug}`}>
                           <span className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'>
@@ -130,32 +121,34 @@ const MegaMenuLi = ({ menu }: { menu: GET_MENU_CATEGORIESResult[number] }) => {
                   </ul>
                 </div>
               </div>
-            </div>
-            {menu.description && (
-              <div className='categories-wrapper -ml-[70px] flex h-full flex-1 justify-around'>
-                <PortableText
-                  value={menu.description}
-                  components={portableTextComponents}
-                />
-              </div>
-            )}
-            <div className='thumbnil h-full w-[348px]'>
-              <div className='h-[235px] w-full'>
-                <Image
-                  src={menu.featuredImage?.url || MegaMenu}
-                  alt='Mega Menu'
-                  className='h-full w-full object-contain'
-                  width={348}
-                  height={235}
-                  quality={70}
-                  placeholder='blur'
-                  blurDataURL={menu.featuredImage?.blur || MegaMenu.blurDataURL}
-                />
+              {menu.description && (
+                <div className='categories-wrapper flex h-full flex-1 justify-around'>
+                  <PortableText
+                    value={menu.description}
+                    components={portableTextComponents}
+                  />
+                </div>
+              )}
+              <div className='thumbnil h-full w-[348px]'>
+                <div className='h-[235px] w-full'>
+                  <Image
+                    src={menu.featuredImage?.url || MegaMenu}
+                    alt='Mega Menu'
+                    className='h-full w-full object-contain'
+                    width={348}
+                    height={235}
+                    quality={70}
+                    placeholder='blur'
+                    blurDataURL={
+                      menu.featuredImage?.blur || MegaMenu.blurDataURL
+                    }
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ) : null}
-    </li>
-  )
-}
+        )}
+      </li>
+    )
+  }
+)

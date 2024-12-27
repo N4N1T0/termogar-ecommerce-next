@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import * as SliderPrimitive from '@radix-ui/react-slider'
 import { PriceRangeSliderProps } from '@/types'
@@ -11,9 +11,9 @@ const PriceRangeSlider = ({ min, max, step = 1 }: PriceRangeSliderProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const [value, setValue] = useState([min, max])
+  const [value, setValue] = React.useState([min, max])
 
-  useEffect(() => {
+  React.useEffect(() => {
     const minParam = searchParams.get('min')
     const maxParam = searchParams.get('max')
 
@@ -23,7 +23,7 @@ const PriceRangeSlider = ({ min, max, step = 1 }: PriceRangeSliderProps) => {
     setValue([initialMin, initialMax])
   }, [searchParams, min, max])
 
-  const updateURL = useCallback(
+  const updateURL = React.useCallback(
     (newValue: number[]) => {
       const params = new URLSearchParams(searchParams.toString())
       params.set('min', newValue[0].toString())
@@ -33,7 +33,7 @@ const PriceRangeSlider = ({ min, max, step = 1 }: PriceRangeSliderProps) => {
     [router, searchParams]
   )
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handler = setTimeout(() => {
       updateURL(value)
     }, DEBOUNCE_DELAY)

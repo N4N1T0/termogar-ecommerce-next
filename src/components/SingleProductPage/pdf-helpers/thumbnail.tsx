@@ -1,15 +1,18 @@
 'use client'
 
+// * NEXT.JS IMPORTS
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import React from 'react'
+
+// * UTILS IMPORTS
 import { pdfjs } from 'react-pdf'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`
 
 export default function PDFThumbnail({ pdfUrl }: { pdfUrl: string }) {
-  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null)
+  const [thumbnailUrl, setThumbnailUrl] = React.useState<string | null>(null)
 
-  useEffect(() => {
+  React.useEffect(() => {
     const generateThumbnail = async () => {
       const canvas = document.createElement('canvas')
       const page = await pdfjs

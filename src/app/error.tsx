@@ -2,7 +2,7 @@
 
 // * NEXT.JS IMPORTS
 import Link from 'next/link'
-import { useEffect } from 'react'
+import React from 'react'
 
 // * ASSETS IMPORTS
 import ErrorIlustration from '@/components/FourZeroFour/error-ilustration'
@@ -14,7 +14,7 @@ export default function Error({
   error: Error & { digest?: string }
   reset: () => void
 }) {
-  useEffect(() => {
+  React.useEffect(() => {
     console.error(error)
   }, [error])
 

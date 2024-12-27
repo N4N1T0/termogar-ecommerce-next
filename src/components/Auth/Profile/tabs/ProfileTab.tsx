@@ -24,21 +24,24 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
   const profileImgInput = React.useRef<HTMLInputElement>(null)
   const router = useRouter()
 
-  const browseProfileImg = () => {
+  const browseProfileImg = React.useCallback(() => {
     profileImgInput?.current?.click()
-  }
+  }, [])
 
-  const profileImgChangHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value !== '') {
-      const imgReader = new FileReader()
-      imgReader.onload = (event) => {
-        setProfileImg(event.target?.result as string)
+  const profileImgChangHandler = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.value !== '') {
+        const imgReader = new FileReader()
+        imgReader.onload = (event) => {
+          setProfileImg(event.target?.result as string)
+        }
+        if (e.target.files) {
+          imgReader.readAsDataURL(e.target.files[0] as File)
+        }
       }
-      if (e.target.files) {
-        imgReader.readAsDataURL(e.target.files[0] as File)
-      }
-    }
-  }
+    },
+    [setProfileImg]
+  )
 
   const form = useForm<CostumerSchema>({
     resolver: zodResolver(costumerSchema),

@@ -2,7 +2,7 @@
 
 // * NEXT.JS IMPORTS
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
+import React from 'react'
 
 // * ASSETS IMPORTS
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -26,7 +26,7 @@ const BrandAccordion = ({ categories, label }: BrandAccordionProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const handleCategoryChange = useCallback(
+  const handleCategoryChange = React.useCallback(
     (value: string) => {
       const params = new URLSearchParams(searchParams.toString())
       params.set('subcat', value)

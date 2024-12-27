@@ -1,7 +1,7 @@
 'use client'
 
 // * NEXT.JS IMPORTS
-import { useState } from 'react'
+import React from 'react'
 
 // * ASSETS IMPORTS
 import { useForm } from 'react-hook-form'
@@ -25,7 +25,7 @@ import reportProduct from '@/actions/report-product'
 import { toast } from 'sonner'
 
 export function ReportProductModal({ productName }: { productName: string }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = React.useState(false)
 
   const form = useForm<ReportProductSchema>({
     resolver: zodResolver(reportProductSchema),
