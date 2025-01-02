@@ -667,6 +667,8 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
   defineQuery(`*[_type=='product' && status=='publish' && defined(price) && slug.current == $slug][0]{
   "id": _id,
   sku,
+  ean,
+  referenceCode,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
       "blur": featuredMedia.asset->metadata.lqip

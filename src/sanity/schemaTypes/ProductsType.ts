@@ -27,6 +27,12 @@ export const productType = defineType({
       description: 'El EAN del producto.'
     }),
     defineField({
+      name: 'referenceCode',
+      type: 'string',
+      title: 'Código de Referencia',
+      description: 'El código de referencia del producto.'
+    }),
+    defineField({
       name: 'status',
       type: 'string',
       title: 'Estado',
