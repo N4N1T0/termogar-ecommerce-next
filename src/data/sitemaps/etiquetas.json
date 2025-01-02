@@ -1,0 +1,1337 @@
+[
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentadores-a-gas-atmosfericos",
+    "destination": "https://termogar.es/etiqueta/calentadores-a-gas-atmosfericos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentadores-a-gas-termostaticos",
+    "destination": "https://termogar.es/etiqueta/calentadores-a-gas-termostaticos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/minimaxx",
+    "destination": "https://termogar.es/etiqueta/minimaxx",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/serie-atmomag-vaillant",
+    "destination": "https://termogar.es/etiqueta/serie-atmomag-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/serie-minimaxx-junkers",
+    "destination": "https://termogar.es/etiqueta/serie-minimaxx-junkers",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/serie-supreme-plus-cointra",
+    "destination": "https://termogar.es/etiqueta/serie-supreme-plus-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/serie-easy-de-htw",
+    "destination": "https://termogar.es/etiqueta/serie-easy-de-htw",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gama-ecotec-de-vaillant",
+    "destination": "https://termogar.es/etiqueta/gama-ecotec-de-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gama-eco-de-baxi",
+    "destination": "https://termogar.es/etiqueta/gama-eco-de-baxi",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gama-bluehelix-de-ferroli",
+    "destination": "https://termogar.es/etiqueta/gama-bluehelix-de-ferroli",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/serie-arotherm-de-vaillant",
+    "destination": "https://termogar.es/etiqueta/serie-arotherm-de-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/serie-vai-6-de-vaillant",
+    "destination": "https://termogar.es/etiqueta/serie-vai-6-de-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gama-tnc-plus-de-cointra",
+    "destination": "https://termogar.es/etiqueta/gama-tnc-plus-de-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gama-tl-plus",
+    "destination": "https://termogar.es/etiqueta/gama-tl-plus",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/serie-altherma-de-daikin",
+    "destination": "https://termogar.es/etiqueta/serie-altherma-de-daikin",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gama-optima-de-cointra",
+    "destination": "https://termogar.es/etiqueta/gama-optima-de-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gama-perseo-cointra",
+    "destination": "https://termogar.es/etiqueta/gama-perseo-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gama-tnd-plus-de-cointra",
+    "destination": "https://termogar.es/etiqueta/gama-tnd-plus-de-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/panasonic",
+    "destination": "https://termogar.es/etiqueta/panasonic",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/panasonic-etherea",
+    "destination": "https://termogar.es/etiqueta/panasonic-etherea",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/panasonic-etherea-kit-xz20-tke",
+    "destination": "https://termogar.es/etiqueta/panasonic-etherea-kit-xz20-tke",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/etherea-tke-inverter",
+    "destination": "https://termogar.es/etiqueta/etherea-tke-inverter",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/baxi",
+    "destination": "https://termogar.es/etiqueta/baxi",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/junkers",
+    "destination": "https://termogar.es/etiqueta/junkers",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/junkers-hydronext",
+    "destination": "https://termogar.es/etiqueta/junkers-hydronext",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/de-condensacion",
+    "destination": "https://termogar.es/etiqueta/de-condensacion",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/cointra",
+    "destination": "https://termogar.es/etiqueta/cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/turbomag-pro",
+    "destination": "https://termogar.es/etiqueta/turbomag-pro",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/vaillant",
+    "destination": "https://termogar.es/etiqueta/vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/serie-vai-5-de-vaillant",
+    "destination": "https://termogar.es/etiqueta/serie-vai-5-de-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/aire-acondicionado",
+    "destination": "https://termogar.es/etiqueta/aire-acondicionado",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldertas-baxi-precio",
+    "destination": "https://termogar.es/etiqueta/caldertas-baxi-precio",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-baxi-catalogo",
+    "destination": "https://termogar.es/etiqueta/calderas-baxi-catalogo",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-baxi-neodens-plus",
+    "destination": "https://termogar.es/etiqueta/caldera-baxi-neodens-plus",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-baxi-de-condensacion",
+    "destination": "https://termogar.es/etiqueta/calderas-baxi-de-condensacion",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-cointra-precios",
+    "destination": "https://termogar.es/etiqueta/calderas-cointra-precios",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-cointras-baratas",
+    "destination": "https://termogar.es/etiqueta/calderas-cointras-baratas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/modelos-de-calderas-cointra",
+    "destination": "https://termogar.es/etiqueta/modelos-de-calderas-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-cointra-superlative",
+    "destination": "https://termogar.es/etiqueta/calderas-cointra-superlative",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-de-condensacion-cointra",
+    "destination": "https://termogar.es/etiqueta/calderas-de-condensacion-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-junker",
+    "destination": "https://termogar.es/etiqueta/calderas-junker",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-junkers-baratas",
+    "destination": "https://termogar.es/etiqueta/calderas-junkers-baratas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-junker-precios",
+    "destination": "https://termogar.es/etiqueta/calderas-junker-precios",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-junkers-de-condensacion",
+    "destination": "https://termogar.es/etiqueta/calderas-junkers-de-condensacion",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-junkers-de-condensacion-precios",
+    "destination": "https://termogar.es/etiqueta/calderas-junkers-de-condensacion-precios",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/precios-de-calderas-junkers",
+    "destination": "https://termogar.es/etiqueta/precios-de-calderas-junkers",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-junkers-de-gas-natural",
+    "destination": "https://termogar.es/etiqueta/calderas-junkers-de-gas-natural",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-junkers-de-gas-butano",
+    "destination": "https://termogar.es/etiqueta/calderas-junkers-de-gas-butano",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas",
+    "destination": "https://termogar.es/etiqueta/calderas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-vaillant-de-condensacion-precios",
+    "destination": "https://termogar.es/etiqueta/calderas-vaillant-de-condensacion-precios",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-vaillant-ecotec-pro-vmw-236-5-3",
+    "destination": "https://termogar.es/etiqueta/caldera-vaillant-ecotec-pro-vmw-236-5-3",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-vaillant-modelos",
+    "destination": "https://termogar.es/etiqueta/calderas-vaillant-modelos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/comprar-calderas-vaillant",
+    "destination": "https://termogar.es/etiqueta/comprar-calderas-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-vaillant-precios",
+    "destination": "https://termogar.es/etiqueta/calderas-vaillant-precios",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-vaillant-economicas",
+    "destination": "https://termogar.es/etiqueta/calderas-vaillant-economicas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-de-5-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-de-5-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-de-10-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-de-10-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-de-tiro-forzado",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-de-tiro-forzado",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-de-butano",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-de-butano",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-de-11l",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-de-11l",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-de-agua",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-de-agua",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-precios",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-precios",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/comprar-calentador-cointra",
+    "destination": "https://termogar.es/etiqueta/comprar-calentador-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-cob-10",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-cob-10",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-cob-11",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-cob-11",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-de-11-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-de-11-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-supreme-11",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-supreme-11",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-estancos",
+    "destination": "https://termogar.es/etiqueta/calentador-estancos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-estancos",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-estancos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-de-14-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-de-14-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-supreme-14",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-supreme-14",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junker-a-gas",
+    "destination": "https://termogar.es/etiqueta/calentador-junker-a-gas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentadores-junkers-a-gas-precios",
+    "destination": "https://termogar.es/etiqueta/calentadores-junkers-a-gas-precios",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentadores-junkers-a-gas-natural",
+    "destination": "https://termogar.es/etiqueta/calentadores-junkers-a-gas-natural",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-con-tiro-forzado",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-con-tiro-forzado",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentadores-junkers-a-gas-butano",
+    "destination": "https://termogar.es/etiqueta/calentadores-junkers-a-gas-butano",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-estanco",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-estanco",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-estanco-12-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-estanco-12-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-estanco-o-atmosferico",
+    "destination": "https://termogar.es/etiqueta/calentador-estanco-o-atmosferico",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-estanco-precio",
+    "destination": "https://termogar.es/etiqueta/calentador-estanco-precio",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junker-a-gas-baratos",
+    "destination": "https://termogar.es/etiqueta/calentador-junker-a-gas-baratos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/comprar-calentador-junker-a-gas",
+    "destination": "https://termogar.es/etiqueta/comprar-calentador-junker-a-gas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-estanco-15-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-estanco-15-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-estanco-6-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-estanco-6-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-estanco-14-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-estanco-14-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-estanco-11-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-estanco-11-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termos-electricos",
+    "destination": "https://termogar.es/etiqueta/termos-electricos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termos-electricos-cointra",
+    "destination": "https://termogar.es/etiqueta/termos-electricos-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termos-electricos-baratos",
+    "destination": "https://termogar.es/etiqueta/termos-electricos-baratos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/precio-de-termos-electricos",
+    "destination": "https://termogar.es/etiqueta/precio-de-termos-electricos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/marcas-de-termos-electricos",
+    "destination": "https://termogar.es/etiqueta/marcas-de-termos-electricos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/marcas-de-termos-electricos-baratos",
+    "destination": "https://termogar.es/etiqueta/marcas-de-termos-electricos-baratos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termos-electricos-grandes",
+    "destination": "https://termogar.es/etiqueta/termos-electricos-grandes",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termos-electricos-gran-capacidad",
+    "destination": "https://termogar.es/etiqueta/termos-electricos-gran-capacidad",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-estanco-lownox",
+    "destination": "https://termogar.es/etiqueta/calentador-estanco-lownox",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-estanco-lownox",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-estanco-lownox",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gama-premium-cointra",
+    "destination": "https://termogar.es/etiqueta/gama-premium-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/serie-premium-cointra",
+    "destination": "https://termogar.es/etiqueta/serie-premium-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-de-gas-natural",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-de-gas-natural",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-de-gas-cointra",
+    "destination": "https://termogar.es/etiqueta/calentador-de-gas-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-premium-11-l",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-premium-11-l",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-prmium-11-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-prmium-11-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-hydronext-5700-s",
+    "destination": "https://termogar.es/etiqueta/calentador-hydronext-5700-s",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentadores-wifi",
+    "destination": "https://termogar.es/etiqueta/calentadores-wifi",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentadores-junkers",
+    "destination": "https://termogar.es/etiqueta/calentadores-junkers",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-gas-neckar",
+    "destination": "https://termogar.es/etiqueta/calentador-gas-neckar",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/neckar-w-10-ame",
+    "destination": "https://termogar.es/etiqueta/neckar-w-10-ame",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-w-10-ame",
+    "destination": "https://termogar.es/etiqueta/calentador-w-10-ame",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/w10-ame",
+    "destination": "https://termogar.es/etiqueta/w10-ame",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/htw-split",
+    "destination": "https://termogar.es/etiqueta/htw-split",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/3000-frg-h",
+    "destination": "https://termogar.es/etiqueta/3000-frg-h",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-neckar-con-tiro-forzado",
+    "destination": "https://termogar.es/etiqueta/calentador-neckar-con-tiro-forzado",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-neckar-estanco",
+    "destination": "https://termogar.es/etiqueta/calentador-neckar-estanco",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentadores-neckar-a-gas-butano",
+    "destination": "https://termogar.es/etiqueta/calentadores-neckar-a-gas-butano",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentadores-neckar-a-gas-natural",
+    "destination": "https://termogar.es/etiqueta/calentadores-neckar-a-gas-natural",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentadores-neckar-a-gas-precios",
+    "destination": "https://termogar.es/etiqueta/calentadores-neckar-a-gas-precios",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/neckar",
+    "destination": "https://termogar.es/etiqueta/neckar",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/neckar-hydronext",
+    "destination": "https://termogar.es/etiqueta/neckar-hydronext",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-hidronext-2400",
+    "destination": "https://termogar.es/etiqueta/calentador-hidronext-2400",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-de-agua",
+    "destination": "https://termogar.es/etiqueta/calentador-de-agua",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/eliminar-termino-calentador-cointra-de-11-litros-calentador-cointra-de-12-litros",
+    "destination": "https://termogar.es/etiqueta/eliminar-termino-calentador-cointra-de-11-litros-calentador-cointra-de-12-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-prmium-12-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-prmium-12-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/junkers-hidronextcalentador-de-agua",
+    "destination": "https://termogar.es/etiqueta/junkers-hidronextcalentador-de-agua",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-hydronext-2400",
+    "destination": "https://termogar.es/etiqueta/calentador-hydronext-2400",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-hidronext",
+    "destination": "https://termogar.es/etiqueta/calentador-hidronext",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/hidronext",
+    "destination": "https://termogar.es/etiqueta/hidronext",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-hydronext",
+    "destination": "https://termogar.es/etiqueta/calentador-hydronext",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calendator-hydronext-2400",
+    "destination": "https://termogar.es/etiqueta/calendator-hydronext-2400",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/combustion-estanca",
+    "destination": "https://termogar.es/etiqueta/combustion-estanca",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gas-natural",
+    "destination": "https://termogar.es/etiqueta/gas-natural",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gas-propano",
+    "destination": "https://termogar.es/etiqueta/gas-propano",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gas-butano",
+    "destination": "https://termogar.es/etiqueta/gas-butano",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra-premium-10-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra-premium-10-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bluehelix-de-ferroli",
+    "destination": "https://termogar.es/etiqueta/bluehelix-de-ferroli",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-a-gas-de-condensacion-mixta",
+    "destination": "https://termogar.es/etiqueta/caldera-a-gas-de-condensacion-mixta",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-a-gas",
+    "destination": "https://termogar.es/etiqueta/caldera-a-gas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-ecologica",
+    "destination": "https://termogar.es/etiqueta/caldera-ecologica",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/baja-emision-de-noxx",
+    "destination": "https://termogar.es/etiqueta/baja-emision-de-noxx",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-mixta",
+    "destination": "https://termogar.es/etiqueta/caldera-mixta",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/ferroli",
+    "destination": "https://termogar.es/etiqueta/ferroli",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/estuda-de-pellets",
+    "destination": "https://termogar.es/etiqueta/estuda-de-pellets",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/estufas",
+    "destination": "https://termogar.es/etiqueta/estufas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/metlor",
+    "destination": "https://termogar.es/etiqueta/metlor",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/estufa-metlor",
+    "destination": "https://termogar.es/etiqueta/estufa-metlor",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calefaccion",
+    "destination": "https://termogar.es/etiqueta/calefaccion",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/pellets",
+    "destination": "https://termogar.es/etiqueta/pellets",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calefaccion-ecologica",
+    "destination": "https://termogar.es/etiqueta/calefaccion-ecologica",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/metlor-salamandra",
+    "destination": "https://termogar.es/etiqueta/metlor-salamandra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/metlor-sofia",
+    "destination": "https://termogar.es/etiqueta/metlor-sofia",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/metlor-adriana",
+    "destination": "https://termogar.es/etiqueta/metlor-adriana",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/amoladora",
+    "destination": "https://termogar.es/etiqueta/amoladora",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bosch",
+    "destination": "https://termogar.es/etiqueta/bosch",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/herramientas",
+    "destination": "https://termogar.es/etiqueta/herramientas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/minamoladora",
+    "destination": "https://termogar.es/etiqueta/minamoladora",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/taladro",
+    "destination": "https://termogar.es/etiqueta/taladro",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/percutor",
+    "destination": "https://termogar.es/etiqueta/percutor",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador",
+    "destination": "https://termogar.es/etiqueta/calentador",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-htw",
+    "destination": "https://termogar.es/etiqueta/calentador-htw",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-a-gas",
+    "destination": "https://termogar.es/etiqueta/calentador-a-gas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/htw",
+    "destination": "https://termogar.es/etiqueta/htw",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/obi-11litros",
+    "destination": "https://termogar.es/etiqueta/obi-11litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-obi-htw-11-litros",
+    "destination": "https://termogar.es/etiqueta/calentador-obi-htw-11-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera",
+    "destination": "https://termogar.es/etiqueta/caldera",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-de-condensacion",
+    "destination": "https://termogar.es/etiqueta/caldera-de-condensacion",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/protherm",
+    "destination": "https://termogar.es/etiqueta/protherm",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-electrico",
+    "destination": "https://termogar.es/etiqueta/termo-electrico",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-electrico-centro-mediterraneo",
+    "destination": "https://termogar.es/etiqueta/termo-electrico-centro-mediterraneo",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termos",
+    "destination": "https://termogar.es/etiqueta/termos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-de-50-litros",
+    "destination": "https://termogar.es/etiqueta/termo-de-50-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-de-80-litros",
+    "destination": "https://termogar.es/etiqueta/termo-de-80-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-baltico-80-litros",
+    "destination": "https://termogar.es/etiqueta/termo-baltico-80-litros",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-baltico",
+    "destination": "https://termogar.es/etiqueta/termo-baltico",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-centro-baltico",
+    "destination": "https://termogar.es/etiqueta/termo-centro-baltico",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-electrico-baltico-eco-80-lt",
+    "destination": "https://termogar.es/etiqueta/termo-electrico-baltico-eco-80-lt",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-atmosferico",
+    "destination": "https://termogar.es/etiqueta/calentador-atmosferico",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-cointra",
+    "destination": "https://termogar.es/etiqueta/calentador-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-estanco",
+    "destination": "https://termogar.es/etiqueta/calentador-estanco",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-estanco-zeus-low-nox",
+    "destination": "https://termogar.es/etiqueta/calentador-estanco-zeus-low-nox",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-electrico-ariston",
+    "destination": "https://termogar.es/etiqueta/termo-electrico-ariston",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/ariston-termo-electrico",
+    "destination": "https://termogar.es/etiqueta/ariston-termo-electrico",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/ariston",
+    "destination": "https://termogar.es/etiqueta/ariston",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-estanco-vaillant",
+    "destination": "https://termogar.es/etiqueta/calentador-estanco-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/mejores-calderas-de-gas",
+    "destination": "https://termogar.es/etiqueta/mejores-calderas-de-gas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-a-gas",
+    "destination": "https://termogar.es/etiqueta/calderas-a-gas",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-de-condensacion",
+    "destination": "https://termogar.es/etiqueta/calderas-de-condensacion",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calderas-ferroli",
+    "destination": "https://termogar.es/etiqueta/calderas-ferroli",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-vaillant",
+    "destination": "https://termogar.es/etiqueta/calentador-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-6-lt-w135-2",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-6-lt-w135-2",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-6lt-at-w135-kw1",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-6lt-at-w135-kw1",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-neckar",
+    "destination": "https://termogar.es/etiqueta/calentador-neckar",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-m-6-lt-w135-2uv",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-m-6-lt-w135-2uv",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-neckar-m-13-lt-wn13-2",
+    "destination": "https://termogar.es/etiqueta/calentador-neckar-m-13-lt-wn13-2",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-m-13-lt-w350-2",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-m-13-lt-w350-2",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-junkers-m-13-lt-w325-kv",
+    "destination": "https://termogar.es/etiqueta/calentador-junkers-m-13-lt-w325-kv",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/estufa",
+    "destination": "https://termogar.es/etiqueta/estufa",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/estufa-de-pellets",
+    "destination": "https://termogar.es/etiqueta/estufa-de-pellets",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-saunier-duval",
+    "destination": "https://termogar.es/etiqueta/caldera-saunier-duval",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/el-calentador-saunier-duval-opaliatherm-f12-l",
+    "destination": "https://termogar.es/etiqueta/el-calentador-saunier-duval-opaliatherm-f12-l",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-saunier-duval",
+    "destination": "https://termogar.es/etiqueta/calentador-saunier-duval",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-saunier-duval-opaliatherm-f15-l",
+    "destination": "https://termogar.es/etiqueta/calentador-saunier-duval-opaliatherm-f15-l",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-ferroli",
+    "destination": "https://termogar.es/etiqueta/caldera-ferroli",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bluehelix-maxima",
+    "destination": "https://termogar.es/etiqueta/bluehelix-maxima",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/aire-acondicionado-split-ferroli-diamant-3000-frg",
+    "destination": "https://termogar.es/etiqueta/aire-acondicionado-split-ferroli-diamant-3000-frg",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/aire-acondicionado-split-ferroli-diamant-s9-de-2270frg",
+    "destination": "https://termogar.es/etiqueta/aire-acondicionado-split-ferroli-diamant-s9-de-2270frg",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-ferroli-bluehelix-maxima-28",
+    "destination": "https://termogar.es/etiqueta/caldera-ferroli-bluehelix-maxima-28",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-ferroli-bluehelix-alpha-24c",
+    "destination": "https://termogar.es/etiqueta/caldera-ferroli-bluehelix-alpha-24c",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-ferroli-bluehelix-alpha-28c",
+    "destination": "https://termogar.es/etiqueta/caldera-ferroli-bluehelix-alpha-28c",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/aire-acondicionado-split",
+    "destination": "https://termogar.es/etiqueta/aire-acondicionado-split",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/split",
+    "destination": "https://termogar.es/etiqueta/split",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-electrico-tnc-plus-h",
+    "destination": "https://termogar.es/etiqueta/termo-electrico-tnc-plus-h",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-electrico-tdf-plus",
+    "destination": "https://termogar.es/etiqueta/termo-electrico-tdf-plus",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/arotherm-split",
+    "destination": "https://termogar.es/etiqueta/arotherm-split",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/aerotermia",
+    "destination": "https://termogar.es/etiqueta/aerotermia",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bomba-de-calor",
+    "destination": "https://termogar.es/etiqueta/bomba-de-calor",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/ferroli-bluehelix-alpha",
+    "destination": "https://termogar.es/etiqueta/ferroli-bluehelix-alpha",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/ferroli-bluehelix-alpha-28c",
+    "destination": "https://termogar.es/etiqueta/ferroli-bluehelix-alpha-28c",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termo-electrico-cointra",
+    "destination": "https://termogar.es/etiqueta/termo-electrico-cointra",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termostato",
+    "destination": "https://termogar.es/etiqueta/termostato",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/modulo-vaillant-vr-71",
+    "destination": "https://termogar.es/etiqueta/modulo-vaillant-vr-71",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/modulo-vaillant-vr-92",
+    "destination": "https://termogar.es/etiqueta/modulo-vaillant-vr-92",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/interacumulador-de-acs",
+    "destination": "https://termogar.es/etiqueta/interacumulador-de-acs",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/grupos-de-bombeo-vaillant",
+    "destination": "https://termogar.es/etiqueta/grupos-de-bombeo-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/grupos-de-bombeo",
+    "destination": "https://termogar.es/etiqueta/grupos-de-bombeo",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/grupo-de-bombeo",
+    "destination": "https://termogar.es/etiqueta/grupo-de-bombeo",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/termostato-vaillant",
+    "destination": "https://termogar.es/etiqueta/termostato-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/sensocomfort-vrc-720",
+    "destination": "https://termogar.es/etiqueta/sensocomfort-vrc-720",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/grupo-de-bombeo-sin-mezcladora",
+    "destination": "https://termogar.es/etiqueta/grupo-de-bombeo-sin-mezcladora",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/deposito-acs-panasonic",
+    "destination": "https://termogar.es/etiqueta/deposito-acs-panasonic",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/acs",
+    "destination": "https://termogar.es/etiqueta/acs",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/acs-vaillant",
+    "destination": "https://termogar.es/etiqueta/acs-vaillant",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/junkers-cerapur",
+    "destination": "https://termogar.es/etiqueta/junkers-cerapur",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/deposito-de-inercia",
+    "destination": "https://termogar.es/etiqueta/deposito-de-inercia",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-ariston",
+    "destination": "https://termogar.es/etiqueta/calentador-ariston",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-a-gas-ariston",
+    "destination": "https://termogar.es/etiqueta/calentador-a-gas-ariston",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-ariston",
+    "destination": "https://termogar.es/etiqueta/caldera-ariston",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/caldera-vaillant-mixta-con-microacumulacion",
+    "destination": "https://termogar.es/etiqueta/caldera-vaillant-mixta-con-microacumulacion",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/cerapur-excellence-compact-zwb-30-36-1a",
+    "destination": "https://termogar.es/etiqueta/cerapur-excellence-compact-zwb-30-36-1a",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bombas-de-calor",
+    "destination": "https://termogar.es/etiqueta/bombas-de-calor",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-estanco-htw-lownox",
+    "destination": "https://termogar.es/etiqueta/calentador-estanco-htw-lownox",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bomba-de-calor-ferroli-egea-90-lt",
+    "destination": "https://termogar.es/etiqueta/bomba-de-calor-ferroli-egea-90-lt",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bomba-de-calor-aerotermica-egea-lt-pie",
+    "destination": "https://termogar.es/etiqueta/bomba-de-calor-aerotermica-egea-lt-pie",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bomba-de-calor-ferroli-egea-lt-120",
+    "destination": "https://termogar.es/etiqueta/bomba-de-calor-ferroli-egea-lt-120",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bomba-de-calor-ferroli-egea-lt-200",
+    "destination": "https://termogar.es/etiqueta/bomba-de-calor-ferroli-egea-lt-200",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bomba-de-calor-ferroli-egea-ht-260",
+    "destination": "https://termogar.es/etiqueta/bomba-de-calor-ferroli-egea-ht-260",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bomba-de-calor-ferroli-egea-ht-200",
+    "destination": "https://termogar.es/etiqueta/bomba-de-calor-ferroli-egea-ht-200",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/bomba-de-calor-ferroli-egea-lt-260",
+    "destination": "https://termogar.es/etiqueta/bomba-de-calor-ferroli-egea-lt-260",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/inverair",
+    "destination": "https://termogar.es/etiqueta/inverair",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/sistema-de-climatizacion",
+    "destination": "https://termogar.es/etiqueta/sistema-de-climatizacion",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/vaillant-atmomag",
+    "destination": "https://termogar.es/etiqueta/vaillant-atmomag",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/centro-confort-bali",
+    "destination": "https://termogar.es/etiqueta/centro-confort-bali",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/calentador-juntek",
+    "destination": "https://termogar.es/etiqueta/calentador-juntek",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/juntek-jce",
+    "destination": "https://termogar.es/etiqueta/juntek-jce",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/lg-s12et",
+    "destination": "https://termogar.es/etiqueta/lg-s12et",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/aire-acondicionado-lg-confort-wifi-s12et-r32",
+    "destination": "https://termogar.es/etiqueta/aire-acondicionado-lg-confort-wifi-s12et-r32",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/lg-s09et",
+    "destination": "https://termogar.es/etiqueta/lg-s09et",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/aire-acondicionado-lg-confort-wifi-s09et-r32",
+    "destination": "https://termogar.es/etiqueta/aire-acondicionado-lg-confort-wifi-s09et-r32",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/gama-cerapur-de-junkers",
+    "destination": "https://termogar.es/etiqueta/gama-cerapur-de-junkers",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/vaillant-serie-turbomag",
+    "destination": "https://termogar.es/etiqueta/vaillant-serie-turbomag",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/varese-500he",
+    "destination": "https://termogar.es/etiqueta/varese-500he",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/interacumulador-de-acs-unistor-vih-rw-300-3-br-l",
+    "destination": "https://termogar.es/etiqueta/interacumulador-de-acs-unistor-vih-rw-300-3-br-l",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/ferroli-tiber-b-50",
+    "destination": "https://termogar.es/etiqueta/ferroli-tiber-b-50",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/alm09a23",
+    "destination": "https://termogar.es/etiqueta/alm09a23",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/alm12a23",
+    "destination": "https://termogar.es/etiqueta/alm12a23",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/alm18a23",
+    "destination": "https://termogar.es/etiqueta/alm18a23",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/alm24a23",
+    "destination": "https://termogar.es/etiqueta/alm24a23",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/etiqueta-producto/aire-acondicionado-split-olimpia-splendid-nexya-s4-e",
+    "destination": "https://termogar.es/etiqueta/aire-acondicionado-split-olimpia-splendid-nexya-s4-e",
+    "permanent": true
+  }
+]
