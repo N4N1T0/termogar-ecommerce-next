@@ -12,7 +12,6 @@ import { sanityFetchImages } from '../import-wp/lib/utils/wpImageFetch'
 import { transformToPage } from '../import-wp/lib'
 
 // * TYPES IMPORTS
-import { WP_REST_API_Product } from '../import-wp/types'
 import { wcAPI } from '@/lib/clients'
 import { WP_REST_API_Page, WP_REST_API_Pages } from 'wp-types'
 

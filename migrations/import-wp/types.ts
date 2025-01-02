@@ -48,6 +48,7 @@ export type SanitySchemaType =
 // * CUSTOM TYPES
 export type WP_REST_API_Product = {
   id: number
+  sku: string
   date_created: string
   date_modified: string
   permalink: string
