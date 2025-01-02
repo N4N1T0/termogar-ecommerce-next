@@ -84,13 +84,7 @@ const SingleProductTabs = ({
               value='sizes'
               className='rounded-none py-3 text-sm font-medium text-gray-500 data-[state=active]:border-b-2 data-[state=active]:border-accent data-[state=active]:text-gray-900 sm:text-sm'
             >
-              Medidas
-            </TabsTrigger>
-            <TabsTrigger
-              value='tech'
-              className='rounded-none py-3 text-sm font-medium text-gray-500 data-[state=active]:border-b-2 data-[state=active]:border-accent data-[state=active]:text-gray-900 sm:text-sm'
-            >
-              Datos Técnicos
+              Peso, Medidas y Datos Técnicos
             </TabsTrigger>
             <TabsTrigger
               value='info'
@@ -145,6 +139,20 @@ const SingleProductTabs = ({
               </h3>
             )}
           </div>
+          {product.ean && (
+            <div className='mt-5 w-full border-t border-gray-500 pt-5'>
+              <span className='text-2xl text-gray-900'>EAN :</span>
+              <span>{product.ean}</span>
+            </div>
+          )}
+          {product.referenceCode && (
+            <div className='mt-5 w-full border-t border-gray-500 pt-5'>
+              <span className='text-2xl text-gray-900'>
+                Código de Referencia :
+              </span>
+              <span>{product.referenceCode}</span>
+            </div>
+          )}
         </TabsContent>
 
         {/* Documentation Tab */}
@@ -158,15 +166,6 @@ const SingleProductTabs = ({
                 actualizaremos
               </h3>
             )}
-          </div>
-        </TabsContent>
-
-        {/* Technical Tab */}
-        <TabsContent value='tech' className='tab-content-item w-full'>
-          <div data-aos='fade-up'>
-            <h3 className='w-full bg-white p-5 text-center text-xl'>
-              Aun no tenemos Técnicos de este Producto, Pronto lo actualizaremos
-            </h3>
           </div>
         </TabsContent>
 
