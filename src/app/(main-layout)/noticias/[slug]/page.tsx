@@ -118,7 +118,7 @@ const NewsArticlePage = async ({
                 </div>
               </div>
               {content ? (
-                <section className='prose w-full max-w-none text-pretty'>
+                <section className='prose w-full max-w-none text-pretty px-3'>
                   <PortableText
                     value={content}
                     components={portableTextComponents}

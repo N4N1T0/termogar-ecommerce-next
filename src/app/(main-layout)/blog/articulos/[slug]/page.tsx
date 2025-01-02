@@ -119,7 +119,7 @@ const BogArticlePage = async ({
             {searchedPostArticule.content ? (
               <section
                 id='content'
-                className='prose w-full max-w-none text-pretty'
+                className='prose w-full max-w-none text-pretty px-3'
               >
                 <PortableText
                   value={searchedPostArticule.content}
