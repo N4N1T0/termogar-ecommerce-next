@@ -24,8 +24,7 @@ export const productType = defineType({
       name: 'ean',
       type: 'string',
       title: 'EAN',
-      description: 'El EAN del producto.',
-      hidden: true
+      description: 'El EAN del producto.'
     }),
     defineField({
       name: 'status',
