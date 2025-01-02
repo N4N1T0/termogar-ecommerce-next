@@ -135,12 +135,12 @@ const ProductView = ({
             className='mb-2 w-full text-xs font-normal uppercase tracking-wider text-gray-500'
           >
             <ul className='flex w-full gap-2'>
-              {categories?.map(({ name }) => (
+              {categories?.map(({ name, slug }) => (
                 <li
                   key={name}
                   className='hover-200 underline hover:text-accent'
                 >
-                  <Link href={`/categoria/${name}`}>{name}</Link>
+                  <Link href={`/categorias/${slug}`}>{name}</Link>
                 </li>
               ))}
             </ul>
