@@ -2,14 +2,13 @@
 
 // * NEXT.JS IMPORTS
 import Form from 'next/form'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useQueryState, parseAsString } from 'nuqs'
 
 // * ASSETS IMPORTS
 import { Input } from '@/components/ui/input'
 
 const SearchFilter = () => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const [search, setSearch] = useQueryState('search', parseAsString)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -18,9 +17,7 @@ const SearchFilter = () => {
 
     if (!search) return
 
-    const params = new URLSearchParams(searchParams.toString())
-    params.set('search', search?.toString().toLowerCase())
-    router.push(`?${params}`, { scroll: false })
+    setSearch(search.toString())
   }
 
   return (
@@ -34,7 +31,7 @@ const SearchFilter = () => {
         type='text'
         name='search'
         placeholder='Buscar...'
-        defaultValue={searchParams.get('search') || ''}
+        defaultValue={search || ''}
         className='rounded-none border border-gray-600'
         autoComplete='search'
       />

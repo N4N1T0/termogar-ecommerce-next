@@ -93,7 +93,7 @@ const CategoriesPage = async ({
             <span className='text-lg text-accent'> {products.length}</span>{' '}
             Productos Encontrados
           </p>
-          <OrderSelect url={`/categorias/${tag}`} orderBy={orderBy} />
+          <OrderSelect url={`/categorias/${tag}`} />
         </div>
         {searchedTag.products.length > 0 && middlePart ? (
           <>

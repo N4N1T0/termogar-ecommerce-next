@@ -1,5 +1,10 @@
 'use client'
 
+// * NEXT.JS IMPORTS
+import React from 'react'
+import { useQueryState, parseAsString } from 'nuqs'
+
+// * ASSETS IMPORTS
 import {
   Select,
   SelectContent,
@@ -7,26 +12,18 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
-import React from 'react'
-import { useRouter } from 'next/navigation'
 
 // * UTILS IMPORTS
 import siteData from '@/data/site-data.json'
 
-const OrderSelect = ({
-  url,
-  orderBy
-}: {
-  url: string
-  orderBy: string | string[] | undefined
-}) => {
-  const router = useRouter()
+const OrderSelect = ({ url }: { url: string }) => {
+  const [order, setOrder] = useQueryState('orderBy', parseAsString)
 
   const handleChange = React.useCallback(
     (url: string, value: string) => {
-      router.push(`${url}?orderBy=${value}`, { scroll: false })
+      setOrder(value, { shallow: false })
     },
-    [router]
+    [setOrder]
   )
 
   return (
@@ -34,10 +31,9 @@ const OrderSelect = ({
       <SelectTrigger className='w-[150px] rounded-none border-0 bg-transparent text-gray-700 shadow-none focus:ring-0'>
         <SelectValue
           placeholder={
-            !orderBy
+            !order
               ? 'Ordenar por...'
-              : siteData.orderBy.filter(({ value }) => value === orderBy)[0]
-                  .label
+              : siteData.orderBy.filter(({ value }) => value === order)[0].label
           }
         />
       </SelectTrigger>

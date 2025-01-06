@@ -11,6 +11,7 @@ import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING } from '@/sanity/lib/queries'
 import { Logger } from 'next-axiom'
 
+
 export const dynamic = 'force-dynamic'
 const log = new Logger()
 

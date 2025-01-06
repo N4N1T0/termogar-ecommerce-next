@@ -1,8 +1,8 @@
 'use client'
 
 // * NEXT.JS IMPORTS
-import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
+import { useQueryState, parseAsString } from 'nuqs'
 
 // * ASSETS IMPORTS
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -12,23 +12,20 @@ import { Label } from '@/components/ui/label'
 import { RadiogroupFilterProps } from '@/types'
 
 export function RadiogroupFilter({ categories, label }: RadiogroupFilterProps) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const [subCat, setSubCat] = useQueryState('subcat', parseAsString)
 
   const handleCategoryChange = React.useCallback(
     (value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set('subcat', value)
-      router.push(`?${params}`, { scroll: false })
+      setSubCat(value, { shallow: false })
     },
-    [router, searchParams]
+    [setSubCat]
   )
 
   return (
     <div className='space-y-4 py-4'>
       <h3 className='text-lg font-medium'>{label}</h3>
       <RadioGroup
-        defaultValue={searchParams.get('subcat') || ''}
+        defaultValue={subCat || ''}
         onValueChange={handleCategoryChange}
         className='space-y-2'
       >

@@ -1,7 +1,7 @@
 'use client'
 
 // * NEXT.JS IMPORTS
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useQueryState, parseAsString } from 'nuqs'
 import React from 'react'
 
 // * ASSETS IMPORTS
@@ -23,16 +23,13 @@ interface BrandAccordionProps {
 }
 
 const BrandAccordion = ({ categories, label }: BrandAccordionProps) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const [subcat, setSubcat] = useQueryState('subcat', parseAsString)
 
   const handleCategoryChange = React.useCallback(
     (value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set('subcat', value)
-      router.push(`?${params}`, { scroll: false })
+      setSubcat(value, { shallow: false })
     },
-    [router, searchParams]
+    [setSubcat]
   )
 
   return (
@@ -46,7 +43,7 @@ const BrandAccordion = ({ categories, label }: BrandAccordionProps) => {
             </AccordionTrigger>
             <AccordionContent>
               <RadioGroup
-                defaultValue={searchParams.get('subcat') || ''}
+                defaultValue={subcat || ''}
                 onValueChange={handleCategoryChange}
                 className='space-y-2'
               >

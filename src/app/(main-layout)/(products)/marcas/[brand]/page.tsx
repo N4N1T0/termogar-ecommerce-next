@@ -106,7 +106,7 @@ const BrandsPage = async ({
             <span className='text-lg text-accent'> {products.length}</span>{' '}
             Productos Encontrados
           </p>
-          <OrderSelect url={`/marcas/${brand}`} orderBy={orderBy} />
+          <OrderSelect url={`/marcas/${brand}`} />
         </div>
         {middlePart ? (
           <>

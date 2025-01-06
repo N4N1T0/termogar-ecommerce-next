@@ -86,7 +86,7 @@ const CategoriesPage = async ({
             <span className='text-lg text-accent'> {products.length}</span>{' '}
             Productos Encontrados
           </p>
-          <OrderSelect url='/ofertas' orderBy={orderBy} />
+          <OrderSelect url='/ofertas' />
         </div>
         {middlePart ? (
           <>

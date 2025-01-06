@@ -4,6 +4,7 @@ import localFont from 'next/font/local'
 import { seoMetatags } from '@/components/seo'
 import { Toaster } from 'sonner'
 import { AxiomWebVitals } from 'next-axiom'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 export const metadata: Metadata = seoMetatags()
 
@@ -42,7 +43,7 @@ export default function RootLayout({
       <body
         className={`overflow-x-hidden bg-gray-50 antialiased ${korbFonts.className}`}
       >
-        {children}
+        <NuqsAdapter>{children}</NuqsAdapter>
         <Toaster
           toastOptions={{
             unstyled: true,

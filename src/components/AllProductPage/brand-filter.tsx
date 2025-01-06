@@ -1,7 +1,7 @@
 'use client'
 
 // * NEXT.JS IMPORTS
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useQueryState, parseAsString } from 'nuqs'
 import React from 'react'
 
 // * ASSETS IMPORTS
@@ -12,23 +12,20 @@ import { Label } from '@/components/ui/label'
 import { BrandFilterProps } from '@/types'
 
 const BrandFilter = ({ brands }: BrandFilterProps) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const [brand, setBrand] = useQueryState('brand', parseAsString)
 
   const handleBrandChange = React.useCallback(
     (value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.set('brand', value)
-      router.push(`?${params}`, { scroll: false })
+      setBrand(value, { shallow: false })
     },
-    [router, searchParams]
+    [setBrand]
   )
 
   return (
     <div className='space-y-4 py-4'>
       <h3 className='text-lg font-medium'>Marcas</h3>
       <RadioGroup
-        defaultValue={searchParams.get('brand') || ''}
+        defaultValue={brand || ''}
         onValueChange={handleBrandChange}
         className='space-y-2'
       >
