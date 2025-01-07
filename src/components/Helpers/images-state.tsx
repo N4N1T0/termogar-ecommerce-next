@@ -45,8 +45,8 @@ const ImagesState = ({ data }: { data: ProductCardType }) => {
               alt={title || 'Product'}
               title={title || 'Product'}
               className='h-full w-full object-cover'
-              width={300}
-              height={400}
+              width={500}
+              height={600}
               quality={100}
             />
           </div>
