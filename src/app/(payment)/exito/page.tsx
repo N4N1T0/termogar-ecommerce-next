@@ -13,6 +13,7 @@ import { GET_USER_INFO } from '@/sanity/lib/queries'
 import { processRestNotification } from '@/lib/clients'
 import { Order } from '@/types/sanity'
 import { uuid } from '@sanity/uuid'
+import { paypal } from '@/lib/fetchers'
 
 export const metadata: Metadata = {
   title: 'Pago Realizado con Exito',
@@ -35,7 +36,8 @@ const SuccessPage = async ({
     Ds_MerchantParameters,
     Ds_Signature,
     products,
-    total
+    total,
+    token
   } = await searchParams
 
   if (!userId || !orderId) {
@@ -50,6 +52,14 @@ const SuccessPage = async ({
     })
 
     if (Ds_Response !== '0000') {
+      notFound()
+    }
+  }
+
+  if (gateway === 'PayPal') {
+    const response = await paypal.captureOrder(token as string)
+    console.log('🚀 ~ response:', response)
+    if (response !== 'COMPLETED') {
       notFound()
     }
   }
@@ -104,7 +114,7 @@ const SuccessPage = async ({
           />
         </CardContent>
       </Card>
-      <div className='top-2 flex h-full w-auto flex-1 items-center justify-center bg-gray-100 p-6 md:sticky'>
+      <div className='top-10 flex h-full w-auto flex-1 items-center justify-center bg-gray-100 p-6 md:sticky'>
         <SuccessIlustration />
       </div>
     </div>

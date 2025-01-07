@@ -24,9 +24,10 @@ export default function FailedPaymentContent({
     failedPaymentData
 
   // * VARIABLES
-  const refactoredShippingAddress = newAddress
-    ? user?.shippingAddresses && user.shippingAddresses[0]
-    : user?.billingAddress
+  const refactoredShippingAddress =
+    newAddress === 'true'
+      ? user?.shippingAddresses && user.shippingAddresses[0]
+      : user?.billingAddress
   const refactoredCoupon =
     discountCoupon && !Array.isArray(discountCoupon)
       ? discountCoupon.split('-')

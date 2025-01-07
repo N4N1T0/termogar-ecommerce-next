@@ -21,9 +21,11 @@ const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
   const { user, orderId, newAddress, gateway, discountCoupon } = orderData
 
   // * VARIABLES
-  const refactoredShippingAddress = newAddress
-    ? user?.shippingAddresses && user.shippingAddresses[0]
-    : user?.billingAddress
+  const refactoredShippingAddress =
+    newAddress === 'true'
+      ? user?.shippingAddresses && user.shippingAddresses[0]
+      : user?.billingAddress
+
   const refactoredCoupon = React.useMemo(() => {
     return discountCoupon && !Array.isArray(discountCoupon)
       ? discountCoupon.split('-')
