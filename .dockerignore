@@ -8,3 +8,4 @@ README.md
 .github/
 .vscode/
 migrations/
+src/app/api/temp/

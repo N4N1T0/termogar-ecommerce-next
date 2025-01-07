@@ -2,11 +2,8 @@
 
 ## TODOS
 
-- [ ] SKU
-- [ ] Delete Globally at the end
-- [ ] Delete Dependencies from Migration (SANITY)
-- [ ] TIPSA Envió
-
-## Tell to Jorge
-
-- [ ] Brand Problem
+- [x] padding in the blog section
+- [x] Sanity Token review
+- [x] Axiom Token review
+- [ ] NextAuth Docker
+- [ ] nuqs para los filtros (Check the incoming and outgoing products after the filter)

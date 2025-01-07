@@ -1,0 +1,68 @@
+{
+  "aire-acondicionado": [
+    {
+      "id": "2500 a 3500",
+      "name": "2500 a 3500",
+      "slug": "de-2500-a-3500"
+    },
+    {
+      "id": "3500 a 5000",
+      "name": "3500 a 5000",
+      "slug": "de-3500-a-5000"
+    },
+    {
+      "id": "5000 a 6500",
+      "name": "5000 a 6500",
+      "slug": "de-5000-a-6500"
+    }
+  ],
+  "fancoil": [
+    {
+      "id": "2500 a 3500",
+      "name": "2500 a 3500",
+      "slug": "de-2500-a-3500"
+    },
+    {
+      "id": "3500 a 5000",
+      "name": "3500 a 5000",
+      "slug": "de-3500-a-5000"
+    },
+    {
+      "id": "5000 a 6500",
+      "name": "5000 a 6500",
+      "slug": "de-5000-a-6500"
+    }
+  ],
+  "calderas-termogar": [
+    {
+      "id": "20-25 Kw",
+      "name": "20-25 Kw",
+      "slug": "de-20-a-25-kw"
+    },
+    {
+      "id": "26-30 Kw",
+      "name": "26-30 Kw",
+      "slug": "de-26-a-30-kw"
+    },
+    {
+      "id": "mas de 30 Kw",
+      "name": "Mas de 30 Kw",
+      "slug": "mas-de-30-kw"
+    }
+  ],
+  "termos-electricos": [
+    { "id": "0-50-lt", "name": "0-50 lt", "slug": "de-0-a-50-litros" },
+    { "id": "51-80-lt", "name": "51-80 lt", "slug": "de-51-a-80-litros" },
+    { "id": "81-100-lt", "name": "81-100 lt", "slug": "de-81-a-100-litros" },
+    {
+      "id": "mas-de-100-lt",
+      "name": "Mas de 100 lt",
+      "slug": "mas-de-100-litros"
+    }
+  ],
+  "estufas-y-termoestufas": [
+    { "id": "6-9-kw", "name": "6-9 Kw", "slug": "6-9-kw" },
+    { "id": "10-14-kw", "name": "10-14 Kw", "slug": "10-14-kw" },
+    { "id": "15-23-kw", "name": "15-23 Kw", "slug": "15-23-kw" }
+  ]
+}
