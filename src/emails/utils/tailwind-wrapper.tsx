@@ -136,7 +136,7 @@ const TailwindWrapper = ({
                         target='_blank'
                         className='mr-2 flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
                       >
-                        <Facebook className='fill-gray-50' />
+                        <Facebook className='fill-gray-50 text-gray-50' />
                       </Link>
                     </Column>
                     <Column>
@@ -144,7 +144,7 @@ const TailwindWrapper = ({
                         href='https://www.instagram.com/termogar.es/'
                         className='mr-2 flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
                       >
-                        <Instagram className='fill-gray-50' />
+                        <Instagram className='fill-gray-50 text-gray-50' />
                       </Link>
                     </Column>
                     <Column>
@@ -152,7 +152,7 @@ const TailwindWrapper = ({
                         href='https://www.youtube.com/channel/UC2bX_gn3IX27PP2fyDpbhbg'
                         className='mr-2 flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
                       >
-                        <Youtube className='fill-gray-50' />
+                        <Youtube className='fill-gray-50 text-gray-50' />
                       </Link>
                     </Column>
                   </Row>

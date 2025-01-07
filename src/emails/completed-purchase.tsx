@@ -30,7 +30,7 @@ export const CompletedPurchase = ({
   billingAddress,
   discountCoupon
 }: CompletedPurchaseProps) => {
-  const previewText = `hola ${user?.firstName} ${user?.lastName}! su compra ha sido realizada con exito`
+  const previewText = `hola ${user?.firstName} ${user?.lastName}! su compra en Termogar.es ha sido realizada con exito`
 
   return (
     <TailwindWrapper previewText={previewText}>
