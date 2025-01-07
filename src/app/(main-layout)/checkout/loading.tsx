@@ -15,18 +15,28 @@ const CheckoutPageLoading = () => {
         <div className='flex w-full gap-10'>
           <div className='flex flex-1 flex-col gap-5'>
             <div className='h-10 w-1/4 animate-pulse bg-gray-200' />
-            {Array(10)
+            {Array(2)
               .fill('Checkout Form')
               .map((item, index) => (
-                <div
-                  key={`${item}-${index}`}
-                  className='h-8 w-full animate-pulse bg-gray-200'
-                />
+                <div key={`${item}-${index}`} className='flex w-full gap-10'>
+                  <div className='h-8 flex-1 animate-pulse bg-gray-200' />
+                  <div className='h-8 flex-1 animate-pulse bg-gray-200' />
+                </div>
               ))}
+            <div className='h-5 w-full animate-pulse bg-gray-200' />
+            {Array(4)
+              .fill('Checkout Form')
+              .map((item, index) => (
+                <div key={`${item}-${index}`} className='flex w-full gap-10'>
+                  <div className='h-8 flex-1 animate-pulse bg-gray-200' />
+                  <div className='h-8 flex-1 animate-pulse bg-gray-200' />
+                </div>
+              ))}
+            <div className='h-5 w-full animate-pulse bg-gray-200' />
           </div>
           <div className='flex flex-1 flex-col gap-5'>
             <div className='h-10 w-1/4 animate-pulse bg-gray-200' />
-            {Array(10)
+            {Array(3)
               .fill('Checkout Form')
               .map((item, index) => (
                 <div
@@ -34,6 +44,16 @@ const CheckoutPageLoading = () => {
                   className='h-8 w-full animate-pulse bg-gray-200'
                 />
               ))}
+            <div className='h-14 w-full animate-pulse bg-gray-200' />
+            {Array(3)
+              .fill('Checkout Form')
+              .map((item, index) => (
+                <div
+                  key={`${item}-${index}`}
+                  className='h-8 w-full animate-pulse bg-gray-200'
+                />
+              ))}
+            <div className='h-10 w-full animate-pulse bg-gray-200' />
           </div>
         </div>
       </div>
