@@ -2,7 +2,7 @@
 
 // * NEXT.JS IMPORTS
 import React from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
 // * ASSETS IMPORTS
@@ -19,12 +19,17 @@ import { toast } from 'sonner'
 import { checkoutUser, CheckoutUser } from '@/lib/schemas'
 import { GET_USER_INFOResult } from '@/types/sanity'
 import checkoutLogic from '@/actions/checkout-logic'
+import { cn } from '@/lib/utils'
 
 const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
   const [isShippingAddress, setIsShippingAddress] =
     React.useState<boolean>(false)
   const router = useRouter()
   const path = usePathname()
+  const searchParams = useSearchParams()
+
+  const isDisabled =
+    searchParams.get('userId') && searchParams.get('newAddress') ? true : false
 
   const form = useForm<CheckoutUser>({
     resolver: zodResolver(checkoutUser),
@@ -174,7 +179,15 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className='mt-5'>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <h2
+          className={cn(
+            'mb-5 text-xl font-medium sm:text-2xl',
+            isDisabled ? 'text-gray-900' : 'text-accent'
+          )}
+        >
+          Datos de Envío y Facturación
+        </h2>
         <fieldset className='flex space-x-8'>
           <div className='w-[570px]'>
             {/* USER INFO */}
@@ -298,7 +311,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
               {!user && (
                 <fieldset className='mt-5 space-y-4 border-t border-accent/20'>
                   <legend className='pr-4 text-sm text-tertiary'>
-                    Crea tu contraseña y date de alta en Termogar.es España.
+                    Crea tu contraseña y date de alta en Termogar.es
                   </legend>
                   <CheckoutPasswordCheck form={form} />
                 </fieldset>
@@ -346,8 +359,8 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
             {isSubmitting
               ? 'Actualizando...'
               : isDirty && user
-                ? 'Actualizar'
-                : 'Aceptar'}
+                ? 'Actualizar Datos'
+                : 'Aceptar Datos'}
           </button>
           {!user && (
             <Link

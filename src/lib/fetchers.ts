@@ -1,13 +1,15 @@
 import { CartItemType, YoptopReviews } from '@/types'
 
-const appKey = process.env.NEXT_PUBLIC_YOTPO_APP_KEY
+const yoptopAppKey = process.env.NEXT_PUBLIC_YOTPO_APP_KEY
+const paypalClientId = process.env.PAYPAL_CLIENT_ID
+const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET
 
 const yoptop = {
   fetchReviews: async (
     id: string
   ): Promise<{ status: number; reviews: YoptopReviews }> => {
     const reviews = await fetch(
-      `https://api-cdn.yotpo.com/v1/widget/${appKey}/products/${id}/reviews.json`
+      `https://api-cdn.yotpo.com/v1/widget/${yoptopAppKey}/products/${id}/reviews.json`
     )
     if (!reviews.ok) {
       throw new Error(`HTTP error! status: ${reviews.status}`)
@@ -57,16 +59,14 @@ const yoptop = {
 const paypal = {
   generateAccessToken: async (): Promise<string> => {
     const response = await fetch(
-      `${process.env.PAYPAL_BASE_URL}/v1/oauth2/token`,
+      'https://api-m.sandbox.paypal.com/v1/oauth2/token',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Basic ${btoa(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`)}`
+          'Authorization': `Basic ${btoa(`${paypalClientId}:${paypalClientSecret}`)}`
         },
-        body: new URLSearchParams({
-          grant_type: 'client_credentials'
-        }).toString()
+        body: 'grant_type=client_credentials'
       }
     )
     const data = await response.json()
@@ -74,12 +74,12 @@ const paypal = {
   },
   createOrder: async function (
     products: CartItemType[],
-    redirectUrl: (page: string) => string,
+    redirectUrl: (page: string, gateway?: string) => string,
     totalAmount: number
   ): Promise<string> {
     const accessToken = await this.generateAccessToken()
     const response = await fetch(
-      `${process.env.PAYPAL_BASE_URL}/v2/checkout/orders`,
+      `${process.env.NEXT_PUBLIC_PAYPAL_URL}/v2/checkout/orders`,
       {
         method: 'POST',
         headers: {
@@ -91,16 +91,18 @@ const paypal = {
           purchase_units: [
             {
               items: [
-                {
-                  name: 'Node.js Complete Course',
-                  description:
-                    'Node.js Complete Course with Express and MongoDB',
-                  quantity: 1,
+                ...products.map((product) => ({
+                  name: product.title,
+                  description: product.excerpt
+                    ?.split(' ')
+                    .slice(0, 20)
+                    .join(' '),
+                  quantity: product.quantity,
                   unit_amount: {
                     currency_code: 'EUR',
-                    value: '100.00'
+                    value: product.sale ? product.sale.price : product.price
                   }
-                }
+                }))
               ],
 
               amount: {
@@ -117,8 +119,8 @@ const paypal = {
           ],
 
           application_context: {
-            return_url: redirectUrl('exito'),
-            cancel_url: redirectUrl('fallo'),
+            return_url: redirectUrl('exito', 'PayPal'),
+            cancel_url: redirectUrl('fallo', 'PayPal'),
             shipping_preference: 'NO_SHIPPING',
             user_action: 'PAY_NOW',
             brand_name: 'Termogar'
@@ -127,9 +129,25 @@ const paypal = {
       }
     )
     const data = await response.json()
+    console.log('🚀 ~ data:', data)
     return data.links.find(
       (link: Record<string, string>) => link.rel === 'approve'
     ).href
+  },
+  captureOrder: async function (orderId: string): Promise<string> {
+    const accessToken = await this.generateAccessToken()
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_PAYPAL_URL}/v2/checkout/orders/${orderId}/capture`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        }
+      }
+    )
+    const data = await response.json()
+    return data.status
   }
 }
 

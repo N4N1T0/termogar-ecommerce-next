@@ -12,7 +12,7 @@ import LoaderStyleOne from '@/components/Helpers/Loaders/LoaderStyleOne'
 import CouponValidation from '@/components/CartPage/coupon-validation'
 
 // * UTILS IMPORTS
-import { calculateTotal, eurilize } from '@/lib/utils'
+import { calculateTotal, cn, eurilize } from '@/lib/utils'
 import { Coupon } from '@/types/sanity'
 import paymentLogic from '@/actions/payment-logic'
 import { RedirectForm } from 'redsys-easy'
@@ -88,7 +88,12 @@ const OrderSummary = ({
 
   return (
     <section id='order-summary' className='top-2 h-fit flex-1 md:sticky'>
-      <h2 className='mb-5 text-xl font-medium text-gray-900 sm:text-2xl'>
+      <h2
+        className={cn(
+          'mb-5 text-xl font-medium sm:text-2xl',
+          isDisabled ? 'text-gray-900' : 'text-accent'
+        )}
+      >
         Resumen de Orden
       </h2>
 
@@ -202,7 +207,7 @@ const OrderSummary = ({
             {eurilize(total + iva)}
           </p>
         </div>
-        <Form onSubmit={handleSubmit} action=''>
+        <Form onSubmit={handleSubmit} action='' disabled={isDisabled}>
           <ul className='mt-4'>
             {['Transferencia bancaria directa', 'PayPal', 'Tarjeta'].map(
               (paymentType) => (
@@ -214,10 +219,12 @@ const OrderSummary = ({
                     value={paymentType.replace(/ /g, '-').toLowerCase()}
                     className='mr-2 cursor-pointer accent-accent'
                     id={paymentType.replace(/ /g, '-').toLowerCase()}
+                    disabled={isDisabled}
                   />
                   <label
                     htmlFor={paymentType.replace(/ /g, '-').toLowerCase()}
-                    className='text-normal cursor-pointer text-[18px] text-gray-900'
+                    className='text-normal cursor-pointer text-[18px] text-gray-900 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
+                    aria-disabled={isDisabled}
                   >
                     {paymentType}
                   </label>

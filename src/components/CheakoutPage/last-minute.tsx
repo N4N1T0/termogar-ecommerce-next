@@ -25,7 +25,9 @@ const LastMinute = () => {
     if (rehydrated && products.length > 0) {
       const id = products.find((product) => product.hasLastMinute)?.id
 
-      ;(async () => {
+      if (!id) return
+
+      const findLastMinuteProduct = async () => {
         const searchedLastMinuteProduct = await sanityClientRead.fetch(
           GET_LAST_MINUTE_PRODUCTS_FROM_ID,
           {
@@ -59,7 +61,9 @@ const LastMinute = () => {
             return () => clearInterval(interval)
           }
         }
-      })()
+      }
+
+      findLastMinuteProduct()
     }
   }, [products, rehydrated])
 
