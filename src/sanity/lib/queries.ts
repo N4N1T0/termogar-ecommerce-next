@@ -475,7 +475,12 @@ export const GET_PRODUCTS_AND_BRAND_FOR_FILTERING =
 
 export const GET_CATEGORY_AND_PRODUCTS =
   defineQuery(`*[_type=='productCategory' && slug.current == $slug][0]{
-  name, 
+  name,
+  main,
+  "parent": {
+    "slug": parent->slug.current,
+    "name": parent->name
+  },
   description,
   "banner": *[_type =='homePage'][0]{
       "url": productListBanner.banner.asset->url,
@@ -598,6 +603,7 @@ export const GET_PRODUCTS_WITH_OFFER_FOR_FILTERING = defineQuery(`{
 
 export const GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING =
   defineQuery(`*[_type=='productCategory' && slug.current == $slug][0] {
+  main,
   "children": *[_type=='productCategory' && references(^._id)]
    {
       "id": _id,

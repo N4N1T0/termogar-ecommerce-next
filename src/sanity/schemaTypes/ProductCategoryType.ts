@@ -26,7 +26,7 @@ export const productCategoryType = defineType({
       title: 'Slug',
       description: 'El slug de la categoría de producto.',
       options: {
-        source: 'title'
+        source: 'name'
       }
     }),
     defineField({
@@ -39,7 +39,8 @@ export const productCategoryType = defineType({
       name: 'taxonomy',
       type: 'string',
       title: 'Taxonomía',
-      description: 'La taxonomía de la categoría de producto.'
+      description: 'La taxonomía de la categoría de producto.',
+      initialValue: 'product_cat'
     }),
     defineField({
       name: 'main',

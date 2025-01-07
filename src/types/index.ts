@@ -77,6 +77,7 @@ export interface RadiogroupFilterProps {
     slug: string | null
   }[]
   label: string
+  links?: boolean | null
 }
 
 export interface BrandFilterProps {

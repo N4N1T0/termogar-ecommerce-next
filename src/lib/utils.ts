@@ -347,43 +347,6 @@ export const getPriceRange = (data: Product[] | undefined) => {
   return { minPrice: minPrice - 10, maxPrice: maxPrice + 10 }
 }
 
-/**
- * Filters the children categories from the given data based on which categories
- * the products from the given data belong to.
- *
- * @param data - An array of product and category data conforming to the
- *               GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult interface.
- *               Each entry contains a list of products with their respective categories.
- *
- * @returns An array of category objects that match the categories the products
- *          belong to. Returns an empty array if the input data is empty or undefined.
- */
-export const matchCategories = (
-  data: GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
-) => {
-  if (!data) return []
-
-  const matchedCategories: {
-    id: string
-    name: string | null
-    slug: string | null
-  }[] = []
-
-  const productCategoryIds = new Set(
-    data.products.flatMap((product) =>
-      product?.categories?.map((cat) => cat.id)
-    )
-  )
-
-  const filteredChildren = data.children.filter((child) =>
-    productCategoryIds.has(child.id)
-  )
-
-  matchedCategories.push(...filteredChildren)
-
-  return matchedCategories
-}
-
 export const matchBrands = (
   data:
     | GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
@@ -436,7 +399,8 @@ export const filterProductsByFilter = (
   max?: string | string[],
   subcat?: string | string[],
   brand?: string | string[],
-  search?: string | string[]
+  search?: string | string[],
+  main?: boolean | null
 ): any[] => {
   // Convert min and max to numbers (if possible)
   const minValue = Array.isArray(min) ? Number(min[0]) : Number(min)
@@ -456,13 +420,23 @@ export const filterProductsByFilter = (
         (productPrice !== null && productPrice >= minValue)) &&
       (isNaN(maxValue) || (productPrice !== null && productPrice <= maxValue))
 
+    let isInSubcategory = false
+
+    if (main) {
+      isInSubcategory =
+        !subcatSlug ||
+        product.categories?.some((category: { slug: string }) =>
+          category.slug.includes(subcatSlug)
+        )
+    } else {
+      isInSubcategory =
+        !subcatSlug ||
+        (product.categories?.some(
+          (category: { slug: string }) => category.slug === subcatSlug
+        ) ??
+          false)
+    }
     // Filter by subcategory
-    const isInSubcategory =
-      !subcatSlug ||
-      (product.categories?.some(
-        (category: { slug: string }) => category.slug === subcatSlug
-      ) ??
-        false)
 
     // Filter by brand
     const matchesBrand = !brandSlug || product.brand?.link === brandSlug
