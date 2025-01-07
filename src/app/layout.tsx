@@ -5,6 +5,8 @@ import { seoMetatags } from '@/components/seo'
 import { Toaster } from 'sonner'
 import { AxiomWebVitals } from 'next-axiom'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import GoogleOneTap from '@/components/Auth/google-one-tap'
+import { SessionProvider } from 'next-auth/react'
 
 export const metadata: Metadata = seoMetatags()
 
@@ -62,6 +64,9 @@ export default function RootLayout({
           }}
         />
         <AxiomWebVitals />
+        <SessionProvider>
+          <GoogleOneTap />
+        </SessionProvider>
       </body>
     </html>
   )
