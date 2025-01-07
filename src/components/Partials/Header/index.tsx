@@ -59,7 +59,6 @@ const HeaderOne = async ({ className }: { className?: string }) => {
                 src={smallLogo}
                 alt='Termogar Logo'
                 title='Termogar Logo'
-                priority
                 className='h-auto w-auto'
               />
             </Link>

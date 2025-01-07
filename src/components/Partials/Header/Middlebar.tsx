@@ -37,6 +37,7 @@ const Middlebar = async ({
                   src={bigLogo}
                   alt='Termogar logo'
                   className='h-auto w-auto'
+                  priority
                 />
               </Link>
               <Link href='/' className='block sm:hidden'>
