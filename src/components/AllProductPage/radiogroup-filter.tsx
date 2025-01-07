@@ -3,6 +3,7 @@
 // * NEXT.JS IMPORTS
 import React from 'react'
 import { useQueryState, parseAsString } from 'nuqs'
+import { useRouter } from 'next/navigation'
 
 // * ASSETS IMPORTS
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -11,7 +12,12 @@ import { Label } from '@/components/ui/label'
 // * UTILS IMPORTS
 import { RadiogroupFilterProps } from '@/types'
 
-export function RadiogroupFilter({ categories, label }: RadiogroupFilterProps) {
+export function RadiogroupFilter({
+  categories,
+  label,
+  links = false
+}: RadiogroupFilterProps) {
+  const router = useRouter()
   const [subCat, setSubCat] = useQueryState('subcat', parseAsString)
 
   const handleCategoryChange = React.useCallback(
@@ -21,12 +27,21 @@ export function RadiogroupFilter({ categories, label }: RadiogroupFilterProps) {
     [setSubCat]
   )
 
+  const handleLinksChange = React.useCallback(
+    (value: string) => {
+      router.push(`/categorias/${value}`)
+    },
+    [router]
+  )
+
+  if (!categories) return null
+
   return (
     <div className='space-y-4 py-4'>
       <h3 className='text-lg font-medium'>{label}</h3>
       <RadioGroup
         defaultValue={subCat || ''}
-        onValueChange={handleCategoryChange}
+        onValueChange={links ? handleLinksChange : handleCategoryChange}
         className='space-y-2'
       >
         {categories.map(({ id, slug, name }) => (

@@ -6,11 +6,11 @@ import ResetFilters from '@/components/AllProductPage/reset-filters'
 import SearchFilter from '@/components/AllProductPage/search-filter'
 
 // * UTILS IMPORTS
-import { getPriceRange, matchCategories, matchBrands } from '@/lib/utils'
+import { getPriceRange, matchBrands } from '@/lib/utils'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING } from '@/sanity/lib/queries'
 import { Logger } from 'next-axiom'
-
+import data from '@/data/filters.json'
 
 export const dynamic = 'force-dynamic'
 const log = new Logger()
@@ -29,8 +29,9 @@ const ProductSidebar = async ({
 
   if (!searchedData) return log.error('No se encontraron categorias')
 
+  const filterData = data[category as keyof typeof data]
+
   const { maxPrice, minPrice } = getPriceRange(searchedData?.products)
-  const categoriesFilter = matchCategories(searchedData)
   const brandsFilter = matchBrands(searchedData)
 
   return (
@@ -40,12 +41,16 @@ const ProductSidebar = async ({
       </h2>
       <nav aria-label='Categories filters' className='divide-y-[1px]'>
         <SearchFilter />
-        <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
-        <RadiogroupFilter
-          categories={categoriesFilter}
-          label='Sub Categorias'
-        />
         <BrandFilter brands={brandsFilter} />
+        <RadiogroupFilter
+          categories={searchedData.children}
+          label={searchedData.main ? 'Categorias' : 'Sub Categorias'}
+          links={searchedData.main}
+        />
+        {searchedData.main && (
+          <RadiogroupFilter categories={filterData} label='Sub Categorias' />
+        )}
+        <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
         <ResetFilters url={`/categorias/${category}`} />
       </nav>
     </aside>

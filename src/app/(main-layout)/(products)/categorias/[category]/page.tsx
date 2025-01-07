@@ -81,23 +81,37 @@ const CategoriesPage = async ({
     max,
     subcat,
     brand,
-    search
+    search,
+    searchedCategory.main
   )
 
   const middlePart =
     products.length > 8 ? Math.floor(products.length / 2) : null
 
+  const breadcrumb = [
+    { name: 'P. Principal', path: '/' },
+    { name: 'Categorias', path: '/categorias' },
+    {
+      name: searchedCategory.name || 'Sin Categoría',
+      path: `/categorias/${category}`
+    }
+  ]
+
   return (
     <main className='container-x mx-auto w-full'>
       <BreadcrumbCom
-        paths={[
-          { name: 'P. Principal', path: '/' },
-          { name: 'Categorias', path: '/categorias' },
-          {
-            name: searchedCategory.name || 'Sin Categoría',
-            path: `/categorias/${category}`
-          }
-        ]}
+        paths={
+          searchedCategory.main
+            ? breadcrumb
+            : [
+                ...breadcrumb.slice(0, -1),
+                {
+                  name: searchedCategory.parent.name,
+                  path: `/categorias/${searchedCategory.parent.slug}`
+                },
+                breadcrumb[breadcrumb.length - 1]
+              ]
+        }
         className='mt-10'
       />
       <div className='w-full'>
