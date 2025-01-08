@@ -5,6 +5,12 @@ import Image from 'next/image'
 // * ASSETS IMPORTS
 import { bigLogo } from '@/assets'
 import Gateways from '@/assets/images/payment-getways.png'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion'
 
 // * UTILS IMPORTS
 import siteData from '@/data/site-data.json'
@@ -44,8 +50,8 @@ const Footer = async () => {
             />
           </Link>
         </div>
-        <div className='mb-11 justify-between lg:flex'>
-          <ul className='mb-8 ml-0 flex w-full flex-col space-y-2 lg:mb-0 lg:w-[424px]'>
+        <div className='mb-5 justify-between md:mb-11 lg:flex'>
+          <ul className='mb-4 ml-0 flex w-full flex-col space-y-2 md:mb-8 lg:mb-0 lg:w-[424px]'>
             {footerLinks.info.map((item) => (
               <li key={item}>
                 <span className='text-[15px] text-gray-500'>{item}</span>
@@ -75,14 +81,16 @@ const Footer = async () => {
               </Link>
             </li>
           </ul>
-          <div className='flex-1 lg:flex'>
+
+          {/* FOOTER LINKS DESKTOP */}
+          <div className='hidden flex-1 md:block xl:flex'>
             <div className='mb-14 w-full lg:mb-0 lg:w-1/3'>
               <h6 className='font-500 mb-5 text-[18] text-gray-900'>
                 Categorias
               </h6>
               <ul className='flex flex-col space-y-1'>
                 {searchedCategories.map(({ id, slug, name }) => (
-                  <li key={id}>
+                  <li key={`desktop-category-${id}`}>
                     <Link href={`/categorias/${slug}`}>
                       <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                         {name}
@@ -97,15 +105,17 @@ const Footer = async () => {
                 Atencion al Cliente
               </h6>
               <ul className='flex flex-col space-y-1'>
-                {footerLinks['Atención al Cliente'].map(({ name, slug }) => (
-                  <li key={name}>
-                    <Link href={`/${slug}`}>
-                      <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
-                        {name}
-                      </span>
-                    </Link>
-                  </li>
-                ))}
+                {footerLinks['Atención al Cliente'].map(
+                  ({ id, name, slug }) => (
+                    <li key={id}>
+                      <Link href={`/servicio-al-cliente/${slug}`}>
+                        <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
+                          {name}
+                        </span>
+                      </Link>
+                    </li>
+                  )
+                )}
               </ul>
             </div>
             <div className='mb-14 w-full lg:mb-0 lg:flex lg:w-1/3 lg:flex-col'>
@@ -113,8 +123,8 @@ const Footer = async () => {
                 Paginas Legales
               </h6>
               <ul className='flex flex-col space-y-1'>
-                {footerLinks['Paginas Legales'].map(({ name, slug }) => (
-                  <li key={name}>
+                {footerLinks['Paginas Legales'].map(({ id, name, slug }) => (
+                  <li key={id}>
                     <Link href={`/paginas-legales/${slug}`}>
                       <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                         {name}
@@ -125,8 +135,71 @@ const Footer = async () => {
               </ul>
             </div>
           </div>
+
+          {/* FOOTER LINKS MOBILE */}
+          <Accordion type='single' collapsible className='md:hidden'>
+            <AccordionItem value='categories'>
+              <AccordionTrigger className='text-lg'>
+                Categorias
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className='flex flex-col space-y-1' role='categories'>
+                  {searchedCategories.map(({ id, slug, name }) => (
+                    <li key={`mobile-category-${id}`}>
+                      <Link
+                        href={`/categorias/${slug}`}
+                        className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'
+                      >
+                        {name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value='client'>
+              <AccordionTrigger className='text-lg'>
+                Atencion al Cliente
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className='flex flex-col space-y-1' role='categories'>
+                  {footerLinks['Atención al Cliente'].map(
+                    ({ id, slug, name }) => (
+                      <li key={id}>
+                        <Link
+                          href={`/servicio-al-cliente/${slug}`}
+                          className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'
+                        >
+                          {name}
+                        </Link>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value='legal'>
+              <AccordionTrigger className='text-lg'>
+                Paginas Legales
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className='flex flex-col space-y-1' role='categories'>
+                  {footerLinks['Paginas Legales'].map(({ id, slug, name }) => (
+                    <li key={id}>
+                      <Link
+                        href={`/paginas-legales/${slug}`}
+                        className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'
+                      >
+                        {name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
-        <div className='bottom-bar border-gray-500-border items-center justify-between border-t text-gray-500 lg:flex lg:h-[82px]'>
+        <div className='items-center justify-between border-gray-500 py-3 text-gray-500 md:border-t lg:flex lg:h-[82px]'>
           <div className='mb-3 flex items-center justify-between lg:space-x-5'>
             <small>termogar.es - PEREZEMMALVA SLU - CIF: B-72301666.</small>
             <small>
@@ -136,7 +209,28 @@ const Footer = async () => {
           </div>
           <Image width='318' height='28' src={Gateways} alt='payment-getways' />
         </div>
-        {/* // TODO: Make my statement */}
+
+        {/* Designer and developer */}
+        <div className='border-t border-gray-300 py-2 text-center text-gray-500'>
+          <small className='text-xs'>
+            Created with <span className='text-red-500'>❤️</span>, powered by{' '}
+            <Link
+              href='https://nextjs.org/'
+              className='underline'
+              target='_blank'
+            >
+              Next.js
+            </Link>{' '}
+            and made by{' '}
+            <Link
+              href='https://www.adrian-alvarez.dev/es/'
+              className='underline'
+              target='_blank'
+            >
+              Adrian
+            </Link>
+          </small>
+        </div>
       </div>
     </footer>
   )

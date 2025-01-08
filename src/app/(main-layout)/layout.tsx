@@ -1,7 +1,6 @@
 // * ASSETS IMPORTS
 import Footer from '@/components/Partials/Footer'
 import Header from '@/components/Partials/Header'
-// import Drawer from '@/components/Mobile/Drawer'
 
 export default function MainLayout({
   children
@@ -10,7 +9,6 @@ export default function MainLayout({
 }>) {
   return (
     <>
-      {/* <Drawer /> */}
       <Header />
       {children}
       <Footer />

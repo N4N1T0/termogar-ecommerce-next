@@ -6,13 +6,13 @@ import Image from 'next/image'
 import CartPopup from '@/components/Cart/cart-popup'
 import SearchBox from '@/components/Helpers/search-box'
 import { WishlistLink } from '@/components/Wishlist/wishlist-helpers'
+import { CompaireLink } from '@/components/Compaire/compaire-helpers'
+import { CartLink } from '@/components/Cart/cart-helpers'
 import { bigLogo, smallLogo } from '@/assets'
 import UserPopup from '@/components/Partials/Header/user-popup'
 
 // * UTILS IMPORTS
 import { GET_MENU_CATEGORIESResult } from '@/types/sanity'
-import { CartLink } from '@/components/Cart/cart-helpers'
-import { CompaireLink } from '@/components/Compaire/compaire-helpers'
 import { auth } from '@/lib/auth'
 
 const Middlebar = async ({
