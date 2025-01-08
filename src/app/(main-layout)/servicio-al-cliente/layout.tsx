@@ -6,7 +6,7 @@ const ServiceClientLayout = async ({
   sidebar: React.ReactNode
 }) => {
   return (
-    <main className='container-x relative mx-auto flex w-full'>
+    <main className='relative mx-auto w-full max-w-screen-2xl md:flex'>
       {sidebar}
       {children}
     </main>

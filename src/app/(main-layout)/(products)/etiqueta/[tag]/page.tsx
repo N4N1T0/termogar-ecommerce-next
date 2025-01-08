@@ -85,10 +85,10 @@ const CategoriesPage = async ({
             path: `/etiqueta/${tag}`
           }
         ]}
-        className='mt-10'
+        className='mt-5 md:mt-10'
       />
       <div className='w-full'>
-        <div className='mb-10 flex w-full flex-col space-y-5 bg-white px-7 md:h-16 md:flex-row md:items-center md:justify-between md:space-y-0'>
+        <div className='mb-5 flex w-full items-center justify-between bg-white px-1 md:mb-10 md:h-16 md:px-5'>
           <p className='font-400 text-base'>
             <span className='text-lg text-accent'> {products.length}</span>{' '}
             Productos Encontrados
@@ -97,7 +97,7 @@ const CategoriesPage = async ({
         </div>
         {searchedTag.products.length > 0 && middlePart ? (
           <>
-            <div className='mb-10 grid grid-cols-1 gap-5 p-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+            <div className='mb-10 grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
               {products
                 .slice(0, middlePart)
                 .map(
@@ -112,7 +112,7 @@ const CategoriesPage = async ({
             </div>
             s
             <LinkOrDiv banner={searchedTag.banner} />
-            <div className='mb-10 grid grid-cols-1 gap-5 p-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+            <div className='mb-10 grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
               {products
                 .slice(middlePart, products.length)
                 .map(
@@ -127,7 +127,7 @@ const CategoriesPage = async ({
             </div>
           </>
         ) : (
-          <div className='mb-10 grid grid-cols-1 gap-5 p-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+          <div className='mb-10 grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
             {products.map(
               (
                 product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]
