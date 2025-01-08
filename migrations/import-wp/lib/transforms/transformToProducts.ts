@@ -132,8 +132,8 @@ export async function transformToProduct(
     )
   }
 
-  if (wpDoc.stockQuantity) {
-    doc.stockQuantity = wpDoc.stockQuantity
+  if (wpDoc.stock_quantity) {
+    doc.stockQuantity = wpDoc.stock_quantity
   }
 
   if (wpDoc.meta_data && wpDoc.meta_data.length) {

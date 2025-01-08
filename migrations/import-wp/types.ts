@@ -59,7 +59,7 @@ export type WP_REST_API_Product = {
   type: string
   link: string
   name: string
-  stockQuantity: number
+  stock_quantity: number
   sale_price: string
   date_on_sale_from: string
   date_on_sale_to: string
