@@ -19,7 +19,7 @@ import AddToCart from '@/components/Helpers/quantity'
 import ImagesState from '@/components/Helpers/images-state'
 
 // * UTILS IMPORTS
-import { ProductQuickViewProps, YoptopReviews } from '@/types'
+import { CartItemType, ProductQuickViewProps, YoptopReviews } from '@/types'
 import { calculateAverageRating, eurilize } from '@/lib/utils'
 import { PortableText } from 'next-sanity'
 import { yoptop } from '@/lib/fetchers'
@@ -44,6 +44,13 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
 
     fetchReviews()
   }, [data?.id])
+
+  const refactoredDatas: CartItemType = {
+    ...data,
+    quantity: 1,
+    selectedOption: (data.options?.values && data.options.values[0]) || ''
+  }
+
   return (
     <Dialog modal>
       <DialogTrigger className='flex h-10 w-10 cursor-pointer items-center justify-center bg-accent p-1 text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900'>
@@ -145,7 +152,7 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
               {/* TODO: ADD OPTIONS */}
             </div>
             <div className='bg-background sticky bottom-0 flex gap-3 border-t p-3 md:p-5'>
-              <AddToCart product={data} showQuantity />
+              <AddToCart product={refactoredDatas} showQuantity />
             </div>
           </div>
         </div>

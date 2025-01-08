@@ -10,7 +10,11 @@ import { CompaireBtn } from '@/components/Compaire/compaire-helpers'
 import { PlaceholderSquare } from '@/assets'
 
 // * UTILS IMPORTS
-import { ProductCardRowStyleTwoProps, ProductCardType } from '@/types'
+import {
+  CartItemType,
+  ProductCardRowStyleTwoProps,
+  ProductCardType
+} from '@/types'
 import { cn, eurilize, isWithinSalePeriod } from '@/lib/utils'
 
 const ProductCardRowStyleOne = ({
@@ -20,6 +24,12 @@ const ProductCardRowStyleOne = ({
   const { featuredMedia, title, slug, sale, price } = datas
 
   const isOnSale = isWithinSalePeriod(sale)
+
+  const refactoredDatas: CartItemType = {
+    ...datas,
+    quantity: 1,
+    selectedOption: (datas.options?.values && datas.options.values[0]) || ''
+  }
 
   return (
     <div
@@ -82,10 +92,7 @@ const ProductCardRowStyleOne = ({
                 <small className='ml-1 font-normal underline'>IVA incl.</small>
               </span>
             </div>
-            <AddToCart
-              className='mt-2 w-fit'
-              product={datas as ProductCardType}
-            />
+            <AddToCart className='mt-2 w-fit' product={refactoredDatas} />
           </div>
         </div>
       </div>

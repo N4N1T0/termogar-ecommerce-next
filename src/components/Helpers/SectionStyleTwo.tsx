@@ -34,7 +34,6 @@ const SectionStyleTwo = async ({
         <div className='products-section w-full'>
           <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-[30px]'>
             {searchedProducts
-              .slice(0, 12)
               .map(
                 (
                   product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]

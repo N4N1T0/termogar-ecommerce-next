@@ -1,15 +1,11 @@
-import { cn } from '@/lib/utils'
-
-// Next.js Imports
+// * NEXT.JS IMPORTS
 import Link from 'next/link'
 import Image from 'next/image'
 
-// Assets Imports
+// * ASSETS IMPORTS
+import { cn } from '@/lib/utils'
 import { Banner3 } from '@/assets'
 import InfoRow from '@/components/Shared/info-row'
-
-// TODO: Refactor to have less DOM Elements
-// TODO: Prepare for Sanity and Array
 
 const tempBanners = [
   {
@@ -55,7 +51,7 @@ export default function Banner({
           </div>
           <div
             data-aos='fade-left'
-            className='flex h-full flex-1 flex-row xl:flex-col xl:space-y-[30px]'
+            className='mt-2 flex h-full flex-1 flex-row gap-[10px] md:mt-0 xl:flex-col xl:gap-0 xl:space-y-[30px]'
           >
             <div className='w-full xl:h-1/2'>
               <LinkOrDiv banner={banners[1]} />
@@ -93,7 +89,7 @@ const LinkOrDiv = ({
           height={isBig ? 600 : 285}
           blurDataURL={banner?.blur || tempBanners[0].blur}
           placeholder='blur'
-          className='h-auto w-auto object-cover'
+          className='h-auto w-full object-cover'
           priority
           quality={isBig ? 100 : 70}
         />
@@ -108,7 +104,7 @@ const LinkOrDiv = ({
         height={isBig ? 600 : 285}
         blurDataURL={banner?.blur || tempBanners[0].blur}
         placeholder='blur'
-        className='h-auto w-auto object-cover'
+        className='h-auto w-full object-cover'
         priority
         quality={isBig ? 100 : 70}
       />

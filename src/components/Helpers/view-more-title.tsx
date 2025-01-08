@@ -17,7 +17,7 @@ export default function ViewMoreTitle({
   return (
     <div className={cn('section-wrapper w-full', className)}>
       <div className='container-x mx-auto'>
-        <div className='section-title mb-5 flex items-center justify-between'>
+        <div className='section-title mb-5 flex items-center justify-between px-5'>
           <div>
             <h1 className='font-600 text-xl leading-none text-gray-900 sm:text-3xl'>
               Nuestros {categoryTitle}

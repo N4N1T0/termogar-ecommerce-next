@@ -18,7 +18,7 @@ const OffersBanners = ({ className, data }: CampaignCountDownProps) => {
   return (
     <div
       className={cn(
-        'flash-ad mb-10 flex h-[400px] w-full items-center justify-center bg-white sm:justify-end',
+        'mb-10 flex h-fit w-full flex-col items-center justify-center bg-white sm:justify-end md:h-[400px] md:flex-row',
         className
       )}
     >
