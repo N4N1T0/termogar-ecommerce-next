@@ -29,7 +29,7 @@ const WishlistBtn = ({ product }: { product: ProductCardType }) => {
       })
     } else {
       addProduct(product)
-      toast.success('Se agregó correctamente a la lista de deseos', {
+      toast.info('Se agregó correctamente a la lista de deseos', {
         duration: 2000,
         classNames: {
           toast: 'text-green-500 border-green-500'

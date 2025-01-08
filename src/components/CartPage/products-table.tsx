@@ -1,24 +1,50 @@
+'use client'
+
 // * NEXT.JS IMPORTS
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 // * ASSETS IMPORTS
 import { PlaceholderSquare } from '@/assets'
-import { CartItemType } from '@/types'
+import OptionSelect from '@/components/SingleProductPage/option-select'
 
 // * UTILS IMPORTS
+import { CartItemType } from '@/types'
 import { cn, eurilize } from '@/lib/utils'
 import {
   CartProductTableQuantity,
   CartProductTableRemover
 } from '@/components/Cart/cart-helpers'
+import { useCart } from '@/stores'
 
 // Product Row Component for cleaner and reusable rows
 const ProductRow = ({ product }: { product: CartItemType }) => {
-  const { featuredMedia, title, price, sale, id, quantity, slug } = product
+  const [type, setType] = React.useState<string | null>(null)
+  const { updateProductOption } = useCart()
+  const {
+    featuredMedia,
+    title,
+    price,
+    sale,
+    id,
+    quantity,
+    slug,
+    options,
+    selectedOption
+  } = product
+
+  React.useEffect(() => {
+    if (type) {
+      updateProductOption(id, type || '')
+    }
+  }, [id, type, updateProductOption])
+
+  const totalPrice = eurilize((sale?.price || price || 1) * quantity)
+
   return (
     <tr className='border-b bg-white hover:bg-gray-50'>
-      <td className='w-[380px] py-4 pl-10'>
+      <td className='w-[380px] p-4 pl-10'>
         <div className='flex items-center space-x-6'>
           <div className='flex h-[80px] w-[80px] items-center justify-center overflow-hidden border border-[#EDEDED]'>
             <Image
@@ -40,27 +66,31 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
           </div>
         </div>
       </td>
-      <td className='px-2 py-4 text-center'>
+      <td className='p-4 text-center'>
         <div className='flex items-center justify-center'>
-          {eurilize(price || 0)}
+          {sale ? eurilize(sale.price || 0) : eurilize(price || 0)}
         </div>
       </td>
-      <td className='px-2 py-4 text-center'>
-        <span className='text-[15px] font-normal'>
-          {sale ? eurilize(sale.price || 0) : 'Sin Ofertas'}
-        </span>
+      <td className='p-4 text-center'>
+        {options ? (
+          <OptionSelect
+            options={options}
+            setType={setType}
+            defaultValue={selectedOption}
+          />
+        ) : (
+          'N/A'
+        )}
       </td>
-      <td className='py-4 text-center'>
+      <td className='p-4 text-center md:px-0'>
         <div className='grid h-full place-content-center'>
           <CartProductTableQuantity id={id} />
         </div>
       </td>
-      <td className='py-4 text-center'>
-        <span className='text-[15px] font-normal'>
-          {eurilize((sale?.price || price || 1) * quantity)}
-        </span>
+      <td className='p-4 text-center'>
+        <span className='text-[15px] font-normal'>{totalPrice}</span>
       </td>
-      <td className='py-4'>
+      <td className='p-4'>
         <CartProductTableRemover id={id} />
       </td>
     </tr>
@@ -83,15 +113,15 @@ export default function ProductsTable({
             <tr className='default-border-bottom whitespace-nowrap border-b bg-[#F6F6F6] px-2 text-[13px] font-medium uppercase text-black'>
               <th className='block min-w-[300px] py-4 pl-10'>Producto</th>
               <th className='py-4 text-center'>Precio</th>
-              <th className='py-4 text-center'>Oferta</th>
+              <th className='py-4 text-center'>Opción</th>
               <th className='py-4 text-center'>Cantidad</th>
               <th className='py-4 text-center'>Total</th>
               <th className='w-[114px] py-4 text-right'></th>
             </tr>
           </thead>
           <tbody>
-            {products.map((product, index) => (
-              <ProductRow key={index} product={product} />
+            {products.map((product) => (
+              <ProductRow key={product.id} product={product} />
             ))}
           </tbody>
         </table>

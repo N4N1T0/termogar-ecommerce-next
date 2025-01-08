@@ -13,7 +13,7 @@ const WishlistProductRow = ({ product }: { product: ProductCardType }) => {
     product
   return (
     <tr className='border-b bg-white hover:bg-gray-50'>
-      <td className='w-[380px] py-4 pl-10'>
+      <td className='w-[380px] p-4 pl-10'>
         <div className='flex items-center space-x-6'>
           <div className='flex h-[80px] w-[80px] items-center justify-center overflow-hidden border border-[#EDEDED]'>
             <Image
@@ -35,22 +35,22 @@ const WishlistProductRow = ({ product }: { product: ProductCardType }) => {
           </div>
         </div>
       </td>
-      <td className='px-2 py-4 text-center'>
+      <td className='p-4 px-2 text-center'>
         <div className='flex items-center justify-center'>
           {eurilize(price || 0)}
         </div>
       </td>
-      <td className='px-2 py-4 text-center'>
+      <td className='p-4 px-2 text-center'>
         <span className='text-[15px] font-normal'>
           {sale ? eurilize(sale.price || 0) : 'Sin Ofertas'}
         </span>
       </td>
-      <td className='py-4 text-center'>
+      <td className='p-4 text-center'>
         <div className='grid h-full place-content-center'>
           {categories ? categories[0]?.name : 'Sin Categoría'}
         </div>
       </td>
-      <td className='py-4 text-center'>
+      <td className='p-4 text-center'>
         <span className='text-[15px] font-normal'>
           {options ? (
             <ul>

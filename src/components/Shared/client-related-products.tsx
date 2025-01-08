@@ -46,7 +46,7 @@ const RelatedProducts = ({
     return (
       <div className='mt-10 w-full bg-white'>
         <div className='mt-5 h-16 animate-pulse bg-gray-100' />
-        <div className='mb-10 grid grid-cols-1 gap-5 p-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+        <div className='mb-10 grid grid-cols-2 gap-5 p-5 lg:grid-cols-3 xl:grid-cols-4'>
           {Array(amount)
             .fill('CategoriesPage')
             .map((item, index) => (
@@ -70,7 +70,7 @@ const RelatedProducts = ({
         También te podrían gustar
       </h3>
       <div className='products-section w-full'>
-        <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px]'>
+        <div className='grid grid-cols-2 gap-5 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px]'>
           {searchedProducts?.slice(0, amount).map((product) => (
             <div key={product.id} className='item'>
               <ProductCardStyleOne<
