@@ -646,7 +646,7 @@ export const isWithinSalePeriod = (
  *          empty or if no products have categories.
  */
 export const getMostUsedCategory = (
-  products: ProductCardType[]
+  products: CartItemType[] | ProductCardType[]
 ): string | null => {
   if (!products || products.length === 0) return null
 

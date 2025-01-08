@@ -297,6 +297,13 @@
                   "type": "number"
                 },
                 "optional": true
+              },
+              "selectedOption": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
               }
             },
             "rest": {

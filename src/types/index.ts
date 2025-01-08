@@ -142,6 +142,7 @@ export interface ProductCardType {
 
 export interface CartItemType extends ProductCardType {
   quantity: number
+  selectedOption: string
 }
 
 export interface ProductQuickViewProps {
@@ -320,6 +321,7 @@ export interface CartState {
   rehydrated: boolean
   hasHydrated: () => void
   updateProductQuantity: (id: string, quantity: number) => void
+  updateProductOption: (id: string, option: string) => void
 }
 
 export interface WishlistState {

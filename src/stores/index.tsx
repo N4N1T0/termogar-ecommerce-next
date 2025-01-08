@@ -73,6 +73,17 @@ const useCart = create<CartState>()(
               : product
           )
         })),
+      updateProductOption: (id, option) =>
+        set((state) => ({
+          products: state.products.map((product) =>
+            product.id === id
+              ? {
+                  ...product,
+                  selectedOption: option
+                }
+              : product
+          )
+        })),
       removeProduct: (id) =>
         set((state) => ({
           products: state.products.filter((product) => product.id !== id)

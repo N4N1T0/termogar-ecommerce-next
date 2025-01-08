@@ -260,7 +260,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
   content,
   price,
   sale,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   "tags": productTag[]->{
     "id": _id,
     name,
@@ -291,7 +291,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION =
   content,
   price,
   sale,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   "tags": productTag[]->{
     "id": _id,
     name,
@@ -325,7 +325,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
   content,
   price,
   sale,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   "tags": productTag[]->{
     "id": _id,
     name,
@@ -339,7 +339,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && count((productCategories[]->name)[@ in $type]) > 0]{
+  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && count((productCategories[]->name)[@ in $type]) > 0][0...8]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -361,7 +361,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
   content,
   price,
   sale,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   "tags": productTag[]->{
     "id": _id,
     name,
@@ -397,7 +397,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS =
   content,
   price,
   sale,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   "tags": productTag[]->{
     "id": _id,
     name,
@@ -440,7 +440,7 @@ export const GET_BRANDS_AND_PRODUCTS =
   content,
   price,
   sale,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   "tags": productTag[]->{
     "id": _id,
     name,
@@ -515,7 +515,7 @@ export const GET_CATEGORY_AND_PRODUCTS =
   content,
   price,
   sale,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   "tags": productTag[]->{
     "id": _id,
     name,
@@ -565,7 +565,7 @@ export const GET_PRODUCTS_BY_OFFER = defineQuery(`{
   content,
   price,
   sale,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   "tags": productTag[]->{
     "id": _id,
     name,
@@ -655,7 +655,7 @@ export const GET_TAG_AND_PRODUCTS =
   content,
   price,
   sale,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   "tags": productTag[]->{
     "id": _id,
     name,
@@ -698,7 +698,7 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
   sale,
   createdAt,
   dimensions,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   options,
   date,
   "tags": productTag[]->{
@@ -764,7 +764,7 @@ export const GET_LAST_MINUTE_PRODUCTS_FROM_ID =
   content,
   price,
   sale,
-  "stockQuantity": stock_quantity,
+  "stockQuantity": stockQuantity,
   "tags": productTag[]->{
     "id": _id,
     name,

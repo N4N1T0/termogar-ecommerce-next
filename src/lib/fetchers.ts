@@ -129,7 +129,6 @@ const paypal = {
       }
     )
     const data = await response.json()
-    console.log('🚀 ~ data:', data)
     return data.links.find(
       (link: Record<string, string>) => link.rel === 'approve'
     ).href
