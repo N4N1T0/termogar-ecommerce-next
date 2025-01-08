@@ -135,7 +135,7 @@ const SingleProductPage = async ({
 
   return (
     <main id='w-full'>
-      <div className='container-x mx-auto my-10 w-full bg-white py-5'>
+      <div className='container-x mx-auto my-5 w-full bg-white py-5 md:my-10'>
         <BreadcrumbCom
           paths={getMainCategoryBreadcrumb(searchedProduct)}
           className='mb-0'

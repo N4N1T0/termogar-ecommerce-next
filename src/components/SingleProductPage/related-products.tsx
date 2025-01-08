@@ -17,17 +17,17 @@ const RelatedProducts = async ({ productsId }: { productsId: string[] }) => {
   if (!searchedProducts) {
     log.error('No related products found')
   }
-  
+
   return (
     <section
       id='related-products'
       className='container-x mx-auto mb-10 w-full bg-white py-5'
     >
-      <h3 className='font-600 text-xl leading-none text-gray-900 sm:text-3xl'>
+      <h3 className='font-600 ml-3 text-xl leading-none text-gray-900 sm:text-3xl md:ml-0'>
         Productos Relacionados
       </h3>
       <div className='products-section w-full'>
-        <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px]'>
+        <div className='grid grid-cols-2 gap-5 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px]'>
           {searchedProducts
             .slice(0, 12)
             .map(

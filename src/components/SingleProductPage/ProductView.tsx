@@ -9,22 +9,16 @@ import { usePathname } from 'next/navigation'
 // * ASSETS IMPORTS
 import AddToCart from '@/components/Helpers/quantity'
 import { AtencionAlCliente, PlaceholderSquare } from '@/assets'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select'
 import { ReportProductModal } from '@/components/SingleProductPage/report-modal'
 import { Clipboard, Twitter, Facebook, Phone, Star } from 'lucide-react'
 
 // * UTILS IMPORTS
 import { GET_WHOLE_PRODUCT_BY_SLUGResult } from '@/types/sanity'
 import { cn, eurilize, shareLink, calculateAverageRating } from '@/lib/utils'
-import { YoptopReviews } from '@/types'
+import { CartItemType, YoptopReviews } from '@/types'
 import { WishlistBtn } from '../Wishlist/wishlist-helpers'
 import { CompaireBtn } from '../Compaire/compaire-helpers'
+import OptionSelect from './option-select'
 
 const ProductView = ({
   className = '',
@@ -39,9 +33,8 @@ const ProductView = ({
     url: product?.featuredMedia.url,
     blur: product?.featuredMedia.blur
   })
+  const [type, setType] = useState<string | null>(null)
   const path = usePathname()
-
-  const score = calculateAverageRating(product.reviews)
 
   if (!product) {
     return (
@@ -66,8 +59,18 @@ const ProductView = ({
     excerpt,
     options,
     id,
-    tags
+    tags,
+    reviews
   } = product
+
+  const score = calculateAverageRating(reviews)
+
+  const refactoredRelatesProduct: CartItemType = {
+    ...product,
+    selectedOption:
+      type || (product.options?.values && product.options?.values[0]) || '',
+    quantity: 1
+  }
 
   return (
     <section
@@ -211,32 +214,14 @@ const ProductView = ({
           </p>
 
           {/* OPTIONS */}
-          {options && (
-            <div data-aos='fade-up' className='product-size mb-5'>
-              <span className='mb-3 inline-block text-sm font-normal uppercase text-gray-500'>
-                {options.name}
-              </span>
-              <Select>
-                <SelectTrigger className='w-full rounded-none'>
-                  <SelectValue placeholder={options.name} />
-                </SelectTrigger>
-                <SelectContent>
-                  {options.values?.map((item) => (
-                    <SelectItem value={item} key={item} className='uppercase'>
-                      {item}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
+          {options && <OptionSelect options={options} setType={setType} />}
 
           {/* ADD TO CART */}
           <div
             data-aos='fade-up'
-            className='quantity-card-wrapper mb-5 flex h-12 w-full items-center space-x-2'
+            className='quantity-card-wrapper my-5 flex h-12 w-full items-center space-x-2'
           >
-            <AddToCart showQuantity product={product} />
+            <AddToCart showQuantity product={refactoredRelatesProduct} />
             <WishlistBtn product={product} />
             <CompaireBtn product={product} />
           </div>
@@ -245,7 +230,7 @@ const ProductView = ({
           <div data-aos='fade-up' className='mb-5'>
             <div className='text-sm leading-7 text-gray-500'>
               <span className='text-gray-900'>Etiquetas :</span>
-              <ul className='flex w-full gap-2'>
+              <ul className='flex w-full flex-wrap gap-2'>
                 {tags?.map(({ id, name, slug }) => (
                   <li
                     key={id}

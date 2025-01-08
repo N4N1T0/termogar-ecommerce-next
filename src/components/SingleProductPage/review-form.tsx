@@ -78,7 +78,7 @@ const ReviewForm = ({
     <Form {...form}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='mt-10 space-y-8 bg-white p-5'
+        className='mt-10 space-y-5 bg-white p-5 md:space-y-8'
       >
         <FormFieldComponent
           control={control}
