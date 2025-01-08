@@ -23,7 +23,17 @@ declare global {
 export default function GoogleOneTap() {
   const { data: session } = useSession()
   const [isGoogleScriptLoaded, setIsGoogleScriptLoaded] = useState(false)
-  const [isOneTapInitialized, setIsOneTapInitialized] = useState(false)
+
+  // Check localStorage to see if the user dismissed the One Tap prompt
+  const shouldShowOneTap = () => {
+    const lastDismissed = localStorage.getItem('googleOneTapDismissed')
+    if (lastDismissed) {
+      const timeElapsed = Date.now() - parseInt(lastDismissed)
+      // If more than a day has passed, show the prompt again
+      return timeElapsed > 60 * 60 * 1000 * 24
+    }
+    return true // Show the prompt by default
+  }
 
   const handleCredentialResponse = useCallback((response: any) => {
     signIn('google', {
@@ -35,50 +45,34 @@ export default function GoogleOneTap() {
   }, [])
 
   const initializeGoogleOneTap = useCallback(() => {
-    if (window.google && !session && !isOneTapInitialized) {
+    if (window.google && !session && shouldShowOneTap()) {
       try {
-        // Cancel any active prompts before initializing
-        window.google.accounts.id.cancel()
-
         window.google.accounts.id.initialize({
           client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
           callback: handleCredentialResponse,
-          context: 'signin', // or 'signup' based on your use case
+          context: 'signin',
           ux_mode: 'popup',
           auto_select: false,
-          use_fedcm_for_prompt: true,
-          enable_debug_logs: true
+          use_fedcm_for_prompt: true
         })
 
         window.google.accounts.id.prompt((notification: any) => {
-          if (
-            notification.isNotDisplayed() &&
-            notification.getNotDisplayedReason() === 'fedcm_disabled'
-          ) {
-            console.warn(
-              'FedCM is disabled in the browser settings. Please enable third-party cookies or allow FedCM in your browser.'
-            )
-          } else if (notification.isNotDisplayed()) {
-            console.warn(
+          if (notification.isNotDisplayed()) {
+            console.log(
               'One Tap was not displayed:',
               notification.getNotDisplayedReason()
             )
           } else if (notification.isSkippedMoment()) {
-            console.info(
-              'One Tap was skipped:',
-              notification.getSkippedReason()
-            )
+            console.log('One Tap was skipped:', notification.getSkippedReason())
           } else if (notification.isDismissedMoment()) {
             console.log(
               'One Tap was dismissed:',
               notification.getDismissedReason()
             )
-          } else {
-            console.log('One Tap prompt displayed successfully.')
+            // Store the time when the user dismissed the prompt
+            localStorage.setItem('googleOneTapDismissed', Date.now().toString())
           }
         })
-
-        setIsOneTapInitialized(true) // Mark as initialized
       } catch (error) {
         if (
           error instanceof Error &&
@@ -95,7 +89,7 @@ export default function GoogleOneTap() {
         }
       }
     }
-  }, [session, handleCredentialResponse, isOneTapInitialized])
+  }, [session, handleCredentialResponse])
 
   useEffect(() => {
     if (isGoogleScriptLoaded) {
@@ -105,7 +99,7 @@ export default function GoogleOneTap() {
 
   useEffect(() => {
     if (session) {
-      // Cancel any ongoing One Tap prompts when the user is signed in
+      // If user is signed in, cancel any ongoing One Tap prompts
       window.google?.accounts.id.cancel()
     }
   }, [session])
@@ -116,7 +110,7 @@ export default function GoogleOneTap() {
       async
       defer
       onLoad={() => setIsGoogleScriptLoaded(true)}
-      strategy='afterInteractive' // Ensure the script loads early
+      strategy='afterInteractive'
     />
   )
 }

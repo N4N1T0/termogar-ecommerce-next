@@ -64,9 +64,11 @@ export default function RootLayout({
           }}
         />
         <AxiomWebVitals />
-        <SessionProvider>
-          <GoogleOneTap />
-        </SessionProvider>
+        {process.env.NODE_ENV !== 'development' && (
+          <SessionProvider>
+            <GoogleOneTap />
+          </SessionProvider>
+        )}
       </body>
     </html>
   )
