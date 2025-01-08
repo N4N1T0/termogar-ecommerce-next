@@ -122,7 +122,8 @@ export default function FailedPaymentContent({
                   price,
                   sale,
                   id,
-                  featuredMedia
+                  featuredMedia,
+                  selectedOption
                 }) => (
                   <li
                     key={id}
@@ -148,15 +149,21 @@ export default function FailedPaymentContent({
                             x{quantity}
                           </sup>
                         </h4>
-                        <p className='w-full text-balance text-[13px] text-gray-500'>
-                          {categories?.map((category, index) => (
-                            <span key={category.id}>
-                              {' '}
-                              {category.name}
-                              {index === categories.length - 1 ? ',' : ''}
-                            </span>
-                          ))}
-                        </p>
+                        {selectedOption === '' ? (
+                          <p className='w-full text-balance text-[13px] text-gray-500'>
+                            {categories?.map((category, index) => (
+                              <span key={category.id}>
+                                {' '}
+                                {category.name}
+                                {index === categories.length - 1 ? ',' : ''}
+                              </span>
+                            ))}
+                          </p>
+                        ) : (
+                          <span className='text-balance text-[13px] text-gray-500'>
+                            {selectedOption}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div>

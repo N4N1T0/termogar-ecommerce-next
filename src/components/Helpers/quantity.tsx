@@ -8,7 +8,7 @@ import { Minus, Plus, ShoppingBag } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { useCart } from '@/stores'
-import { CartItemType, ProductCardType } from '@/types'
+import { CartItemType } from '@/types'
 
 // * UTILS IMPORTS
 import { cn } from '@/lib/utils'
@@ -18,7 +18,7 @@ const AddToCart = ({
   showQuantity = false,
   className = ''
 }: {
-  product: ProductCardType
+  product: CartItemType
   showQuantity?: boolean
   className?: string
 }) => {
@@ -29,7 +29,7 @@ const AddToCart = ({
   const decrement = () => setQuantity((prev) => Math.max(1, prev - 1))
 
   const handleAddToCart = () => {
-    const cartItem: CartItemType = { quantity, ...product }
+    const cartItem: CartItemType = { ...product, quantity }
     addProduct(cartItem)
     toast.info('Producto agregado al carrito', {
       duration: 2000,
@@ -37,7 +37,7 @@ const AddToCart = ({
         toast: 'text-accent border-accent'
       },
       action: {
-        label: 'carrito',
+        label: 'Carrito',
         onClick: () => (window.location.href = '/carrito-de-la-compra')
       }
     })

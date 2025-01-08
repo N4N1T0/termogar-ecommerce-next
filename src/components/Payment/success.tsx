@@ -60,8 +60,16 @@ const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
   }, [products, refactoredShippingAddress?.postcode, refactoredCoupon])
 
   const ProductItem = React.memo((product: CartItemType) => {
-    const { title, quantity, categories, price, sale, id, featuredMedia } =
-      product
+    const {
+      title,
+      quantity,
+      categories,
+      price,
+      sale,
+      id,
+      featuredMedia,
+      selectedOption
+    } = product
     return (
       <li
         key={id}
@@ -85,15 +93,21 @@ const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
                 x{quantity}
               </sup>
             </h4>
-            <p className='w-full text-balance text-[13px] text-gray-500'>
-              {categories?.map((category, index) => (
-                <span key={category.id}>
-                  {' '}
-                  {category.name}
-                  {index === categories.length - 1 ? ',' : ''}
-                </span>
-              ))}
-            </p>
+            {selectedOption === '' ? (
+              <p className='w-full text-balance text-[13px] text-gray-500'>
+                {categories?.map((category, index) => (
+                  <span key={category.id}>
+                    {' '}
+                    {category.name}
+                    {index === categories.length - 1 ? ',' : ''}
+                  </span>
+                ))}
+              </p>
+            ) : (
+              <span className='text-balance text-[13px] text-gray-500'>
+                {selectedOption}
+              </span>
+            )}
           </div>
         </div>
         <div>

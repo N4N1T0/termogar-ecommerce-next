@@ -32,7 +32,9 @@ const paymentLogic = async (
 ) => {
   const orderId = randomTransactionId()
   const refactoredProductsForPayment = products
-    .map((product) => `${product.id}_${product.quantity}`)
+    .map(
+      (product) => `${product.id}_${product.quantity}_${product.selectedOption}`
+    )
     .join(',')
   const templateRedirectUrl = (page: string, gateway: string = 'RedSys') => {
     return `${process.env.NEXT_PUBLIC_URL}/${page}?userId=${userId}&orderId=${orderId}&gateway=${gateway}&newAddress=${newAddress}&discountCoupon=${discountCoupon}&total=${totalAmount}&products=${refactoredProductsForPayment}`

@@ -58,7 +58,6 @@ const SuccessPage = async ({
 
   if (gateway === 'PayPal') {
     const response = await paypal.captureOrder(token as string)
-    console.log('🚀 ~ response:', response)
     if (response !== 'COMPLETED') {
       notFound()
     }
@@ -77,6 +76,7 @@ const SuccessPage = async ({
             _type: 'reference' as const
           },
           quantity: parseInt(product.split('_')[1], 10),
+          selectedOption: product.split('_')[2] || '',
           _key: uuid()
         }))
 

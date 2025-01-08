@@ -23,7 +23,7 @@ export async function generateMetadata({
 
   return {
     title: `Resultados para "${search}"`,
-    description: `Busqueda de Resultados para "${search}" de productos en la categoría de ${category}`
+    description: `Busqueda de Resultados para "${search}" de productos en la categoría de ${category === '' ? 'Todos' : category}`
   }
 }
 
@@ -63,7 +63,7 @@ const SearchPage = async ({
         <div className='container-x mx-auto'>
           <PageTitle
             title={`Resultados de la busqueda para "${search}"`}
-            subTitle={`En la categoría de "${category}"`}
+            subTitle={`En la categoría de "${category === '' ? 'Todos' : category}"`}
             breadcrumb={[
               { name: 'P. Principal', path: '/' },
               { name: 'Busqueda', path: '/busqueda' }
@@ -81,7 +81,7 @@ const SearchPage = async ({
     <main>
       <PageTitle
         title={`Resultados de la busqueda para "${search}"`}
-        subTitle={`En la categoría de "${category}"`}
+        subTitle={`En la categoría de "${category === '' ? 'Todos' : category}"`}
         breadcrumb={[
           { name: 'P. Principal', path: '/' },
           { name: 'Busqueda', path: '/busqueda' }

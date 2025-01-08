@@ -19,10 +19,12 @@ import { GET_MENU_CATEGORIESResult } from '@/types/sanity'
 
 export default function SearchBox({
   className,
-  categories
+  categories,
+  mobile = false
 }: {
   className?: string
   categories: GET_MENU_CATEGORIESResult
+  mobile?: boolean
 }) {
   return (
     <Form
@@ -40,8 +42,12 @@ export default function SearchBox({
           name='search'
         />
       </div>
-      <div className='mr-5 h-[22px] w-[1px] bg-gray-500'></div>
-      <SearchedBoxCategories categories={categories} />
+      {!mobile && (
+        <>
+          <div className='mr-5 h-[22px] w-[1px] bg-gray-500'></div>
+          <SearchedBoxCategories categories={categories} />
+        </>
+      )}
       <button
         className='font-600 search-btn h-full w-[93px] bg-accent text-sm text-white transition-colors duration-150 ease-in hover:bg-secondary/80'
         type='submit'
