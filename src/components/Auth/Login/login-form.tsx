@@ -113,7 +113,7 @@ const LoginForm = ({
         </form>
       </Form>
       <form
-        action={(e) => loginGoogleAction(e, redirectTo)}
+        action={() => loginGoogleAction(redirectTo)}
         className='w-full lg:w-1/2'
       >
         <button

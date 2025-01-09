@@ -7,7 +7,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
+  DialogDescription
 } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
@@ -23,6 +24,7 @@ const OrderDialog = ({
   orderInfo: GET_ORDERS_BY_USER_IDResult[number]
   children: React.ReactNode
 }) => {
+  console.log('🚀 ~ orderInfo:', orderInfo)
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -31,6 +33,9 @@ const OrderDialog = ({
           <DialogTitle className='text-xl'>
             Detalles del Pedido - {orderInfo.id.split('-')[0]}
           </DialogTitle>
+          <DialogDescription className='sr-only'>
+            Detalles del Pedido
+          </DialogDescription>
         </DialogHeader>
         <ScrollArea className='h-[60vh] pr-4'>
           <div className='space-y-6'>
@@ -75,13 +80,26 @@ const OrderDialog = ({
               <h3 className='mb-2 text-lg font-semibold text-accent'>
                 Información del Pedido
               </h3>
-              <dl className='grid grid-cols-2 gap-2 text-sm'>
-                <dt className='font-medium'>Código de Envío:</dt>
-                <dd>{orderInfo.currierCode}</dd>
-                <dt className='font-medium'>Fecha de Envío Esperada:</dt>
-                <dd>{orderInfo.expectedDeliveryDate}</dd>
-                <dt className='font-medium'>Método de Pago:</dt>
-                <dd>{orderInfo.paymentMethod}</dd>
+              <dl className='flex w-full items-center justify-between'>
+                <div className='grid grid-cols-2 gap-2 text-sm'>
+                  {/* TODO: Add tracking link */}
+                  <dt className='font-medium'>Link de Seguimiento:</dt>
+                  <dd>{orderInfo.currierCode}</dd>
+                  <dt className='font-medium'>Fecha de Envío Esperada:</dt>
+                  <dd>{orderInfo.expectedDeliveryDate}</dd>
+                  <dt className='font-medium'>Método de Pago:</dt>
+                  <dd>{orderInfo.paymentMethod}</dd>
+                </div>
+                <div className='grid grid-cols-2 gap-2 text-sm'>
+                  <dt className='font-medium'>Fecha de Compra:</dt>
+                  <dd>
+                    {new Date(orderInfo.purchaseDate || '').toLocaleString()}
+                  </dd>
+                  <dt className='font-medium'>Monto Total:</dt>
+                  <dd>{eurilize(orderInfo.totalAmount || 0)}</dd>
+                  <dt className='font-medium'>Status:</dt>
+                  <dd>{orderInfo.status}</dd>
+                </div>
               </dl>
             </div>
             <hr className='my-4 border-t border-gray-200' />
