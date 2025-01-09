@@ -35,9 +35,6 @@ const LoginForm = ({
     }
   })
 
-  // TODO: Add forgot password
-  const handleForgotPassword = () => {}
-
   const onSubmit = async (values: LoginSchema) => {
     const response = await loginAction(values)
 
@@ -50,7 +47,7 @@ const LoginForm = ({
       toast.success(response.message, {
         duration: 4000
       })
-      setTimeout(() => router.push(tempUrl), 4500)
+      setTimeout(() => router.push(tempUrl), 2000)
     }
   }
 
@@ -116,13 +113,13 @@ const LoginForm = ({
       </form>
       <div className='mt-5 text-xs font-normal text-gray-500'>
         {forgotPassword ? (
-          <button
-            onClick={handleForgotPassword}
+          <Link
+            href='/reset-password'
             type='button'
             className='hover-200 ml-2 text-accent hover:text-gray-900'
           >
             Olvidaste la contraseña
-          </button>
+          </Link>
         ) : (
           <p className='font-normal text-gray-700'>
             No tienes cuenta?

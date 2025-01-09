@@ -124,11 +124,12 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
   }, [isShippingAddress, form])
 
   React.useEffect(() => {
-    if (!isDirty) return
+    if (!isDirty || !isDisabled) return
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault()
       return (event.returnValue = '')
     }
+
     window.addEventListener('beforeunload', handleBeforeUnload, {
       capture: true
     })
@@ -138,7 +139,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
         capture: true
       })
     }
-  }, [path, isDirty])
+  }, [path, isDirty, isDisabled])
 
   const onSubmit = async (values: CheckoutUser) => {
     if (!isDirty && noErrors && !isShippingAddress) {

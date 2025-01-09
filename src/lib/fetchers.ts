@@ -95,7 +95,7 @@ const paypal = {
                   name: product.title,
                   description: product.excerpt
                     ?.split(' ')
-                    .slice(0, 20)
+                    .slice(0, 10)
                     .join(' '),
                   quantity: product.quantity,
                   unit_amount: {
@@ -129,6 +129,7 @@ const paypal = {
       }
     )
     const data = await response.json()
+    console.log('🚀 ~ data:', data)
     return data.links.find(
       (link: Record<string, string>) => link.rel === 'approve'
     ).href

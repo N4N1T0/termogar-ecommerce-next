@@ -42,7 +42,7 @@ const SignupForm = ({
         duration: 4000
       })
       form.reset()
-      setTimeout(() => router.push(tempUrl), 4500)
+      setTimeout(() => router.push(tempUrl), 2000)
     } else {
       toast.error(response.message, {
         duration: 5000
