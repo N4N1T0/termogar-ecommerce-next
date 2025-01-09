@@ -108,7 +108,7 @@ const Footer = async () => {
                 {footerLinks['Atención al Cliente'].map(
                   ({ id, name, slug }) => (
                     <li key={id}>
-                      <Link href={`/servicio-al-cliente/${slug}`}>
+                      <Link href={`/${slug}`}>
                         <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                           {name}
                         </span>
@@ -167,7 +167,7 @@ const Footer = async () => {
                     ({ id, slug, name }) => (
                       <li key={id}>
                         <Link
-                          href={`/servicio-al-cliente/${slug}`}
+                          href={`/${slug}`}
                           className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'
                         >
                           {name}
