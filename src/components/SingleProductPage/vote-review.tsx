@@ -27,17 +27,11 @@ const VoteReview = ({
 
     if (!response.success) {
       toast.error(response.message, {
-        duration: 4000,
-        classNames: {
-          toast: 'bg-red-500 text-white'
-        }
+        duration: 4000
       })
     } else {
       toast.success(response.message, {
-        duration: 4000,
-        classNames: {
-          toast: 'text-green-500 border-green-500'
-        }
+        duration: 4000
       })
     }
   }

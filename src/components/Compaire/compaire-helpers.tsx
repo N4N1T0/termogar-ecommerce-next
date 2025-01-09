@@ -42,18 +42,12 @@ const CompaireBtn = ({ product }: { product: ProductCardType }) => {
     if (compaireHasProduct) {
       removeProduct(product.id)
       toast.info('El producto se eliminó de la lista de comparación', {
-        duration: 2000,
-        classNames: {
-          toast: 'text-accent border-accent'
-        }
+        duration: 2000
       })
     } else {
       addProduct(product)
       toast.info('Se agregó correctamente a la lista de comparación', {
         duration: 2000,
-        classNames: {
-          toast: 'text-accent border-accent'
-        },
         action: {
           label: 'Lista',
           onClick: () => {
@@ -84,10 +78,7 @@ const CompaireProductTableRemover = ({ id }: { id: string }) => {
   const handleRemoveProduct = () => {
     removeProduct(id)
     toast.info('El producto se eliminó de la lista de comparación', {
-      duration: 2000,
-      classNames: {
-        toast: 'text-accent border-accent'
-      }
+      duration: 2000
     })
   }
 

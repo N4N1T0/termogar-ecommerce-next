@@ -40,18 +40,12 @@ const CouponValidation = ({
 
       if (!response.success) {
         toast.error(response.message, {
-          duration: 2000,
-          classNames: {
-            toast: 'bg-red-500 text-white'
-          }
+          duration: 2000
         })
       } else {
         setIsPending(false)
         toast.success(response.message, {
-          duration: 3000,
-          classNames: {
-            toast: 'text-green-500 border-green-500'
-          }
+          duration: 3000
         })
 
         setCoupon({

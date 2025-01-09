@@ -33,9 +33,6 @@ const AddToCart = ({
     addProduct(cartItem)
     toast.info('Producto agregado al carrito', {
       duration: 2000,
-      classNames: {
-        toast: 'text-accent border-accent'
-      },
       action: {
         label: 'Carrito',
         onClick: () => (window.location.href = '/carrito-de-la-compra')

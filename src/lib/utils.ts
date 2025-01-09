@@ -566,16 +566,12 @@ export const shareLink = (
         .writeText(url)
         .then(() =>
           toast.success('Enlace copiado al portapapeles', {
-            duration: 3000,
-            classNames: {
-              toast: 'text-green-500 border-green-500'
-            }
+            duration: 3000
           })
         )
         .catch(() =>
           toast.error('Error al copiar el enlace', {
-            duration: 3000,
-            classNames: { toast: 'bg-red-500 text-white' }
+            duration: 3000
           })
         )
       return // Exit here, no need to open a URL
