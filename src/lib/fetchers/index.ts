@@ -1,8 +1,12 @@
 import { CartItemType, YoptopReviews } from '@/types'
+import { parseStringPromise } from 'xml2js' // Necesitas instalar xml2js: npm install xml2js
+import { loginEnvelop } from './utils'
 
 const yoptopAppKey = process.env.NEXT_PUBLIC_YOTPO_APP_KEY
 const paypalClientId = process.env.PAYPAL_CLIENT_ID
 const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET
+const tipsaURLWebService =
+  'https://testapps.tipsa-dinapaq.com/SOAP?service=LoginWSService'
 
 const yoptop = {
   fetchReviews: async (
@@ -151,4 +155,43 @@ const paypal = {
   }
 }
 
-export { yoptop, paypal }
+const tipsa = {
+  generateSessionId: async () => {
+    try {
+      const response = await fetch(tipsaURLWebService, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/xml'
+        },
+        body: loginEnvelop
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data = await response.text()
+
+      // Parsear el XML de la respuesta
+      const result = await parseStringPromise(data, { explicitArray: false })
+      console.log('Parsed XML result:', result)
+
+      // Extraer strSesion de la respuesta
+      const sessionId =
+        result['SOAP-ENV:Envelope']?.['SOAP-ENV:Body']?.[
+          'v1:LoginWSService___LoginCliResponse'
+        ]?.['v1:strSesion']
+
+      if (!sessionId) {
+        throw new Error('Session ID not found in response')
+      }
+
+      console.log('Session ID:', sessionId)
+      return sessionId // Devuelve el ID de sesión
+    } catch (error) {
+      console.error('Error creating SOAP client:', error)
+      throw error
+    }
+  }
+}
+export { yoptop, paypal, tipsa }

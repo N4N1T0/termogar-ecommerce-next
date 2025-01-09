@@ -59,6 +59,7 @@
     "styled-components": "^6.1.14",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
+    "xml2js": "^0.6.2",
     "zod": "^3.24.1",
     "zustand": "^5.0.2"
   },
@@ -72,6 +73,7 @@
     "@types/react": "^19.0.3",
     "@types/react-dom": "^19.0.2",
     "@types/woocommerce__woocommerce-rest-api": "^1.0.5",
+    "@types/xml2js": "^0.4.14",
     "eslint": "^9.17.0",
     "eslint-config-next": "15.1.0",
     "eslint-config-prettier": "^9.1.0",
