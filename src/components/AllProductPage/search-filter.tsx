@@ -17,7 +17,7 @@ const SearchFilter = () => {
 
     if (!search) return
 
-    setSearch(search.toString())
+    setSearch(search.toString(), { shallow: false })
   }
 
   return (

@@ -22,11 +22,14 @@ const log = new Logger()
 export const dynamic = 'force-dynamic'
 
 const ProductSidebar = async ({
-  params
+  params,
+  searchParams
 }: {
   params: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { brand } = await params
+  const searchParamsKey = await searchParams
 
   const searchedData = await sanityClientRead.fetch(
     GET_PRODUCTS_AND_BRAND_FOR_FILTERING,
@@ -47,7 +50,11 @@ const ProductSidebar = async ({
         <h2 className='mb-2 text-xl font-semibold uppercase text-accent'>
           Filtrar por...
         </h2>
-        <nav aria-label='Brands filters' className='divide-y-[1px]'>
+        <nav
+          aria-label='Brands filters'
+          className='divide-y-[1px]'
+          key={JSON.stringify(searchParamsKey)}
+        >
           <SearchFilter />
           <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
           <BrandAccordion categories={categoriesFilter} label='Categorias' />
@@ -71,7 +78,11 @@ const ProductSidebar = async ({
               Filtros para los productos dentro de la marca de {brand}
             </SheetDescription>
           </SheetHeader>
-          <nav aria-label='Brands filters' className='divide-y-[1px]'>
+          <nav
+            aria-label='Brands filters'
+            className='divide-y-[1px]'
+            key={JSON.stringify(searchParamsKey)}
+          >
             <SearchFilter />
             <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
             <BrandAccordion categories={categoriesFilter} label='Categorias' />

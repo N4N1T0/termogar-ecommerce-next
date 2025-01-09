@@ -24,7 +24,13 @@ import { GET_PRODUCTS_WITH_OFFER_FOR_FILTERING } from '@/sanity/lib/queries'
 
 export const dynamic = 'force-dynamic'
 
-const ProductSidebar = async () => {
+const ProductSidebar = async ({
+  searchParams
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) => {
+  const searchParamsKey = await searchParams
+
   const searchedData = await sanityClientRead.fetch(
     GET_PRODUCTS_WITH_OFFER_FOR_FILTERING
   )
@@ -40,7 +46,11 @@ const ProductSidebar = async () => {
         <h2 className='mb-2 text-xl font-semibold uppercase text-accent'>
           Filtrar por...
         </h2>
-        <nav aria-label='Categories filters'>
+        <nav
+          aria-label='Categories filters'
+          className='divide-y-[1px]'
+          key={JSON.stringify(searchParamsKey)}
+        >
           <SearchFilter />
           <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
           <BrandAccordion
@@ -68,7 +78,11 @@ const ProductSidebar = async () => {
               Filtros para los productos dentro de la categoria de Ofertas
             </SheetDescription>
           </SheetHeader>
-          <nav aria-label='Categories filters'>
+          <nav
+            aria-label='Categories filters'
+            className='divide-y-[1px]'
+            key={JSON.stringify(searchParamsKey)}
+          >
             <SearchFilter />
             <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
             <BrandAccordion

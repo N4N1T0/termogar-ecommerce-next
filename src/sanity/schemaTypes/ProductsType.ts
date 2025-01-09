@@ -160,6 +160,13 @@ export const productType = defineType({
       ]
     }),
     defineField({
+      name: 'main',
+      type: 'boolean',
+      title: 'Principal',
+      description: '¿Es un producto principal?',
+      initialValue: false
+    }),
+    defineField({
       name: 'date',
       type: 'datetime',
       title: 'Fecha',
