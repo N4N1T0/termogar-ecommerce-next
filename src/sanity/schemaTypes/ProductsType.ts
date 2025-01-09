@@ -33,6 +33,13 @@ export const productType = defineType({
       description: 'El código de referencia del producto.'
     }),
     defineField({
+      name: 'brand',
+      type: 'reference',
+      title: 'Marca',
+      description: 'La marca del producto.',
+      to: [{ type: 'brand' }]
+    }),
+    defineField({
       name: 'status',
       type: 'string',
       title: 'Estado',

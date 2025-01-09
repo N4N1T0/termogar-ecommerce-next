@@ -96,10 +96,13 @@ const SuccessPage = async ({
       _ref: user?.id || '',
       _type: 'reference'
     },
-    // @ts-expect-error ignore
     shippingAddress: newAddress
-      ? [user?.shippingAddresses ? user?.shippingAddresses[0] : undefined]
+      ? user?.shippingAddresses && user.shippingAddresses.length > 0
+        ? [user.shippingAddresses[0]]
+        : undefined
       : user?.billingAddress
+        ? [user.billingAddress]
+        : undefined
   })
 
   return (

@@ -30,6 +30,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
 
   const isDisabled =
     searchParams.get('userId') && searchParams.get('newAddress') ? true : false
+  console.log('🚀 ~ BillingAddress ~ isDisabled:', isDisabled)
 
   const form = useForm<CheckoutUser>({
     resolver: zodResolver(checkoutUser),
@@ -124,7 +125,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
   }, [isShippingAddress, form])
 
   React.useEffect(() => {
-    if (!isDirty || !isDisabled) return
+    if (!isDirty || isDisabled) return
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault()
       return (event.returnValue = '')

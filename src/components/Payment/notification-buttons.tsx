@@ -3,6 +3,7 @@
 // * NEXT.JS IMPORTS
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 // * ASSETS IMPORTS
 import { HelpCircle, RefreshCcw, UserIcon } from 'lucide-react'
@@ -29,6 +30,7 @@ const NotificationsPageButton = ({
     status
   } = orderData
 
+  const { data: session } = useSession()
   const { removeAllProducts } = useCart()
   const router = useRouter()
 
@@ -57,7 +59,11 @@ const NotificationsPageButton = ({
       handlePush('/')
     }
     if (value === 'goToProfile') {
-      handlePush(`/perfil/${user?.id}`)
+      if (session) {
+        handlePush(`/perfil/${user?.id}`)
+      } else {
+        handlePush(`/login?redirectTo=/perfil/${user?.id}`)
+      }
     }
   }
 
