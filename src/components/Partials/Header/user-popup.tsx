@@ -29,7 +29,7 @@ const UserPopup = ({ session }: { session: Session | null }) => {
               href={`/login?redirectTo=${path}`}
               className='font-400 border-b border-transparent text-sm text-gray-500 hover:border-accent hover:text-accent'
             >
-              Iniciar Session
+              Iniciar sesión
             </Link>
           </div>
         </div>

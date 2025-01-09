@@ -11,9 +11,6 @@ import { bigLogo } from '@/assets'
 // * UTILS IMPORTS
 import { GET_USER_INFO } from '@/sanity/lib/queries'
 import { sanityClientRead } from '@/sanity/lib/client'
-import { Logger } from 'next-axiom'
-
-const log = new Logger()
 
 const ResetPasswordPage = async ({
   searchParams
@@ -22,25 +19,20 @@ const ResetPasswordPage = async ({
 }) => {
   const { token } = await searchParams
 
-  if (!token || Array.isArray(token)) {
-    log.error('Invalid token', { token })
-    return notFound()
-  }
+  if (!token || Array.isArray(token)) return notFound()
 
-  const secretKey = process.env.SECRET_KEY! // Your server-side secret
-  const expirationTime = 24 * 60 * 60 * 1000 // 24 hours
-
-  if (validateSecurityToken(token, secretKey, expirationTime) === null) {
-    return notFound()
-  }
+  const secretKey = process.env.SECRET_KEY!
+  const expirationTime = 24 * 60 * 60 * 1000
 
   const customerId = validateSecurityToken(token, secretKey, expirationTime)
+
+  if (customerId === null) return notFound()
 
   const searchedUser = await sanityClientRead.fetch(GET_USER_INFO, {
     id: customerId
   })
 
-  if (!searchedUser) return log.error('User not found', { searchedUser })
+  if (!searchedUser) return notFound()
 
   return (
     <div className='flex min-h-screen items-center justify-center bg-gray-100 p-4'>

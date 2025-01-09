@@ -16,6 +16,7 @@ import GoogleIcon from '@/components/Auth/Login/google-icon'
 import { loginSchema, LoginSchema } from '@/lib/schemas'
 import { loginAction, loginGoogleAction } from '@/actions/login-action'
 import { toast } from 'sonner'
+import sendForgetPassword from '@/actions/send-forgot-password'
 
 const LoginForm = ({
   redirectTo
@@ -48,6 +49,20 @@ const LoginForm = ({
         duration: 4000
       })
       setTimeout(() => router.push(tempUrl), 2000)
+    }
+  }
+
+  const handleForgotPassword = async () => {
+    const response = await sendForgetPassword(form.getValues('email'))
+
+    if (!response?.success) {
+      toast.error(response?.message, {
+        duration: 4000
+      })
+    } else {
+      toast.success(response.message, {
+        duration: 4000
+      })
     }
   }
 
@@ -113,13 +128,13 @@ const LoginForm = ({
       </form>
       <div className='mt-5 text-xs font-normal text-gray-500'>
         {forgotPassword ? (
-          <Link
-            href='/reset-password'
+          <button
+            onClick={() => handleForgotPassword()}
             type='button'
             className='hover-200 ml-2 text-accent hover:text-gray-900'
           >
             Olvidaste la contraseña
-          </Link>
+          </button>
         ) : (
           <p className='font-normal text-gray-700'>
             No tienes cuenta?
