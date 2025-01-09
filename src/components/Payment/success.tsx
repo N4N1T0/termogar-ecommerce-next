@@ -70,6 +70,7 @@ const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
       featuredMedia,
       selectedOption
     } = product
+
     return (
       <li
         key={id}
