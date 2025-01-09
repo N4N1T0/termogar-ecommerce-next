@@ -3,8 +3,8 @@ import Footer from '@/components/Partials/Footer'
 import Header from '@/components/Partials/Header'
 import { Toaster } from 'sonner'
 import GoogleOneTap from '@/components/Auth/google-one-tap'
-import { SessionProvider } from 'next-auth/react'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import { SessionProvider } from 'next-auth/react'
 
 export default function MainLayout({
   children

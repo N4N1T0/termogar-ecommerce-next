@@ -22,6 +22,7 @@ export default async function Home() {
   const searchedMainPage = await sanityClientRead.fetch(GET_MAIN_PAGE)
 
   if (!searchedMainPage) return log.error('No se encontraron datos')
+
   return (
     <main>
       <Banner
