@@ -13,17 +13,17 @@ import UserPopup from '@/components/Partials/Header/user-popup'
 
 // * UTILS IMPORTS
 import { GET_MENU_CATEGORIESResult } from '@/types/sanity'
-import { auth } from '@/lib/auth'
+import { Session } from 'next-auth'
 
 const Middlebar = async ({
   className,
+  session,
   categories
 }: {
   className?: string
+  session: Session | null
   categories: GET_MENU_CATEGORIESResult
 }) => {
-  const session = await auth()
-
   return (
     <div className={`h-[86px] w-full bg-white ${className}`}>
       <div className='container-x mx-auto h-full'>

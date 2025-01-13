@@ -18,7 +18,7 @@ const UserPopup = ({ session }: { session: Session | null }) => {
     return (
       <div className='user-popup relative'>
         <User />
-        <div className='user-sub-menu absolute -left-14 top-[30px] w-[130px]'>
+        <div className='user-sub-menu -left-22 absolute top-[30px] w-[130px] md:-left-14'>
           <div
             className='flex w-full flex-col items-center justify-between gap-3 bg-white py-3'
             style={{
@@ -47,7 +47,7 @@ const UserPopup = ({ session }: { session: Session | null }) => {
           {user?.name?.split('').slice(0, 2).join('').toUpperCase()}
         </AvatarFallback>
       </Avatar>
-      <div className='user-sub-menu absolute -left-10 top-[60px] w-[150px]'>
+      <div className='user-sub-menu absolute -left-20 top-[60px] w-[150px] md:-left-10'>
         <div
           className='flex w-full flex-col items-center justify-between gap-3 bg-white py-3'
           style={{

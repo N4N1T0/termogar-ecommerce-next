@@ -105,6 +105,23 @@ export default function Drawer({
               </AccordionContent>
             </AccordionItem>
           ))}
+          <AccordionItem value='blog'>
+            <AccordionTrigger>Blog</AccordionTrigger>
+            <AccordionContent>
+              <ul>
+                <li key='articulos' className='py-2'>
+                  <SheetClose asChild>
+                    <Link href='/blog'>Artículos</Link>
+                  </SheetClose>
+                </li>
+                <li key='noticias' className='py-2'>
+                  <SheetClose asChild>
+                    <Link href='/noticias'>Noticias</Link>
+                  </SheetClose>
+                </li>
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
       </SheetContent>
     </Sheet>
