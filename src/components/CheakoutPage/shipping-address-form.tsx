@@ -81,7 +81,7 @@ const ShippingAddressForm = ({
           autocomplete='tel'
         />
       </div>
-      <hr />
+      <hr className='mt-3' />
     </fieldset>
   )
 }

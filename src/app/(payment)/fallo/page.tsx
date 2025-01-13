@@ -57,7 +57,7 @@ export default async function FailedPage({
           />
         </CardContent>
       </Card>
-      <div className='top-10 flex h-full w-auto flex-1 items-center justify-center bg-gray-100 p-6 md:sticky'>
+      <div className='top-10 hidden h-full w-auto flex-1 items-center justify-center bg-gray-100 p-6 md:sticky md:flex'>
         <FailedIlustration />
       </div>
     </div>

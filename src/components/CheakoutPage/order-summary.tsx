@@ -87,7 +87,10 @@ const OrderSummary = ({
   }
 
   return (
-    <section id='order-summary' className='top-2 h-fit flex-1 md:sticky'>
+    <section
+      id='order-summary'
+      className='mt-5 h-fit flex-1 px-2 md:sticky md:top-2 md:mt-0 md:px-0'
+    >
       <h2
         className={cn(
           'mb-5 text-xl font-medium sm:text-2xl',
@@ -97,7 +100,7 @@ const OrderSummary = ({
         Resumen de Orden
       </h2>
 
-      <div className='w-full border border-gray-200 px-10 py-[30px]'>
+      <div className='w-full border border-gray-200 px-7 py-[30px] md:px-10'>
         <div className='mb-4 flex items-center justify-between border-b border-gray-200'>
           <p className='text-[13px] font-medium uppercase text-gray-900'>
             Productos

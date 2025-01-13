@@ -30,7 +30,6 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
 
   const isDisabled =
     searchParams.get('userId') && searchParams.get('newAddress') ? true : false
-  console.log('🚀 ~ BillingAddress ~ isDisabled:', isDisabled)
 
   const form = useForm<CheckoutUser>({
     resolver: zodResolver(checkoutUser),
@@ -144,9 +143,12 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
 
   const onSubmit = async (values: CheckoutUser) => {
     if (!isDirty && noErrors && !isShippingAddress) {
-      router.replace(`/checkout?userId=${user?.id}&newAddress=false`, {
-        scroll: false
-      })
+      router.replace(
+        `/checkout?userId=${user?.id}&newAddress=false#order-summary`,
+        {
+          scroll: false
+        }
+      )
       return
     }
 
@@ -161,7 +163,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
         duration: 4000
       })
       router.replace(
-        `/checkout?userId=${response.userId}&newAddress=${isShippingAddress}`,
+        `/checkout?userId=${response.userId}&newAddress=${isShippingAddress}#order-summary`,
         {
           scroll: false
         }
@@ -184,8 +186,8 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
         >
           Datos de Envío y Facturación
         </h2>
-        <fieldset className='flex space-x-8'>
-          <div className='w-[570px]'>
+        <fieldset className='flex justify-center px-4'>
+          <div className='max-w-[570px]'>
             {/* USER INFO */}
             <div className='mb-4 flex space-x-2.5'>
               <FormFieldComponent
@@ -209,7 +211,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
                 autocomplete='family-name'
               />
             </div>
-            <div className='input-item mb-4 flex space-x-2.5'>
+            <div className='mb-4 flex space-x-2.5'>
               <FormFieldComponent
                 className='w-full'
                 label='Email'
@@ -236,7 +238,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
               <legend className='mb-2 mt-4 block pr-4 text-lg font-semibold leading-6 text-gray-900'>
                 Dirección de Facturación
               </legend>
-              <div className='input-item mt-4 flex space-x-2.5'>
+              <div className='mt-4 flex flex-col gap-2 md:flex-row'>
                 <FormFieldComponent
                   className='w-full'
                   label='Dirección'
@@ -258,7 +260,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
                   autocomplete='address-line2'
                 />
               </div>
-              <div className='input-item mt-4 flex space-x-2.5'>
+              <div className='mt-4 flex space-x-2.5'>
                 <FormFieldComponent
                   className='w-full'
                   label='Ciudad'
@@ -280,7 +282,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
                   autocomplete='postal-code'
                 />
               </div>
-              <div className='input-item mt-4 flex space-x-2.5'>
+              <div className='mt-4 flex space-x-2.5'>
                 <FormFieldComponent
                   className='w-full'
                   label='Localidad'
