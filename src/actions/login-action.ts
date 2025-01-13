@@ -56,7 +56,7 @@ const loginAction = async (values: LoginSchema) => {
 
     return {
       success: true,
-      message: 'Redirigiendo a la pagina principal'
+      message: 'Iniciando sesión. Redirigiendo a la'
     }
   } catch (error) {
     if (error instanceof AuthError) {

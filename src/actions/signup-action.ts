@@ -85,7 +85,7 @@ const signupAction = async (values: SignupSchema) => {
 
     return {
       success: true,
-      message: 'Registro Completo, Redirigiendo a la pagina principal'
+      message: 'Registro Completo, Redirigiendo a la'
     }
   } catch (error) {
     if (error instanceof AuthError) {

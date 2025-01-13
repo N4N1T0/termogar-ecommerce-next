@@ -11,7 +11,7 @@ import ProductCardStyleOne from '@/components/Helpers/Cards/product-card-style-o
 
 const RelatedProducts = ({
   mostUsedCategory,
-  amount = 8
+  amount = 5
 }: {
   mostUsedCategory: string | null
   amount?: number
@@ -70,7 +70,7 @@ const RelatedProducts = ({
         También te podrían gustar
       </h3>
       <div className='products-section w-full'>
-        <div className='grid grid-cols-2 gap-5 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px]'>
+        <div className='grid grid-cols-2 gap-5 lg:grid-cols-3 xl:grid-cols-4 xl:gap-[30px] 2xl:grid-cols-5'>
           {searchedProducts?.slice(0, amount).map((product) => (
             <div key={product.id} className='item'>
               <ProductCardStyleOne<

@@ -19,6 +19,7 @@ const OrderTab = async ({
             <td className='whitespace-nowrap py-4 text-center'>Fecha</td>
             <td className='whitespace-nowrap py-4 text-center'>Estado</td>
             <td className='whitespace-nowrap py-4 text-center'>Monto</td>
+            <td className='whitespace-nowrap py-4 text-center'>Iva</td>
             <td className='whitespace-nowrap py-4 text-center'>Acción</td>
           </tr>
 
@@ -52,6 +53,13 @@ const OrderTab = async ({
               <td className='px-2 py-4 text-center'>
                 <span className='text-qblack whitespace-nowrap px-2 text-base'>
                   {eurilize(order.totalAmount || 0)}
+                </span>
+              </td>
+              <td className='px-2 py-4 text-center'>
+                <span className='text-qblack whitespace-nowrap px-2 text-base'>
+                  {eurilize(
+                    (order.totalAmount && order.totalAmount * 0.21) || 0
+                  )}
                 </span>
               </td>
               <td className='py-4 text-center'>

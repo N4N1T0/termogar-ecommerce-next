@@ -24,6 +24,19 @@ interface BrandAccordionProps {
 
 const BrandAccordion = ({ categories, label }: BrandAccordionProps) => {
   const [subcat, setSubcat] = useQueryState('subcat', parseAsString)
+  const [openAccordions, setOpenAccordions] = React.useState<string[]>([])
+
+  // Initialize the accordion state based on the selected category
+  React.useEffect(() => {
+    if (subcat) {
+      const parentCategory = categories.find(({ children }) =>
+        children.some(({ slug }) => slug === subcat)
+      )
+      if (parentCategory) {
+        setOpenAccordions((prev) => [...prev, parentCategory.main.id])
+      }
+    }
+  }, [subcat, categories])
 
   const handleCategoryChange = React.useCallback(
     (value: string) => {
@@ -32,13 +45,27 @@ const BrandAccordion = ({ categories, label }: BrandAccordionProps) => {
     [setSubcat]
   )
 
+  const handleAccordionChange = (id: string) => {
+    setOpenAccordions((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    )
+  }
+
   return (
     <div className='py-4'>
       <h3 className='text-lg font-medium'>{label}</h3>
-      <Accordion type='multiple' className='space-y-2'>
+      <Accordion
+        type='multiple'
+        className='space-y-2'
+        value={openAccordions}
+        onValueChange={(values) => setOpenAccordions(values)}
+      >
         {categories.map(({ main, children }) => (
           <AccordionItem key={main.id} value={main.id}>
-            <AccordionTrigger className='font-medium'>
+            <AccordionTrigger
+              className='font-medium'
+              onClick={() => handleAccordionChange(main.id)}
+            >
               {main.name}
             </AccordionTrigger>
             <AccordionContent>

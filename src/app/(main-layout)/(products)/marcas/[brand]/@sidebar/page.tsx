@@ -1,4 +1,5 @@
 // * ASSETS IMPORTS
+import BackFilter from '@/components/AllProductPage/back-filter'
 import BrandAccordion from '@/components/AllProductPage/brand-accordion'
 import PriceRangeSlider from '@/components/AllProductPage/price-range-slider'
 import ResetFilters from '@/components/AllProductPage/reset-filters'
@@ -56,9 +57,12 @@ const ProductSidebar = async ({
           key={JSON.stringify(searchParamsKey)}
         >
           <SearchFilter />
-          <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
           <BrandAccordion categories={categoriesFilter} label='Categorias' />
-          <ResetFilters url={`/marcas/${brand}`} />
+          <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
+          <div className='flex w-full items-center justify-between'>
+            <ResetFilters url={`/marcas/${brand}`} />
+            <BackFilter />
+          </div>
         </nav>
       </aside>
 
@@ -86,7 +90,10 @@ const ProductSidebar = async ({
             <SearchFilter />
             <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
             <BrandAccordion categories={categoriesFilter} label='Categorias' />
-            <ResetFilters url={`/marcas/${brand}`} />
+            <div className='flex w-full items-center justify-between'>
+              <ResetFilters url={`/marcas/${brand}`} />
+              <BackFilter />
+            </div>
           </nav>
         </SheetContent>
       </Sheet>

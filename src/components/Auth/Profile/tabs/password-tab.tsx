@@ -65,7 +65,7 @@ const PasswordTab = ({ user }: { user: GET_USER_INFOResult }) => {
             <button
               type='submit'
               disabled={isSubmitting}
-              className='hover-200 h-[46px] w-full bg-accent font-bold text-gray-100 hover:text-gray-400'
+              className='hover-200 disabled: h-[46px] w-full bg-accent font-bold text-gray-100 hover:text-gray-400 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50'
               onClick={handleSubmit(onSubmit)}
             >
               {isSubmitting
@@ -74,9 +74,10 @@ const PasswordTab = ({ user }: { user: GET_USER_INFOResult }) => {
             </button>
             {isDirty && (
               <button
+                disabled={isSubmitting}
                 type='button'
                 onClick={() => reset()}
-                className='mb-5 h-[46px] w-full text-sm font-semibold sm:mb-0'
+                className='mb-5 h-[46px] w-full text-sm font-semibold disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 sm:mb-0'
               >
                 Cancelar
               </button>

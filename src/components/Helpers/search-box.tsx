@@ -65,7 +65,8 @@ const SearchedBoxCategories = ({
 }) => {
   const refactoredCategories = categories.map((category) => ({
     id: category.id,
-    name: category.name
+    name: category.name,
+    slug: category.slug
   }))
   return (
     <Select name='category'>
@@ -74,13 +75,13 @@ const SearchedBoxCategories = ({
       </SelectTrigger>
       <SelectContent className='w-[200px] rounded-none border-0 bg-white text-gray-700 shadow-none'>
         <SelectGroup>
-          {refactoredCategories.map((category) => (
+          {refactoredCategories.map(({ id, name, slug }) => (
             <SelectItem
-              value={category.name?.toLowerCase() || 'value-1'}
-              key={category.id}
+              value={slug || 'value-1'}
+              key={id}
               className='rounded-none text-gray-700 hover:bg-accent hover:text-white'
             >
-              {category.name}
+              {name}
             </SelectItem>
           ))}
         </SelectGroup>

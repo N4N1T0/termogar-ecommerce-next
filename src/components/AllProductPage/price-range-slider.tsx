@@ -7,6 +7,7 @@ import { useQueryStates, parseAsInteger } from 'nuqs'
 // * ASSETS IMPORTS
 import * as SliderPrimitive from '@radix-ui/react-slider'
 import { PriceRangeSliderProps } from '@/types'
+import { eurilize } from '@/lib/utils'
 
 const DEBOUNCE_DELAY = 300
 
@@ -45,8 +46,8 @@ const PriceRangeSlider = ({ min, max, step = 1 }: PriceRangeSliderProps) => {
         <SliderPrimitive.Thumb className='border-primary focus-visible:ring-ring block h-4 w-4 rounded-full border-[1px] bg-white ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50' />
       </SliderPrimitive.Root>
       <div className='text-muted-foreground flex justify-between text-sm'>
-        <span>Min: ${range.min}</span>
-        <span>Max: ${range.max}</span>
+        <span>Min: {eurilize(range.min)}</span>
+        <span>Max: {eurilize(range.max)}</span>
       </div>
     </div>
   )

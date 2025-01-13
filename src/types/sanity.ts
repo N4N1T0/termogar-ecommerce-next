@@ -142,27 +142,6 @@ export type Costumer = {
   }
 }
 
-export type Brand = {
-  _id: string
-  _type: 'brand'
-  _createdAt: string
-  _updatedAt: string
-  _rev: string
-  image?: {
-    asset?: {
-      _ref: string
-      _type: 'reference'
-      _weak?: boolean
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
-    }
-    hotspot?: SanityImageHotspot
-    crop?: SanityImageCrop
-    _type: 'image'
-  }
-  title?: string
-  link?: Slug
-}
-
 export type HomePage = {
   _id: string
   _type: 'homePage'
@@ -379,6 +358,12 @@ export type Product = {
   sku?: string
   ean?: string
   referenceCode?: string
+  brand?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'brand'
+  }
   status?: 'publish' | 'draft' | 'pending' | 'private'
   slug?: Slug
   link?: Slug
@@ -450,6 +435,7 @@ export type Product = {
     name?: string
     values?: Array<string>
   }
+  main?: boolean
   date?: string
   modified?: string
   content?: Array<
@@ -582,6 +568,27 @@ export type SanityFileAsset = {
   path?: string
   url?: string
   source?: SanityAssetSourceData
+}
+
+export type Brand = {
+  _id: string
+  _type: 'brand'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  title?: string
+  link?: Slug
 }
 
 export type Tag = {
@@ -890,7 +897,6 @@ export type AllSanitySchemaTypes =
   | Link
   | Address
   | Costumer
-  | Brand
   | HomePage
   | SubscriberNewsletter
   | Coupon
@@ -898,6 +904,7 @@ export type AllSanitySchemaTypes =
   | ProductCategory
   | Product
   | SanityFileAsset
+  | Brand
   | Tag
   | Post
   | ExternalImage
@@ -1050,7 +1057,7 @@ export type GET_COSTUMER_SERVICES_PAGEResult = {
   > | null
 } | null
 // Variable: GET_CARD_BLOG_POST
-// Query: *[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0][0...12] | order(date desc) {    "id": _id,  "featuredMedia": {    "url": featuredMedia.asset -> url,    "blur": featuredMedia.asset -> metadata.lqip  },  excerpt,  author->{    name,    "avatar": {      "url": avatar.asset -> url,    "blur": avatar.asset -> metadata.lqip    }  },  "slug": slug.current,  categories[]->{    name,    "id": _id,  },    title,    date  }
+// Query: *[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(_id) [0...12] {    "id": _id,  "featuredMedia": {    "url": featuredMedia.asset -> url,    "blur": featuredMedia.asset -> metadata.lqip  },  excerpt,  author->{    name,    "avatar": {      "url": avatar.asset -> url,    "blur": avatar.asset -> metadata.lqip    }  },  "slug": slug.current,  categories[]->{    name,    "id": _id,  },    title,    date  }
 export type GET_CARD_BLOG_POSTResult = Array<{
   id: string
   featuredMedia: {
@@ -1074,7 +1081,7 @@ export type GET_CARD_BLOG_POSTResult = Array<{
   date: string | null
 }>
 // Variable: GET_CARD_BLOG_POST_BY_TAGS
-// Query: *[_type =='post' && status == 'publish' && count((tags[]->slug.current)[@ in $slug]) > 0][0...24] | order(date desc) {    "id": _id,  "featuredMedia": {    "url": featuredMedia.asset -> url,    "blur": featuredMedia.asset -> metadata.lqip  },  excerpt,  author->{    name,    "avatar": {      "url": avatar.asset -> url,    "blur": avatar.asset -> metadata.lqip    }  },  "slug": slug.current,  categories[]->{    name,    "id": _id,  },    title,    date  }
+// Query: *[_type =='post' && status == 'publish' && count((tags[]->slug.current)[@ in $slug]) > 0] | order(_id) [0...12] {    "id": _id,  "featuredMedia": {    "url": featuredMedia.asset -> url,    "blur": featuredMedia.asset -> metadata.lqip  },  excerpt,  author->{    name,    "avatar": {      "url": avatar.asset -> url,    "blur": avatar.asset -> metadata.lqip    }  },  "slug": slug.current,  categories[]->{    name,    "id": _id,  },    title,    date  }
 export type GET_CARD_BLOG_POST_BY_TAGSResult = Array<{
   id: string
   featuredMedia: {
@@ -1098,7 +1105,7 @@ export type GET_CARD_BLOG_POST_BY_TAGSResult = Array<{
   date: string | null
 }>
 // Variable: GET_CARD_BLOG_POST_BY_CATEGORIES
-// Query: *[_type =='post' && status == 'publish' && count((categories[]->slug.current)[@ in $slug]) > 0][0...24] | order(date desc) {    "id": _id,  "featuredMedia": {    "url": featuredMedia.asset -> url,    "blur": featuredMedia.asset -> metadata.lqip  },  excerpt,  author->{    name,    "avatar": {      "url": avatar.asset -> url,    "blur": avatar.asset -> metadata.lqip    }  },  "slug": slug.current,  categories[]->{    name,    "id": _id,  },    title,    date  }
+// Query: *[_type =='post' && status == 'publish' && count((categories[]->slug.current)[@ in $slug]) > 0] | order(_id) [0...12] {    "id": _id,  "featuredMedia": {    "url": featuredMedia.asset -> url,    "blur": featuredMedia.asset -> metadata.lqip  },  excerpt,  author->{    name,    "avatar": {      "url": avatar.asset -> url,    "blur": avatar.asset -> metadata.lqip    }  },  "slug": slug.current,  categories[]->{    name,    "id": _id,  },    title,    date  }
 export type GET_CARD_BLOG_POST_BY_CATEGORIESResult = Array<{
   id: string
   featuredMedia: {
@@ -1122,7 +1129,7 @@ export type GET_CARD_BLOG_POST_BY_CATEGORIESResult = Array<{
   date: string | null
 }>
 // Variable: GET_LATEST_BLOG_POSTS_BY_CATEGORIES
-// Query: *[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0][0...3] | order(date desc) {    "id": _id,  "featuredMedia": {    "url": featuredMedia.asset -> url,    "blur": featuredMedia.asset -> metadata.lqip  },    title,    date,    "slug": slug.current  }
+// Query: *[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(_id) [0...3] {    "id": _id,  "featuredMedia": {    "url": featuredMedia.asset -> url,    "blur": featuredMedia.asset -> metadata.lqip  },    title,    date,    "slug": slug.current  }
 export type GET_LATEST_BLOG_POSTS_BY_CATEGORIESResult = Array<{
   id: string
   featuredMedia: {
@@ -1213,7 +1220,7 @@ export type GET_BLOG_ARTICLE_BY_SLUGResult = {
   }> | null
 } | null
 // Variable: GET_CARD_BLOG_POST_PAGINATION
-// Query: *[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0 && _id > $lastId][0...12] | order(date desc) {    "id": _id,  "featuredMedia": {    "url": featuredMedia.asset -> url,    "blur": featuredMedia.asset -> metadata.lqip  },  excerpt,  author->{    name,    "avatar": {      "url": avatar.asset -> url,    "blur": avatar.asset -> metadata.lqip    }  },  "slug": slug.current,  categories[]->{    name,    "id": _id,  },    title,    date  }
+// Query: *[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0 && _id > $lastId] | order(_id) [0...12] {    "id": _id,  "featuredMedia": {    "url": featuredMedia.asset -> url,    "blur": featuredMedia.asset -> metadata.lqip  },  excerpt,  author->{    name,    "avatar": {      "url": avatar.asset -> url,    "blur": avatar.asset -> metadata.lqip    }  },  "slug": slug.current,  categories[]->{    name,    "id": _id,  },    title,    date  }
 export type GET_CARD_BLOG_POST_PAGINATIONResult = Array<{
   id: string
   featuredMedia: {
@@ -2463,12 +2470,12 @@ declare module '@sanity/client' {
     '*[_type==\'productTag\'] | order(name asc){\n  "id": _id,\n  name,\n"slug": slug.current\n}': GET_ALL_TAGSResult
     '*[_type ==\'page\' && status == \'publish\']{\n  "id": _id,\n  "slug": slug.current,\n  "link": link.current,\n  title,\n}': GET_COSTUMER_SERVICES_SIDEBAR_MENUResult
     "*[_type =='page' && status == 'publish' && slug.current in $slug][0]{\n  title,\n  excerpt,\n  content\n}": GET_COSTUMER_SERVICES_PAGEResult
-    '*[_type ==\'post\' && status == \'publish\' && count((categories[]->name)[@ in $type]) > 0][0...12] | order(date desc) {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POSTResult
-    '*[_type ==\'post\' && status == \'publish\' && count((tags[]->slug.current)[@ in $slug]) > 0][0...24] | order(date desc) {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POST_BY_TAGSResult
-    '*[_type ==\'post\' && status == \'publish\' && count((categories[]->slug.current)[@ in $slug]) > 0][0...24] | order(date desc) {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POST_BY_CATEGORIESResult
-    '*[_type ==\'post\' && status == \'publish\' && count((categories[]->name)[@ in $type]) > 0][0...3] | order(date desc) {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n    title,\n    date,\n    "slug": slug.current\n  }': GET_LATEST_BLOG_POSTS_BY_CATEGORIESResult
+    '*[_type ==\'post\' && status == \'publish\' && count((categories[]->name)[@ in $type]) > 0] | order(_id) [0...12] {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POSTResult
+    '*[_type ==\'post\' && status == \'publish\' && count((tags[]->slug.current)[@ in $slug]) > 0] | order(_id) [0...12] {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POST_BY_TAGSResult
+    '*[_type ==\'post\' && status == \'publish\' && count((categories[]->slug.current)[@ in $slug]) > 0] | order(_id) [0...12] {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POST_BY_CATEGORIESResult
+    '*[_type ==\'post\' && status == \'publish\' && count((categories[]->name)[@ in $type]) > 0] | order(_id) [0...3] {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n    title,\n    date,\n    "slug": slug.current\n  }': GET_LATEST_BLOG_POSTS_BY_CATEGORIESResult
     '*[_type==\'post\' && status == \'publish\' && slug.current == $slug][0]{\n   "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n    "slug": slug.current,\n    "count": count(*[_type == \'post\' && status == \'publish\' && references(^._id)])\n  },\n    title,\n    date,\n    content,\n    tags[]->{\n    name,\n    "id": _id,\n    "slug": slug.current,\n    "count": count(*[_type == \'post\' && status == \'publish\' && references(^._id)])\n  },\n}': GET_BLOG_ARTICLE_BY_SLUGResult
-    '*[_type ==\'post\' && status == \'publish\' && count((categories[]->name)[@ in $type]) > 0 && _id > $lastId][0...12] | order(date desc) {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POST_PAGINATIONResult
+    '*[_type ==\'post\' && status == \'publish\' && count((categories[]->name)[@ in $type]) > 0 && _id > $lastId] | order(_id) [0...12] {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POST_PAGINATIONResult
     "count(*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0])": GET_TOTAL_BLOG_POSTResult
     '*[_type==\'brand\']{\n  "id": _id,\n  "slug": link.current,\n  "media": {\n    "url": image.asset->url,\n    "blur": image.asset->metadata.lqip\n  },\n  title\n}': GET_BRANDSResult
     '*[_type==\'product\' && status==\'publish\' && defined(price) && (title match $search || excerpt match $search) && count((productCategories[]->slug.current)[@ in $category]) > 0]{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  "brand": *[_type == \'brand\' && ^.title match title] {\n    title\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stockQuantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n},\n"hasLastMinute": defined(lastMinute)\n}': GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORYResult

@@ -16,5 +16,15 @@
 - [x] Fix Legal Mobile View
 - [x] Product Card Mobile View
 - [x] Fix Type Errors
-- [ ] Delete all the jsx
-- [ ] Add shipping Costs
+- [x] Delete all the jsx
+- [x] Ask Marian about TIPSA
+- [x] Fix the Emails Static Assets
+- [x] Why tsconfig.tsbuildinfo
+- [x] Auth Mobile View
+- [x] Fix the Blog Mobile View
+- [x] Fix the Categories View
+- [x] Fix the Brands View
+- [x] Fix the Tags View
+- [x] Fix Checkout Mobile View
+- [x] Fix Payment Mobile View
+- [ ] Look for the TODOS

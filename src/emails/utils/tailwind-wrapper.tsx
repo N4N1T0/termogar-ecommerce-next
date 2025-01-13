@@ -1,6 +1,4 @@
-import Facebook from '@/components/Helpers/icons/Facebook'
-import Instagram from '@/components/Helpers/icons/Instagram'
-import Youtube from '@/components/Helpers/icons/Youtube'
+import { Facebook, Instagram, Youtube } from 'lucide-react'
 import {
   Body,
   Container,
@@ -25,6 +23,7 @@ const TailwindWrapper = ({
   previewText: string
   children: React.ReactNode
 }) => {
+  // TODO: Add production URL
   const baseUrl =
     process.env.NODE_ENV !== 'production'
       ? 'http://localhost:3000'
@@ -63,15 +62,15 @@ const TailwindWrapper = ({
           }
         }}
       >
-        <Body className='mx-auto my-auto bg-white font-sans antialiased'>
-          <Container className='mx-auto my-[40px] rounded border border-solid border-gray-200 bg-white px-8'>
+        <Body className='mx-auto my-10 bg-gray-100 font-sans antialiased'>
+          <Container className='rounded border border-solid border-gray-200 bg-white px-8'>
             <Section className='pb-5 pt-10'>
               <Row>
                 <Column className='w-[45%]'>
                   <Link href={`${baseUrl}/`}>
                     <Img
-                      src='https://termogar-ecommerce-next.vercel.app/android-chrome-192x192.png'
-                      width='60'
+                      src='https://termogar-ecommerce-next.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftermogar_logo1-02.ebfa0838.png&w=256&q=75'
+                      width='140'
                       height='60'
                       alt='company-logo'
                       className='aspect-square'
@@ -115,8 +114,8 @@ const TailwindWrapper = ({
               <Row>
                 <Column className='w-[45%]'>
                   <Img
-                    src='https://termogar-ecommerce-next.vercel.app/android-chrome-192x192.png'
-                    width='60'
+                    src='https://termogar-ecommerce-next.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftermogar_logo1-02.ebfa0838.png&w=256&q=75'
+                    width='140'
                     height='60'
                     alt='company-logo'
                     className='aspect-square'
@@ -136,7 +135,7 @@ const TailwindWrapper = ({
                         target='_blank'
                         className='mr-2 flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
                       >
-                        <Facebook className='fill-gray-50 text-gray-50' />
+                        <Facebook className='text-gray-50' size={20} />
                       </Link>
                     </Column>
                     <Column>
@@ -144,7 +143,7 @@ const TailwindWrapper = ({
                         href='https://www.instagram.com/termogar.es/'
                         className='mr-2 flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
                       >
-                        <Instagram className='fill-gray-50 text-gray-50' />
+                        <Instagram className='text-gray-50' size={20} />
                       </Link>
                     </Column>
                     <Column>
@@ -152,7 +151,7 @@ const TailwindWrapper = ({
                         href='https://www.youtube.com/channel/UC2bX_gn3IX27PP2fyDpbhbg'
                         className='mr-2 flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
                       >
-                        <Youtube className='fill-gray-50 text-gray-50' />
+                        <Youtube className='text-gray-50' size={20} />
                       </Link>
                     </Column>
                   </Row>

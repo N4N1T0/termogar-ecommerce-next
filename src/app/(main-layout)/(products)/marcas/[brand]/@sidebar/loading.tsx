@@ -2,7 +2,7 @@ import { renderPulseDivs } from '@/lib/ui-utils'
 
 const SidebarLoading = () => {
   return (
-    <aside className='sticky top-0 m-4 hidden h-screen w-72 animate-pulse divide-y-[1px] overflow-y-auto text-balance bg-white px-4 pt-10 md:block'>
+    <aside className='sticky top-0 m-4 hidden h-screen w-72 animate-pulse space-y-3 divide-y-[1px] overflow-y-auto text-balance bg-white px-4 pt-10 md:block'>
       {renderPulseDivs(8, 'w-full rounded', 'h-20', 'sidebar-loading')}
     </aside>
   )

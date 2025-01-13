@@ -45,9 +45,12 @@ const LoginForm = ({
       })
       setForgotPassword(true)
     } else {
-      toast.success(response.message, {
-        duration: 4000
-      })
+      toast.success(
+        `${response.message} ${redirectTo && !Array.isArray(redirectTo) ? 'Tienda' : 'Pagina Principal'}`,
+        {
+          duration: 4000
+        }
+      )
       setTimeout(() => router.push(tempUrl), 2000)
     }
   }
@@ -104,7 +107,7 @@ const LoginForm = ({
               <button
                 disabled={isSubmitting}
                 type='submit'
-                className='hover-200 mb-3 flex h-[50px] w-full items-center justify-center bg-accent text-lg font-medium text-gray-900 hover:text-gray-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-75'
+                className='hover-200 mb-3 flex h-[50px] w-full items-center justify-center bg-accent text-lg font-medium text-gray-100 hover:text-gray-900 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-75'
               >
                 {isSubmitting ? 'iniciando...' : 'iniciar'}
               </button>
@@ -139,7 +142,7 @@ const LoginForm = ({
           <p className='font-normal text-gray-700'>
             No tienes cuenta?
             <Link
-              href='/signup'
+              href={`/signup?redirectTo=${tempUrl}`}
               className='hover-200 ml-2 text-accent hover:text-gray-900'
             >
               Regístrate gratis

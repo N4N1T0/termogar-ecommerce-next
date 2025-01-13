@@ -97,7 +97,7 @@ const ReviewForm = ({
           name='review_score'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Rating</FormLabel>
+              <FormLabel>Calificación</FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={(value) => field.onChange(parseInt(value, 10))}

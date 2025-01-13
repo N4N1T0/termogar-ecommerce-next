@@ -69,7 +69,7 @@ export default function ProductCardStyleOne<T>({
           blurDataURL={
             featuredMedia?.blur || PlaceholderProductCard.blurDataURL
           }
-          className='h-full w-full object-cover'
+          className='h-full w-full object-fill'
           width={500}
           height={500}
         />
@@ -129,7 +129,7 @@ export default function ProductCardStyleOne<T>({
             {eurilize(finalPrice)}
           </span>
           {/* Price with IVA */}
-          <span className='iva-price font-600 text-[16px] text-gray-800'>
+          <span className='iva-price font-600 ml-2 text-[16px] text-gray-800'>
             {eurilize(finalPriceWithIVA)}
             <small className='ml-1 text-[11px] font-normal underline'>
               IVA.

@@ -27,7 +27,7 @@ const BlogCard = ({ className, data, priority, type }: BlogCardProps) => {
           height={500}
           placeholder='blur'
           blurDataURL={data.featuredMedia.blur || PlaceholderSquare.blurDataURL}
-          className='h-full w-full object-cover'
+          className='h-full w-full object-fill'
           priority={priority}
         />
       </Link>
@@ -63,7 +63,9 @@ const BlogCard = ({ className, data, priority, type }: BlogCardProps) => {
           {/* view more btn */}
           <Link href={`/blog/articulos/${data.slug}`} className='text-tertiary'>
             <div className='flex items-center space-x-2'>
-              <span className='text-base font-semibold'>Ver el Post</span>
+              <span className='text-base font-semibold'>
+                Ver {type === 'blog' ? 'el articulo' : 'la noticia'}
+              </span>
               <ArrowRight className='h-6 w-6 transition-transform duration-150 ease-in group-hover:translate-x-2' />
             </div>
           </Link>

@@ -91,10 +91,22 @@ export default function CartPopup({ className }: { className?: string }) {
             <div className='h-[1px] bg-[#F0F1F3]'></div>
           </div>
           <div className='product-actions mb-[30px] px-4'>
-            <div className='total-equation mb-[28px] flex items-center justify-between'>
+            <div className='total-equation mb-[14px] flex items-center justify-between'>
               <span className='font-500 text-[15px] text-gray-900'>
                 Subtotal
               </span>
+              <span className='font-500 text-[15px] text-red-500'>
+                {eurilize(subtotal || 0)}
+              </span>
+            </div>
+            <div className='total-equation mb-[14px] flex items-center justify-between'>
+              <span className='font-500 text-[15px] text-gray-900'>Iva</span>
+              <span className='font-500 text-[15px] text-red-500'>
+                {eurilize(subtotal * 0.21 || 0)}
+              </span>
+            </div>
+            <div className='total-equation mb-[7px] flex items-center justify-between'>
+              <span className='font-500 text-[15px] text-gray-900'>Total</span>
               <span className='font-500 text-[15px] text-red-500'>
                 {eurilize(subtotal || 0)}
               </span>

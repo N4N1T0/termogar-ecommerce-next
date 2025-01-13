@@ -1,7 +1,7 @@
 'use server'
 
 // * ASSETS IMPORTS
-import { CostumerSchema, costumerSchema } from '@/lib/schemas'
+import { userProfileSchema, UserProfileSchema } from '@/lib/schemas'
 import { sanityClientWrite } from '@/sanity/lib/client'
 import { GET_USER_FOR_AUTH } from '@/sanity/lib/queries'
 import { AuthError } from 'next-auth'
@@ -10,13 +10,16 @@ import { Logger } from 'next-axiom'
 const log = new Logger()
 
 const userProfileUpdate = async (
-  values: CostumerSchema & { id: string | undefined; avatarUrl: string | null },
+  values: UserProfileSchema & {
+    id: string | undefined
+    avatarUrl: string | null
+  },
   isEmailDirty: boolean
 ) => {
   const { id, avatarUrl, ...dataToValidate } = values
 
   try {
-    const result = costumerSchema.safeParse(dataToValidate)
+    const result = userProfileSchema.safeParse(dataToValidate)
 
     if (!result.success) {
       log.error('Validation failed', { error: result.error.issues })

@@ -15,9 +15,10 @@ import { Pencil } from 'lucide-react'
 import { PlaceholderSquare } from '@/assets'
 
 // * UTILS IMPORTS
-import { costumerSchema, CostumerSchema } from '@/lib/schemas'
+import { userProfileSchema, UserProfileSchema } from '@/lib/schemas'
 import { GET_USER_INFOResult } from '@/types/sanity'
 import userProfileUpdate from '@/actions/user-profile-update'
+import Link from 'next/link'
 
 export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
   const [profileImg, setProfileImg] = React.useState<string | null>(null)
@@ -43,24 +44,14 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
     [setProfileImg]
   )
 
-  const form = useForm<CostumerSchema>({
-    resolver: zodResolver(costumerSchema),
+  const form = useForm<UserProfileSchema>({
+    resolver: zodResolver(userProfileSchema),
     defaultValues: {
       email: user?.email || '',
       firstName: user?.firstName || '',
       lastName: user?.lastName || '',
       userName: user?.userName || '',
       billingAddress: {
-        address1: user?.billingAddress?.address1 || '',
-        address2: user?.billingAddress?.address2 || '',
-        city: user?.billingAddress?.city || '',
-        postcode: user?.billingAddress?.postcode || '',
-        state: user?.billingAddress?.state || '',
-        email: user?.email || '',
-        phone: user?.billingAddress?.phone || '',
-        firstName: user?.firstName || ''
-      },
-      shippingAddresses: {
         address1: user?.billingAddress?.address1 || '',
         address2: user?.billingAddress?.address2 || '',
         city: user?.billingAddress?.city || '',
@@ -97,7 +88,7 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
     }
   }, [isDirty])
 
-  const onSubmit = async (values: CostumerSchema) => {
+  const onSubmit = async (values: UserProfileSchema) => {
     const refactoredValues = { ...values, id: user?.id, avatarUrl: profileImg }
     const isEmailDirty = form.getFieldState('email', form.formState).isDirty
     const response = await userProfileUpdate(refactoredValues, isEmailDirty)
@@ -110,7 +101,6 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
       toast.success(response?.message, {
         duration: 4000
       })
-      reset()
       router.refresh()
     }
   }
@@ -259,9 +249,10 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
                       blurDataURL={
                         user?.avatar?.blur || PlaceholderSquare.blurDataURL
                       }
-                      width={100}
-                      height={100}
+                      width={500}
+                      height={500}
                       className='h-full w-full object-cover'
+                      priority
                     />
                   </div>
                   <input
@@ -285,18 +276,27 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
           <button
             type='button'
             onClick={() => reset()}
-            className='hover-200 h-[50px] w-[164px] font-semibold text-red-500 hover:text-gray-900'
+            disabled={isSubmitting}
+            className='hover-200 h-[50px] w-[164px] bg-secondary text-gray-50 hover:text-gray-900 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50'
           >
             Cancelar
           </button>
-          {isDirty && (
+          {isDirty || profileImgInput.current ? (
             <button
+              disabled={isSubmitting}
               type='submit'
-              className='hover-200 h-[50px] w-[164px] bg-accent text-gray-50 hover:text-gray-900'
+              className='hover-200 h-[50px] w-[164px] bg-accent text-gray-50 hover:text-gray-900 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50'
             >
-              Actualizar
+              {isSubmitting ? 'Actualizando...' : 'Actualizar'}
             </button>
-          )}
+          ) : null}
+          <Link
+            aria-disabled={isSubmitting}
+            className='hover-200 flex h-[50px] w-[164px] items-center justify-center bg-secondary text-gray-50 hover:text-gray-900 aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
+            href='/'
+          >
+            Ir al Inicio
+          </Link>
         </div>
       </form>
     </Form>

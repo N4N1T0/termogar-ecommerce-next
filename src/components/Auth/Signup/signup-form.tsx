@@ -38,12 +38,16 @@ const SignupForm = ({
     const response = await signupAction(values)
 
     if (response.success) {
-      toast.success(response.message, {
-        duration: 4000
-      })
+      toast.success(
+        `${response.message} ${redirectTo && !Array.isArray(redirectTo) ? 'Tienda' : 'Pagina Principal'}`,
+        {
+          duration: 4000
+        }
+      )
       form.reset()
       setTimeout(() => router.push(tempUrl), 2000)
     } else {
+      console.log(response.message)
       toast.error(response.message, {
         duration: 5000
       })
@@ -94,7 +98,7 @@ const SignupForm = ({
             <button
               disabled={isSubmitting}
               type='submit'
-              className='hover-200 mb-3 flex h-[50px] w-full items-center justify-center bg-accent text-lg font-medium text-gray-900 hover:text-gray-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-75'
+              className='hover-200 mb-3 flex h-[50px] w-full items-center justify-center bg-accent text-lg font-medium text-gray-100 hover:text-gray-900 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-75'
             >
               {isSubmitting ? 'Registrando...' : 'Registrarse'}
             </button>

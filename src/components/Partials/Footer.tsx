@@ -92,7 +92,7 @@ const Footer = async () => {
                 {searchedCategories.map(({ id, slug, name }) => (
                   <li key={`desktop-category-${id}`}>
                     <Link href={`/categorias/${slug}`}>
-                      <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
+                      <span className='cursor-pointer border-b border-transparent text-[15px] text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                         {name}
                       </span>
                     </Link>
@@ -109,7 +109,7 @@ const Footer = async () => {
                   ({ id, name, slug }) => (
                     <li key={id}>
                       <Link href={`/${slug}`}>
-                        <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
+                        <span className='cursor-pointer border-b border-transparent text-[15px] text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                           {name}
                         </span>
                       </Link>
@@ -126,7 +126,7 @@ const Footer = async () => {
                 {footerLinks['Paginas Legales'].map(({ id, name, slug }) => (
                   <li key={id}>
                     <Link href={`/paginas-legales/${slug}`}>
-                      <span className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'>
+                      <span className='cursor-pointer border-b border-transparent text-[15px] text-gray-600 hover:border-gray-900 hover:text-gray-900'>
                         {name}
                       </span>
                     </Link>
@@ -148,7 +148,7 @@ const Footer = async () => {
                     <li key={`mobile-category-${id}`}>
                       <Link
                         href={`/categorias/${slug}`}
-                        className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'
+                        className='cursor-pointer border-b border-transparent text-[15px] text-gray-600 hover:border-gray-900 hover:text-gray-900'
                       >
                         {name}
                       </Link>
@@ -168,7 +168,7 @@ const Footer = async () => {
                       <li key={id}>
                         <Link
                           href={`/${slug}`}
-                          className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'
+                          className='cursor-pointer border-b border-transparent text-[15px] text-gray-600 hover:border-gray-900 hover:text-gray-900'
                         >
                           {name}
                         </Link>
@@ -188,7 +188,7 @@ const Footer = async () => {
                     <li key={id}>
                       <Link
                         href={`/paginas-legales/${slug}`}
-                        className='cursor-pointer border-b border-transparent text-[15px] capitalize text-gray-600 hover:border-gray-900 hover:text-gray-900'
+                        className='cursor-pointer border-b border-transparent text-[15px] text-gray-600 hover:border-gray-900 hover:text-gray-900'
                       >
                         {name}
                       </Link>
@@ -199,7 +199,7 @@ const Footer = async () => {
             </AccordionItem>
           </Accordion>
         </div>
-        <div className='items-center justify-between border-gray-500 py-3 text-gray-500 md:border-t lg:flex lg:h-[82px]'>
+        <div className='items-center justify-between border-gray-200 py-3 text-gray-500 md:border-t lg:flex lg:h-[82px]'>
           <div className='mb-3 flex items-center justify-between lg:space-x-5'>
             <small>termogar.es - PEREZEMMALVA SLU - CIF: B-72301666.</small>
             <small>
@@ -211,8 +211,9 @@ const Footer = async () => {
         </div>
 
         {/* Designer and developer */}
-        <div className='border-t border-gray-300 py-2 text-center text-gray-500'>
-          <small className='text-xs'>
+        <div className='border-t border-gray-200 py-2 text-center text-gray-500'>
+          <small>Copyright ©️2025 | TERMOGAR | PEREZEMMALVA SLU</small>
+          <small className='sr-only'>
             Created with <span className='text-red-500'>❤️</span>, powered by{' '}
             <Link
               href='https://nextjs.org/'

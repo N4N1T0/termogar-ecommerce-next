@@ -1,6 +1,11 @@
+// * NEXT.JS IMPORTS
+import { Metadata } from 'next'
+import Link from 'next/link'
+
+// * ASSETS IMPORTS
 import SignupForm from '@/components/Auth/Signup/signup-form'
 import Thumbnail from '@/components/Auth/Signup/thumbnail'
-import { Metadata } from 'next'
+import { ChevronLeft } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Registro',
@@ -20,6 +25,13 @@ const SignupPage = async ({
           Registro de Usuario
         </h1>
         <SignupForm redirectTo={redirectTo} />
+        <Link
+          href={redirectTo && !Array.isArray(redirectTo) ? redirectTo : '/'}
+          className='hover-200 mt-5 border-t border-accent pt-1 font-bold text-gray-900 hover:text-accent'
+        >
+          <ChevronLeft className='mr-1 inline h-5 w-5' />
+          Volver a la Tienda
+        </Link>
       </div>
       <div className='hidden h-full max-h-[500px] flex-1 items-center lg:block'>
         <Thumbnail />

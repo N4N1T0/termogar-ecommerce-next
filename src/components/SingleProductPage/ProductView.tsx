@@ -178,7 +178,7 @@ const ProductView = ({
                   ))}
               </div>
               <span className='text-sm font-normal text-gray-900'>
-                {product.reviews?.length} Reviews
+                {product.reviews?.length} Reseñas
               </span>
             </Link>
           ) : (

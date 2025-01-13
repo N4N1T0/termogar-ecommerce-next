@@ -35,7 +35,7 @@ const ResetPasswordPage = async ({
   if (!searchedUser) return notFound()
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gray-100 p-4'>
+    <main className='flex min-h-screen items-center justify-center bg-gray-100 p-4'>
       <div className='w-full max-w-md bg-white p-8 shadow-lg'>
         <div className='mb-4 text-center'>
           <Link href='/'>
@@ -53,7 +53,7 @@ const ResetPasswordPage = async ({
         </div>
         <ResetPasswordForm user={searchedUser} />
       </div>
-    </div>
+    </main>
   )
 }
 

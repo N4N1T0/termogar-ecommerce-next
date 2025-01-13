@@ -131,8 +131,13 @@ export const checkoutUser = z
     }
   })
 
+export const userProfileSchema = costumerSchema.omit({
+  shippingAddresses: true
+})
+
 // * TYPES
 export type RateReviewSchema = z.infer<typeof rateReviewSchema>
+export type UserProfileSchema = z.infer<typeof userProfileSchema>
 export type ReviewSchema = z.infer<typeof reviewSchema>
 export type ReportProductSchema = z.infer<typeof reportProductSchema>
 export type LoginSchema = z.infer<typeof loginSchema>

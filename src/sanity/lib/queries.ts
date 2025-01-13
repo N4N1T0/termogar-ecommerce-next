@@ -84,7 +84,7 @@ export const GET_COSTUMER_SERVICES_PAGE =
 
 // * BLOG QUERIES
 export const GET_CARD_BLOG_POST =
-  defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0][0...12] | order(date desc) {
+  defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(_id) [0...12] {
     "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset -> url,
@@ -108,7 +108,7 @@ export const GET_CARD_BLOG_POST =
   }`)
 
 export const GET_CARD_BLOG_POST_BY_TAGS =
-  defineQuery(`*[_type =='post' && status == 'publish' && count((tags[]->slug.current)[@ in $slug]) > 0][0...24] | order(date desc) {
+  defineQuery(`*[_type =='post' && status == 'publish' && count((tags[]->slug.current)[@ in $slug]) > 0] | order(_id) [0...12] {
     "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset -> url,
@@ -132,7 +132,7 @@ export const GET_CARD_BLOG_POST_BY_TAGS =
   }`)
 
 export const GET_CARD_BLOG_POST_BY_CATEGORIES =
-  defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->slug.current)[@ in $slug]) > 0][0...24] | order(date desc) {
+  defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->slug.current)[@ in $slug]) > 0] | order(_id) [0...12] {
     "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset -> url,
@@ -156,7 +156,7 @@ export const GET_CARD_BLOG_POST_BY_CATEGORIES =
   }`)
 
 export const GET_LATEST_BLOG_POSTS_BY_CATEGORIES =
-  defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0][0...3] | order(date desc) {
+  defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0] | order(_id) [0...3] {
     "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset -> url,
@@ -201,7 +201,7 @@ export const GET_BLOG_ARTICLE_BY_SLUG =
 }`)
 
 export const GET_CARD_BLOG_POST_PAGINATION =
-  defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0 && _id > $lastId][0...12] | order(date desc) {
+  defineQuery(`*[_type =='post' && status == 'publish' && count((categories[]->name)[@ in $type]) > 0 && _id > $lastId] | order(_id) [0...12] {
     "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset -> url,

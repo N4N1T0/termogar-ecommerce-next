@@ -111,7 +111,10 @@ const ProductSidebar = async ({
               />
             )}
             <PriceRangeSlider min={minPrice} max={maxPrice} step={10} />
-            <ResetFilters url={`/categorias/${category}`} />
+            <div className='flex w-full items-center justify-between'>
+              <ResetFilters url={`/categorias/${category}`} />
+              {!searchedData.main && <BackFilter />}
+            </div>
           </nav>
         </SheetContent>
       </Sheet>

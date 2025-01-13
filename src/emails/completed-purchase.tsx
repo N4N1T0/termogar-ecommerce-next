@@ -45,68 +45,76 @@ export const CompletedPurchase = ({
         Gracias por tu compra. Estamos emocionados de confirmar que tu pedido ha
         sido procesado con éxito.
       </Text>
-      {/* ORDER SUMMARY */}
-      <Section
-        className='mb-6 border p-6'
-        style={{ border: '1px solid #e5e7eb' }}
-      >
-        <Text className='mb-2 text-sm text-gray-700'>
-          <strong>Número de pedido:</strong> #{orderNumber}
-        </Text>
-        <Text className='mb-2 text-sm text-gray-700'>
-          <strong>Total:</strong> {eurilize(Number(totalAmount))}
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Iva:</strong> {eurilize(Number(iva))}
-        </Text>
-        {discountCoupon > 0 && (
-          <Text className='text-sm text-gray-700'>
-            <strong>Descuento por Cupon:</strong> -{discountCoupon}%{' '}
-            <span>
-              (-
-              {eurilize(
-                Number(totalAmount) / (1 - discountCoupon / 100) -
-                  Number(totalAmount)
-              )}
-              )
-            </span>
+      <div className='flex w-full gap-3'>
+        {/* ORDER SUMMARY */}
+        <Section
+          className='mb-6 border p-6'
+          style={{ border: '1px solid #e5e7eb' }}
+        >
+          <Text className='mb-4 text-xl text-accent'>
+            <strong>Datos del Pedido</strong>
           </Text>
-        )}
-        <Text className='text-sm text-gray-700'>
-          <strong>Fecha de compra:</strong> {purchaseDate}
-        </Text>
-      </Section>
+          <Text className='mb-2 text-sm text-gray-700'>
+            <strong>Número de pedido:</strong> #{orderNumber}
+          </Text>
+          <Text className='mb-2 text-sm text-gray-700'>
+            <strong>Total:</strong> {eurilize(Number(totalAmount))}
+          </Text>
+          <Text className='mb-2 text-sm text-gray-700'>
+            <strong>Subtotal:</strong> {eurilize(Number(totalAmount))}
+          </Text>
+          <Text className='text-sm text-gray-700'>
+            <strong>Iva:</strong> {eurilize(Number(iva))}
+          </Text>
+          {discountCoupon > 0 && (
+            <Text className='text-sm text-gray-700'>
+              <strong>Descuento por Cupon:</strong> -{discountCoupon}%{' '}
+              <span>
+                (-
+                {eurilize(
+                  Number(totalAmount) / (1 - discountCoupon / 100) -
+                    Number(totalAmount)
+                )}
+                )
+              </span>
+            </Text>
+          )}
+          <Text className='text-sm text-gray-700'>
+            <strong>Fecha:</strong> {purchaseDate}
+          </Text>
+        </Section>
 
-      {/* New Section for Shipping Information */}
-      <Section
-        className='mb-6 mt-3 p-6'
-        style={{ border: '1px solid #e5e7eb' }}
-      >
-        <Text className='mb-4 text-xl text-accent'>
-          <strong>Datos de Facturación</strong>
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Nombre:</strong> {user?.firstName || ''}
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Email:</strong> {user?.email || ''}
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Teléfono:</strong> {billingAddress?.phone || ''}
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Calle:</strong> {billingAddress.address1}
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Piso:</strong> {billingAddress.address2}
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Código Postal:</strong> {billingAddress.postcode}
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Localidad:</strong> {billingAddress.city}
-        </Text>
-      </Section>
+        {/* New Section for Shipping Information */}
+        <Section
+          className='mb-6 h-full p-6'
+          style={{ border: '1px solid #e5e7eb' }}
+        >
+          <Text className='mb-4 text-xl text-accent'>
+            <strong>Datos de Facturación</strong>
+          </Text>
+          <Text className='text-sm text-gray-700'>
+            <strong>Nombre:</strong> {user?.firstName || ''}
+          </Text>
+          <Text className='text-sm text-gray-700'>
+            <strong>Email:</strong> {user?.email || ''}
+          </Text>
+          <Text className='text-sm text-gray-700'>
+            <strong>Teléfono:</strong> {billingAddress?.phone || ''}
+          </Text>
+          <Text className='text-sm text-gray-700'>
+            <strong>Calle:</strong> {billingAddress.address1}
+          </Text>
+          <Text className='text-sm text-gray-700'>
+            <strong>Piso:</strong> {billingAddress.address2}
+          </Text>
+          <Text className='text-sm text-gray-700'>
+            <strong>Código Postal:</strong> {billingAddress.postcode}
+          </Text>
+          <Text className='text-sm text-gray-700'>
+            <strong>Localidad:</strong> {billingAddress.city}
+          </Text>
+        </Section>
+      </div>
 
       {/* New Section for Shipping Information */}
       <Section
@@ -116,18 +124,30 @@ export const CompletedPurchase = ({
         <Text className='mb-4 text-xl text-accent'>
           <strong>Datos del Envío</strong>
         </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Calle:</strong> {shippingAddress?.address1 || ''}
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Piso:</strong> {shippingAddress?.address2 || ''}
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Código Postal:</strong> {shippingAddress?.postcode || ''}
-        </Text>
-        <Text className='text-sm text-gray-700'>
-          <strong>Localidad:</strong> {shippingAddress?.state || ''}
-        </Text>
+        <div className='flex w-full flex-row gap-3'>
+          <div className='flex-1'>
+            <Text className='text-sm text-gray-700'>
+              <strong>Nombre:</strong> {shippingAddress?.firstName || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Email:</strong> {shippingAddress?.email || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Piso:</strong> {shippingAddress?.address2 || ''}
+            </Text>
+          </div>
+          <div className='flex-1'>
+            <Text className='text-sm text-gray-700'>
+              <strong>Calle:</strong> {shippingAddress?.address1 || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Código Postal:</strong> {shippingAddress?.postcode || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
+              <strong>Localidad:</strong> {shippingAddress?.state || ''}
+            </Text>
+          </div>
+        </div>
       </Section>
 
       <Section
@@ -171,7 +191,7 @@ export const CompletedPurchase = ({
         </table>
       </Section>
 
-      {gateway === 'Transferencia' && (
+      {gateway === 'transferencia-bancaria-directa' && (
         <>
           <Text className='text-gray-800'>
             Si has elegido pagar mediante transferencia, solo tienes que
@@ -195,14 +215,33 @@ export const CompletedPurchase = ({
 
 CompletedPurchase.PreviewProps = {
   orderNumber: '12345',
-  totalAmount: 'N/A',
-  purchaseDate: new Date().toLocaleString('es-ES'),
+  totalAmount: 2000,
+  purchaseDate: new Date().toLocaleDateString('es-ES'),
   products: [],
   gateway: 'Transferencia',
-  user: '',
-  iva: 'N/A',
-  shippingAddress: {},
-  billingAddress: {},
+  user: {
+    firstName: 'John Doe',
+    email: 'rB4Qs@example.com'
+  },
+  iva: 2000 * 0.21,
+  shippingAddress: {
+    address1: '123 Main St',
+    address2: 'Apt 4B',
+    city: 'New York',
+    state: 'NY',
+    postcode: '10001',
+    country: 'United States',
+    phone: '123-456-7890'
+  },
+  billingAddress: {
+    address1: '123 Main St',
+    address2: 'Apt 4B',
+    city: 'New York',
+    state: 'NY',
+    postcode: '10001',
+    country: 'United States',
+    phone: '123-456-7890'
+  },
   discountCoupon: 0
 } as unknown as CompletedPurchaseProps
 

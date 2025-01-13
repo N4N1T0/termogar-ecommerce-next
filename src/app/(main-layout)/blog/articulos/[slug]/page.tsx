@@ -94,7 +94,7 @@ const BogArticlePage = async ({
                 searchedPostArticule.featuredMedia.blur ||
                 PlaceholderBlogPost.blurDataURL
               }
-              className='h-full w-full object-cover'
+              className='h-full w-full object-fill'
             />
           </div>
           <div className='px-6 pt-6'>

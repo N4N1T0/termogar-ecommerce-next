@@ -97,6 +97,13 @@ const OrderDialog = ({
                   </dd>
                   <dt className='font-medium'>Monto Total:</dt>
                   <dd>{eurilize(orderInfo.totalAmount || 0)}</dd>
+                  <dt className='font-medium'>Iva:</dt>
+                  <dd>
+                    {eurilize(
+                      (orderInfo.totalAmount && orderInfo.totalAmount * 0.21) ||
+                        0
+                    )}
+                  </dd>
                   <dt className='font-medium'>Status:</dt>
                   <dd>{orderInfo.status}</dd>
                 </div>
