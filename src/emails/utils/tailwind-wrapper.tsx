@@ -26,7 +26,7 @@ const TailwindWrapper = ({
   children: React.ReactNode
 }) => {
   const baseUrl =
-    process.env.CI !== 'production'
+    process.env.NODE_ENV !== 'production'
       ? 'http://localhost:3000'
       : 'https://termogar-ecommerce-next.vercel.app'
 
