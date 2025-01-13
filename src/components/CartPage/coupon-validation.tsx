@@ -26,7 +26,6 @@ const CouponValidation = ({
 }) => {
   const [isPending, setIsPending] = React.useState(false)
 
-  // TODO: Make an server action
   const handleCouponValidationSubmit = async (
     e: FormEvent<HTMLFormElement>
   ) => {

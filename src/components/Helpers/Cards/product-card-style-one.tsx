@@ -104,7 +104,7 @@ export default function ProductCardStyleOne<T>({
         )}
       </div>
 
-      <div className='product-card-details relative px-[30px] pb-[20px]'>
+      <div className='product-card-details relative px-5 pb-3 md:px-7 md:pb-5'>
         {/* Add to Cart Button */}
         <div className='absolute left-0 top-40 hidden h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px] md:block'>
           <AddToCart product={refactoredDatas} />
@@ -140,7 +140,7 @@ export default function ProductCardStyleOne<T>({
 
       {/* QUICK ACCESS BTN MOBILE */}
       <div
-        className='flex w-full items-center justify-start gap-3 pb-3 pl-[3px] md:hidden'
+        className='flex w-full items-center justify-start gap-3 pb-3 pl-5 md:hidden'
         aria-label='Quick Access'
       >
         <WishlistBtn product={updatedDatas} />
@@ -149,7 +149,7 @@ export default function ProductCardStyleOne<T>({
 
       {/* QUICK ACCESS BTN DESKTOP */}
       <div
-        className='quick-access-btns absolute -right-10 top-20 flex flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:right-4'
+        className='quick-access-btns absolute -right-10 top-20 hidden flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:right-4 md:flex'
         aria-label='Quick Access'
       >
         <ProductQuickViewDynamic data={updatedDatas} />

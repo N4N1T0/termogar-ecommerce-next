@@ -41,7 +41,7 @@ const CartClientPage = () => {
       <div className='w-full justify-end sm:flex'>
         <div className='flex items-center space-x-2.5'>
           <Link href='/'>
-            <div className='hover-200 flex h-[50px] w-[220px] items-center justify-center bg-accent text-white hover:text-gray-900'>
+            <div className='hover-200 flex h-[50px] w-[220px] items-center justify-center bg-secondary text-white hover:text-gray-900'>
               <span className='text-sm font-semibold'>Continuar Comprando</span>
             </div>
           </Link>

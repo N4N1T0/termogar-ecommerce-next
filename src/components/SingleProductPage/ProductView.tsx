@@ -3,7 +3,7 @@
 // * NEXT.JS IMPORTS
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import React from 'react'
 import { usePathname } from 'next/navigation'
 
 // * ASSETS IMPORTS
@@ -29,11 +29,11 @@ const ProductView = ({
     reviews: YoptopReviews | undefined
   }
 }) => {
-  const [imgUrl, setImgUrl] = useState({
+  const [imgUrl, setImgUrl] = React.useState({
     url: product?.featuredMedia.url,
     blur: product?.featuredMedia.blur
   })
-  const [type, setType] = useState<string | null>(null)
+  const [type, setType] = React.useState<string | null>(null)
   const path = usePathname()
 
   if (!product) {
@@ -130,7 +130,7 @@ const ProductView = ({
         </div>
       </div>
 
-      <div className='flex-1'>
+      <div className='flex-1 px-7 md:px-0'>
         <div className='product-details mt-10 w-full lg:mt-0'>
           {/* CATEGORIES */}
           <div
@@ -236,7 +236,7 @@ const ProductView = ({
                     key={id}
                     className='hover-200 underline hover:text-accent'
                   >
-                    <Link href={`/etiqueta/${slug}`}>{name}</Link>
+                    <Link href={`/etiquetas/${slug}`}>{name}</Link>
                   </li>
                 ))}
               </ul>

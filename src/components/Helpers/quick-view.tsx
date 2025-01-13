@@ -23,13 +23,16 @@ import { CartItemType, ProductQuickViewProps, YoptopReviews } from '@/types'
 import { calculateAverageRating, eurilize } from '@/lib/utils'
 import { PortableText } from 'next-sanity'
 import { yoptop } from '@/lib/fetchers'
+import OptionSelect from '../SingleProductPage/option-select'
 
 const ProductQuickView = ({ data }: ProductQuickViewProps) => {
-  const { sale, price, categories, content, excerpt, tags } = data
+  const { sale, price, categories, content, excerpt, tags, options } = data
 
   const [reviews, setReviews] = React.useState<
     YoptopReviews | null | undefined
   >(null)
+  const [type, setType] = React.useState<string | null>(null)
+
   const [score, setScore] = React.useState(0)
 
   React.useEffect(() => {
@@ -48,7 +51,7 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
   const refactoredDatas: CartItemType = {
     ...data,
     quantity: 1,
-    selectedOption: (data.options?.values && data.options.values[0]) || ''
+    selectedOption: type || (options?.values && options?.values[0]) || ''
   }
 
   return (
@@ -149,7 +152,8 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
               ) : (
                 <p className='text-xl text-gray-700'>{excerpt}</p>
               )}
-              {/* TODO: ADD OPTIONS */}
+              {/* OPTIONS */}
+              {options && <OptionSelect options={options} setType={setType} />}
             </div>
             <div className='bg-background sticky bottom-0 flex gap-3 border-t p-3 md:p-5'>
               <AddToCart product={refactoredDatas} showQuantity />
