@@ -15,7 +15,7 @@ const SignupPage = async ({
   const { redirectTo } = await searchParams
   return (
     <main className='container-x mx-auto h-full min-h-[90vh] w-full items-center gap-5 py-10 lg:flex'>
-      <div className='flex min-h-[500px] w-full flex-1 flex-col items-center justify-center bg-gray-100 text-center'>
+      <div className='flex min-h-[500px] w-full flex-1 flex-col items-center justify-center bg-gray-100 px-10 text-center md:px-0'>
         <h1 className='mb-1 border-b border-accent text-[30px] font-bold leading-[74px] text-gray-900'>
           Registro de Usuario
         </h1>
