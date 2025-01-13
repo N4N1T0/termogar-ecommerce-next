@@ -85,7 +85,7 @@ const BlogPage = async ({
       </div>
       <div className='w-full py-[60px]'>
         <div className='container-x mx-auto'>
-          <div className='grid w-full grid-cols-1 gap-5 md:grid-cols-2 lg:gap-[30px] xl:grid-cols-3'>
+          <div className='grid w-full grid-cols-1 gap-5 px-5 md:grid-cols-2 md:px-0 lg:gap-[30px] xl:grid-cols-3'>
             {blogPosts.map((post, index) => (
               <BlogCard
                 type='blog'

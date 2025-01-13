@@ -79,10 +79,10 @@ const CategoriesPage = async ({
       <BreadcrumbCom
         paths={[
           { name: 'P. Principal', path: '/' },
-          { name: 'Etiquetas', path: '/etiqueta' },
+          { name: 'Etiquetas', path: '/etiquetas' },
           {
             name: searchedTag.name || 'Sin Etiqueta',
-            path: `/etiqueta/${tag}`
+            path: `/etiquetas/${tag}`
           }
         ]}
         className='mt-5 md:mt-10'

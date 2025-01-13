@@ -59,11 +59,12 @@ const TagsPage = async ({
         ]}
       />
       <Form action='' className='mt-5 flex w-full justify-end'>
-        <fieldset className='flex w-1/3 items-center gap-3'>
+        <fieldset className='flex w-full items-center justify-end gap-3 md:w-1/3'>
           <Input
             type='text'
             name='search'
             id='search'
+            defaultValue={search || ''}
             placeholder='Buscar'
             className='h-[40px] w-full flex-1 rounded-none bg-gray-200 pl-5 placeholder:text-gray-500 focus:outline-none focus:ring-0'
           />
@@ -79,7 +80,7 @@ const TagsPage = async ({
         {refactoredTags.map(({ id, name, slug }) => (
           <Link
             key={id}
-            href={`/etiqueta/${slug}`}
+            href={`/etiquetas/${slug}`}
             className='hover-200 flex flex-col items-center border border-gray-300 p-4 hover:bg-accent hover:text-gray-100'
           >
             {name}

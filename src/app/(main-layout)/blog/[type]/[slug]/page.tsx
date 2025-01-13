@@ -90,7 +90,7 @@ const CategoriesOrTagPage = async ({
       <div className='w-full py-[60px]'>
         <div className='container-x mx-auto'>
           <div className='w-full'>
-            <div className='grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-[30px] xl:grid-cols-3'>
+            <div className='grid grid-cols-1 gap-5 px-5 md:grid-cols-2 md:px-0 lg:gap-[30px] xl:grid-cols-3'>
               {blogPosts.map((post, index) => (
                 <div data-aos='fade-up' className='item w-full' key={post.id}>
                   <BlogCard type='blog' data={post} priority={index < 6} />
