@@ -1,3 +1,4 @@
+import { renderPulseDivs } from '@/lib/ui-utils'
 import React from 'react'
 
 const BlogArticleLoading = () => {
@@ -9,14 +10,11 @@ const BlogArticleLoading = () => {
       <div className='container-x mx-auto w-full'>
         <div className='mb-7 lg:flex lg:space-x-8'>
           <div className='flex-1 space-y-5'>
-            <div className='h-[457px] w-full bg-gray-200' />
-            <div className='h-[225px] w-full bg-gray-200' />
-            <div className='h-[225px] w-full bg-gray-200' />
+            {renderPulseDivs(3, '457px', 'full', 'blog-loading')}
+            {renderPulseDivs(3, '225px', 'full', 'blog-loading-2')}
           </div>
           <div className='w-64 space-y-5'>
-            <div className='h-64 w-full rounded bg-gray-200' />
-            <div className='h-64 w-full rounded bg-gray-200' />
-            <div className='h-64 w-full rounded bg-gray-200' />
+            {renderPulseDivs(3, '64', 'full', 'blog-loading-3')}
           </div>
         </div>
       </div>
