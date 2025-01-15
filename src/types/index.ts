@@ -17,6 +17,8 @@ export interface SectionStyleOneProps {
   sectionTitle: string | null | undefined
 }
 
+export type DimensionKey = 'height' | 'width' | 'length' | 'weight'
+
 export type SectionStyleTwoProps = Omit<
   SectionStyleOneProps,
   'categoryTitle' | 'brands' | 'categoryBackground'
@@ -131,8 +133,11 @@ export interface ProductCardType {
     alt?: Content | null
   } | null
   options: {
-    name?: string
-    values?: string[]
+    name: string | null
+    values: Array<{
+      value: string | null
+      slug: string | null
+    }> | null
   } | null
   date: string | null
   tags: { id: string; name: string | null; slug: string | null }[] | null

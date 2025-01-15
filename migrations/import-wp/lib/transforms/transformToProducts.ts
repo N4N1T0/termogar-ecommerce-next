@@ -150,9 +150,9 @@ export async function transformToProduct(
 
     if (documentInfo && documentInfo.value.length > 0) {
       if (existingDocuments[documentInfo?.id]) {
-        doc.downloads = sanityIdToDocumentReference(
-          existingDocuments[documentInfo?.id]
-        )
+        doc.downloads = [
+          sanityIdToDocumentReference(existingDocuments[documentInfo?.id])
+        ]
       } else {
         // Retrieve image details from WordPress
         const metadata = await wpDocumentsFetch(
@@ -169,7 +169,7 @@ export async function transformToProduct(
           )
 
           if (asset) {
-            doc.downloads = sanityIdToDocumentReference(asset._id)
+            doc.downloads = [sanityIdToDocumentReference(asset._id)]
             existingDocuments[documentInfo?.id] = asset._id
           }
         }
@@ -216,13 +216,6 @@ export async function transformToProduct(
       weight: Number(wpDoc.weight),
       // @ts-expect-error ignore
       alt: altDimensions
-    }
-  }
-
-  if (Array.isArray(wpDoc.attributes) && wpDoc.attributes.length > 0) {
-    doc.options = {
-      name: wpDoc.attributes[0].name,
-      values: wpDoc.attributes[0].options.map((option) => option)
     }
   }
 

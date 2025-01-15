@@ -699,7 +699,13 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
   createdAt,
   dimensions,
   "stockQuantity": stockQuantity,
-  options,
+  "options": options{
+  name,
+  "values": values[]{
+    value,
+    "slug": reference->slug.current
+  }
+},
   date,
   "tags": productTag[]->{
     "id": _id,
@@ -710,9 +716,9 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
   "url": url,
   "blur": metadata.lqip
 },
-"downloads": downloads.asset->{
-    title,
-    url
+"downloads": downloads[]{
+    "title": asset->title,
+    "url": asset->url
   },
 variations,
 "relatedProducts": relatedProducts[]->{

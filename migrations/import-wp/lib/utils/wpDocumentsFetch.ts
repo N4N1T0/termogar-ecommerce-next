@@ -1,9 +1,9 @@
-import { Product } from '@/types/sanity'
 import type {
   SanityAssetDocument,
   SanityClient,
   UploadClientConfig
 } from '@sanity/client'
+import { uuid } from '@sanity/uuid'
 import { Readable } from 'stream'
 
 // Get WordPress' asset metadata about an image by its ID
@@ -52,10 +52,19 @@ export async function sanityFetchDocuments(client: SanityClient) {
   return existingDocuments
 }
 
-export function sanityIdToDocumentReference(id: string): Product['downloads'] {
+export function sanityIdToDocumentReference(id: string): {
+  asset?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+  }
+  _type: 'file'
+  _key: string
+} {
   return {
     _type: 'file',
-    asset: { _type: 'reference', _ref: id }
+    asset: { _type: 'reference', _ref: id, _weak: true },
+    _key: uuid()
   }
 }
 

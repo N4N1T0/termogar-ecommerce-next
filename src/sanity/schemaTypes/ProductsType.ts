@@ -51,7 +51,8 @@ export const productType = defineType({
           { title: 'Pendiente', value: 'pending' },
           { title: 'Privado', value: 'private' }
         ]
-      }
+      },
+      initialValue: 'draft'
     }),
     defineField({
       name: 'slug',
@@ -102,7 +103,8 @@ export const productType = defineType({
     }),
     defineField({
       name: 'downloads',
-      type: 'file',
+      type: 'array',
+      of: [{ type: 'file' }],
       title: 'Descargas',
       description: 'Las descargas del producto.'
     }),
@@ -115,22 +117,26 @@ export const productType = defineType({
         defineField({
           name: 'length',
           type: 'number',
-          title: 'Longitud'
+          title: 'Longitud',
+          initialValue: 0
         }),
         defineField({
           name: 'width',
           type: 'number',
-          title: 'Anchura'
+          title: 'Anchura',
+          initialValue: 0
         }),
         defineField({
           name: 'height',
           type: 'number',
-          title: 'Altura'
+          title: 'Altura',
+          initialValue: 0
         }),
         defineField({
           name: 'weight',
           type: 'number',
-          title: 'Peso'
+          title: 'Peso',
+          initialValue: 0
         }),
         defineField({
           name: 'alt',
@@ -154,8 +160,29 @@ export const productType = defineType({
         defineField({
           name: 'values',
           type: 'array',
-          title: 'Valores',
-          of: [{ type: 'string' }]
+          title: 'Valores y Referencia',
+          of: [
+            defineField({
+              name: 'values',
+              type: 'object',
+              fields: [
+                { type: 'string', name: 'value', title: 'Valor' },
+                {
+                  type: 'reference',
+                  to: [{ type: 'product' }],
+                  name: 'reference',
+                  title: 'Referencia'
+                }
+              ],
+              preview: {
+                select: {
+                  title: 'value',
+                  subtitle: 'reference.title',
+                  media: 'reference.featuredMedia'
+                }
+              }
+            })
+          ]
         })
       ]
     }),
@@ -204,6 +231,12 @@ export const productType = defineType({
       title: 'Imágenes Relacionadas',
       description: 'Las imágenes relacionadas del producto.',
       of: [{ type: 'image' }]
+    }),
+    defineField({
+      name: 'youtube',
+      type: 'url',
+      title: 'YouTube',
+      description: 'Enlace de YouTube del producto.'
     }),
     defineField({
       name: 'stockQuantity',
