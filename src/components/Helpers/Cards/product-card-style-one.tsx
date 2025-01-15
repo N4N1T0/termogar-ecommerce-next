@@ -29,7 +29,7 @@ export default function ProductCardStyleOne<T>({
 
   const isOnSale = sale && isWithinSalePeriod(sale)
   const remainingStock =
-    stockQuantity && stockQuantity < 3 ? stockQuantity : null
+    stockQuantity && stockQuantity < 4 ? stockQuantity : null
 
   // Calculate Prices
   const getDiscountedPrice = (basePrice: number): number =>
@@ -52,7 +52,8 @@ export default function ProductCardStyleOne<T>({
     ...updatedDatas,
     quantity: 1,
     selectedOption:
-      (updatedDatas.options?.values && updatedDatas.options.values[0]) || ''
+      (updatedDatas.options?.values && updatedDatas.options.values[0].value) ||
+      ''
   }
   return (
     <div
@@ -77,17 +78,17 @@ export default function ProductCardStyleOne<T>({
         {/* Stock Alert */}
         {remainingStock && !sale && (
           <div className='absolute left-0 top-3 w-full px-[30px]'>
-            <div className='progress-title flex justify-between'>
+            <div className='justify-start0 flex'>
               <p className='text-qblack font-400 text-xs leading-6'>
                 Quedan Pocos
               </p>
-              <span className='text-qblack font-600 text-sm leading-6'>
+              <span className='text-qblack font-600 ml-2 text-sm leading-6'>
                 {remainingStock}
               </span>
             </div>
-            <div className='progress bg-primarygray relative h-[5px] w-full overflow-hidden rounded-[22px]'>
+            <div className='progress relative h-[5px] w-full overflow-hidden rounded-[22px] bg-gray-200'>
               <div
-                style={{ width: `${remainingStock * 20}%` }}
+                style={{ width: `${remainingStock * 25}%` }}
                 className='absolute left-0 top-0 h-full bg-secondary'
               ></div>
             </div>

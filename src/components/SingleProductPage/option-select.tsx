@@ -1,3 +1,10 @@
+'use client'
+
+// * NEXT.JS IMPORTS
+import { useRouter } from 'next/navigation'
+import React from 'react'
+
+// * ASSETS IMPORTS
 import {
   Select,
   SelectContent,
@@ -12,12 +19,23 @@ const OptionSelect = ({
   setType
 }: {
   options: {
-    name?: string
-    values?: Array<string>
+    name: string | null
+    values: Array<{
+      value: string | null
+      slug: string | null
+    }> | null
   }
   defaultValue?: string | null | undefined
   setType: (e: string) => void
 }) => {
+  const router = useRouter()
+
+  React.useEffect(() => {
+    options.values?.forEach(({ slug }) => {
+      router.prefetch(`/product/${slug}`)
+    })
+  }, [options.values, router])
+
   return (
     <div data-aos='fade-up' className='product-size'>
       {!defaultValue && (
@@ -30,13 +48,13 @@ const OptionSelect = ({
           <SelectValue placeholder={defaultValue || options.name} />
         </SelectTrigger>
         <SelectContent className='rounded-none bg-white'>
-          {options.values?.map((item) => (
+          {options.values?.map(({ value }) => (
             <SelectItem
-              value={item}
-              key={item}
+              value={value || ''}
+              key={value || ''}
               className='rounded-none uppercase'
             >
-              {item}
+              {value}
             </SelectItem>
           ))}
         </SelectContent>

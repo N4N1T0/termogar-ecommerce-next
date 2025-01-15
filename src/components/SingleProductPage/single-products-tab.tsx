@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 // * UTILS IMPORTS
-import { YoptopReviews } from '@/types'
+import { DimensionKey, YoptopReviews } from '@/types'
 import { User } from 'next-auth'
 import { PortableText } from 'next-sanity'
 import { GET_WHOLE_PRODUCT_BY_SLUGResult } from '@/types/sanity'
@@ -68,6 +68,10 @@ const SingleProductTabs = ({
 }) => {
   if (!product) return null
 
+  const noDimension = !(
+    ['height', 'width', 'length', 'weight'] as DimensionKey[]
+  ).some((key) => product.dimensions?.[key] && product.dimensions[key]! > 0)
+
   return (
     <Tabs defaultValue='des' className='mt-10 w-full pb-[60px]' id='tabs'>
       {/* Tab Buttons */}
@@ -118,48 +122,55 @@ const SingleProductTabs = ({
 
         {/* Sizes Tab */}
         <TabsContent value='sizes' className='tab-content-item w-full'>
-          <div data-aos='fade-up'>
-            {product.dimensions ? (
-              <>
-                <span className='text-3xl text-gray-900'>Dimensiones :</span>
+          <div
+            data-aos='fade-up'
+            className='grid grid-cols-2 gap-5 divide-x-2 divide-gray-200 md:grid-cols-3 xl:grid-cols-4'
+          >
+            {noDimension ? (
+              <div>
                 {product?.dimensions?.alt ? (
                   <PortableText value={product?.dimensions?.alt} />
                 ) : (
-                  <span className='flex w-full gap-2'>
-                    {product?.dimensions?.height || 'N/D'} X{' '}
-                    {product?.dimensions?.width || 'N/D'} X{' '}
-                    {product?.dimensions?.length || 'N/D'}
-                  </span>
+                  <h3 className='w-full bg-white p-5 text-center text-xl'>
+                    Aun no tenemos Medidas de este Producto, Pronto lo
+                    actualizaremos
+                  </h3>
                 )}
-              </>
+              </div>
             ) : (
-              <h3 className='w-full bg-white p-5 text-center text-xl'>
-                Aun no tenemos Medidas de este Producto, Pronto lo
-                actualizaremos
-              </h3>
+              <div className='w-full'>
+                <span className='text-2xl text-gray-900'>Dimensiones :</span>
+                <span className='ml-2 text-xl'>
+                  {product?.dimensions?.height || 'N/D'} X{' '}
+                  {product?.dimensions?.width || 'N/D'} X{' '}
+                  {product?.dimensions?.length || 'N/D'}
+                </span>
+              </div>
+            )}
+            {product.ean && (
+              <div className='w-full pl-3'>
+                <span className='text-2xl text-gray-900'>EAN :</span>
+                <span className='ml-2 text-xl'>{product.ean}</span>
+              </div>
+            )}
+            {product.referenceCode && (
+              <div className='w-full pl-3'>
+                <span className='text-2xl text-gray-900'>
+                  Código de Referencia :
+                </span>
+                <span className='ml-2 text-xl'>{product.referenceCode}</span>
+              </div>
             )}
           </div>
-          {product.ean && (
-            <div className='mt-5 w-full border-t border-gray-500 pt-5'>
-              <span className='text-2xl text-gray-900'>EAN :</span>
-              <span className='ml-2 text-xl'>{product.ean}</span>
-            </div>
-          )}
-          {product.referenceCode && (
-            <div className='mt-5 w-full border-t border-gray-500 pt-5'>
-              <span className='text-2xl text-gray-900'>
-                Código de Referencia :
-              </span>
-              <span className='ml-2 text-xl'>{product.referenceCode}</span>
-            </div>
-          )}
         </TabsContent>
 
         {/* Documentation Tab */}
         <TabsContent value='info' className='tab-content-item w-full'>
           <div data-aos='fade-up'>
-            {product.downloads ? (
-              <ModalDocumentation pdf={product.downloads} />
+            {product.downloads && product.downloads.length > 0 ? (
+              product.downloads.map((item) => (
+                <ModalDocumentation key={item.title} pdf={item} />
+              ))
             ) : (
               <h3 className='w-full bg-white p-5 text-center text-xl'>
                 Aun no tenemos documentación de este Producto, Pronto lo

@@ -28,7 +28,8 @@ const ProductCardRowStyleOne = ({
   const refactoredDatas: CartItemType = {
     ...datas,
     quantity: 1,
-    selectedOption: (datas.options?.values && datas.options.values[0]) || ''
+    selectedOption:
+      (datas.options?.values && datas.options.values[0].value) || ''
   }
 
   return (

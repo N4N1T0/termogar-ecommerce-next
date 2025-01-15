@@ -115,7 +115,7 @@ const SingleProductPage = async ({
     {
       cache: 'force-cache',
       next: {
-        revalidate: 600
+        revalidate: 60
       }
     }
   )

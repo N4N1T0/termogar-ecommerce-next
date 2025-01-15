@@ -51,7 +51,7 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
   const refactoredDatas: CartItemType = {
     ...data,
     quantity: 1,
-    selectedOption: type || (options?.values && options?.values[0]) || ''
+    selectedOption: type || (options?.values && options?.values[0].value) || ''
   }
 
   return (

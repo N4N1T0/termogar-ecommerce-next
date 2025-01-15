@@ -24,7 +24,16 @@
 - [x] Fix the Blog Mobile View
 - [x] Fix the Categories View
 - [x] Fix the Brands View
-- [x] Fix the Tags View
+- [x] Fix the Tags Views
 - [x] Fix Checkout Mobile View
 - [x] Fix Payment Mobile View
+
+## TODO PM REVIEWS
+
+- [x] Migrate the Products Downloads
+- [x] Migrate the Dimensions
+- [ ] Add the YoutubeLink to Product Page
+- [ ] Review the Desktop File
+- [ ] Review the Mobile File
+- [ ] Test the TIPSA
 - [ ] Look for the TODOS

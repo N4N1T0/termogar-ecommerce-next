@@ -68,7 +68,9 @@ const ProductView = ({
   const refactoredRelatesProduct: CartItemType = {
     ...product,
     selectedOption:
-      type || (product.options?.values && product.options?.values[0]) || '',
+      type ||
+      (product.options?.values && product.options?.values[0].value) ||
+      '',
     quantity: 1
   }
 

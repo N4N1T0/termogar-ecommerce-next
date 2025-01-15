@@ -54,7 +54,7 @@ const WishlistProductRow = ({ product }: { product: ProductCardType }) => {
         <span className='text-[15px] font-normal'>
           {options ? (
             <ul>
-              {options.values?.map((option) => <li key={option}>{option}</li>)}
+              {options.values?.map(({ value }) => <li key={value}>{value}</li>)}
             </ul>
           ) : (
             'Sin Opciones'
