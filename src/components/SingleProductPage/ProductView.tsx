@@ -10,15 +10,29 @@ import { usePathname } from 'next/navigation'
 import AddToCart from '@/components/Helpers/quantity'
 import { AtencionAlCliente, PlaceholderSquare } from '@/assets'
 import { ReportProductModal } from '@/components/SingleProductPage/report-modal'
-import { Clipboard, Twitter, Facebook, Phone, Star } from 'lucide-react'
+import {
+  Clipboard,
+  Twitter,
+  Facebook,
+  Phone,
+  Star,
+  PlayCircle
+} from 'lucide-react'
 
 // * UTILS IMPORTS
 import { GET_WHOLE_PRODUCT_BY_SLUGResult } from '@/types/sanity'
-import { cn, eurilize, shareLink, calculateAverageRating } from '@/lib/utils'
+import {
+  cn,
+  eurilize,
+  shareLink,
+  calculateAverageRating,
+  getVideoIdFromUrl
+} from '@/lib/utils'
 import { CartItemType, YoptopReviews } from '@/types'
 import { WishlistBtn } from '../Wishlist/wishlist-helpers'
 import { CompaireBtn } from '../Compaire/compaire-helpers'
 import OptionSelect from './option-select'
+import YoutubeDialog from '../AllProductPage/youtube-dialog'
 
 const ProductView = ({
   className = '',
@@ -31,7 +45,8 @@ const ProductView = ({
 }) => {
   const [imgUrl, setImgUrl] = React.useState({
     url: product?.featuredMedia.url,
-    blur: product?.featuredMedia.blur
+    blur: product?.featuredMedia.blur,
+    type: 'image'
   })
   const [type, setType] = React.useState<string | null>(null)
   const path = usePathname()
@@ -60,7 +75,8 @@ const ProductView = ({
     options,
     id,
     tags,
-    reviews
+    reviews,
+    youtube
   } = product
 
   const score = calculateAverageRating(reviews)
@@ -73,6 +89,8 @@ const ProductView = ({
       '',
     quantity: 1
   }
+
+  const youtubeThumbnail = getVideoIdFromUrl(youtube || '')
 
   return (
     <section
@@ -101,13 +119,17 @@ const ProductView = ({
               </div>
             )}
           </div>
-          <div className='flex flex-wrap gap-2'>
+          <div className='flex flex-wrap gap-2 overflow-x-auto'>
             {otherImages &&
               otherImages.length > 1 &&
               otherImages?.map((img, index) => (
                 <div
                   onClick={() =>
-                    setImgUrl({ url: img?.url || '', blur: img?.blur || '' })
+                    setImgUrl({
+                      url: img?.url || '',
+                      blur: img?.blur || '',
+                      type: 'image'
+                    })
                   }
                   key={img?.url}
                   className={`w-h-28 h-28 cursor-pointer border p-4 ${
@@ -128,6 +150,20 @@ const ProductView = ({
                   />
                 </div>
               ))}
+            {youtube && (
+              <YoutubeDialog url={youtube}>
+                <div className='w-h-28 relative h-28 cursor-pointer border p-4 opacity-50'>
+                  <Image
+                    src={youtubeThumbnail[0] || PlaceholderSquare}
+                    alt={youtube}
+                    className='h-full w-full object-contain'
+                    width={100}
+                    height={100}
+                  />
+                  <PlayCircle className='absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 text-gray-50' />
+                </div>
+              </YoutubeDialog>
+            )}
           </div>
         </div>
       </div>

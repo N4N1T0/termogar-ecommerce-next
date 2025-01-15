@@ -781,6 +781,15 @@ export const getMainCategoryBreadcrumb = (
     : null
 }
 
+export const getVideoIdFromUrl = (url: string) => {
+  const regex =
+    /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/|.+\?v=)?([^&\s]{11})|youtu\.be\/([^&\s]{11})/
+  const match = url.match(regex)
+  const id = match ? match[1] || match[2] : null
+
+  return [`https://img.youtube.com/vi/${id}/mqdefault.jpg`, id]
+}
+
 // * TYPES HELPERS
 export type Category = {
   id: string

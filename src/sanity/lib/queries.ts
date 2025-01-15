@@ -686,6 +686,7 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
       "link": link.current,
       "featuredMedia": image.asset->url,
     },
+    youtube,
   excerpt,
   "categories": productCategories[]->{
     "id": _id,

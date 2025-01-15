@@ -32,7 +32,7 @@
 
 - [x] Migrate the Products Downloads
 - [x] Migrate the Dimensions
-- [ ] Add the YoutubeLink to Product Page
+- [x] Add the YoutubeLink to Product Page
 - [ ] Review the Desktop File
 - [ ] Review the Mobile File
 - [ ] Test the TIPSA
