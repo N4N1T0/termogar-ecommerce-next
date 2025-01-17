@@ -705,7 +705,12 @@ export const calculateTotal = (
   const total = subTotal + shippingCost
   const iva = total * 0.21
 
-  return [subTotal, total - total * (cupon?.amount || 0), iva, shippingCost]
+  return [
+    subTotal * 0.79,
+    total - total * (cupon?.amount || 0),
+    iva,
+    shippingCost
+  ]
 }
 
 /**

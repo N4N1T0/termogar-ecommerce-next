@@ -25,14 +25,15 @@ export const grabaEnvio24 = (
   strCPDes: string,
   strTlfDes: string,
   intPaq: number,
-  strContenido: string
+  strContenido: string,
+  id: string
 ) => {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
    <soapenv:Header>
       <tem:ROClientIDHeader>
          <!--Optional:-->
-         <tem:ID>{D65E7D7A-3CC0-44A6-AEBA-A225DA5CE1D5}</tem:ID>
+         <tem:ID>{{${id}}}</tem:ID>
       </tem:ROClientIDHeader>
    </soapenv:Header>
    <soapenv:Body>

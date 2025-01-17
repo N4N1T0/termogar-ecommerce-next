@@ -7,7 +7,7 @@ import Link from 'next/link'
 // * ASSETS IMPORTS
 import { PlaceholderProductCard } from '@/assets'
 import ProductQuickViewDynamic from '@/components/Helpers/quick-view'
-import AddToCart from '@/components/Helpers/quantity'
+import AddToCart, { AddToCartMobile } from '@/components/Helpers/quantity'
 import { WishlistBtn } from '@/components/Wishlist/wishlist-helpers'
 import { CompaireBtn } from '@/components/Compaire/compaire-helpers'
 
@@ -18,6 +18,7 @@ import {
   ProductCardType
 } from '@/types'
 import { eurilize, isWithinSalePeriod } from '@/lib/utils'
+import NoStockNotifyMe from '@/components/Shared/no-stock-notify-me'
 
 export default function ProductCardStyleOne<T>({
   datas,
@@ -30,6 +31,10 @@ export default function ProductCardStyleOne<T>({
   const isOnSale = sale && isWithinSalePeriod(sale)
   const remainingStock =
     stockQuantity && stockQuantity < 4 ? stockQuantity : null
+  const salePercentage =
+    sale && sale.price && isOnSale && price
+      ? 100 - (sale.price * 100) / price
+      : null
 
   // Calculate Prices
   const getDiscountedPrice = (basePrice: number): number =>
@@ -61,7 +66,7 @@ export default function ProductCardStyleOne<T>({
       style={{ boxShadow: '0px 15px 64px 0px rgba(0, 0, 0, 0.05)' }}
     >
       {/* Image */}
-      <div className='h-[300px] w-full p-5'>
+      <div className='h-[200px] w-full p-5 sm:h-[300px]'>
         <Image
           src={featuredMedia?.url || PlaceholderProductCard}
           alt={title || ''}
@@ -75,41 +80,59 @@ export default function ProductCardStyleOne<T>({
           height={500}
         />
 
-        {/* Stock Alert */}
-        {remainingStock && !sale && (
-          <div className='absolute left-0 top-3 w-full px-[30px]'>
-            <div className='justify-start0 flex'>
-              <p className='text-qblack font-400 text-xs leading-6'>
-                Quedan Pocos
-              </p>
-              <span className='text-qblack font-600 ml-2 text-sm leading-6'>
-                {remainingStock}
-              </span>
+        {/* STOCK ALERT */}
+        {remainingStock &&
+          !sale &&
+          stockQuantity !== null &&
+          stockQuantity > 0 && (
+            <div className='absolute left-0 top-3 w-full px-[30px]'>
+              <div className='justify-start0 flex'>
+                <p className='text-qblack font-400 text-xs leading-6'>
+                  Quedan Pocos
+                </p>
+                <span className='text-qblack font-600 ml-2 text-sm leading-6'>
+                  {remainingStock}
+                </span>
+              </div>
+              <div className='progress relative h-[5px] w-full overflow-hidden rounded-[22px] bg-gray-200'>
+                <div
+                  style={{ width: `${remainingStock * 25}%` }}
+                  className='absolute left-0 top-0 h-full bg-secondary'
+                ></div>
+              </div>
             </div>
-            <div className='progress relative h-[5px] w-full overflow-hidden rounded-[22px] bg-gray-200'>
-              <div
-                style={{ width: `${remainingStock * 25}%` }}
-                className='absolute left-0 top-0 h-full bg-secondary'
-              ></div>
-            </div>
-          </div>
-        )}
+          )}
 
         {/* SALE BADGE */}
-        {sale && isOnSale && (
+        {sale && isOnSale && stockQuantity !== null && stockQuantity > 0 && (
           <div className='absolute right-[14px] top-[17px]'>
             <span className='font-700 rounded-full bg-accent px-3 py-[6px] text-xs uppercase leading-none tracking-wider text-white'>
-              Oferta
+              Oferta {salePercentage && `-${salePercentage.toFixed(0)}%`}
             </span>
           </div>
         )}
       </div>
 
-      <div className='product-card-details relative px-5 pb-3 md:px-7 md:pb-5'>
-        {/* Add to Cart Button */}
-        <div className='absolute left-0 top-40 hidden h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px] md:block'>
-          <AddToCart product={refactoredDatas} />
+      {/* OUT OF STOCK BADGE */}
+      {(stockQuantity !== null && stockQuantity) === 0 && (
+        <div className='absolute right-[14px] top-[17px]'>
+          <span className='font-700 rounded-full bg-gray-900 px-3 py-[6px] text-xs uppercase leading-none tracking-wider text-white'>
+            Agotado
+          </span>
         </div>
+      )}
+
+      <div className='product-card-details relative px-5 pb-3 md:px-7 md:pb-5'>
+        {/* ADD TO CART */}
+        <div className='absolute left-0 top-40 hidden h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px] md:block'>
+          {stockQuantity !== null && stockQuantity > 0 ? (
+            <AddToCart product={refactoredDatas} />
+          ) : (
+            <NoStockNotifyMe product={refactoredDatas} />
+          )}
+        </div>
+
+        {/* TITLE */}
         <Link href={`/producto/${slug}`} prefetch={true}>
           <p className='title font-600 mb-1 line-clamp-2 text-[15px] leading-[24px] text-gray-900 transition-colors duration-150 ease-in-out hover:text-secondary'>
             {title}
@@ -121,7 +144,7 @@ export default function ProductCardStyleOne<T>({
           {/* Original Price */}
           {(sale && isOnSale) || discounts ? (
             <span className='font-400 block text-[14px] text-gray-500 line-through'>
-              {eurilize(sale?.price || price || 0)}{' '}
+              {discounts ? eurilize(finalPrice) : eurilize(price || 0)}
               <span className='ml-1 hidden md:inline'>Precio Normal</span>
             </span>
           ) : null}
@@ -130,7 +153,7 @@ export default function ProductCardStyleOne<T>({
             {eurilize(finalPrice)}
           </span>
           {/* Price with IVA */}
-          <span className='iva-price font-600 ml-2 text-[16px] text-gray-800'>
+          <span className='iva-price font-600 text-[16px] text-gray-800 sm:ml-2'>
             {eurilize(finalPriceWithIVA)}
             <small className='ml-1 text-[11px] font-normal underline'>
               IVA.
@@ -140,23 +163,28 @@ export default function ProductCardStyleOne<T>({
       </div>
 
       {/* QUICK ACCESS BTN MOBILE */}
-      <div
-        className='flex w-full items-center justify-start gap-3 pb-3 pl-5 md:hidden'
-        aria-label='Quick Access'
-      >
-        <WishlistBtn product={updatedDatas} />
-        <CompaireBtn product={updatedDatas} />
-      </div>
+      {stockQuantity !== null && stockQuantity > 0 && (
+        <div
+          className='flex w-full items-center justify-start gap-3 pb-3 pl-5 md:hidden'
+          aria-label='Quick Access'
+        >
+          <WishlistBtn product={updatedDatas} />
+          <CompaireBtn product={updatedDatas} />
+          <AddToCartMobile product={refactoredDatas} />
+        </div>
+      )}
 
       {/* QUICK ACCESS BTN DESKTOP */}
-      <div
-        className='quick-access-btns absolute -right-10 top-20 hidden flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:right-4 md:flex'
-        aria-label='Quick Access'
-      >
-        <ProductQuickViewDynamic data={updatedDatas} />
-        <WishlistBtn product={updatedDatas} />
-        <CompaireBtn product={updatedDatas} />
-      </div>
+      {stockQuantity !== null && stockQuantity > 0 && (
+        <div
+          className='quick-access-btns absolute -right-10 top-20 hidden flex-col space-y-2 transition-all duration-300 ease-in-out group-hover:right-4 md:flex'
+          aria-label='Quick Access'
+        >
+          <ProductQuickViewDynamic data={updatedDatas} />
+          <WishlistBtn product={updatedDatas} />
+          <CompaireBtn product={updatedDatas} />
+        </div>
+      )}
     </div>
   )
 }

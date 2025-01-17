@@ -1,11 +1,13 @@
 import { CartItemType, YoptopReviews } from '@/types'
 import { parseStringPromise } from 'xml2js' // Necesitas instalar xml2js: npm install xml2js
-import { loginEnvelop } from './utils'
+import { grabaEnvio24, loginEnvelop } from './utils'
 
 const yoptopAppKey = process.env.NEXT_PUBLIC_YOTPO_APP_KEY
 const paypalClientId = process.env.PAYPAL_CLIENT_ID
 const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET
 const tipsaURLWebService =
+  'https://testapps.tipsa-dinapaq.com/SOAP?service=WebServService'
+const tipsaURLWebServiceLogin =
   'https://testapps.tipsa-dinapaq.com/SOAP?service=LoginWSService'
 
 const yoptop = {
@@ -158,7 +160,7 @@ const paypal = {
 const tipsa = {
   generateSessionId: async () => {
     try {
-      const response = await fetch(tipsaURLWebService, {
+      const response = await fetch(tipsaURLWebServiceLogin, {
         method: 'POST',
         headers: {
           'Content-Type': 'text/xml'
@@ -188,6 +190,55 @@ const tipsa = {
 
       console.log('Session ID:', sessionId)
       return sessionId // Devuelve el ID de sesión
+    } catch (error) {
+      console.error('Error creating SOAP client:', error)
+      throw error
+    }
+  },
+  grabaEnvio24: async function (
+    dtFecha: string,
+    strCodTipoServ: string,
+    strNomDes: string,
+    strDirDes: string,
+    strPobDes: string,
+    strCPDes: string,
+    strTlfDes: string,
+    intPaq: number,
+    strContenido: string
+  ) {
+    try {
+      const sessionId = await this.generateSessionId()
+
+      const response = await fetch(tipsaURLWebService, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/xml'
+        },
+        body: grabaEnvio24(
+          dtFecha,
+          strCodTipoServ,
+          strNomDes,
+          strDirDes,
+          strPobDes,
+          strCPDes,
+          strTlfDes,
+          intPaq,
+          strContenido,
+          sessionId
+        )
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data = await response.text()
+
+      // Parsear el XML de la respuesta
+      const result = await parseStringPromise(data, { explicitArray: false })
+      console.log('Parsed XML result:', result)
+
+      return result
     } catch (error) {
       console.error('Error creating SOAP client:', error)
       throw error

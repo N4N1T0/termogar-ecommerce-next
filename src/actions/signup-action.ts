@@ -38,7 +38,7 @@ const signupAction = async (values: SignupSchema) => {
       return {
         success: false,
         message:
-          'Ya tienes una cuenta con nosotros, puedes iniciar session en la pagina principal!'
+          'Ya tienes una cuenta con nosotros, puedes iniciar sesión en la pagina principal!'
       }
     }
 

@@ -21,9 +21,15 @@ const ProductCardRowStyleOne = ({
   className,
   datas
 }: ProductCardRowStyleTwoProps<ProductCardType>) => {
-  const { featuredMedia, title, slug, sale, price } = datas
+  const { featuredMedia, title, slug, sale, price, stockQuantity } = datas
 
   const isOnSale = isWithinSalePeriod(sale)
+  const remainingStock =
+    stockQuantity && stockQuantity < 4 ? stockQuantity : null
+  const salePercentage =
+    sale && sale.price && isOnSale && price
+      ? 100 - (sale.price * 100) / price
+      : null
 
   const refactoredDatas: CartItemType = {
     ...datas,
@@ -40,11 +46,40 @@ const ProductCardRowStyleOne = ({
         className
       )}
     >
-      {/* SALE */}
-      {sale && isOnSale && (
-        <div className='absolute left-[14px] top-[17px]'>
+      {/* STOCK ALERT */}
+      {remainingStock && stockQuantity && stockQuantity > 0 && !sale && (
+        <div className='absolute left-0 top-3 w-full px-[30px]'>
+          <div className='justify-start0 flex'>
+            <p className='text-qblack font-400 text-xs leading-6'>
+              Quedan Pocos
+            </p>
+            <span className='text-qblack font-600 ml-2 text-sm leading-6'>
+              {remainingStock}
+            </span>
+          </div>
+          <div className='progress relative h-[5px] w-full overflow-hidden rounded-[22px] bg-gray-200'>
+            <div
+              style={{ width: `${remainingStock * 25}%` }}
+              className='absolute left-0 top-0 h-full bg-secondary'
+            ></div>
+          </div>
+        </div>
+      )}
+
+      {/* SALE BADGE */}
+      {sale && isOnSale && stockQuantity && stockQuantity > 0 && (
+        <div className='absolute right-[14px] top-[17px]'>
           <span className='font-700 rounded-full bg-accent px-3 py-[6px] text-xs uppercase leading-none tracking-wider text-white'>
-            Oferta
+            Oferta {salePercentage && `-${salePercentage.toFixed(0)}%`}
+          </span>
+        </div>
+      )}
+
+      {/* OUT OF STOCK BADGE */}
+      {stockQuantity && stockQuantity === 0 && (
+        <div className='absolute right-[14px] top-[17px]'>
+          <span className='font-700 rounded-full bg-gray-500 px-3 py-[6px] text-xs uppercase leading-none tracking-wider text-white'>
+            Agotado
           </span>
         </div>
       )}
