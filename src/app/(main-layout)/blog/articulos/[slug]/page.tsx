@@ -67,7 +67,7 @@ const BogArticlePage = async ({
     <main className='w-full'>
       <PageTitle
         title={searchedPostArticule.title || 'Sin Titulo'}
-        className='mb-14'
+        className='mb-14 h-fit'
         breadcrumb={[
           { name: 'P. Principal', path: '/' },
           { name: 'Blog', path: '/blog' },
@@ -79,7 +79,7 @@ const BogArticlePage = async ({
       />
       <div className='container-x mx-auto mb-7 w-full lg:flex lg:space-x-8'>
         <div className='flex-1 bg-white'>
-          <div className='h-[457px] w-full'>
+          <div className='h-[257] w-full md:h-[457px]'>
             <Image
               src={
                 searchedPostArticule.featuredMedia.url || PlaceholderBlogPost

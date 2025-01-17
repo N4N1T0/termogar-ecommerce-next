@@ -153,7 +153,7 @@ const CategoriesPage = async ({
             </div>
           </>
         ) : (
-          <div className='mb-10 grid grid-cols-1 gap-5 p-0 md:grid-cols-2 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
+          <div className='mb-10 grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
             {products.map(
               (
                 product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]

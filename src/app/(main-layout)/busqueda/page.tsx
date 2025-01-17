@@ -86,10 +86,11 @@ const SearchPage = async ({
           { name: 'P. Principal', path: '/' },
           { name: 'Busqueda', path: '/busqueda' }
         ]}
+        className='h-fit'
       />
       <section
         id='products'
-        className='container-x mx-auto grid grid-cols-1 gap-5 p-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+        className='container-x mx-auto grid grid-cols-2 gap-5 p-5 lg:grid-cols-3 xl:grid-cols-4'
       >
         {searchedProducts?.map((product, index) => (
           <div data-aos='fade-up' key={product?.id} className='item'>

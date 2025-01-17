@@ -125,7 +125,7 @@ const LoginForm = ({
         >
           <GoogleIcon />
           <span className='text-[18px] font-normal text-gray-700'>
-            Inicia sección with Google
+            Inicia sección con Google
           </span>
         </button>
       </form>

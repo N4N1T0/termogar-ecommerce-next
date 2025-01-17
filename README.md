@@ -33,7 +33,11 @@
 - [x] Migrate the Products Downloads
 - [x] Migrate the Dimensions
 - [x] Add the YoutubeLink to Product Page
-- [ ] Review the Desktop File
-- [ ] Review the Mobile File
+- [x] Review the Mobile File
+- [x] Review the Desktop File
+- [x] Migrate Options and Variations
+- [ ] Add Notify me option
 - [ ] Test the TIPSA
+- [ ] Add new Fields to the Costumer
+- [ ] Revisar SIGNIN and SIGNUP in Production
 - [ ] Look for the TODOS

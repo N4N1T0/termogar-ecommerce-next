@@ -151,7 +151,7 @@ const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
         </div>
         <div>
           <h3 className='font-semibold'>Total:</h3>
-          <p className='text-lg font-medium'>{eurilize(total + iva)}</p>
+          <p className='text-lg font-medium'>{eurilize(total)}</p>
         </div>
         <div>
           <h3 className='font-semibold'>SubTotal:</h3>
@@ -177,6 +177,29 @@ const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
           </p>
         </div>
       </div>
+      {gateway === 'transferencia-bancaria-directa' && (
+        <div className='border-px border-t border-gray-200 pt-2'>
+          Has elegido el método de Pago por Transferencia o Ingreso Directo,
+          deberás realizar el pago desde tu propia entidad mediante
+          transferencia. Por favor, usa el{' '}
+          <strong>Nº DE PEDIDO Y TU NOMBRE</strong> como concepto de pago. Tu
+          pedido no será enviado hasta que los fondos hayan sido recibidos en
+          nuestra cuenta.{' '}
+          <strong>Dispones de un plazo de 3 días laborables</strong>, a contar
+          desde la realización de la compra, para proceder al pago.
+          <div className='mt-1 font-semibold text-accent underline'>
+            ENTIDAD: BANCO SANTANDER
+          </div>
+          <div className='mt-1 font-semibold text-accent underline'>
+            IBAN: ES63 0049 3207 5321 1401 6384
+          </div>
+          <small className='mt-1'>
+            Si la entidad bancaria desde la que nos haces el pago es diferente a
+            la nuestra, es posible que se demore la recepción del pago en un
+            plazo de 24 a 48 horas.
+          </small>
+        </div>
+      )}
       <div className='space-y-2'>
         <h3 className='border-b border-gray-200 pb-2 font-semibold'>
           Productos:

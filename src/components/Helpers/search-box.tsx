@@ -1,3 +1,5 @@
+'use client'
+
 // * NEXT.JS IMPORTS
 import Form from 'next/form'
 
@@ -20,15 +22,24 @@ import { GET_MENU_CATEGORIESResult } from '@/types/sanity'
 export default function SearchBox({
   className,
   categories,
-  mobile = false
+  mobile = false,
+  close
 }: {
   className?: string
   categories: GET_MENU_CATEGORIESResult
   mobile?: boolean
+  close: React.Dispatch<React.SetStateAction<boolean>>
 }) {
+  const handleSubmit = () => {
+    if (mobile) {
+      close(false)
+    }
+  }
+
   return (
     <Form
       action='/busqueda'
+      onSubmit={handleSubmit}
       className={cn(
         `border-gray-500-border flex h-full w-full items-center border bg-white`,
         className

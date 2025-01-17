@@ -98,7 +98,7 @@ const SingleProductTabs = ({
             </TabsTrigger>
             <TabsTrigger
               value='review'
-              className='rounded-none py-3 text-sm font-medium text-gray-500 data-[state=active]:border-b-2 data-[state=active]:border-accent data-[state=active]:text-gray-900 sm:text-sm'
+              className='rounded-none py-3 text-base font-medium text-gray-500 data-[state=active]:border-b-2 data-[state=active]:border-accent data-[state=active]:text-gray-900 sm:text-sm'
             >
               Reseñas
             </TabsTrigger>
@@ -121,32 +121,34 @@ const SingleProductTabs = ({
         </TabsContent>
 
         {/* Sizes Tab */}
-        <TabsContent value='sizes' className='tab-content-item w-full'>
-          <div
-            data-aos='fade-up'
-            className='grid grid-cols-2 gap-5 divide-x-2 divide-gray-200 md:grid-cols-3 xl:grid-cols-4'
-          >
-            {noDimension ? (
-              <div>
-                {product?.dimensions?.alt ? (
+        <TabsContent
+          value='sizes'
+          className='tab-content-item grid w-full grid-cols-2 gap-5 divide-x-2 divide-gray-200 md:grid-cols-3 xl:grid-cols-4'
+        >
+          {noDimension ? (
+            <>
+              {product?.dimensions?.alt ? (
+                <div className='prose text-pretty'>
                   <PortableText value={product?.dimensions?.alt} />
-                ) : (
-                  <h3 className='w-full bg-white p-5 text-center text-xl'>
-                    Aun no tenemos Medidas de este Producto, Pronto lo
-                    actualizaremos
-                  </h3>
-                )}
-              </div>
-            ) : (
-              <div className='w-full'>
-                <span className='text-2xl text-gray-900'>Dimensiones :</span>
-                <span className='ml-2 text-xl'>
-                  {product?.dimensions?.height || 'N/D'} X{' '}
-                  {product?.dimensions?.width || 'N/D'} X{' '}
-                  {product?.dimensions?.length || 'N/D'}
-                </span>
-              </div>
-            )}
+                </div>
+              ) : (
+                <h3 className='w-full bg-white p-5 text-center text-xl'>
+                  Aun no tenemos Medidas de este Producto, Pronto lo
+                  actualizaremos
+                </h3>
+              )}
+            </>
+          ) : (
+            <div className='w-full'>
+              <span className='text-2xl text-gray-900'>Dimensiones :</span>
+              <span className='ml-2 text-xl'>
+                {product?.dimensions?.height || 'N/D'} X{' '}
+                {product?.dimensions?.width || 'N/D'} X{' '}
+                {product?.dimensions?.length || 'N/D'}
+              </span>
+            </div>
+          )}
+          <>
             {product.ean && (
               <div className='w-full pl-3'>
                 <span className='text-2xl text-gray-900'>EAN :</span>
@@ -161,23 +163,21 @@ const SingleProductTabs = ({
                 <span className='ml-2 text-xl'>{product.referenceCode}</span>
               </div>
             )}
-          </div>
+          </>
         </TabsContent>
 
         {/* Documentation Tab */}
         <TabsContent value='info' className='tab-content-item w-full'>
-          <div data-aos='fade-up'>
-            {product.downloads && product.downloads.length > 0 ? (
-              product.downloads.map((item) => (
-                <ModalDocumentation key={item.title} pdf={item} />
-              ))
-            ) : (
-              <h3 className='w-full bg-white p-5 text-center text-xl'>
-                Aun no tenemos documentación de este Producto, Pronto lo
-                actualizaremos
-              </h3>
-            )}
-          </div>
+          {product.downloads && product.downloads.length > 0 ? (
+            product.downloads.map((item) => (
+              <ModalDocumentation key={item.title} pdf={item} />
+            ))
+          ) : (
+            <h3 className='w-full bg-white p-5 text-center text-xl'>
+              Aun no tenemos documentación de este Producto, Pronto lo
+              actualizaremos
+            </h3>
+          )}
         </TabsContent>
 
         {/* Reviews Tab */}

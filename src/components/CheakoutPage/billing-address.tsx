@@ -177,7 +177,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className='flex-1'>
         <h2
           className={cn(
             'mb-5 text-xl font-medium sm:text-2xl',
@@ -187,7 +187,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
           Datos de Envío y Facturación
         </h2>
         <fieldset className='flex justify-center px-4'>
-          <div className='max-w-[570px]'>
+          <div className='max-w-[570px] md:w-full'>
             {/* USER INFO */}
             <div className='mb-4 flex space-x-2.5'>
               <FormFieldComponent

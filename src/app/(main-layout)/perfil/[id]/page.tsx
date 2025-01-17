@@ -3,13 +3,13 @@ import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 // * ASSETS IMPORTS
-import ProfileDashboard from '@/components/Auth/Profile/profile-dashboard'
-import BreadcrumbCom from '@/components/BreadcrumbCom'
+import { OrderTab, ProfileTab } from '@/components/Auth/Profile/tabs'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_ORDERS_BY_USER_ID, GET_USER_INFO } from '@/sanity/lib/queries'
 import { Logger } from 'next-axiom'
+import PasswordTab from '@/components/Auth/Profile/tabs/password-tab'
 
 const log = new Logger()
 export async function generateMetadata({
@@ -52,26 +52,22 @@ const ProfilePage = async ({
   }
 
   return (
-    <main className='w-full'>
-      <div className='container-x mx-auto my-10 w-full'>
-        <BreadcrumbCom
-          paths={[
-            { name: 'P. Principal', path: '/' },
-            { name: 'Perfil', path: `/profile/${id}` }
-          ]}
-        />
-        <div className='w-full bg-white px-10 py-9'>
-          <h1 className='text-[22px] font-bold text-gray-900'>
-            Tu Perfil de usuario
-          </h1>
-          <ProfileDashboard
-            user={searchesUser}
-            activeTab={tab}
-            orders={searchedOrders}
-          />
-        </div>
+    <div className='w-full bg-white px-5 py-9 md:px-10'>
+      <h1 className='text-[22px] font-bold text-gray-900'>
+        Tu Perfil de usuario
+      </h1>
+      <div className='w-full flex-1'>
+        {tab === 'profile' ? (
+          <ProfileTab user={searchesUser} />
+        ) : tab === 'order' ? (
+          <OrderTab orders={searchedOrders} />
+        ) : tab === 'password' ? (
+          <PasswordTab user={searchesUser} />
+        ) : (
+          <ProfileTab user={searchesUser} />
+        )}
       </div>
-    </main>
+    </div>
   )
 }
 

@@ -90,6 +90,13 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
       <td className='p-4 text-center'>
         <div className='flex items-center justify-center'>
           {sale
+            ? eurilize((sale.price && sale.price * 0.79) || 0)
+            : eurilize((price && price * 0.79) || 0)}
+        </div>
+      </td>
+      <td className='p-4 text-center'>
+        <div className='flex items-center justify-center'>
+          {sale
             ? eurilize((sale.price && sale.price * 0.21) || 0)
             : eurilize((price && price * 0.21) || 0)}
         </div>
@@ -122,6 +129,7 @@ export default function ProductsTable({
               <th className='py-4 text-center'>Precio</th>
               <th className='py-4 text-center'>Opción</th>
               <th className='py-4 text-center'>Cantidad</th>
+              <th className='py-4 text-center'>Subtotal</th>
               <th className='py-4 text-center'>Iva</th>
               <th className='py-4 text-center'>Total</th>
               <th className='w-[114px] py-4 text-right'></th>

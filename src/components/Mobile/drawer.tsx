@@ -2,6 +2,7 @@
 
 // * ASSETS IMPORTS
 import Link from 'next/link'
+import React from 'react'
 
 // * ASSETS IMPORTS
 import { CompaireLink } from '@/components/Compaire/compaire-helpers'
@@ -29,6 +30,8 @@ export default function Drawer({
 }: {
   categories: GET_MENU_CATEGORIESResult
 }) {
+  const [open, setOpen] = React.useState(false)
+
   const refactoredCategories = categories.map((category) => ({
     ...category,
     children: [
@@ -41,7 +44,7 @@ export default function Drawer({
     ]
   }))
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger>
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -82,6 +85,7 @@ export default function Drawer({
             categories={categories}
             mobile={true}
             className='search-com'
+            close={setOpen}
           />
         </div>
         <Accordion

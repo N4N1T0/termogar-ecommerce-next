@@ -14,7 +14,7 @@ const tempAds = Array(4).fill({
     src: PlaceholderHorizontal,
     blur: PlaceholderHorizontal.blurDataURL
   },
-  link: ''
+  link: '/'
 })
 
 export default function ProductsAds({
@@ -43,7 +43,7 @@ export default function ProductsAds({
                   placeholder='blur'
                   width={740}
                   height={300}
-                  className='h-auto w-auto'
+                  className='h-auto w-full'
                 />
               </Link>
             </div>

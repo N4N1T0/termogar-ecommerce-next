@@ -96,7 +96,7 @@ export default function CartPopup({ className }: { className?: string }) {
                 Subtotal
               </span>
               <span className='font-500 text-[15px] text-red-500'>
-                {eurilize(subtotal || 0)}
+                {eurilize(subtotal * 0.79 || 0)}
               </span>
             </div>
             <div className='total-equation mb-[14px] flex items-center justify-between'>

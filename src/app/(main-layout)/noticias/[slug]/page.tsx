@@ -85,7 +85,7 @@ const NewsArticlePage = async ({
       <div className='container-x mx-auto w-full'>
         <div className='mb-7 lg:flex lg:space-x-8'>
           <div className='flex-1'>
-            <div className='h-[457px] w-full'>
+            <div className='h-[257] w-full md:h-[457px]'>
               <Image
                 src={featuredMedia.url || PlaceholderBlogPost}
                 alt={title || 'Sin Titulo'}

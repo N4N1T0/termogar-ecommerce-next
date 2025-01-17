@@ -194,18 +194,23 @@ export const CompletedPurchase = ({
       {gateway === 'transferencia-bancaria-directa' && (
         <>
           <Text className='text-gray-800'>
-            Si has elegido pagar mediante transferencia, solo tienes que
-            realizar la transferencia a la cuenta{' '}
+            Has elegido el método de Pago por Transferencia o Ingreso Directo,
+            deberás realizar el pago desde tu propia entidad mediante
+            transferencia. Por favor, usa el{' '}
+            <strong>Nº DE PEDIDO Y TU NOMBRE</strong> como concepto de pago. Tu
+            pedido no será enviado hasta que los fondos hayan sido recibidos en
+            nuestra cuenta.{' '}
+            <strong>Dispones de un plazo de 3 días laborables</strong>, a contar
+            desde la realización de la compra, para proceder al pago.
           </Text>
-          <Text className='font-bold'>IBAN: ES04 0182 4136 9102 0178 4853</Text>
-          <Text className='font-bold'>BIC: BBVAESMMXXX</Text>
-          <Text className='font-bold'>
-            con el concepto: &quot;termogar-{orderNumber}&quot;
-          </Text>
+          <Text className='font-bold'>ENTIDAD: BANCO SANTANDER</Text>
+          <Text className='font-bold'>IBAN: ES63 0049 3207 5321 1401 6384</Text>
           <Text>
-            Después de recibir la confirmación de la transferencia, nosotros nos
-            pondremos en contacto contigo para confirmar la recepción del pago y
-            proceder con el envío de tu pedido.
+            <small>
+              Si la entidad bancaria desde la que nos haces el pago es diferente
+              a la nuestra, es posible que se demore la recepción del pago en un
+              plazo de 24 a 48 horas.
+            </small>
           </Text>
         </>
       )}

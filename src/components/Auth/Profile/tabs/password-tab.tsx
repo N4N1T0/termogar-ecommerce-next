@@ -52,7 +52,7 @@ const PasswordTab = ({ user }: { user: GET_USER_INFOResult }) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className='mb-10 w-[397px]'
+          className='mb-10 w-full md:w-[397px]'
         >
           <input
             type='hidden'

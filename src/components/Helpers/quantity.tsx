@@ -80,4 +80,29 @@ const AddToCart = ({
   )
 }
 
+export const AddToCartMobile = ({ product }: { product: CartItemType }) => {
+  const { addProduct } = useCart()
+
+  const handleAddToCart = () => {
+    const cartItem: CartItemType = { ...product, quantity: 1 }
+    addProduct(cartItem)
+    toast.info('Producto agregado al carrito', {
+      duration: 2000,
+      action: {
+        label: 'Carrito',
+        onClick: () => (window.location.href = '/carrito-de-la-compra')
+      }
+    })
+  }
+  return (
+    <Button
+      asChild
+      className='rounded-none bg-accent p-0 text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900'
+      onClick={handleAddToCart}
+    >
+      <ShoppingBag className='h-10 w-10 cursor-pointer p-2' />
+    </Button>
+  )
+}
+
 export default AddToCart

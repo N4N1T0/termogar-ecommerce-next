@@ -26,7 +26,8 @@ import {
   eurilize,
   shareLink,
   calculateAverageRating,
-  getVideoIdFromUrl
+  getVideoIdFromUrl,
+  isWithinSalePeriod
 } from '@/lib/utils'
 import { CartItemType, YoptopReviews } from '@/types'
 import { WishlistBtn } from '../Wishlist/wishlist-helpers'
@@ -76,21 +77,27 @@ const ProductView = ({
     id,
     tags,
     reviews,
-    youtube
+    youtube,
+    stockQuantity
   } = product
+  console.log('🚀 ~ stockQuantity:', stockQuantity)
 
+  const youtubeThumbnail = getVideoIdFromUrl(youtube || '')
   const score = calculateAverageRating(reviews)
+  const isOnSale = sale && isWithinSalePeriod(sale)
+  const salePercentage =
+    sale && sale.price && isOnSale && price
+      ? 100 - (sale.price * 100) / price
+      : null
 
   const refactoredRelatesProduct: CartItemType = {
     ...product,
     selectedOption:
       type ||
-      (product.options?.values && product.options?.values[0].value) ||
+      (product.options?.values?.length && product.options?.values[0].value) ||
       '',
     quantity: 1
   }
-
-  const youtubeThumbnail = getVideoIdFromUrl(youtube || '')
 
   return (
     <section
@@ -113,9 +120,9 @@ const ProductView = ({
               quality={100}
               className='object-contain'
             />
-            {sale && (
-              <div className='h-w-20 absolute left-7 top-7 flex w-20 items-center justify-center rounded-full bg-accent text-xl font-medium text-gray-50'>
-                <span>Oferta</span>
+            {sale && isOnSale && (
+              <div className='absolute left-7 top-7 flex w-fit items-center justify-center rounded-full bg-accent px-2 py-1 text-xl font-medium text-gray-50'>
+                Oferta {salePercentage && `-${salePercentage.toFixed(0)}%`}
               </div>
             )}
           </div>
@@ -131,7 +138,7 @@ const ProductView = ({
                       type: 'image'
                     })
                   }
-                  key={img?.url}
+                  key={`img?.url-${index}`}
                   className={`w-h-28 h-28 cursor-pointer border p-4 ${
                     imgUrl.url !== img?.url
                       ? 'border-gray-500 opacity-50'
@@ -178,7 +185,7 @@ const ProductView = ({
             <ul className='flex w-full gap-2'>
               {categories?.map(({ name, slug }) => (
                 <li
-                  key={name}
+                  key={slug}
                   className='hover-200 underline hover:text-accent'
                 >
                   <Link href={`/categorias/${slug}`}>{name}</Link>
@@ -227,7 +234,7 @@ const ProductView = ({
 
           {/* PRICE */}
           <div data-aos='fade-up' className='mb-5 flex items-center space-x-2'>
-            {sale ? (
+            {sale && isOnSale ? (
               <>
                 <span className='font-500 mt-2 text-sm text-gray-500 line-through'>
                   {eurilize(price || 0)}

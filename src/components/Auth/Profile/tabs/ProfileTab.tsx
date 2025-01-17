@@ -108,8 +108,8 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <fieldset className='flex space-x-8'>
-          <div className='w-[570px]'>
+        <fieldset className='flex flex-col space-x-8 md:flex-row'>
+          <div className='w-full md:w-[570px]'>
             <div className='mb-4 flex space-x-2.5'>
               <FormFieldComponent
                 className='w-full'
@@ -227,7 +227,7 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
               </div>
             </fieldset>
           </div>
-          <div className='flex-1'>
+          <div className='mt-10 flex-1 md:mt-0'>
             <div className='update-logo mb-9 w-full'>
               <h2 className='text-qblack mb-2 flex items-center text-xl font-bold tracking-wide'>
                 Foto de Perfil
