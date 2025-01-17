@@ -3,7 +3,6 @@
 // * NEXT.JS IMPORTS
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 
 // * ASSETS IMPORTS
 import { HelpCircle, RefreshCcw, UserIcon } from 'lucide-react'
@@ -11,6 +10,7 @@ import { useCart } from '@/stores'
 import Form from 'next/form'
 import sendPurchaseEmail from '@/actions/send-purchase-email'
 import { OrderDataNotificationsButtons } from '@/types'
+import updateProductsStock from '@/actions/update-products-stock'
 
 const NotificationsPageButton = ({
   orderData
@@ -30,7 +30,6 @@ const NotificationsPageButton = ({
     status
   } = orderData
 
-  const { data: session } = useSession()
   const { removeAllProducts } = useCart()
   const router = useRouter()
 
@@ -55,15 +54,13 @@ const NotificationsPageButton = ({
       'success'
     )
 
+    await updateProductsStock(products)
+
     if (value === 'keepShopping') {
       handlePush('/')
     }
     if (value === 'goToProfile') {
-      if (session) {
-        handlePush(`/perfil/${user?.id}`)
-      } else {
-        handlePush(`/login?redirectTo=/perfil/${user?.id}`)
-      }
+      handlePush(`/perfil/${user?.id}`)
     }
   }
 
