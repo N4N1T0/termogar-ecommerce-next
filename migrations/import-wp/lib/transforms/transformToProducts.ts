@@ -219,23 +219,6 @@ export async function transformToProduct(
     }
   }
 
-  // Handle Variations
-  if (Array.isArray(wpDoc.variations) && wpDoc.variations.length > 0) {
-    doc.variations = wpDoc.variations
-      .filter((variation) =>
-        existingProducts.some(
-          (product) => product._id === `product-${variation}`
-        )
-      )
-      .map((variation) => ({
-        _key: uuid(),
-        _type: 'reference',
-        _ref: `product-${variation}`
-      }))
-
-    console.log('Done', wpDoc.variations)
-  }
-
   if (Array.isArray(wpDoc.related_ids) && wpDoc.related_ids.length > 0) {
     doc.relatedProducts = wpDoc.related_ids
       .filter((relatedId) =>

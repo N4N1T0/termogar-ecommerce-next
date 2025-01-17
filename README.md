@@ -37,7 +37,7 @@
 - [x] Review the Desktop File
 - [x] Migrate Options and Variations
 - [x] Add Notify me option
+- [ ] Add new Fields to the Costumer Form
 - [ ] Test the TIPSA
-- [ ] Add new Fields to the Costumer
 - [ ] Revisar SIGNIN and SIGNUP in Production
 - [ ] Look for the TODOS
