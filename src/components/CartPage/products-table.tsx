@@ -31,6 +31,7 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
     quantity,
     slug,
     options,
+    stockQuantity,
     selectedOption
   } = product
 
@@ -84,7 +85,7 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
       </td>
       <td className='p-4 text-center md:px-0'>
         <div className='grid h-full place-content-center'>
-          <CartProductTableQuantity id={id} />
+          <CartProductTableQuantity id={id} stock={stockQuantity} />
         </div>
       </td>
       <td className='p-4 text-center'>

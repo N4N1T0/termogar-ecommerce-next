@@ -16,6 +16,7 @@ import {
   ProductCardType
 } from '@/types'
 import { cn, eurilize, isWithinSalePeriod } from '@/lib/utils'
+import NoStockNotifyMe from '@/components/Shared/no-stock-notify-me'
 
 const ProductCardRowStyleOne = ({
   className,
@@ -68,7 +69,7 @@ const ProductCardRowStyleOne = ({
 
       {/* SALE BADGE */}
       {sale && isOnSale && stockQuantity && stockQuantity > 0 && (
-        <div className='absolute right-[14px] top-[17px]'>
+        <div className='absolute left-[14px] top-[17px]'>
           <span className='font-700 rounded-full bg-accent px-3 py-[6px] text-xs uppercase leading-none tracking-wider text-white'>
             Oferta {salePercentage && `-${salePercentage.toFixed(0)}%`}
           </span>
@@ -77,7 +78,7 @@ const ProductCardRowStyleOne = ({
 
       {/* OUT OF STOCK BADGE */}
       {stockQuantity && stockQuantity === 0 && (
-        <div className='absolute right-[14px] top-[17px]'>
+        <div className='absolute left-[14px] top-[17px]'>
           <span className='font-700 rounded-full bg-gray-500 px-3 py-[6px] text-xs uppercase leading-none tracking-wider text-white'>
             Agotado
           </span>
@@ -128,7 +129,11 @@ const ProductCardRowStyleOne = ({
                 <small className='ml-1 font-normal underline'>IVA incl.</small>
               </span>
             </div>
-            <AddToCart className='mt-2 w-fit' product={refactoredDatas} />
+            {stockQuantity !== null && stockQuantity > 0 ? (
+              <AddToCart product={refactoredDatas} stock={stockQuantity} />
+            ) : (
+              <NoStockNotifyMe product={refactoredDatas} />
+            )}
           </div>
         </div>
       </div>

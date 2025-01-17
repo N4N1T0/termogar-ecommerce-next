@@ -281,7 +281,11 @@ const ProductView = ({
           >
             {stockQuantity !== null && stockQuantity > 0 ? (
               <>
-                <AddToCart product={refactoredRelatesProduct} />
+                <AddToCart
+                  product={refactoredRelatesProduct}
+                  stock={stockQuantity}
+                  showQuantity={true}
+                />
                 <WishlistBtn product={product} />
                 <CompaireBtn product={product} />
               </>

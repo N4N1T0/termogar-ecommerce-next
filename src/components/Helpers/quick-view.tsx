@@ -26,7 +26,16 @@ import { yoptop } from '@/lib/fetchers'
 import OptionSelect from '../SingleProductPage/option-select'
 
 const ProductQuickView = ({ data }: ProductQuickViewProps) => {
-  const { sale, price, categories, content, excerpt, tags, options } = data
+  const {
+    sale,
+    price,
+    categories,
+    content,
+    excerpt,
+    tags,
+    options,
+    stockQuantity
+  } = data
 
   const [reviews, setReviews] = React.useState<
     YoptopReviews | null | undefined
@@ -156,7 +165,11 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
               {options && <OptionSelect options={options} setType={setType} />}
             </div>
             <div className='bg-background sticky bottom-0 flex gap-3 border-t p-3 md:p-5'>
-              <AddToCart product={refactoredDatas} showQuantity />
+              <AddToCart
+                product={refactoredDatas}
+                showQuantity
+                stock={stockQuantity}
+              />
             </div>
           </div>
         </div>

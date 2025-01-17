@@ -16,11 +16,13 @@ import { cn } from '@/lib/utils'
 const AddToCart = ({
   product,
   showQuantity = false,
-  className = ''
+  className = '',
+  stock
 }: {
   product: CartItemType
   showQuantity?: boolean
   className?: string
+  stock: number | null
 }) => {
   const [quantity, setQuantity] = React.useState(1)
   const { addProduct } = useCart()
@@ -60,6 +62,7 @@ const AddToCart = ({
             size='icon'
             aria-label='increase'
             className='rounded-none bg-accent text-gray-100 transition-colors duration-150 ease-in hover:text-gray-900'
+            disabled={quantity === stock}
             onClick={increment}
           >
             <Plus className='h-4 w-4' />

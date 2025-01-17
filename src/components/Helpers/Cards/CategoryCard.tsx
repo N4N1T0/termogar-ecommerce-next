@@ -1,9 +1,7 @@
 import { CategoryCardProps } from '@/types'
 import Link from 'next/link'
 
-export default function CategoryCard({
-  childrenCategories = []
-}: CategoryCardProps) {
+const CategoryCard = ({ childrenCategories = [] }: CategoryCardProps) => {
   return (
     <div className='category-card-wrappwer h-full w-full p-[30px]'>
       <div>
@@ -55,3 +53,5 @@ export default function CategoryCard({
     </div>
   )
 }
+
+export default CategoryCard

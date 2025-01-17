@@ -114,7 +114,7 @@ export default function ProductCardStyleOne<T>({
       </div>
 
       {/* OUT OF STOCK BADGE */}
-      {(stockQuantity !== null && stockQuantity) === 0 && (
+      {stockQuantity !== null && stockQuantity === 0 && (
         <div className='absolute right-[14px] top-[17px]'>
           <span className='font-700 rounded-full bg-gray-900 px-3 py-[6px] text-xs uppercase leading-none tracking-wider text-white'>
             Agotado
@@ -126,7 +126,7 @@ export default function ProductCardStyleOne<T>({
         {/* ADD TO CART */}
         <div className='absolute left-0 top-40 hidden h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px] md:block'>
           {stockQuantity !== null && stockQuantity > 0 ? (
-            <AddToCart product={refactoredDatas} />
+            <AddToCart product={refactoredDatas} stock={stockQuantity} />
           ) : (
             <NoStockNotifyMe product={refactoredDatas} />
           )}

@@ -55,37 +55,41 @@ const CartProductTableRemover = React.memo(({ id }: { id: string }) => {
   )
 })
 
-const CartProductTableQuantity = React.memo(({ id }: { id: string }) => {
-  const { products, updateProductQuantity } = useCart()
-  const quantity = products.find((product) => product.id === id)?.quantity || 1
+const CartProductTableQuantity = React.memo(
+  ({ id, stock }: { id: string; stock: number | null }) => {
+    const { products, updateProductQuantity } = useCart()
+    const quantity =
+      products.find((product) => product.id === id)?.quantity || 1
 
-  const increment = () => updateProductQuantity(id, quantity + 1)
-  const decrement = () => updateProductQuantity(id, quantity - 1)
+    const increment = () => updateProductQuantity(id, quantity + 1)
+    const decrement = () => updateProductQuantity(id, quantity - 1)
 
-  return (
-    <div className='flex items-center gap-1'>
-      <Button
-        variant='outline'
-        size='icon'
-        aria-label='decrease'
-        className='rounded-none bg-accent text-gray-100 transition-colors duration-150 ease-in hover:text-gray-900'
-        disabled={quantity === 1}
-        onClick={decrement}
-      >
-        <Minus className='h-4 w-4' />
-      </Button>
-      <span className='w-6 text-center'>{quantity}</span>
-      <Button
-        variant='outline'
-        size='icon'
-        aria-label='increase'
-        className='rounded-none bg-accent text-gray-100 transition-colors duration-150 ease-in hover:text-gray-900'
-        onClick={increment}
-      >
-        <Plus className='h-4 w-4' />
-      </Button>
-    </div>
-  )
-})
+    return (
+      <div className='flex items-center gap-1'>
+        <Button
+          variant='outline'
+          size='icon'
+          aria-label='decrease'
+          className='rounded-none bg-accent text-gray-100 transition-colors duration-150 ease-in hover:text-gray-900'
+          disabled={quantity === 1}
+          onClick={decrement}
+        >
+          <Minus className='h-4 w-4' />
+        </Button>
+        <span className='w-6 text-center'>{quantity}</span>
+        <Button
+          variant='outline'
+          size='icon'
+          aria-label='increase'
+          disabled={quantity === stock}
+          className='rounded-none bg-accent text-gray-100 transition-colors duration-150 ease-in hover:text-gray-900'
+          onClick={increment}
+        >
+          <Plus className='h-4 w-4' />
+        </Button>
+      </div>
+    )
+  }
+)
 
 export { CartLink, CartProductTableRemover, CartProductTableQuantity }
