@@ -17,7 +17,7 @@ const ResetPasswordPage = async ({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
-  const { token } = await searchParams
+  const { token, reset } = await searchParams
 
   if (!token || Array.isArray(token)) return notFound()
 
@@ -51,7 +51,7 @@ const ResetPasswordPage = async ({
             Restablecer Contraseña
           </h1>
         </div>
-        <ResetPasswordForm user={searchedUser} />
+        <ResetPasswordForm user={searchedUser} reset={reset} />
       </div>
     </main>
   )

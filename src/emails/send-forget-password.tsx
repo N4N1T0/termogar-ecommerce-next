@@ -24,7 +24,9 @@ export const SendForgotPassword = ({
         recuperarla, solo tiene que hacer click en el enlace de abajo.
       </Text>
       <Section className='mb-6'>
-        <Link href={`http://localhost:3000/forget-password/?token=${token}`}>
+        <Link
+          href={`http://localhost:3000/reset-password/?token=${token}?reset=true`}
+        >
           Recuperar contraseña
         </Link>
       </Section>
@@ -36,7 +38,9 @@ export const SendForgotPassword = ({
           {new Date(Date.now() + 24 * 60 * 60 * 1000).toLocaleString()}.
         </span>
       </Text>
-      <Text>http://localhost:3000/forget-password/?token={token}</Text>
+      <Text>
+        http://localhost:3000/reset-password/?token={token}?reset=true
+      </Text>
     </TailwindWrapper>
   )
 }

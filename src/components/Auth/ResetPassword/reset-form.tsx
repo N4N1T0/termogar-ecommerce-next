@@ -18,7 +18,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { PlaceholderSquare } from '@/assets'
 
-export function ResetPasswordForm({ user }: { user: GET_USER_INFOResult }) {
+export function ResetPasswordForm({
+  user,
+  reset
+}: {
+  user: GET_USER_INFOResult
+  reset: string | string[] | undefined
+}) {
   const [state, setState] = useState(false)
 
   const form = useForm<PasswordSchema>({
@@ -67,7 +73,7 @@ export function ResetPasswordForm({ user }: { user: GET_USER_INFOResult }) {
           Muchas gracias por su apoyo! que tenga buen dia!
         </p>
         <Link
-          href='/productos'
+          href='/'
           className='hover-200 mr-2 bg-accent px-4 py-2 text-gray-50 hover:text-gray-950'
         >
           Ir a la Tienda
@@ -97,12 +103,20 @@ export function ResetPasswordForm({ user }: { user: GET_USER_INFOResult }) {
             className='mx-auto h-20 w-20 rounded-full'
           />
         </div>
-        <p className='mb-4 text-sm text-gray-600'>
-          Hola <span className='text-accent'>{user?.firstName}</span>! Estamos
-          creando una nueva y más potente web para ti. Como cliente leal,
-          necesitamos que nos acompañes en este proceso actualizando tu
-          contraseña.
-        </p>
+        {reset ? (
+          <p className='mb-4 text-sm text-gray-600'>
+            Hola <span className='text-accent'>{user?.firstName}</span> aquí
+            puede restablecer tu contraseña para su cuenta
+          </p>
+        ) : (
+          <p className='mb-4 text-sm text-gray-600'>
+            Hola <span className='text-accent'>{user?.firstName}</span>! Estamos
+            creando una nueva y más potente web para ti. Como cliente leal,
+            necesitamos que nos acompañes en este proceso actualizando tu
+            contraseña.
+          </p>
+        )}
+
         <input
           type='hidden'
           name='username'
@@ -120,6 +134,7 @@ export function ResetPasswordForm({ user }: { user: GET_USER_INFOResult }) {
             ? 'Restableciendo contraseña...'
             : 'Restablecer contraseña'}
         </button>
+        {/* // TODO: Add a link to contact support */}
         <p className='mt-4 text-xs text-gray-600'>
           Si tienes alguna duda, por favor contáctenos:
           <br />
