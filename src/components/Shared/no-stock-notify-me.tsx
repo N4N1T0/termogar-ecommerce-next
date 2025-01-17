@@ -20,7 +20,6 @@ import FormFieldComponent from '@/components/Auth/ResetPassword/form-field'
 
 // * UTILS IMPORTS
 import { CartItemType } from '@/types'
-import notifyMe from '@/actions/notifyme'
 
 const NoStockNotifyMe = ({ product }: { product: CartItemType }) => {
   const [open, setOpen] = React.useState(false)
@@ -32,10 +31,7 @@ const NoStockNotifyMe = ({ product }: { product: CartItemType }) => {
     }
   })
 
-  const onSubmit = async (data: any) => {
-    await notifyMe(data)
-    setOpen(false)
-  }
+  const onSubmit = async () => {}
 
   const {
     control,

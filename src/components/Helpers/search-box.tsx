@@ -28,10 +28,10 @@ export default function SearchBox({
   className?: string
   categories: GET_MENU_CATEGORIESResult
   mobile?: boolean
-  close: React.Dispatch<React.SetStateAction<boolean>>
+  close?: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const handleSubmit = () => {
-    if (mobile) {
+    if (mobile && close) {
       close(false)
     }
   }
