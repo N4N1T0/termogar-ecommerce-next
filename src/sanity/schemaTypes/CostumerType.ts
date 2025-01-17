@@ -33,6 +33,16 @@ export const costumerType = defineType({
       type: 'string'
     }),
     defineField({
+      name: 'IdDocument',
+      title: 'Documento de Identidad',
+      type: 'string'
+    }),
+    defineField({
+      name: 'companyName',
+      title: 'Nombre de la Empresa (Opcional)',
+      type: 'string'
+    }),
+    defineField({
       name: 'billingAddress',
       title: 'Dirección de Facturación',
       type: 'array',

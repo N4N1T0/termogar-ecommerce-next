@@ -1,4 +1,5 @@
-import { defineField, defineType } from 'sanity'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { defineField, defineType, ImageAsset } from 'sanity'
 
 export const productType = defineType({
   name: 'product',
@@ -67,7 +68,8 @@ export const productType = defineType({
       name: 'link',
       type: 'slug',
       title: 'Enlace Principal',
-      description: 'El enlace del producto.'
+      description: 'El enlace del producto.',
+      hidden: true
     }),
     defineField({
       name: 'price',
@@ -79,7 +81,8 @@ export const productType = defineType({
       name: 'sale',
       type: 'object',
       title: 'Oferta',
-      description: 'La oferta del producto.',
+      description: 'La oferta del producto. (Expandir para ver)',
+      options: { collapsible: true, collapsed: true },
       fields: [
         defineField({
           name: 'price',
@@ -112,7 +115,8 @@ export const productType = defineType({
       name: 'dimensions',
       type: 'object',
       title: 'Dimensiones',
-      description: 'Las dimensiones del producto.',
+      description: 'Las dimensiones del producto. (Expandir para ver)',
+      options: { collapsible: true, collapsed: true },
       fields: [
         defineField({
           name: 'length',
@@ -166,13 +170,18 @@ export const productType = defineType({
               name: 'values',
               type: 'object',
               fields: [
-                { type: 'string', name: 'value', title: 'Valor' },
-                {
+                defineField({
+                  type: 'string',
+                  name: 'value',
+                  title: 'Valor',
+                  description: 'Ejemplo: Panel Solar'
+                }),
+                defineField({
                   type: 'reference',
-                  to: [{ type: 'product' }],
+                  to: [{ type: 'productVariant' }],
                   name: 'reference',
-                  title: 'Referencia'
-                }
+                  title: 'Variante Asociada'
+                })
               ],
               preview: {
                 select: {
@@ -197,13 +206,15 @@ export const productType = defineType({
       name: 'date',
       type: 'datetime',
       title: 'Fecha',
-      description: 'La fecha de creación del producto.'
+      description: 'La fecha de creación del producto.',
+      hidden: true
     }),
     defineField({
       name: 'modified',
       type: 'datetime',
       title: 'Modificado',
-      description: 'La fecha de modificación del producto.'
+      description: 'La fecha de modificación del producto.',
+      hidden: true
     }),
     defineField({
       name: 'content',
@@ -230,7 +241,20 @@ export const productType = defineType({
       type: 'array',
       title: 'Imágenes Relacionadas',
       description: 'Las imágenes relacionadas del producto.',
-      of: [{ type: 'image' }]
+      of: [{ type: 'image' }],
+      validation: (Rule) =>
+        Rule.custom((relatedImages, context) => {
+          const featuredImage = context.document?.featuredMedia as ImageAsset
+          if (
+            featuredImage &&
+            relatedImages?.some(
+              (image: any) => image?._id === featuredImage._id
+            )
+          ) {
+            return 'La imagen destacada no puede ser una imagen relacionada'
+          }
+          return true
+        })
     }),
     defineField({
       name: 'youtube',
@@ -254,7 +278,9 @@ export const productType = defineType({
           { title: 'Abierto', value: 'open' },
           { title: 'Cerrado', value: 'closed' }
         ]
-      }
+      },
+      hidden: true,
+      initialValue: 'open'
     }),
     defineField({
       name: 'productCategories',
@@ -271,13 +297,6 @@ export const productType = defineType({
       of: [{ type: 'reference', to: [{ type: 'productTag' }] }]
     }),
     defineField({
-      name: 'variations',
-      type: 'array',
-      title: 'Variaciones',
-      description: 'Las variaciones del producto.',
-      of: [{ type: 'reference', to: [{ type: 'product' }] }]
-    }),
-    defineField({
       name: 'relatedProducts',
       type: 'array',
       title: 'Productos Relacionados',
@@ -289,6 +308,7 @@ export const productType = defineType({
       title: 'Articulos de Ultima Hora',
       description: 'Articulos de Ultima Hora del Producto.',
       type: 'object',
+      options: { collapsible: true, collapsed: true },
       fields: [
         defineField({
           name: 'products',
