@@ -34,6 +34,7 @@ import { WishlistBtn } from '../Wishlist/wishlist-helpers'
 import { CompaireBtn } from '../Compaire/compaire-helpers'
 import OptionSelect from './option-select'
 import YoutubeDialog from '../AllProductPage/youtube-dialog'
+import NoStockNotifyMe from '../Shared/no-stock-notify-me'
 
 const ProductView = ({
   className = '',
@@ -120,11 +121,14 @@ const ProductView = ({
               quality={100}
               className='object-contain'
             />
-            {sale && isOnSale && (
-              <div className='absolute left-7 top-7 flex w-fit items-center justify-center rounded-full bg-accent px-2 py-1 text-xl font-medium text-gray-50'>
-                Oferta {salePercentage && `-${salePercentage.toFixed(0)}%`}
-              </div>
-            )}
+            {sale &&
+              isOnSale &&
+              stockQuantity !== null &&
+              stockQuantity > 0 && (
+                <div className='absolute left-7 top-7 flex w-fit items-center justify-center rounded-full bg-accent px-2 py-1 text-xl font-medium text-gray-50'>
+                  Oferta {salePercentage && `-${salePercentage.toFixed(0)}%`}
+                </div>
+              )}
           </div>
           <div className='flex flex-wrap gap-2 overflow-x-auto'>
             {otherImages &&
@@ -233,22 +237,29 @@ const ProductView = ({
           )}
 
           {/* PRICE */}
-          <div data-aos='fade-up' className='mb-5 flex items-center space-x-2'>
-            {sale && isOnSale ? (
-              <>
-                <span className='font-500 mt-2 text-sm text-gray-500 line-through'>
+          {stockQuantity !== null && stockQuantity > 0 ? (
+            <div
+              data-aos='fade-up'
+              className='mb-5 flex items-center space-x-2'
+            >
+              {sale && isOnSale ? (
+                <>
+                  <span className='font-500 mt-2 text-sm text-gray-500 line-through'>
+                    {eurilize(price || 0)}
+                  </span>
+                  <span className='font-500 text-2xl text-red-500'>
+                    {eurilize(sale?.price || 0)}
+                  </span>
+                </>
+              ) : (
+                <span className='font-500 text-2xl text-red-500'>
                   {eurilize(price || 0)}
                 </span>
-                <span className='font-500 text-2xl text-red-500'>
-                  {eurilize(sale?.price || 0)}
-                </span>
-              </>
-            ) : (
-              <span className='font-500 text-2xl text-red-500'>
-                {eurilize(price || 0)}
-              </span>
-            )}
-          </div>
+              )}
+            </div>
+          ) : (
+            <div className='my-3 text-xl'>Agotado</div>
+          )}
 
           {/* EXCERPT */}
           <p
@@ -259,16 +270,24 @@ const ProductView = ({
           </p>
 
           {/* OPTIONS */}
-          {options && <OptionSelect options={options} setType={setType} />}
+          {options && stockQuantity !== null && stockQuantity > 0 && (
+            <OptionSelect options={options} setType={setType} />
+          )}
 
           {/* ADD TO CART */}
           <div
             data-aos='fade-up'
             className='quantity-card-wrapper my-5 flex h-12 w-full items-center space-x-2'
           >
-            <AddToCart showQuantity product={refactoredRelatesProduct} />
-            <WishlistBtn product={product} />
-            <CompaireBtn product={product} />
+            {stockQuantity !== null && stockQuantity > 0 ? (
+              <>
+                <AddToCart product={refactoredRelatesProduct} />
+                <WishlistBtn product={product} />
+                <CompaireBtn product={product} />
+              </>
+            ) : (
+              <NoStockNotifyMe product={refactoredRelatesProduct} />
+            )}
           </div>
 
           {/* INFO */}

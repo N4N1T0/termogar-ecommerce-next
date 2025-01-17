@@ -19,6 +19,7 @@ import { addressType } from './AddressType'
 import { orderType } from './OrderType'
 import { link } from './LinkType'
 import { productVariantType } from './ProductVariantType'
+import { noStockNotifyMeType } from './NoStockNotifyMeType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -39,6 +40,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     addressType,
     link,
     productVariantType,
+    noStockNotifyMeType,
     // @ts-expect-error no uses case
     orderType
   ]

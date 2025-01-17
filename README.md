@@ -36,7 +36,7 @@
 - [x] Review the Mobile File
 - [x] Review the Desktop File
 - [x] Migrate Options and Variations
-- [ ] Add Notify me option
+- [x] Add Notify me option
 - [ ] Test the TIPSA
 - [ ] Add new Fields to the Costumer
 - [ ] Revisar SIGNIN and SIGNUP in Production

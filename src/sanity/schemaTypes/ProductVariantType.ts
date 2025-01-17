@@ -1,4 +1,5 @@
-import { defineField, defineType } from 'sanity'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { defineField, defineType, ImageAsset } from 'sanity'
 
 export const productVariantType = defineType({
   name: 'productVariant',
@@ -6,76 +7,242 @@ export const productVariantType = defineType({
   type: 'document',
   fields: [
     defineField({
+      name: 'parent',
+      type: 'reference',
+      title: 'Padre',
+      to: [{ type: 'product' }],
+      description: 'El título del producto.'
+    }),
+    defineField({
       name: 'title',
       type: 'string',
-      title: 'Nombre de la Variante',
-      description: 'Ejemplo: Básico, Intermedio, Avanzado'
-    }),
-    defineField({
-      name: 'optionName',
-      type: 'string',
-      title: 'Nombre de la Opción',
-      description: 'Ejemplo: Nivel'
-    }),
-    defineField({
-      name: 'optionValue',
-      type: 'string',
-      title: 'Valor de la Opción',
-      description: 'Ejemplo: Básico, Intermedio, Avanzado'
+      title: 'Título',
+      description: 'El título del producto.'
     }),
     defineField({
       name: 'sku',
       type: 'string',
       title: 'SKU',
-      description: 'El SKU específico de la variante'
+      description: 'El SKU del producto.'
+    }),
+    defineField({
+      name: 'ean',
+      type: 'string',
+      title: 'EAN',
+      description: 'El EAN del producto.'
+    }),
+    defineField({
+      name: 'referenceCode',
+      type: 'string',
+      title: 'Código de Referencia',
+      description: 'El código de referencia del producto.'
+    }),
+    defineField({
+      name: 'slug',
+      type: 'slug',
+      title: 'Slug',
+      description: 'El slug es el identificador único del producto.',
+      options: {
+        source: 'title'
+      }
     }),
     defineField({
       name: 'price',
       type: 'number',
       title: 'Precio',
-      description: 'Precio de la variante'
+      description: 'El precio del producto.'
+    }),
+    defineField({
+      name: 'sale',
+      type: 'object',
+      title: 'Oferta',
+      description: 'La oferta del producto. (Expandir para ver)',
+      options: { collapsible: true, collapsed: true },
+      fields: [
+        defineField({
+          name: 'price',
+          type: 'number',
+          title: 'Precio',
+          description: 'El precio de la oferta.'
+        }),
+        defineField({
+          name: 'from',
+          type: 'datetime',
+          title: 'Desde',
+          description: 'Desde La fecha de la oferta.'
+        }),
+        defineField({
+          name: 'to',
+          type: 'datetime',
+          title: 'Hasta',
+          description: 'Hasta La fecha de la oferta.'
+        })
+      ]
+    }),
+    defineField({
+      name: 'downloads',
+      type: 'array',
+      of: [{ type: 'file' }],
+      title: 'Descargas',
+      description: 'Las descargas del producto.'
+    }),
+    defineField({
+      name: 'dimensions',
+      type: 'object',
+      title: 'Dimensiones',
+      description: 'Las dimensiones del producto. (Expandir para ver)',
+      options: { collapsible: true, collapsed: true },
+      fields: [
+        defineField({
+          name: 'length',
+          type: 'number',
+          title: 'Longitud',
+          initialValue: 0
+        }),
+        defineField({
+          name: 'width',
+          type: 'number',
+          title: 'Anchura',
+          initialValue: 0
+        }),
+        defineField({
+          name: 'height',
+          type: 'number',
+          title: 'Altura',
+          initialValue: 0
+        }),
+        defineField({
+          name: 'weight',
+          type: 'number',
+          title: 'Peso',
+          initialValue: 0
+        }),
+        defineField({
+          name: 'alt',
+          type: 'array',
+          title: 'Dimensiones Alternativas',
+          hidden: true,
+          of: [{ type: 'block' }, { type: 'image' }, { type: 'externalImage' }]
+        })
+      ]
+    }),
+    defineField({
+      name: 'options',
+      type: 'object',
+      title: 'Opciones',
+      description: 'Las opciones del producto.',
+      fields: [
+        defineField({
+          name: 'name',
+          type: 'string',
+          title: 'Nombre de la opción'
+        }),
+        defineField({
+          name: 'values',
+          type: 'array',
+          title: 'Valores y Referencia',
+          of: [
+            defineField({
+              name: 'values',
+              type: 'object',
+              fields: [
+                defineField({
+                  type: 'string',
+                  name: 'value',
+                  title: 'Valor',
+                  description: 'Ejemplo: Panel Solar'
+                }),
+                defineField({
+                  type: 'reference',
+                  to: [{ type: 'productVariant' }],
+                  name: 'reference',
+                  title: 'Variante Asociada'
+                })
+              ],
+              preview: {
+                select: {
+                  title: 'value',
+                  subtitle: 'reference.title',
+                  media: 'reference.featuredMedia'
+                }
+              }
+            })
+          ]
+        })
+      ]
+    }),
+    defineField({
+      name: 'content',
+      type: 'array',
+      title: 'Contenido',
+      description: 'El contenido del producto.',
+      of: [{ type: 'block' }, { type: 'image' }, { type: 'externalImage' }]
+    }),
+    defineField({
+      name: 'excerpt',
+      type: 'text',
+      title: 'Extracto',
+      description: 'El extracto del producto.',
+      rows: 3
+    }),
+    defineField({
+      name: 'featuredMedia',
+      type: 'image',
+      title: 'Imagen Destacada',
+      description: 'La imagen destacada del producto.'
+    }),
+    defineField({
+      name: 'relatedImages',
+      type: 'array',
+      title: 'Imágenes Relacionadas',
+      description: 'Las imágenes relacionadas del producto.',
+      of: [{ type: 'image' }],
+      validation: (Rule) =>
+        Rule.custom((relatedImages, context) => {
+          const featuredImage = context.document?.featuredMedia as ImageAsset
+          if (
+            featuredImage &&
+            relatedImages?.some(
+              (image: any) => image?._id === featuredImage._id
+            )
+          ) {
+            return 'La imagen destacada no puede ser una imagen relacionada'
+          }
+          return true
+        })
+    }),
+    defineField({
+      name: 'youtube',
+      type: 'url',
+      title: 'YouTube',
+      description: 'Enlace de YouTube del producto.'
     }),
     defineField({
       name: 'stockQuantity',
       type: 'number',
       title: 'Stock',
-      description: 'Stock de la variante'
+      description: 'Stock del Producto'
     }),
     defineField({
-      name: 'variantOptions',
+      name: 'productCategories',
       type: 'array',
-      title: 'Subvariantes',
-      description: 'Opciones adicionales dentro de esta variante',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'name',
-              type: 'string',
-              title: 'Nombre de la Opción',
-              description: 'Ejemplo: Accesorios'
-            }),
-            defineField({
-              name: 'value',
-              type: 'string',
-              title: 'Valor de la Opción',
-              description: 'Ejemplo: Panel Solar'
-            }),
-            defineField({
-              name: 'variant',
-              type: 'reference',
-              to: [{ type: 'productVariant' }],
-              title: 'Subvariantes Asociada'
-            })
-          ]
-        }
-      ]
+      title: 'Categorías',
+      description: 'Las categorías del producto.',
+      of: [{ type: 'reference', to: [{ type: 'productCategory' }] }]
     }),
     defineField({
-      name: 'featuredMedia',
-      type: 'image',
-      title: 'Imagen de la Variante'
+      name: 'productTag',
+      type: 'array',
+      title: 'Etiquetas',
+      description: 'Las etiquetas del producto.',
+      of: [{ type: 'reference', to: [{ type: 'productTag' }] }]
     })
-  ]
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      subtitle: 'status',
+      media: 'featuredMedia'
+    }
+  }
 })

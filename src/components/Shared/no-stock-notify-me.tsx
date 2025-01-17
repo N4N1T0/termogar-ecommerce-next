@@ -20,6 +20,8 @@ import FormFieldComponent from '@/components/Auth/ResetPassword/form-field'
 
 // * UTILS IMPORTS
 import { CartItemType } from '@/types'
+import notifyMe from '@/actions/notifyme'
+import { toast } from 'sonner'
 
 const NoStockNotifyMe = ({ product }: { product: CartItemType }) => {
   const [open, setOpen] = React.useState(false)
@@ -31,13 +33,28 @@ const NoStockNotifyMe = ({ product }: { product: CartItemType }) => {
     }
   })
 
-  const onSubmit = async () => {}
-
   const {
     control,
     formState: { isSubmitting },
-    handleSubmit
+    handleSubmit,
+    reset
   } = form
+
+  const onSubmit = async ({ email, id }: { email: string; id: string }) => {
+    const response = await notifyMe({ email, id })
+
+    if (!response?.success) {
+      toast.error(response?.message, {
+        duration: 4000
+      })
+    } else {
+      toast.success(response.message, {
+        duration: 4000
+      })
+      reset()
+      setOpen(false)
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -78,7 +95,7 @@ const NoStockNotifyMe = ({ product }: { product: CartItemType }) => {
               disabled={isSubmitting}
               className='w-full rounded-none bg-gray-900 text-gray-100 transition-colors duration-150 ease-in hover:text-accent disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50'
             >
-              Enviar
+              {isSubmitting ? 'Enviando...' : 'Enviar'}
             </Button>
           </form>
         </Form>

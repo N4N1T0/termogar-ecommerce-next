@@ -88,6 +88,22 @@ export type Order = {
   expectedDeliveryDate?: string
 }
 
+export type NoStockNotifyMe = {
+  _id: string
+  _type: 'noStockNotifyMe'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  email?: string
+  product?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'product'
+  }>
+}
+
 export type Link = {
   _type: 'link'
   link?: string
@@ -118,6 +134,8 @@ export type Costumer = {
   lastName?: string
   password?: string
   userName?: string
+  IdDocument?: string
+  companyName?: string
   billingAddress?: Array<
     {
       _key: string
@@ -440,7 +458,7 @@ export type Product = {
         _ref: string
         _type: 'reference'
         _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'product'
+        [internalGroqTypeReferenceTo]?: 'productVariant'
       }
       _type: 'values'
       _key: string
@@ -533,13 +551,6 @@ export type Product = {
     _key: string
     [internalGroqTypeReferenceTo]?: 'productTag'
   }>
-  variations?: Array<{
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    _key: string
-    [internalGroqTypeReferenceTo]?: 'product'
-  }>
   relatedProducts?: Array<{
     _ref: string
     _type: 'reference'
@@ -558,6 +569,181 @@ export type Product = {
     time?: number
     discount?: number
   }
+}
+
+export type ProductVariant = {
+  _id: string
+  _type: 'productVariant'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title?: string
+  sku?: string
+  ean?: string
+  referenceCode?: string
+  slug?: Slug
+  price?: number
+  sale?: {
+    price?: number
+    from?: string
+    to?: string
+  }
+  downloads?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.fileAsset'
+    }
+    _type: 'file'
+    _key: string
+  }>
+  dimensions?: {
+    length?: number
+    width?: number
+    height?: number
+    weight?: number
+    alt?: Array<
+      | {
+          children?: Array<{
+            marks?: Array<string>
+            text?: string
+            _type: 'span'
+            _key: string
+          }>
+          style?:
+            | 'normal'
+            | 'h1'
+            | 'h2'
+            | 'h3'
+            | 'h4'
+            | 'h5'
+            | 'h6'
+            | 'blockquote'
+          listItem?: 'bullet' | 'number'
+          markDefs?: Array<{
+            href?: string
+            _type: 'link'
+            _key: string
+          }>
+          level?: number
+          _type: 'block'
+          _key: string
+        }
+      | {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          _type: 'image'
+          _key: string
+        }
+      | ({
+          _key: string
+        } & ExternalImage)
+    >
+  }
+  options?: {
+    name?: string
+    values?: Array<{
+      value?: string
+      reference?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'productVariant'
+      }
+      _type: 'values'
+      _key: string
+    }>
+  }
+  content?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>
+          text?: string
+          _type: 'span'
+          _key: string
+        }>
+        style?:
+          | 'normal'
+          | 'h1'
+          | 'h2'
+          | 'h3'
+          | 'h4'
+          | 'h5'
+          | 'h6'
+          | 'blockquote'
+        listItem?: 'bullet' | 'number'
+        markDefs?: Array<{
+          href?: string
+          _type: 'link'
+          _key: string
+        }>
+        level?: number
+        _type: 'block'
+        _key: string
+      }
+    | {
+        asset?: {
+          _ref: string
+          _type: 'reference'
+          _weak?: boolean
+          [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+        }
+        hotspot?: SanityImageHotspot
+        crop?: SanityImageCrop
+        _type: 'image'
+        _key: string
+      }
+    | ({
+        _key: string
+      } & ExternalImage)
+  >
+  excerpt?: string
+  featuredMedia?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+  }
+  relatedImages?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    _type: 'image'
+    _key: string
+  }>
+  youtube?: string
+  stockQuantity?: number
+  productCategories?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'productCategory'
+  }>
+  productTag?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'productTag'
+  }>
 }
 
 export type SanityFileAsset = {
@@ -906,6 +1092,7 @@ export type AllSanitySchemaTypes =
   | SanityImageDimensions
   | Geopoint
   | Order
+  | NoStockNotifyMe
   | Link
   | Address
   | Costumer
@@ -915,6 +1102,7 @@ export type AllSanitySchemaTypes =
   | ProductTag
   | ProductCategory
   | Product
+  | ProductVariant
   | SanityFileAsset
   | Brand
   | Tag
@@ -2277,13 +2465,7 @@ export type GET_WHOLE_PRODUCT_BY_SLUGResult = {
     title: string | null
     url: string | null
   }> | null
-  variations: Array<{
-    _ref: string
-    _type: 'reference'
-    _weak?: boolean
-    _key: string
-    [internalGroqTypeReferenceTo]?: 'product'
-  }> | null
+  variations: null
   relatedProducts: Array<{
     id: string
   }> | null
@@ -2476,6 +2658,31 @@ export type GET_ORDERS_BY_USER_IDResult = Array<{
     quantity: number | null
   }> | null
 }>
+// Variable: GET_NOTIFY_ME
+// Query: *[_type=='noStockNotifyMe' && email == $email][0]{  email,  "products": product[]->{   _id  }}
+export type GET_NOTIFY_MEResult = {
+  email: string | null
+  products: Array<{
+    _id: string
+  }> | null
+} | null
+// Variable: GET_NOTIFY_ME_FOR_EMAIL
+// Query: *[_type=='noStockNotifyMe' && email == $email][0]{  email,  "product": product[]->{    title,    "slug": slug.current,     price,     sale,    excerpt,    "featuredMedia": featuredMedia.asset->url,  }}
+export type GET_NOTIFY_ME_FOR_EMAILResult = {
+  email: string | null
+  product: Array<{
+    title: string | null
+    slug: string | null
+    price: number | null
+    sale: {
+      price?: number
+      from?: string
+      to?: string
+    } | null
+    excerpt: string | null
+    featuredMedia: string | null
+  }> | null
+} | null
 
 // Query TypeMap
 import '@sanity/client'
@@ -2512,5 +2719,7 @@ declare module '@sanity/client' {
     '*[_type == \'costumer\' && _id == $id][0]{\n  "id": _id,\n  userName,\n  lastName,\n  firstName,\n  password,\n  email,\n  "avatar": avatarUrl.asset->{\n    "url": url,\n    "blur": metadata.lqip\n  },\n  "billingAddress": billingAddress[0],\n  "shippingAddresses": shippingAddresses | order(createdAt desc)\n}\n': GET_USER_INFOResult
     '*[_type ==\'costumer\' && email == $email][0]{\n  "id": _id,\n   userName,\n  lastName,\n  firstName,\n  password,\n    email,\n   "avatar": avatarUrl.asset->{\n    "url": url,\n  },\n}': GET_USER_FOR_AUTHResult
     '*[_type ==\'order\' && userEmail._ref == $id ]{\n  "id": _id,\n  purchaseDate,\n  currierCode,\n  status,\n  expectedDeliveryDate,\n  paymentMethod,\n  "shippingAddress": shippingAddress[0],\n  totalAmount,\n  products[]{\n      product-> {\n        "id": _id,\n        title,\n        price,\n        "featuredMedia": {\n          "url": featuredMedia.asset->url,\n            "blur": featuredMedia.asset->metadata.lqip\n        },\n        sale\n      },\n      quantity\n    }\n}': GET_ORDERS_BY_USER_IDResult
+    '*[_type==\'noStockNotifyMe\' && email == $email][0]{\n  email,\n  "products": product[]->{\n   _id\n  }\n}': GET_NOTIFY_MEResult
+    '*[_type==\'noStockNotifyMe\' && email == $email][0]{\n  email,\n  "product": product[]->{\n    title,\n    "slug": slug.current,\n     price,\n     sale,\n    excerpt,\n    "featuredMedia": featuredMedia.asset->url,\n  }\n}': GET_NOTIFY_ME_FOR_EMAILResult
   }
 }

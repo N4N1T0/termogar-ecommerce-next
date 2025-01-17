@@ -842,3 +842,25 @@ export const GET_ORDERS_BY_USER_ID =
       quantity
     }
 }`)
+
+export const GET_NOTIFY_ME =
+  defineQuery(`*[_type=='noStockNotifyMe' && email == $email][0]{
+  "id": _id,
+  email,
+  "products": products[]->{
+   _id
+  }
+}`)
+
+export const GET_NOTIFY_ME_FOR_EMAIL =
+  defineQuery(`*[_type=='noStockNotifyMe' && email == $email][0]{
+  email,
+  "products": products[]->{
+    title,
+    "slug": slug.current,
+     price,
+     sale,
+    excerpt,
+    "featuredMedia": featuredMedia.asset->url,
+  }
+}`)
