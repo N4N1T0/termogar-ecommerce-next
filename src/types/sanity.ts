@@ -2616,10 +2616,11 @@ export type GET_USER_INFOResult = {
   > | null
 } | null
 // Variable: GET_USER_FOR_AUTH
-// Query: *[_type =='costumer' && email == $email][0]{  "id": _id,   userName,  lastName,  companyName,  password,    email,   "avatar": avatarUrl.asset->{    "url": url,  },}
+// Query: *[_type =='costumer' && email == $email][0]{  "id": _id,   userName,   firstName,  lastName,  companyName,  password,    email,   "avatar": avatarUrl.asset->{    "url": url,  },}
 export type GET_USER_FOR_AUTHResult = {
   id: string
   userName: string | null
+  firstName: string | null
   lastName: string | null
   companyName: string | null
   password: string | null
@@ -2728,7 +2729,7 @@ declare module '@sanity/client' {
     '*[_type==\'coupon\' && code == $code][0] {\n   amount,\n    date_expires,\n    discount_type,\n    limit_usage_to_x_items,\n    maximum_amount,\n    minimum_amount,\n    "product_categories": product_categories[]->{\n     "id": _id\n    },\n    "product_ids": product_ids[]->{\n     "id": _id  \n   },\n    usage_limit,\n    usage_count,\n    usage_limit_per_user\n}': GET_COUPONS_FOR_VALIDATIONResult
     '*[_type==\'product\' && status==\'publish\' && _id == $id][0]{\n    "products": lastMinute.products[]->{\n  "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset->url,\n      "blur": featuredMedia.asset->metadata.lqip\n  },\n  title,\n  "slug": slug.current,\n "brand": *[_type == \'brand\' && ^.title match title][0] {\n      title,\n      "link": link.current,\n      "featuredMedia": image.asset->url,\n    },\n  excerpt,\n  "categories": productCategories[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n  content,\n  price,\n  sale,\n  "stockQuantity": stockQuantity,\n  "tags": productTag[]->{\n    "id": _id,\n    name,\n    "slug": slug.current\n  },\n "otherImages": relatedImages[].asset->{\n  "url": url,\n  "blur": metadata.lqip\n},\n"hasLastMinute": defined(lastMinute)\n},\n"time": lastMinute.time,\n "discount": lastMinute.discount,\n  }': GET_LAST_MINUTE_PRODUCTS_FROM_IDResult
     '*[_type == \'costumer\' && _id == $id][0]{\n  "id": _id,\n  userName,\n  lastName,\n  firstName,\n  companyName,\n  IdDocument,\n  password,\n  email,\n  "avatar": avatarUrl.asset->{\n    "url": url,\n    "blur": metadata.lqip\n  },\n  "billingAddress": billingAddress[0],\n  "shippingAddresses": shippingAddresses | order(createdAt desc)\n}\n': GET_USER_INFOResult
-    '*[_type ==\'costumer\' && email == $email][0]{\n  "id": _id,\n   userName,\n  lastName,\n  companyName,\n  password,\n    email,\n   "avatar": avatarUrl.asset->{\n    "url": url,\n  },\n}': GET_USER_FOR_AUTHResult
+    '*[_type ==\'costumer\' && email == $email][0]{\n  "id": _id,\n   userName,\n   firstName,\n  lastName,\n  companyName,\n  password,\n    email,\n   "avatar": avatarUrl.asset->{\n    "url": url,\n  },\n}': GET_USER_FOR_AUTHResult
     '*[_type ==\'order\' && userEmail._ref == $id ]{\n  "id": _id,\n  purchaseDate,\n  currierCode,\n  status,\n  expectedDeliveryDate,\n  paymentMethod,\n  "shippingAddress": shippingAddress[0],\n  totalAmount,\n  products[]{\n      product-> {\n        "id": _id,\n        title,\n        price,\n        "featuredMedia": {\n          "url": featuredMedia.asset->url,\n            "blur": featuredMedia.asset->metadata.lqip\n        },\n        sale\n      },\n      quantity\n    }\n}': GET_ORDERS_BY_USER_IDResult
     '*[_type==\'noStockNotifyMe\' && email == $email][0]{\n  "id": _id,\n  email,\n  "products": products[]->{\n   _id\n  }\n}': GET_NOTIFY_MEResult
     '*[_type==\'noStockNotifyMe\' && email == $email][0]{\n  email,\n  "products": products[]->{\n    title,\n    "slug": slug.current,\n     price,\n     sale,\n    excerpt,\n    "featuredMedia": featuredMedia.asset->url,\n  }\n}': GET_NOTIFY_ME_FOR_EMAILResult

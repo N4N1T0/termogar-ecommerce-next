@@ -811,6 +811,7 @@ export const GET_USER_FOR_AUTH =
   defineQuery(`*[_type =='costumer' && email == $email][0]{
   "id": _id,
    userName,
+   firstName,
   lastName,
   companyName,
   password,

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { defineField, defineType, ImageAsset } from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export const productType = defineType({
   name: 'product',
@@ -243,16 +243,17 @@ export const productType = defineType({
       description: 'Las imágenes relacionadas del producto.',
       of: [{ type: 'image' }],
       validation: (Rule) =>
-        Rule.custom((relatedImages, context) => {
-          const featuredImage = context.document?.featuredMedia as ImageAsset
-          if (
-            featuredImage &&
-            relatedImages?.some(
-              (image: any) => image?._id === featuredImage._id
-            )
-          ) {
-            return 'La imagen destacada no puede ser una imagen relacionada'
+        Rule.custom((relatedImages) => {
+          if (!Array.isArray(relatedImages)) return true
+
+          const uniqueImages = new Set(
+            relatedImages.map((image: any) => image?._id)
+          )
+
+          if (uniqueImages.size !== relatedImages.length) {
+            return 'No se permiten imágenes duplicadas en Imágenes Relacionadas.'
           }
+
           return true
         })
     }),
@@ -266,7 +267,9 @@ export const productType = defineType({
       name: 'stockQuantity',
       type: 'number',
       title: 'Stock',
-      description: 'Stock del Producto'
+      description: 'Stock del Producto',
+      initialValue: 0,
+      validation: (Rule) => Rule.required()
     }),
     defineField({
       name: 'commentStatus',

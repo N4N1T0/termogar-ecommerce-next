@@ -33,7 +33,7 @@ export const grabaEnvio24 = (
    <soapenv:Header>
       <tem:ROClientIDHeader>
          <!--Optional:-->
-         <tem:ID>{{${id}}}</tem:ID>
+         <tem:ID>${id}</tem:ID>
       </tem:ROClientIDHeader>
    </soapenv:Header>
    <soapenv:Body>

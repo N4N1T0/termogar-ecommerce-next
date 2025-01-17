@@ -38,9 +38,12 @@
 - [x] Migrate Options and Variations
 - [x] Add Notify me option
 - [x] Add new Fields to the Costumer Form
-- [ ] Order maker discount stock
+- [x] Revisar SIGNIN and SIGNUP in Production
+- [x] quantity stop in available stock
+- [x] Order maker discount stock
+- [x] Update send forget password
+- [ ] Delete unused components
 - [ ] Test the TIPSA
-- [ ] Revisar SIGNIN and SIGNUP in Production
 - [ ] Look for the TODOS
 
 ## MAINTENANCE

@@ -31,7 +31,7 @@ export default auth((req) => {
 
   // Redirect unauthenticated users trying to access protected routes
   if (user === undefined && protectedRoutes.includes(pathname.split('/')[1])) {
-    const newUrl = new URL('/', origin)
+    const newUrl = new URL(`/login?redirectTo=${pathname}`, origin)
     return NextResponse.redirect(newUrl)
   }
 

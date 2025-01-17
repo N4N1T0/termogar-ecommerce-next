@@ -29,13 +29,6 @@ export type SectionStyleThreeProps = Omit<
   'categoryTitle' | 'brands' | 'categoryBackground'
 >
 
-export type SectionStyleFourProps = Omit<
-  SectionStyleOneProps,
-  'categoryTitle' | 'brands' | 'categoryBackground'
-> & {
-  products: ProductCardType[]
-}
-
 export interface ViewMoreTitleProps {
   categoryTitle?: string | null | undefined
   className?: string
@@ -216,19 +209,6 @@ export type BreadcrumbProps = {
   name: string | null
   path: string
 } | null
-
-export interface InputComProps {
-  label?: string
-  type: string
-  name?: string
-  placeholder: string
-  children?: React.ReactNode
-  inputHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  value?: string
-  inputClasses?: string
-  labelClasses?: string
-  isPending?: boolean
-}
 
 export interface PaginationBlogProps {
   currentPage: number
