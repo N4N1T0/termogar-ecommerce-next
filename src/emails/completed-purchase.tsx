@@ -84,7 +84,7 @@ export const CompletedPurchase = ({
           </Text>
         </Section>
 
-        {/* New Section for Shipping Information */}
+        {/* New Section for billing Information */}
         <Section
           className='mb-6 h-full p-6'
           style={{ border: '1px solid #e5e7eb' }}
@@ -97,6 +97,12 @@ export const CompletedPurchase = ({
           </Text>
           <Text className='text-sm text-gray-700'>
             <strong>Email:</strong> {user?.email || ''}
+          </Text>
+          <Text className='text-sm text-gray-700'>
+            <strong>Compañía:</strong> {user?.companyName || ''}
+          </Text>
+          <Text className='text-sm text-gray-700'>
+            <strong>Documento:</strong> {user?.IdDocument || ''}
           </Text>
           <Text className='text-sm text-gray-700'>
             <strong>Teléfono:</strong> {billingAddress?.phone || ''}

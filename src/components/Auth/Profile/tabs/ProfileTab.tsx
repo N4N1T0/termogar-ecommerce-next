@@ -51,6 +51,8 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
       firstName: user?.firstName || '',
       lastName: user?.lastName || '',
       userName: user?.userName || '',
+      companyName: user?.companyName || '',
+      IdDocument: user?.IdDocument || '',
       billingAddress: {
         address1: user?.billingAddress?.address1 || '',
         address2: user?.billingAddress?.address2 || '',
@@ -152,6 +154,28 @@ export default function ProfileTab({ user }: { user: GET_USER_INFOResult }) {
                 name='userName'
                 isSubmitting={isSubmitting}
                 autocomplete='username'
+              />
+            </div>
+            <div className='mb-4 flex space-x-2.5'>
+              <FormFieldComponent
+                className='w-full'
+                label='Documento de Identidad'
+                placeholder='123456...'
+                type='text'
+                control={control}
+                name='IdDocument'
+                isSubmitting={isSubmitting}
+                autocomplete='document-id'
+              />
+              <FormFieldComponent
+                className='w-full'
+                label='Nombre de de la Compañía (Opcional)'
+                placeholder='termoga...'
+                type='text'
+                control={control}
+                name='companyName'
+                isSubmitting={isSubmitting}
+                autocomplete='organization'
               />
             </div>
             <fieldset className='border-t border-accent/20'>

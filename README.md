@@ -37,7 +37,12 @@
 - [x] Review the Desktop File
 - [x] Migrate Options and Variations
 - [x] Add Notify me option
-- [ ] Add new Fields to the Costumer Form
+- [x] Add new Fields to the Costumer Form
+- [ ] Order maker discount stock
 - [ ] Test the TIPSA
 - [ ] Revisar SIGNIN and SIGNUP in Production
 - [ ] Look for the TODOS
+
+## MAINTENANCE
+
+- [ ] Sanity Webhook for the notify

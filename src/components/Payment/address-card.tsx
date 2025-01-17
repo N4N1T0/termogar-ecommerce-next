@@ -15,12 +15,14 @@ const AddressDisplay = ({
   return (
     <article className='border-px w-full space-y-3 border border-gray-200 p-4'>
       <h4 className='border-px w-fit border-b border-gray-500 font-semibold uppercase'>
-        {title}
+        {title}:
       </h4>
       <div className='space-y-1'>
         {address?.firstName && (
-          <p className='font-medium'>{address?.firstName}</p>
+          <p className='font-semibold'>{address?.firstName}</p>
         )}
+        {address?.IdDocument && <p>{address?.IdDocument}</p>}
+        {address?.companyName && <p>{address?.companyName}</p>}
         {address?.address1 && <p>{address?.address1}</p>}
         {address?.address2 && <p>{address?.address2}</p>}
         <p>

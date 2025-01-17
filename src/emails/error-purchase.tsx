@@ -96,6 +96,12 @@ export const ErrorPurchase = ({
           <strong>Email:</strong> {user?.email || ''}
         </Text>
         <Text className='text-sm text-gray-700'>
+          <strong>Compañía:</strong> {user?.companyName || ''}
+        </Text>
+        <Text className='text-sm text-gray-700'>
+          <strong>Documento:</strong> {user?.IdDocument || ''}
+        </Text>
+        <Text className='text-sm text-gray-700'>
           <strong>Teléfono:</strong> {billingAddress?.phone || ''}
         </Text>
         <Text className='text-sm text-gray-700'>

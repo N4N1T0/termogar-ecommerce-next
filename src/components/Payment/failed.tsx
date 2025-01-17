@@ -109,8 +109,8 @@ export default function FailedPaymentContent({
           </div>
         </div>
         <div className='space-y-2'>
-          <h3 className='border-b border-gray-200 pb-2 font-semibold'>
-            Productos:
+          <h3 className='border-px w-fit border-b border-gray-500 font-semibold uppercase'>
+            PRODUCTOS:
           </h3>
           <ul className='list-inside list-disc border-b border-gray-200 py-2'>
             {rehydrated ? (
@@ -182,14 +182,16 @@ export default function FailedPaymentContent({
           </ul>
         </div>
       </div>
-      <AddressDisplay
-        address={user?.billingAddress}
-        title='Dirección de Facturación'
-      />
-      <AddressDisplay
-        address={refactoredShippingAddress}
-        title='Dirección de Envío'
-      />
+      <div className='flex flex-col gap-2 md:flex-row'>
+        <AddressDisplay
+          address={user?.billingAddress}
+          title='Dirección de Facturación'
+        />
+        <AddressDisplay
+          address={refactoredShippingAddress}
+          title='Dirección de Envío'
+        />
+      </div>
       <NotificationsPageButton
         orderData={{
           ...failedPaymentData,

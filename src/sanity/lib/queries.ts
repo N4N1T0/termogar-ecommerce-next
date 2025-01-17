@@ -794,6 +794,8 @@ export const GET_USER_INFO =
   userName,
   lastName,
   firstName,
+  companyName,
+  IdDocument,
   password,
   email,
   "avatar": avatarUrl.asset->{
@@ -810,7 +812,7 @@ export const GET_USER_FOR_AUTH =
   "id": _id,
    userName,
   lastName,
-  firstName,
+  companyName,
   password,
     email,
    "avatar": avatarUrl.asset->{

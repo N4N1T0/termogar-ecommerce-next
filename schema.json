@@ -455,7 +455,7 @@
         },
         "optional": true
       },
-      "product": {
+      "products": {
         "type": "objectAttribute",
         "value": {
           "type": "array",
@@ -594,6 +594,20 @@
           "optional": true
         },
         "phone": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "IdDocument": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        },
+        "companyName": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
@@ -3481,6 +3495,36 @@
         "value": {
           "type": "string"
         }
+      },
+      "parent": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "object",
+          "attributes": {
+            "_ref": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              }
+            },
+            "_type": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string",
+                "value": "reference"
+              }
+            },
+            "_weak": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "boolean"
+              },
+              "optional": true
+            }
+          },
+          "dereferencesTo": "product"
+        },
+        "optional": true
       },
       "title": {
         "type": "objectAttribute",

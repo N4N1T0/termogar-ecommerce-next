@@ -21,6 +21,8 @@ export const costumerSchema = z.object({
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   userName: z.string().optional(),
+  companyName: z.string().optional(),
+  IdDocument: z.string().min(1, 'Documento es requerido.'),
   billingAddress: addressSchema,
   shippingAddresses: addressSchema,
   isPayingCustomer: z.boolean().optional()

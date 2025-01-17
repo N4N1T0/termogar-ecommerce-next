@@ -19,6 +19,8 @@ const createAddress = (
   address1: data[type].address1,
   address2: data[type].address2,
   city: data[type].city,
+  companyName: data.companyName,
+  IdDocument: data.IdDocument,
   email: data.email,
   phone: data[type].phone,
   postcode: data[type].postcode,
@@ -70,7 +72,15 @@ const checkoutLogic = async (
       }
     )
 
-    const { email, firstName, lastName, userName, password } = parsedValue.data
+    const {
+      email,
+      firstName,
+      lastName,
+      userName,
+      password,
+      IdDocument,
+      companyName
+    } = parsedValue.data
 
     if (newUser) {
       if (customerAlreadyExist) {
@@ -91,6 +101,9 @@ const checkoutLogic = async (
         email,
         firstName,
         lastName,
+        companyName,
+        IdDocument,
+        isPayingCustomer: true,
         userName,
         password: hashedPassword,
         avatarUrl: {
@@ -119,6 +132,10 @@ const checkoutLogic = async (
           email,
           firstName,
           lastName,
+          userName,
+          companyName,
+          IdDocument,
+          isPayingCustomer: true,
           billingAddress: [createAddress(parsedValue.data, 'billingAddress')],
           shippingAddresses: newShippingAddress
             ? [createAddress(parsedValue.data, 'shippingAddresses')]

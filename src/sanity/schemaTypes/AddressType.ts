@@ -46,6 +46,16 @@ export const addressType = defineType({
       type: 'string'
     }),
     defineField({
+      name: 'IdDocument',
+      title: 'Documento de Identidad',
+      type: 'string'
+    }),
+    defineField({
+      name: 'companyName',
+      title: 'Nombre de la Empresa (Opcional)',
+      type: 'string'
+    }),
+    defineField({
       name: 'createdAt',
       title: 'Fecha de Creación',
       type: 'datetime',
