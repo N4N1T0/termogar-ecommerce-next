@@ -1,16 +1,14 @@
 # Use a specific Node.js version with Alpine
-FROM node:22-alpine AS base
-
-# Install pnpm globally
-RUN npm install -g pnpm
+FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Copy only package files first for better caching
 COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile
+RUN corepack enable pnpm && pnpm i --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -19,7 +17,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Build the application
-RUN pnpm run build
+RUN corepack enable pnpm && pnpm build
 
 # Production image, copy all the files and run next
 FROM base AS runner
@@ -34,13 +32,14 @@ ENV HOSTNAME="0.0.0.0"
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
 # Copy the public folder and built application
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-# Set permissions for the .next directory
-RUN chown -R nextjs:nodejs .next
 
 # Switch to the non-root user
 USER nextjs
