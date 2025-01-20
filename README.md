@@ -42,7 +42,7 @@
 - [x] quantity stop in available stock
 - [x] Order maker discount stock
 - [x] Update send forget password
-- [ ] Delete unused components
+- [x] Delete unused components
 - [ ] Test the TIPSA
 - [ ] Look for the TODOS
 
