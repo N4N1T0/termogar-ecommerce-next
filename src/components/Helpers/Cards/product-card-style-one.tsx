@@ -66,7 +66,7 @@ export default function ProductCardStyleOne<T>({
       style={{ boxShadow: '0px 15px 64px 0px rgba(0, 0, 0, 0.05)' }}
     >
       {/* Image */}
-      <div className='h-[200px] w-full p-5 sm:h-[300px]'>
+      <div className='h-[200px] w-full p-5 sm:h-[280px]'>
         <Image
           src={featuredMedia?.url || PlaceholderProductCard}
           alt={title || ''}

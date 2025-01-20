@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 // * ASSETS IMPORTS
 import { ChevronDownIcon } from 'lucide-react'
-import MegaMenu from '@/assets/images/mega-menu-thumb.jpg'
+import { PlaceholderHorizontal } from '@/assets'
 import { GET_MENU_CATEGORIESResult } from '@/types/sanity'
 import { PortableText } from 'next-sanity'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
@@ -121,7 +121,7 @@ const MegaMenuLi = React.memo(
               <div className='h-full w-[348px]'>
                 <div className='h-[235px] w-full'>
                   <Image
-                    src={menu.featuredImage?.url || MegaMenu}
+                    src={menu.featuredImage?.url || PlaceholderHorizontal}
                     alt='Mega Menu'
                     className='h-full w-full object-contain'
                     width={348}
@@ -129,7 +129,8 @@ const MegaMenuLi = React.memo(
                     quality={70}
                     placeholder='blur'
                     blurDataURL={
-                      menu.featuredImage?.blur || MegaMenu.blurDataURL
+                      menu.featuredImage?.blur ||
+                      PlaceholderHorizontal.blurDataURL
                     }
                   />
                 </div>
