@@ -268,7 +268,7 @@ export const productType = defineType({
       type: 'number',
       title: 'Stock',
       description: 'Stock del Producto',
-      initialValue: 0,
+      initialValue: 1,
       validation: (Rule) => Rule.required()
     }),
     defineField({

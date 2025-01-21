@@ -18,36 +18,37 @@ import {
   Star,
   PlayCircle
 } from 'lucide-react'
+import { WishlistBtn } from '@/components/Wishlist/wishlist-helpers'
+import { CompaireBtn } from '@/components/Compaire/compaire-helpers'
+import OptionSelect from '@/components/SingleProductPage/option-select'
+import YoutubeDialog from '@/components/AllProductPage/youtube-dialog'
+import NoStockNotifyMe from '@/components/Shared/no-stock-notify-me'
 
 // * UTILS IMPORTS
-import { GET_WHOLE_PRODUCT_BY_SLUGResult } from '@/types/sanity'
 import {
   cn,
   eurilize,
   shareLink,
   calculateAverageRating,
   getVideoIdFromUrl,
-  isWithinSalePeriod
+  isWithinSalePeriod,
+  getMinPrice
 } from '@/lib/utils'
 import { CartItemType, YoptopReviews } from '@/types'
-import { WishlistBtn } from '../Wishlist/wishlist-helpers'
-import { CompaireBtn } from '../Compaire/compaire-helpers'
-import OptionSelect from './option-select'
-import YoutubeDialog from '../AllProductPage/youtube-dialog'
-import NoStockNotifyMe from '../Shared/no-stock-notify-me'
+import { GET_WHOLE_PRODUCT_BY_SLUGResult } from '@/types/sanity'
 
 const ProductView = ({
   className = '',
-  product
+  product,
+  reviews
 }: {
   className?: string
-  product: GET_WHOLE_PRODUCT_BY_SLUGResult & {
-    reviews: YoptopReviews | undefined
-  }
+  product: GET_WHOLE_PRODUCT_BY_SLUGResult
+  reviews: YoptopReviews | undefined
 }) => {
   const [imgUrl, setImgUrl] = React.useState({
-    url: product?.featuredMedia.url,
-    blur: product?.featuredMedia.blur,
+    url: product?.featuredMedia?.url,
+    blur: product?.featuredMedia?.blur,
     type: 'image'
   })
   const [type, setType] = React.useState<string | null>(null)
@@ -75,14 +76,15 @@ const ProductView = ({
     price,
     excerpt,
     options,
-    id,
     tags,
-    reviews,
     youtube,
-    stockQuantity
+    stockQuantity,
+    sku
   } = product
-  console.log('🚀 ~ stockQuantity:', stockQuantity)
 
+  const hasVariant =
+    Array.isArray(options?.values) &&
+    options.values.some((option) => option?.product)
   const youtubeThumbnail = getVideoIdFromUrl(youtube || '')
   const score = calculateAverageRating(reviews)
   const isOnSale = sale && isWithinSalePeriod(sale)
@@ -93,10 +95,7 @@ const ProductView = ({
 
   const refactoredRelatesProduct: CartItemType = {
     ...product,
-    selectedOption:
-      type ||
-      (product.options?.values?.length && product.options?.values[0].value) ||
-      '',
+    selectedOption: type || options?.values?.[0]?.value || '',
     quantity: 1
   }
 
@@ -207,7 +206,7 @@ const ProductView = ({
           </p>
 
           {/* REVIEWS STAR */}
-          {product.reviews !== undefined && product.reviews?.length > 0 ? (
+          {reviews !== undefined && reviews?.length > 0 ? (
             <Link
               href='#tabs'
               data-aos='fade-up'
@@ -227,7 +226,7 @@ const ProductView = ({
                   ))}
               </div>
               <span className='text-sm font-normal text-gray-900'>
-                {product.reviews?.length} Reseñas
+                {reviews?.length} Reseñas
               </span>
             </Link>
           ) : (
@@ -237,28 +236,39 @@ const ProductView = ({
           )}
 
           {/* PRICE */}
-          {stockQuantity !== null && stockQuantity > 0 ? (
-            <div
-              data-aos='fade-up'
-              className='mb-5 flex items-center space-x-2'
-            >
-              {sale && isOnSale ? (
-                <>
-                  <span className='font-500 mt-2 text-sm text-gray-500 line-through'>
+          {!hasVariant &&
+            (stockQuantity !== null && stockQuantity > 0 ? (
+              <div
+                data-aos='fade-up'
+                className='mb-5 flex items-center space-x-2'
+              >
+                {sale && isOnSale ? (
+                  <>
+                    <span className='font-500 mt-2 text-sm text-gray-500 line-through'>
+                      {eurilize(price || 0)}
+                    </span>
+                    <span className='font-500 text-2xl text-red-500'>
+                      {eurilize(sale?.price || 0)}
+                    </span>
+                  </>
+                ) : (
+                  <span className='font-500 text-2xl text-red-500'>
                     {eurilize(price || 0)}
                   </span>
-                  <span className='font-500 text-2xl text-red-500'>
-                    {eurilize(sale?.price || 0)}
-                  </span>
-                </>
-              ) : (
-                <span className='font-500 text-2xl text-red-500'>
-                  {eurilize(price || 0)}
-                </span>
-              )}
+                )}
+              </div>
+            ) : (
+              <div className='my-3 text-xl'>Agotado</div>
+            ))}
+
+          {/* HASVARIANT PRICE SECTION */}
+          {hasVariant && (
+            <div className='price'>
+              <span>Precios Desde:</span>
+              <span className='offer-price font-600 block text-[22px] text-secondary md:ml-2 md:inline'>
+                {eurilize(getMinPrice(options) || 0)}
+              </span>
             </div>
-          ) : (
-            <div className='my-3 text-xl'>Agotado</div>
           )}
 
           {/* EXCERPT */}
@@ -275,43 +285,49 @@ const ProductView = ({
           )}
 
           {/* ADD TO CART */}
-          <div
-            data-aos='fade-up'
-            className='quantity-card-wrapper my-5 flex h-12 w-full items-center space-x-2'
-          >
-            {stockQuantity !== null && stockQuantity > 0 ? (
-              <>
-                <AddToCart
-                  product={refactoredRelatesProduct}
-                  stock={stockQuantity}
-                  showQuantity={true}
-                />
-                <WishlistBtn product={product} />
-                <CompaireBtn product={product} />
-              </>
-            ) : (
-              <NoStockNotifyMe product={refactoredRelatesProduct} />
-            )}
-          </div>
+          {!hasVariant && (
+            <div
+              data-aos='fade-up'
+              className='quantity-card-wrapper my-5 flex h-12 w-full items-center space-x-2'
+            >
+              {stockQuantity !== null && stockQuantity > 0 ? (
+                <>
+                  <AddToCart
+                    product={refactoredRelatesProduct}
+                    stock={stockQuantity}
+                    showQuantity={true}
+                  />
+                  <WishlistBtn product={product} />
+                  <CompaireBtn product={product} />
+                </>
+              ) : (
+                <NoStockNotifyMe product={refactoredRelatesProduct} />
+              )}
+            </div>
+          )}
 
           {/* INFO */}
           <div data-aos='fade-up' className='mb-5'>
-            <div className='text-sm leading-7 text-gray-500'>
-              <span className='text-gray-900'>Etiquetas :</span>
-              <ul className='flex w-full flex-wrap gap-2'>
-                {tags?.map(({ id, name, slug }) => (
-                  <li
-                    key={id}
-                    className='hover-200 underline hover:text-accent'
-                  >
-                    <Link href={`/etiquetas/${slug}`}>{name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <p className='text-sm leading-7 text-gray-500'>
-              <span className='text-gray-900'>SKU :</span> {id}
-            </p>
+            {tags && (
+              <div className='text-sm leading-7 text-gray-500'>
+                <span className='text-gray-900'>Etiquetas :</span>
+                <ul className='flex w-full flex-wrap gap-2'>
+                  {tags?.map(({ id, name, slug }) => (
+                    <li
+                      key={id}
+                      className='hover-200 underline hover:text-accent'
+                    >
+                      <Link href={`/etiquetas/${slug}`}>{name}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {sku && (
+              <p className='text-sm leading-7 text-gray-500'>
+                <span className='text-gray-900'>SKU :</span> {sku}
+              </p>
+            )}
           </div>
 
           {/* REPORT */}

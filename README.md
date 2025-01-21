@@ -44,6 +44,8 @@
 - [x] Update send forget password
 - [x] Delete unused components
 - [ ] Test the TIPSA
+- [ ] Improve bundle size (delete unused packages)
+- [ ] improve groq queries
 - [ ] Look for the TODOS
 
 ## MAINTENANCE

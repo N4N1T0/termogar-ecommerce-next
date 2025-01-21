@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   Address,
+  Category,
   ExternalImage,
   GET_CARD_BLOG_POSTResult,
   GET_USER_INFOResult,
@@ -8,7 +9,6 @@ import {
   SanityImageCrop,
   SanityImageHotspot
 } from './sanity'
-import { Category } from '@/lib/utils'
 import { DocumentActionProps } from 'sanity'
 
 //* SECTION STYLES
@@ -130,13 +130,40 @@ export interface ProductCardType {
     name: string | null
     values: Array<{
       value: string | null
-      slug: string | null
+      product: {
+        slug: string | null
+        price: number | null
+        sale: {
+          price?: number
+          from?: string
+          to?: string
+        } | null
+      } | null
     }> | null
   } | null
-  date: string | null
   tags: { id: string; name: string | null; slug: string | null }[] | null
   otherImages: ({ url: string | null; blur: string | null } | null)[] | null
   hasLastMinute: boolean
+}
+
+export interface OptionSelectProps {
+  options: {
+    name: string | null
+    values: Array<{
+      value: string | null
+      product: {
+        slug: string | null
+        price: number | null
+        sale: {
+          price?: number
+          from?: string
+          to?: string
+        } | null
+      } | null
+    }> | null
+  }
+  defaultValue?: string | null | undefined
+  setType: (e: string) => void
 }
 
 export interface CartItemType extends ProductCardType {
@@ -207,7 +234,7 @@ export interface PageTitleProps {
 }
 
 export type BreadcrumbProps = {
-  name: string | null
+  name: string | null | undefined
   path: string
 } | null
 

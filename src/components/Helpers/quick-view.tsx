@@ -41,8 +41,12 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
     YoptopReviews | null | undefined
   >(null)
   const [type, setType] = React.useState<string | null>(null)
-
   const [score, setScore] = React.useState(0)
+
+  const hasVariant =
+    Array.isArray(options?.values) &&
+    options?.values?.length > 0 &&
+    options?.values.some((option) => option !== null && option.product !== null)
 
   React.useEffect(() => {
     const fetchReviews = async () => {
@@ -60,7 +64,12 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
   const refactoredDatas: CartItemType = {
     ...data,
     quantity: 1,
-    selectedOption: type || (options?.values && options?.values[0].value) || ''
+    selectedOption:
+      type ||
+      (Array.isArray(options?.values) &&
+        options?.values?.length > 0 &&
+        options?.values[0]?.value) ||
+      ''
   }
 
   return (
@@ -162,15 +171,22 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
                 <p className='text-xl text-gray-700'>{excerpt}</p>
               )}
               {/* OPTIONS */}
-              {options && <OptionSelect options={options} setType={setType} />}
+              {!hasVariant &&
+                options &&
+                Array.isArray(options?.values) &&
+                options?.values?.length > 0 && (
+                  <OptionSelect options={options} setType={setType} />
+                )}
             </div>
-            <div className='bg-background sticky bottom-0 flex gap-3 border-t p-3 md:p-5'>
-              <AddToCart
-                product={refactoredDatas}
-                showQuantity
-                stock={stockQuantity}
-              />
-            </div>
+            {!hasVariant && (
+              <div className='bg-background sticky bottom-0 flex gap-3 border-t p-3 md:p-5'>
+                <AddToCart
+                  product={refactoredDatas}
+                  showQuantity
+                  stock={stockQuantity}
+                />
+              </div>
+            )}
           </div>
         </div>
       </DialogContent>

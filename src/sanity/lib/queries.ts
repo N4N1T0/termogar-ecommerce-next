@@ -472,60 +472,71 @@ export const GET_PRODUCTS_AND_BRAND_FOR_FILTERING =
   }`)
 
 export const GET_CATEGORY_AND_PRODUCTS =
-  defineQuery(`*[_type=='productCategory' && slug.current == $slug][0]{
+  defineQuery(`*[_type == "productCategory" && slug.current == $slug][0]{
   name,
   main,
-  "parent": {
-    "slug": parent->slug.current,
-    "name": parent->name
+  "parent": parent->{
+    "slug": slug.current,
+    "name": name,
   },
   description,
-  "banner": *[_type =='homePage'][0]{
-      "url": productListBanner.banner.asset->url,
-      "blur": productListBanner.banner.asset->metadata.lqip,
-      "link": productListBanner.link
+  "banner": *[_type == "homePage"][0].productListBanner.banner.asset->{
+    "url": url,
+    "blur": metadata.lqip,
+    link
   },
-  "children": *[_type=='productCategory' && references(^._id)]
-   {
+  "children": *[_type == "productCategory" && references(^._id)]{
     "id": _id,
     name, 
     link
-   },
-  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{
-  "id": _id,
-  "featuredMedia": {
-    "url": featuredMedia.asset->url,
-      "blur": featuredMedia.asset->metadata.lqip
   },
-  title,
-  "slug": slug.current,
- "brand": *[_type == 'brand' && ^.title match title][0] {
+  "products": *[_type == "product" && status == "publish" && references(^._id)]{
+    "id": _id,
+    "featuredMedia": featuredMedia.asset->{
+      "url": url,
+      "blur": metadata.lqip
+    },
+    title,
+    "slug": slug.current,
+    "brand": *[_type == "brand" && ^.title match title][0]{
       title,
       "link": link.current,
-      "featuredMedia": image.asset->url,
+      "featuredMedia": image.asset->url
     },
-  excerpt,
-  "categories": productCategories[]->{
-    "id": _id,
-    name,
-    "slug": slug.current
-  },
-  content,
-  price,
-  sale,
-  "stockQuantity": stockQuantity,
-  "tags": productTag[]->{
-    "id": _id,
-    name,
-    "slug": slug.current
-  },
- "otherImages": relatedImages[].asset->{
-  "url": url,
-  "blur": metadata.lqip
-},
-"hasLastMinute": defined(lastMinute)
+    excerpt,
+    "categories": productCategories[]->{
+      "id": _id,
+      name,
+      "slug": slug.current
+    },
+    content,
+    price,
+    sale,
+    "stockQuantity": stockQuantity,
+    "tags": productTag[]->{
+      "id": _id,
+      name,
+      "slug": slug.current
+    },
+    "otherImages": relatedImages[].asset->{
+      "url": url,
+      "blur": metadata.lqip
+    },
+    "hasLastMinute": defined(lastMinute),
+    "options": options{
+      name,
+      "values": values[]{
+        value,
+        "product": reference->{
+          "slug": slug.current,
+          price,
+          sale
+        }
+      }
+    }
+  }
 }
-  }`)
+`)
 
 export const GET_PRODUCTS_BY_OFFER = defineQuery(`{
   "banner": *[_type =='homePage'][0]{
@@ -695,17 +706,19 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
   content,
   price,
   sale,
-  createdAt,
   dimensions,
   "stockQuantity": stockQuantity,
   "options": options{
-  name,
-  "values": values[]{
-    value,
-    "slug": reference->slug.current
-  }
-},
-  date,
+      name,
+      "values": values[]{
+        value,
+        "product": reference->{
+          "slug": slug.current,
+          price,
+          sale
+        }
+      }
+    },
   "tags": productTag[]->{
     "id": _id,
     name,
@@ -719,11 +732,61 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
     "title": asset->title,
     "url": asset->url
   },
-variations,
 "relatedProducts": relatedProducts[]->{
   "id": _id,
 },
 "hasLastMinute": defined(lastMinute)
+}`)
+
+export const GET_PRODUCT_VARIANT_BY_SLUG =
+  defineQuery(`*[_type=='productVariant' && slug.current == $variant][0]{
+  "id": _id,
+  sku,
+  ean,
+  referenceCode,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+    youtube,
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current,
+    main
+  },
+  content,
+  price,
+  sale,
+  dimensions,
+  "stockQuantity": stockQuantity,
+  "options": options{
+      name,
+      "values": values[]{
+        value,
+        "product": reference->{
+          "slug": slug.current,
+          price,
+          sale
+        }
+      }
+    },
+  "tags": productTag[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+},
+"downloads": downloads[]{
+    "title": asset->title,
+    "url": asset->url
+  }
 }`)
 
 export const GET_COUPONS_FOR_VALIDATION =

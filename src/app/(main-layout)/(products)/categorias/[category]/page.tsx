@@ -54,12 +54,6 @@ const CategoriesPage = async ({
     GET_CATEGORY_AND_PRODUCTS,
     {
       slug: category
-    },
-    {
-      cache: 'force-cache',
-      next: {
-        revalidate: 43200
-      }
     }
   )
 
@@ -106,8 +100,8 @@ const CategoriesPage = async ({
             : [
                 ...breadcrumb.slice(0, -1),
                 {
-                  name: searchedCategory.parent.name,
-                  path: `/categorias/${searchedCategory.parent.slug}`
+                  name: searchedCategory?.parent?.name,
+                  path: `/categorias/${searchedCategory?.parent?.slug}`
                 },
                 breadcrumb[breadcrumb.length - 1]
               ]

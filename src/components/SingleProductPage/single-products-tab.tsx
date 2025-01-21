@@ -59,11 +59,11 @@ const ModalDocumentation = dynamic(
 
 const SingleProductTabs = ({
   product,
-  user
+  user,
+  reviews
 }: {
-  product: GET_WHOLE_PRODUCT_BY_SLUGResult & {
-    reviews: YoptopReviews | undefined
-  }
+  product: GET_WHOLE_PRODUCT_BY_SLUGResult
+  reviews: YoptopReviews | undefined
   user: User | undefined
 }) => {
   if (!product) return null
@@ -183,7 +183,7 @@ const SingleProductTabs = ({
         {/* Reviews Tab */}
         <TabsContent value='review' className='tab-content-item w-full'>
           <Reviews
-            reviews={product.reviews}
+            reviews={reviews}
             user={user}
             product={{
               id: product.id,

@@ -4,18 +4,20 @@ import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 
 // * ASSETS IMPORTS
-import SingleProductTabs from '@/components/SingleProductPage/single-products-tab'
 import BreadcrumbCom from '@/components/BreadcrumbCom'
 import ProductView from '@/components/SingleProductPage/ProductView'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
-import { GET_WHOLE_PRODUCT_BY_SLUG } from '@/sanity/lib/queries'
+import {
+  GET_WHOLE_PRODUCT_BY_SLUG,
+  GET_PRODUCT_VARIANT_BY_SLUG
+} from '@/sanity/lib/queries'
 import { yoptop } from '@/lib/fetchers'
 import { auth } from '@/lib/auth'
 import { Logger } from 'next-axiom'
 import { jldProduct } from '@/components/seo'
-import { getMainCategoryBreadcrumb } from '@/lib/utils'
+import { getMainCategoryBreadcrumb, mergeProductData } from '@/lib/utils'
 
 const log = new Logger()
 
@@ -30,6 +32,12 @@ export async function generateMetadata({
     GET_WHOLE_PRODUCT_BY_SLUG,
     {
       slug
+    },
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 600
+      }
     }
   )
 
@@ -100,25 +108,41 @@ const RelatedProducts = dynamic(
   }
 )
 
+const SingleProductTabs = dynamic(
+  () => import('@/components/SingleProductPage/single-products-tab'),
+  {
+    loading: () => (
+      <div className='mt-10 flex w-full items-center justify-center bg-white'>
+        {Array(4)
+          .fill('SingleProductTabs')
+          .map((item, index) => (
+            <div
+              key={`${item}-${index}`}
+              className='h-16 w-full animate-pulse bg-gray-100'
+            />
+          ))}
+      </div>
+    )
+  }
+)
+
 const SingleProductPage = async ({
-  params
+  params,
+  searchParams
 }: {
   params: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { slug } = await params
+  const { variant } = await searchParams
   const session = await auth()
-  const searchedProduct = await sanityClientRead.fetch(
-    GET_WHOLE_PRODUCT_BY_SLUG,
-    {
-      slug
-    },
-    {
-      cache: 'force-cache',
-      next: {
-        revalidate: 60
-      }
-    }
-  )
+
+  const [searchedProduct, searchedVariant] = await Promise.all([
+    sanityClientRead.fetch(GET_WHOLE_PRODUCT_BY_SLUG, { slug }),
+    variant
+      ? sanityClientRead.fetch(GET_PRODUCT_VARIANT_BY_SLUG, { variant })
+      : null
+  ])
 
   const reviews = await yoptop
     .fetchReviews(searchedProduct?.id.split('-').slice(-1)[0] || '')
@@ -127,6 +151,8 @@ const SingleProductPage = async ({
   const refactoredRelatesProductsIds = searchedProduct?.relatedProducts
     ? searchedProduct?.relatedProducts.map((product) => product.id)
     : []
+
+  const updatedProduct = mergeProductData(searchedProduct, searchedVariant)
 
   if (!searchedProduct) {
     log.error('Product not found', { slug })
@@ -142,16 +168,15 @@ const SingleProductPage = async ({
         />
       </div>
       <div className='container-x mx-auto w-full bg-white py-10'>
-        <ProductView
-          product={{ ...searchedProduct, reviews: reviews?.reviews }}
-        />
+        <ProductView product={updatedProduct} reviews={reviews?.reviews} />
       </div>
       <SingleProductTabs
-        product={{ ...searchedProduct, reviews: reviews?.reviews }}
+        product={updatedProduct}
+        reviews={reviews?.reviews}
         user={session?.user}
       />
       <RelatedProducts productsId={refactoredRelatesProductsIds} />
-      {jldProduct(searchedProduct)}
+      {jldProduct(updatedProduct)}
     </main>
   )
 }

@@ -6,6 +6,7 @@ import crypto from 'crypto'
 import { randomBytes, pbkdf2Sync } from 'crypto'
 import {
   Coupon,
+  GET_PRODUCT_VARIANT_BY_SLUGResult,
   GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult,
   GET_PRODUCTS_WITH_OFFER_FOR_FILTERINGResult,
   GET_WHOLE_PRODUCT_BY_SLUGResult
@@ -119,8 +120,6 @@ export const handleCompareTableCharacteristics = (
       return product.dimensions
         ? `L: ${product.dimensions.length || 'N/A'}, A: ${product.dimensions.width || 'N/A'}, H: ${product.dimensions.height || 'N/A'}, Peso: ${product.dimensions.weight || 'N/A'}`
         : 'Dimensiones no disponibles'
-    case 'date':
-      return product.date || 'Fecha no disponible'
     case 'id':
       return product.id || 'ID no disponible'
     case 'sale':
@@ -347,6 +346,17 @@ export const getPriceRange = (data: Product[] | undefined) => {
   return { minPrice: minPrice - 10, maxPrice: maxPrice + 10 }
 }
 
+/**
+ * Extracts a list of unique brands from a dataset of products.
+ *
+ * @param data - A dataset of products conforming to either
+ *               GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult or
+ *               GET_PRODUCTS_WITH_OFFER_FOR_FILTERINGResult.
+ *
+ * @return An array of unique brand objects with their respective id, title and link.
+ *         If no data is provided or if the data does not contain products,
+ *         an empty array is returned.
+ */
 export const matchBrands = (
   data:
     | GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERINGResult
@@ -450,6 +460,17 @@ export const filterProductsByFilter = (
     )
   })
 }
+
+/**
+ * Groups categories and their children from the provided data into main categories
+ * and extra categories. Main categories are determined by the `main` property.
+ * Categories that are not main categories are added as children to their respective
+ * main categories if they are referenced as children. Categories that do not belong
+ * to any main category are grouped under the "Otras" group as extra categories.
+ *
+ * @param data - The data containing products with categories to be processed.
+ * @returns An array of grouped categories, each with a main category and its children.
+ */
 
 export const groupCategoriesWithExtras = (data: Data) => {
   const firstLevelCategories = new Map<string, Category>()
@@ -786,6 +807,13 @@ export const getMainCategoryBreadcrumb = (
     : null
 }
 
+/**
+ * Extracts the YouTube video ID from a given URL.
+ *
+ * @param {string} url A YouTube video URL.
+ * @returns {Array<string>} A tuple containing the YouTube video thumbnail URL
+ * and the video ID.
+ */
 export const getVideoIdFromUrl = (url: string) => {
   const regex =
     /(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/|.+\?v=)?([^&\s]{11})|youtu\.be\/([^&\s]{11})/
@@ -795,8 +823,84 @@ export const getVideoIdFromUrl = (url: string) => {
   return [`https://img.youtube.com/vi/${id}/mqdefault.jpg`, id]
 }
 
+/**
+ * Returns the minimum price from a given array of products.
+ *
+ * @param data - An object containing an array of products with their respective prices.
+ *               Each product object contains a `price` property and an optional `sale` property
+ *               with a `price` property.
+ * @returns The minimum price from the given products, or null if no products are provided.
+ */
+export const getMinPrice = (
+  data: {
+    name: string | null
+    values: Array<{
+      value: string | null
+      product: {
+        slug: string | null
+        price: number | null
+        sale: {
+          price?: number
+          from?: string
+          to?: string
+        } | null
+      } | null
+    }> | null
+  } | null
+): number | null => {
+  if (!data || !data.values) return null
+
+  let minPrice: number | null = null
+
+  for (const item of data.values) {
+    if (item.product) {
+      const regularPrice = item.product.price
+      const salePrice = item.product.sale?.price
+
+      const lowest = Math.min(
+        ...(regularPrice !== null ? [regularPrice] : []),
+        ...(salePrice !== undefined ? [salePrice] : [])
+      )
+
+      if (minPrice === null || lowest < minPrice) {
+        minPrice = lowest
+      }
+    }
+  }
+
+  return minPrice
+}
+
+export const mergeProductData = (
+  product: GET_WHOLE_PRODUCT_BY_SLUGResult,
+  variant: GET_PRODUCT_VARIANT_BY_SLUGResult
+): GET_WHOLE_PRODUCT_BY_SLUGResult => {
+  if (!variant || !product) return product
+
+  return {
+    ...product,
+    id: variant.id || product?.id,
+    title: variant.title || product?.title,
+    excerpt: variant.excerpt || product?.excerpt,
+    categories: variant.categories || product?.categories,
+    tags: variant.tags || product?.tags,
+    featuredMedia: variant.featuredMedia || product?.featuredMedia,
+    otherImages: variant.otherImages || product?.otherImages,
+    price: variant.price || product?.price,
+    sale: variant.sale || product?.sale,
+    sku: variant.sku || product?.sku,
+    ean: variant.ean || product?.ean,
+    youtube: variant.youtube || product?.youtube,
+    content: variant.content || product?.content,
+    dimensions: variant.dimensions || product?.dimensions,
+    stockQuantity: variant.stockQuantity || product?.stockQuantity,
+    options: variant.options || product?.options,
+    downloads: variant.downloads || product?.downloads
+  }
+}
+
 // * TYPES HELPERS
-export type Category = {
+type Category = {
   id: string
   name: string | null
   slug: string | null
