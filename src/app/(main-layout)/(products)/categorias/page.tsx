@@ -51,7 +51,7 @@ const CategoriesPage = async () => {
   })
 
   return (
-    <div className='container mx-auto px-4 py-8'>
+    <main className='container mx-auto px-4 py-8'>
       <PageTitle
         title='Nuestras Categorias'
         breadcrumb={[
@@ -117,7 +117,7 @@ const CategoriesPage = async () => {
           </div>
         ))}
       </div>
-    </div>
+    </main>
   )
 }
 

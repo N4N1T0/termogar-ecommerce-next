@@ -40,7 +40,7 @@ const BrandsPage = async () => {
   }
 
   return (
-    <div className='container-x mx-auto px-4 py-8'>
+    <main className='container-x mx-auto px-4 py-8'>
       <PageTitle
         title='Nuestras Marcas'
         breadcrumb={[
@@ -70,7 +70,7 @@ const BrandsPage = async () => {
           </Link>
         ))}
       </div>
-    </div>
+    </main>
   )
 }
 

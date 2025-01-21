@@ -50,7 +50,7 @@ const TagsPage = async ({
   })
 
   return (
-    <div className='container-x mx-auto px-4 py-8'>
+    <main className='container-x mx-auto px-4 py-8'>
       <PageTitle
         title='Nuestras Etiquetas'
         breadcrumb={[
@@ -87,7 +87,7 @@ const TagsPage = async ({
           </Link>
         ))}
       </div>
-    </div>
+    </main>
   )
 }
 
