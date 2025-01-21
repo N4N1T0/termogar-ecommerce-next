@@ -3,9 +3,10 @@
 import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
-import { apiVersion, dataset, projectId } from './src/sanity/env'
-import { schema } from './src/sanity/schemaTypes'
-import { structure } from './src/sanity/structure'
+import { apiVersion, dataset, projectId } from '@/sanity/env'
+import { schema } from '@/sanity/schemaTypes'
+import { structure } from '@/sanity/structure'
+import { setParent } from '@/sanity/actions'
 
 export default defineConfig({
   basePath: '/studio',
@@ -15,6 +16,13 @@ export default defineConfig({
   plugins: [
     structureTool({ structure }),
     visionTool({ defaultApiVersion: apiVersion })
-    // sanityCommerce(sanityCommerceConfig)
-  ]
+  ],
+  document: {
+    actions: (prev, context) => {
+      if (context.schemaType === 'productVariant') {
+        return [...prev, setParent(context)]
+      }
+      return prev
+    }
+  }
 })

@@ -221,7 +221,8 @@ export const productVariantType = defineType({
       name: 'stockQuantity',
       type: 'number',
       title: 'Stock',
-      description: 'Stock del Producto'
+      description: 'Stock del Producto',
+      initialValue: 0
     }),
     defineField({
       name: 'productCategories',
