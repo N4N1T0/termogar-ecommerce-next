@@ -1128,7 +1128,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./src/sanity/lib/queries.ts
 // Variable: GET_MAIN_PAGE
-// Query: *[_type =='homePage'][0]{ mainBanner[]{    "url": image.asset->url,    "blur": image.asset->metadata.lqip,     "link": link.current  },  "mainCategory": mainCategory->{  name,  "slug": slug.current  },  "offer": offer{    date,    active,    "media": {      "url": banner.assets->url,      "blur": banner.assets->metadata.lqip    }  },    secondaryCategory->{      name,      "slug": slug.current    },    "ads": ads[]->{  "media": {    "url": asset->url,    "blur": asset->metadata.lqip  },  "link": link.current},"tertiaryCategory": tertiaryCategory->{  name,  "slug": slug.current  },youtubeVideos[]{      videoId,      "id": _key,      title  }}
+// Query: *[_type =='homePage'][0]{ mainBanner[]{    "url": image.asset->url,    "blur": image.asset->metadata.lqip,     "link": link.current  },  "mainCategory": mainCategory->{  name,  "slug": slug.current  },  "offer": offer{    date,    active,    "media": {      "url": banner.assets->url,      "blur": banner.assets->metadata.lqip    }  },    secondaryCategory->{      name,      "slug": slug.current    },    "ads": ads[]{    "url": image.asset->url,    "blur": image.asset->metadata.lqip,    link  },"tertiaryCategory": tertiaryCategory->{  name,  "slug": slug.current  },youtubeVideos[]{      videoId,      "id": _key,      title  }}
 export type GET_MAIN_PAGEResult = {
   mainBanner: Array<{
     url: string | null
@@ -1151,7 +1151,11 @@ export type GET_MAIN_PAGEResult = {
     name: string | null
     slug: string | null
   } | null
-  ads: Array<null> | null
+  ads: Array<{
+    url: string | null
+    blur: string | null
+    link: string | null
+  }> | null
   tertiaryCategory: {
     name: string | null
     slug: string | null
@@ -2700,7 +2704,7 @@ export type GET_NOTIFY_ME_FOR_EMAILResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type ==\'homePage\'][0]{\n mainBanner[]{\n    "url": image.asset->url,\n    "blur": image.asset->metadata.lqip,\n     "link": link.current\n  },\n  "mainCategory": mainCategory->{\n  name,\n  "slug": slug.current\n  },\n  "offer": offer{\n    date,\n    active,\n    "media": {\n      "url": banner.assets->url,\n      "blur": banner.assets->metadata.lqip\n    }\n  },\n    secondaryCategory->{\n      name,\n      "slug": slug.current\n    },\n    "ads": ads[]->{\n  "media": {\n    "url": asset->url,\n    "blur": asset->metadata.lqip\n  },\n  "link": link.current\n},\n"tertiaryCategory": tertiaryCategory->{\n  name,\n  "slug": slug.current\n  },\nyoutubeVideos[]{\n      videoId,\n      "id": _key,\n      title\n  }\n}': GET_MAIN_PAGEResult
+    '*[_type ==\'homePage\'][0]{\n mainBanner[]{\n    "url": image.asset->url,\n    "blur": image.asset->metadata.lqip,\n     "link": link.current\n  },\n  "mainCategory": mainCategory->{\n  name,\n  "slug": slug.current\n  },\n  "offer": offer{\n    date,\n    active,\n    "media": {\n      "url": banner.assets->url,\n      "blur": banner.assets->metadata.lqip\n    }\n  },\n    secondaryCategory->{\n      name,\n      "slug": slug.current\n    },\n    "ads": ads[]{\n    "url": image.asset->url,\n    "blur": image.asset->metadata.lqip,\n    link\n  },\n"tertiaryCategory": tertiaryCategory->{\n  name,\n  "slug": slug.current\n  },\nyoutubeVideos[]{\n      videoId,\n      "id": _key,\n      title\n  }\n}': GET_MAIN_PAGEResult
     '*[_type==\'productCategory\' && main == true] | order(name asc){\n  "id": _id,\n  name, \n  description, \n  "slug": slug.current, \n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n      "id": _id,\n    name, \n    "slug": slug.current, \n   },\n  "featuredImage": *[_type==\'product\' && references(^._id)][0]{\n    "url":featuredMedia.asset->url,\n      "blur":featuredMedia.asset->metadata.lqip\n  }\n  }': GET_MENU_CATEGORIESResult
     '*[_type==\'productTag\'] | order(name asc){\n  "id": _id,\n  name,\n"slug": slug.current\n}': GET_ALL_TAGSResult
     '*[_type ==\'page\' && status == \'publish\']{\n  "id": _id,\n  "slug": slug.current,\n  "link": link.current,\n  title,\n}': GET_COSTUMER_SERVICES_SIDEBAR_MENUResult

@@ -49,7 +49,7 @@ export default async function Home() {
         className='category-products mb-[60px]'
       />
       <ProductsAds
-        // ads={searchedMainPage?.ads}
+        ads={searchedMainPage?.ads}
         className='products-ads-section mb-[60px]'
       />
       <FeaturedBlog />

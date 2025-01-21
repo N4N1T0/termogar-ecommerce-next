@@ -23,13 +23,11 @@ export const GET_MAIN_PAGE = defineQuery(`*[_type =='homePage'][0]{
       name,
       "slug": slug.current
     },
-    "ads": ads[]->{
-  "media": {
-    "url": asset->url,
-    "blur": asset->metadata.lqip
+    "ads": ads[]{
+    "url": image.asset->url,
+    "blur": image.asset->metadata.lqip,
+    link
   },
-  "link": link.current
-},
 "tertiaryCategory": tertiaryCategory->{
   name,
   "slug": slug.current

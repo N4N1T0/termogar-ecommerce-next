@@ -10,10 +10,8 @@ import { cn } from '@/lib/utils'
 
 // Temporary ads array
 const tempAds = Array(4).fill({
-  media: {
-    src: PlaceholderHorizontal,
-    blur: PlaceholderHorizontal.blurDataURL
-  },
+  url: PlaceholderHorizontal,
+  blur: PlaceholderHorizontal.blurDataURL,
   link: '/'
 })
 
@@ -24,7 +22,7 @@ export default function ProductsAds({
   return (
     <section id='ads' className={cn('w-full', className)}>
       <div className='container-x mx-auto grid grid-cols-1 gap-10 sm:grid-cols-2'>
-        {ads.map(({ media, link }, index) => {
+        {ads?.map(({ url, blur, link }, index) => {
           // Check if the current item is the last item and if its index is not divisible by 2
           const isLastIndexNotDivisibleBy2 =
             index === ads.length - 1 && (index + 1) % 2 !== 0
@@ -35,11 +33,11 @@ export default function ProductsAds({
               className={`h-full ${isLastIndexNotDivisibleBy2 ? 'col-span-2' : 'col-span-1'}`}
               key={`image-${link}-${index}`}
             >
-              <Link href={link}>
+              <Link href={link || '/'}>
                 <Image
-                  src={PlaceholderHorizontal}
-                  alt={link}
-                  blurDataURL={media.blur}
+                  src={url || PlaceholderHorizontal}
+                  alt={link || 'Banner para la lista de productos'}
+                  blurDataURL={blur || PlaceholderHorizontal.blurDataURL}
                   placeholder='blur'
                   width={740}
                   height={300}

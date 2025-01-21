@@ -9,6 +9,7 @@ import {
   SanityImageHotspot
 } from './sanity'
 import { Category } from '@/lib/utils'
+import { DocumentActionProps } from 'sanity'
 
 //* SECTION STYLES
 export interface SectionStyleOneProps {
@@ -189,13 +190,13 @@ export interface BlogSideBarProps {
 
 export interface ProductsAdsProps {
   className: string
-  ads?: {
-    media: {
-      url: string
-      blur: string
-    }
-    link: string
-  }[]
+  ads?:
+    | {
+        url: string | null
+        blur: string | null
+        link: string | null
+      }[]
+    | null
 }
 
 export interface PageTitleProps {
@@ -316,6 +317,16 @@ export interface WishlistState {
   removeAllProducts: () => void
   rehydrated: boolean
   hasHydrated: () => void
+}
+
+// * SANITY CUSTOMS
+
+export interface ParentProduct {
+  id: string
+}
+
+export interface AsyncPublishProps extends DocumentActionProps {
+  id: string
 }
 
 // * CUSTOMS
