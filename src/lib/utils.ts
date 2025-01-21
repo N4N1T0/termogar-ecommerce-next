@@ -900,7 +900,7 @@ export const mergeProductData = (
 }
 
 // * TYPES HELPERS
-type Category = {
+export type Category = {
   id: string
   name: string | null
   slug: string | null

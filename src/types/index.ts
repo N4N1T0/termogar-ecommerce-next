@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Address,
-  Category,
   ExternalImage,
   GET_CARD_BLOG_POSTResult,
   GET_USER_INFOResult,
@@ -9,6 +8,7 @@ import {
   SanityImageCrop,
   SanityImageHotspot
 } from './sanity'
+import { Category } from '@/lib/utils'
 import { DocumentActionProps } from 'sanity'
 
 //* SECTION STYLES
