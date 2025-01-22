@@ -738,6 +738,66 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
 "hasLastMinute": defined(lastMinute)
 }`)
 
+export const GET_WHOLE_PRODUCT_BY_ID =
+  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && _id == $id][0]{
+  "id": _id,
+  sku,
+  ean,
+  referenceCode,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
+    youtube,
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current,
+    main
+  },
+  content,
+  price,
+  sale,
+  dimensions,
+  "stockQuantity": stockQuantity,
+  "options": options{
+      name,
+      "values": values[]{
+        value,
+        "product": reference->{
+          "slug": slug.current,
+          price,
+          sale
+        }
+      }
+    },
+  "tags": productTag[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+},
+"downloads": downloads[]{
+    "title": asset->title,
+    "url": asset->url
+  },
+"relatedProducts": relatedProducts[]->{
+  "id": _id,
+},
+"hasLastMinute": defined(lastMinute)
+}`)
+
 export const GET_PRODUCT_VARIANT_BY_SLUG =
   defineQuery(`*[_type=='productVariant' && slug.current == $variant][0]{
   "id": _id,

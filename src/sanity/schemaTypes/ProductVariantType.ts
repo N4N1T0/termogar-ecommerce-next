@@ -11,7 +11,8 @@ export const productVariantType = defineType({
       type: 'reference',
       title: 'Padre',
       to: [{ type: 'product' }],
-      description: 'El título del producto.'
+      description: 'El título del producto.',
+      validation: (Rule) => Rule.required()
     }),
     defineField({
       name: 'title',

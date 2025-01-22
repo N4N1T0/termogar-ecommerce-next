@@ -62,7 +62,8 @@ export const productType = defineType({
       description: 'El slug es el identificador único del producto.',
       options: {
         source: 'title'
-      }
+      },
+      validation: (Rule) => Rule.required()
     }),
     defineField({
       name: 'link',
@@ -194,13 +195,6 @@ export const productType = defineType({
           ]
         })
       ]
-    }),
-    defineField({
-      name: 'main',
-      type: 'boolean',
-      title: 'Principal',
-      description: '¿Es un producto principal?',
-      initialValue: false
     }),
     defineField({
       name: 'date',

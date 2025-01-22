@@ -1,6 +1,16 @@
-import { AsyncPublishProps, ParentProduct } from '@/types'
-import { ShoppingBasket } from 'lucide-react'
+// * ASSETS IMPORTS
+import { toast } from 'sonner'
+import { CircleFadingArrowUp, Replace, CopyPlus } from 'lucide-react'
+
+// * UTILS IMPORTS
+import {
+  AsyncChangeToVariantProps,
+  AsyncPublishProps,
+  ParentProduct
+} from '@/types'
 import { DocumentActionComponent, DocumentActionsContext } from 'sanity'
+import { Product, ProductVariant } from '@/types/sanity'
+import { uuid } from '@sanity/uuid'
 
 export function setParent(
   context: DocumentActionsContext
@@ -11,8 +21,8 @@ export function setParent(
     props: AsyncPublishProps
   ) => {
     return {
-      label: 'Find Parent',
-      icon: <ShoppingBasket className='h-4 w-4' />,
+      label: 'Encontrar Padre',
+      icon: <CircleFadingArrowUp className='h-4 w-4' />,
       onHandle: async () => {
         try {
           // Fetch the parent product
@@ -24,22 +34,150 @@ export function setParent(
           )
 
           if (!parent) {
-            console.warn('No parent product found for this variant.')
+            toast.error('Padre no encontrado')
+            return
           } else {
-            console.log('Parent found:', parent)
-
             // Update the `parent` field in the productVariant document
             await client
               .patch(props.id)
               .set({ parent: { _type: 'reference', _ref: parent.id } })
               .commit()
           }
+
+          toast.success('Padre encontrado y actualizado, Puede Publicar')
         } catch (error) {
-          console.error('Error updating parent field before publishing:', error)
+          console.log('Error updating parent field before publishing:', error)
+          toast.error('Error actualizando el campo padre antes de publicar')
         }
       }
     }
   }
 
   return asyncSetParent
+}
+
+export function changeToVariant(
+  context: DocumentActionsContext
+): DocumentActionComponent {
+  const client = context.getClient({ apiVersion: '2022-11-29' })
+
+  const asyncChangeToVariant: DocumentActionComponent = (
+    props: AsyncChangeToVariantProps
+  ) => {
+    const product = props.published
+
+    return {
+      label: 'Cambiar a Variante',
+      icon: <Replace className='h-4 w-4' />,
+      onHandle: async () => {
+        try {
+          if (!product) {
+            toast.error(
+              'Error: Ningún producto encontrado, trate de actualizar'
+            )
+            return
+          } else {
+            await client.createIfNotExists<ProductVariant>({
+              _id: uuid(),
+              _type: 'productVariant',
+              _createdAt: new Date().toISOString(),
+              _updatedAt: new Date().toISOString(),
+              _rev: uuid(),
+              content: product.content,
+              excerpt: product.excerpt,
+              featuredMedia: product.featuredMedia,
+              price: product.price,
+              slug: product.slug,
+              title: product.title,
+              dimensions: product.dimensions,
+              downloads: product.downloads,
+              ean: product.ean,
+              productCategories: product.productCategories,
+              productTag: product.productTag,
+              referenceCode: product.referenceCode,
+              relatedImages: product.relatedImages,
+              sale: product.sale,
+              sku: product.sku,
+              stockQuantity: product.stockQuantity,
+              youtube: product.youtube
+            })
+
+            toast.success('Producto Exitosamente cambiado a Variante')
+          }
+        } catch (error) {
+          console.log('🚀 ~ onHandle: ~ error:', error)
+          toast.error('Error al cambiar a Variante, trate de actualizar')
+        }
+      }
+    }
+  }
+
+  return asyncChangeToVariant
+}
+
+export function duplicateProduct(
+  context: DocumentActionsContext
+): DocumentActionComponent {
+  const client = context.getClient({ apiVersion: '2022-11-29' })
+
+  const asyncDuplicateProduct: DocumentActionComponent = (
+    props: AsyncChangeToVariantProps
+  ) => {
+    const product = props.published
+
+    return {
+      label: 'Duplicar Producto',
+      icon: <CopyPlus className='h-4 w-4' />,
+      onHandle: async () => {
+        try {
+          if (!product) {
+            toast.error(
+              'Error: Ningún producto encontrado, trate de actualizar'
+            )
+            return
+          } else {
+            await client.createIfNotExists<Product>({
+              _id: uuid(),
+              _type: 'product',
+              _createdAt: new Date().toISOString(),
+              _updatedAt: new Date().toISOString(),
+              _rev: uuid(),
+              content: product.content,
+              excerpt: product.excerpt,
+              featuredMedia: product.featuredMedia,
+              price: product.price,
+              title: product.title,
+              dimensions: product.dimensions,
+              downloads: product.downloads,
+              ean: product.ean,
+              productCategories: product.productCategories,
+              productTag: product.productTag,
+              referenceCode: product.referenceCode,
+              relatedImages: product.relatedImages,
+              sale: product.sale,
+              sku: product.sku,
+              stockQuantity: product.stockQuantity,
+              youtube: product.youtube,
+              brand: product.brand,
+              commentStatus: product.commentStatus,
+              date: product.date,
+              lastMinute: product.lastMinute,
+              link: product.link,
+              modified: product.modified,
+              options: product.options,
+              relatedProducts: product.relatedProducts,
+              status: product.status
+            })
+
+            toast.success('Producto Exitosamente Duplicado')
+          }
+        } catch (error) {
+          console.log('🚀 ~ onHandle: ~ error:', error)
+          toast.error('Error al Duplicar Producto, trate de actualizar')
+        }
+      }
+    }
+  }
+
+  return asyncDuplicateProduct
 }

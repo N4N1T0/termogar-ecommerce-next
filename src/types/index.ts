@@ -5,6 +5,7 @@ import {
   GET_CARD_BLOG_POSTResult,
   GET_USER_INFOResult,
   internalGroqTypeReferenceTo,
+  Product,
   SanityImageCrop,
   SanityImageHotspot
 } from './sanity'
@@ -356,6 +357,9 @@ export interface AsyncPublishProps extends DocumentActionProps {
   id: string
 }
 
+export interface AsyncChangeToVariantProps extends DocumentActionProps {
+  published: (Omit<Product, '_type'> & { _type: string }) | null
+}
 // * CUSTOMS
 export interface YoptopReview {
   id: number
