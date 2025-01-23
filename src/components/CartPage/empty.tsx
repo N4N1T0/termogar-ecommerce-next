@@ -13,7 +13,7 @@ export default function EmptyCartError() {
       </h1>
       <Link
         href='/'
-        className='hover-200 h-[50px] w-[180px] bg-accent px-2 py-4 text-center text-gray-900 hover:text-gray-100'
+        className='hover-200 h-[50px] w-[180px] bg-accent px-2 py-4 text-center text-gray-100 hover:text-gray-900'
       >
         Volver a la Tienda
       </Link>
