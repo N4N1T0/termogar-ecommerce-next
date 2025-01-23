@@ -46,13 +46,22 @@ const ProductView = ({
   product: GET_WHOLE_PRODUCT_BY_SLUGResult
   reviews: YoptopReviews | undefined
 }) => {
-  const [imgUrl, setImgUrl] = React.useState({
-    url: product?.featuredMedia?.url,
-    blur: product?.featuredMedia?.blur,
-    type: 'image'
+  const [imgUrl, setImgUrl] = React.useState<{
+    url: string | null | undefined
+    blur: string | null | undefined
+  }>({
+    url: null,
+    blur: null
   })
   const [type, setType] = React.useState<string | null>(null)
   const path = usePathname()
+
+  React.useEffect(() => {
+    setImgUrl({
+      url: product?.featuredMedia?.url,
+      blur: product?.featuredMedia?.blur
+    })
+  }, [product?.featuredMedia?.blur, product?.featuredMedia?.url])
 
   if (!product) {
     return (
@@ -137,8 +146,7 @@ const ProductView = ({
                   onClick={() =>
                     setImgUrl({
                       url: img?.url || '',
-                      blur: img?.blur || '',
-                      type: 'image'
+                      blur: img?.blur || ''
                     })
                   }
                   key={`img?.url-${index}`}

@@ -13,9 +13,11 @@ const RelatedProducts = async ({ productsId }: { productsId: string[] }) => {
       ids: productsId
     }
   )
+  console.log('🚀 ~ RelatedProducts ~ searchedProducts:', searchedProducts)
 
-  if (!searchedProducts) {
-    log.error('No related products found')
+  if (!searchedProducts || searchedProducts.length === 0) {
+    log.info('No related products found')
+    return null
   }
 
   return (

@@ -27,7 +27,7 @@ const OptionSelect = ({
     const isSlug = (e: string): e is string => /^[a-z0-9-]+$/.test(e)
 
     if (isSlug(e)) {
-      setSearch(e, { shallow: false })
+      setSearch(e, { shallow: false, throttleMs: 200 })
     } else {
       setType(e)
     }

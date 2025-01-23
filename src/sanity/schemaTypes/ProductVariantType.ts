@@ -45,7 +45,8 @@ export const productVariantType = defineType({
       description: 'El slug es el identificador único del producto.',
       options: {
         source: 'title'
-      }
+      },
+      validation: (Rule) => Rule.required()
     }),
     defineField({
       name: 'price',

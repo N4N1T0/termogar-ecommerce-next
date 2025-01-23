@@ -145,7 +145,11 @@ const SingleProductPage = async ({
   ])
 
   const reviews = await yoptop
-    .fetchReviews(searchedProduct?.id.split('-').slice(-1)[0] || '')
+    .fetchReviews(
+      searchedProduct?.id.startsWith('product')
+        ? searchedProduct?.id.split('-').slice(-1)[0]
+        : searchedProduct?.id || ''
+    )
     .then((res) => (res.status !== null ? res : null))
 
   const refactoredRelatesProductsIds = searchedProduct?.relatedProducts

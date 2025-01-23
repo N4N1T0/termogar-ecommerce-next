@@ -15,6 +15,7 @@ import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const CampaignCountDown = ({ className, data }: CampaignCountDownProps) => {
+  console.log('🚀 ~ CampaignCountDown ~ data:', data)
   const countdown = CountDown(data?.date || '2025-10-04 4:00:00')
 
   return (
@@ -64,6 +65,8 @@ const CampaignCountDown = ({ className, data }: CampaignCountDownProps) => {
             alt='Ofertas'
             title='Ofertas'
             placeholder='blur'
+            width={500}
+            height={500}
             blurDataURL={data?.media.blur || PlaceholderSquare.blurDataURL}
           />
         </div>

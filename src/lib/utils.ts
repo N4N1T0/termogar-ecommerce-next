@@ -894,7 +894,7 @@ export const mergeProductData = (
     content: variant.content || product?.content,
     dimensions: variant.dimensions || product?.dimensions,
     stockQuantity: variant.stockQuantity || product?.stockQuantity,
-    options: variant.options || product?.options,
+    options: variant ? variant.options : product?.options,
     downloads: variant.downloads || product?.downloads
   }
 }

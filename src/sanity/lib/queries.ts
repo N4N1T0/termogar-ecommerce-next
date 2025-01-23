@@ -11,14 +11,14 @@ export const GET_MAIN_PAGE = defineQuery(`*[_type =='homePage'][0]{
   name,
   "slug": slug.current
   },
-  "offer": offer{
+   "offer": offer{
     date,
     active,
     "media": {
-      "url": banner.assets->url,
-      "blur": banner.assets->metadata.lqip
+      "url": banner.asset->url,
+      "blur": banner.asset->metadata.lqip
     }
-  },
+ },
     secondaryCategory->{
       name,
       "slug": slug.current
@@ -238,7 +238,7 @@ export const GET_BRANDS = defineQuery(`*[_type=='brand']{
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && (title match $search || excerpt match $search) && count((productCategories[]->slug.current)[@ in $category]) > 0]{
+  defineQuery(`*[_type=='product' && status=='publish' && (title match $search || excerpt match $search) && count((productCategories[]->slug.current)[@ in $category]) > 0]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -272,7 +272,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && _id in $ids]{
+  defineQuery(`*[_type=='product' && status=='publish' && _id in $ids]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -303,7 +303,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION =
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && (title match $search || excerpt match $search)]{
+  defineQuery(`*[_type=='product' && status=='publish' && (title match $search || excerpt match $search)]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -337,7 +337,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && count((productCategories[]->name)[@ in $type]) > 0][0...8]{
+  defineQuery(`*[_type=='product' && status=='publish' && count((productCategories[]->name)[@ in $type]) > 0][0...8]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -373,7 +373,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && _id in $ids][0...4]{
+  defineQuery(`*[_type=='product' && status=='publish' && _id in $ids][0...4]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -416,7 +416,7 @@ export const GET_BRANDS_AND_PRODUCTS =
       "blur": productListBanner.banner.asset->metadata.lqip,
       "link": productListBanner.link
   },
-  "products": *[_type=='product' && status=='publish' && defined(price) && title match ^.title]{
+  "products": *[_type=='product' && status=='publish' && title match ^.title]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -454,7 +454,7 @@ export const GET_BRANDS_AND_PRODUCTS =
 
 export const GET_PRODUCTS_AND_BRAND_FOR_FILTERING =
   defineQuery(`*[_type=='brand' && link.current == $slug][0] {
-  "products": *[_type=='product' && status=='publish' && defined(price) && title match ^.title]{
+  "products": *[_type=='product' && status=='publish' && title match ^.title]{
      "categories": productCategories[]->{
     "id": _id,
     name,
@@ -619,7 +619,7 @@ export const GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING =
     name, 
     "slug": slug.current, 
    },
-  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{
+  "products": *[_type=='product' && status=='publish' && references(^._id)]{
      "categories": productCategories[]->{
     "id": _id,
     name,
@@ -642,7 +642,7 @@ export const GET_TAG_AND_PRODUCTS =
       "blur": productListBanner.banner.asset->metadata.lqip,
       "link": productListBanner.link
   },
-  "products": *[_type=='product' && status=='publish' && defined(price) && references(^._id)]{
+  "products": *[_type=='product' && status=='publish' && references(^._id)]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -679,7 +679,7 @@ export const GET_TAG_AND_PRODUCTS =
   }`)
 
 export const GET_WHOLE_PRODUCT_BY_SLUG =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && slug.current == $slug][0]{
+  defineQuery(`*[_type=='product' && status=='publish' && slug.current == $slug][0]{
   "id": _id,
   sku,
   ean,
@@ -739,7 +739,7 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
 }`)
 
 export const GET_WHOLE_PRODUCT_BY_ID =
-  defineQuery(`*[_type=='product' && status=='publish' && defined(price) && _id == $id][0]{
+  defineQuery(`*[_type=='product' && status=='publish' && _id == $id][0]{
   "id": _id,
   sku,
   ean,
