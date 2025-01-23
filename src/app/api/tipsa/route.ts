@@ -39,7 +39,8 @@ export const POST = async (req: NextRequest) => {
       intPaq,
       strContenido
     )
-    return NextResponse.json({ success: true, data: response })
+
+    return NextResponse.json({ success: true, response })
   } catch (error) {
     return NextResponse.json({
       success: false,

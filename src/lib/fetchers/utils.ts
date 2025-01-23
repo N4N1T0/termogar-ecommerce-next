@@ -32,12 +32,11 @@ export const grabaEnvio24 = (
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
    <soapenv:Header>
       <tem:ROClientIDHeader>
-         <!--Optional:-->
          <tem:ID>${id}</tem:ID>
       </tem:ROClientIDHeader>
    </soapenv:Header>
    <soapenv:Body>
-      <tem:WebServService___GrabaEnvio24>
+      <tem:GrabaEnvio24>
          <tem:strCodAgeCargo>000000</tem:strCodAgeCargo>
          <tem:strCodAgeOri>${process.env.TIPSA_AGENCY}</tem:strCodAgeOri>
          <tem:dtFecha>${dtFecha}</tem:dtFecha>
@@ -52,12 +51,13 @@ export const grabaEnvio24 = (
          <tem:strDirDes>${strDirDes}</tem:strDirDes>
          <tem:strPobDes>${strPobDes}</tem:strPobDes>
          <tem:strCPDes>${strCPDes}</tem:strCPDes>
-         <tem:strCodPais>Es</tem:strCodPais>
+         <tem:strCodPais>ES</tem:strCodPais>
          <tem:strTlfDes>${strTlfDes}</tem:strTlfDes>
          <tem:intPaq>${intPaq}</tem:intPaq>
          <tem:strContenido>${strContenido}</tem:strContenido>
-      </tem:WebServService___GrabaEnvio24>
+         <tem:boInsert>true</tem:boInsert>
+         <tem:strAlbaran></tem:strAlbaran>
+      </tem:GrabaEnvio24>
    </soapenv:Body>
-</soapenv:Envelope>
-`
+</soapenv:Envelope>`
 }

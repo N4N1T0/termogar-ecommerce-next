@@ -54,8 +54,8 @@ export interface CampaignCountDownProps {
     date: string | null
     active: boolean | null
     media: {
-      url: null
-      blur: null
+      url: string | null
+      blur: string | null
     }
   } | null
 }

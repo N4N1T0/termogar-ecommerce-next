@@ -18,7 +18,10 @@ const yoptop = {
       `https://api-cdn.yotpo.com/v1/widget/${yoptopAppKey}/products/${id}/reviews.json`
     )
     if (!reviews.ok) {
-      throw new Error(`HTTP error! status: ${reviews.status}`)
+      return {
+        status: 0,
+        reviews: []
+      }
     }
     const data = await reviews.json()
     return {
@@ -176,7 +179,6 @@ const tipsa = {
 
       // Parsear el XML de la respuesta
       const result = await parseStringPromise(data, { explicitArray: false })
-      console.log('Parsed XML result:', result)
 
       // Extraer strSesion de la respuesta
       const sessionId =
@@ -188,7 +190,6 @@ const tipsa = {
         throw new Error('Session ID not found in response')
       }
 
-      console.log('Session ID:', sessionId)
       return sessionId // Devuelve el ID de sesión
     } catch (error) {
       console.error('Error creating SOAP client:', error)
@@ -236,9 +237,12 @@ const tipsa = {
 
       // Parsear el XML de la respuesta
       const result = await parseStringPromise(data, { explicitArray: false })
-      console.log('Parsed XML result:', result)
+      const albaran =
+        result['SOAP-ENV:Envelope']?.['SOAP-ENV:Body']?.[
+          'v1:WebServService___GrabaEnvio24Response'
+        ]?.['v1:strAlbaranOut']
 
-      return result
+      return albaran
     } catch (error) {
       console.error('Error creating SOAP client:', error)
       throw error
