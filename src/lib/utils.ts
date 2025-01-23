@@ -899,6 +899,49 @@ export const mergeProductData = (
   }
 }
 
+/**
+ * Format a Date object as a string in the format "YYYY-MM-DD".
+ *
+ * @param date - The Date object to format.
+ *
+ * @returns A string in the format "YYYY-MM-DD".
+ */
+export const tipsaFormatDate = (date: Date) => {
+  const d = new Date(date)
+  const year = d.getFullYear()
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
+/**
+ * Convert a base64 string to a Blob object.
+ *
+ * @param base64Data - The base64 string to convert.
+ * @param contentType - The MIME type of the Blob. Defaults to 'application/pdf'.
+ *
+ * @returns A Blob object.
+ */
+export const base64ToBlob = (
+  base64Data: string,
+  contentType = 'application/pdf'
+) => {
+  const byteCharacters = atob(base64Data)
+  const byteArrays = []
+
+  for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+    const slice = byteCharacters.slice(offset, offset + 512)
+    const byteNumbers = new Array(slice.length)
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i)
+    }
+    const byteArray = new Uint8Array(byteNumbers)
+    byteArrays.push(byteArray)
+  }
+
+  return new Blob(byteArrays, { type: contentType })
+}
+
 // * TYPES HELPERS
 export type Category = {
   id: string

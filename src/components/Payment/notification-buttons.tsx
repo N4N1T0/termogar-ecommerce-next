@@ -10,7 +10,6 @@ import { useCart } from '@/stores'
 import Form from 'next/form'
 import sendPurchaseEmail from '@/actions/send-purchase-email'
 import { OrderDataNotificationsButtons } from '@/types'
-import updateProductsStock from '@/actions/update-products-stock'
 
 const NotificationsPageButton = ({
   orderData
@@ -46,15 +45,13 @@ const NotificationsPageButton = ({
       products,
       orderId,
       total,
-      new Date().toLocaleString(),
+      new Date(),
       gateway as string,
       iva,
       Number(refactoredCoupon[0]),
       refactoredShippingAddress,
       'success'
     )
-
-    await updateProductsStock(products)
 
     if (value === 'keepShopping') {
       handlePush('/')
@@ -72,7 +69,7 @@ const NotificationsPageButton = ({
       products,
       orderId,
       total,
-      new Date().toLocaleString(),
+      new Date(),
       gateway as string,
       iva,
       Number(refactoredCoupon[0]),

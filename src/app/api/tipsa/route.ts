@@ -15,30 +15,10 @@ export const GET = async () => {
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json()
-  const {
-    dtFecha,
-    strCodTipoServ,
-    strNomDes,
-    strDirDes,
-    strPobDes,
-    strCPDes,
-    strTlfDes,
-    intPaq,
-    strContenido
-  } = body
+  const { strAlbaran } = body
 
   try {
-    const response = await tipsa.grabaEnvio24(
-      dtFecha,
-      strCodTipoServ,
-      strNomDes,
-      strDirDes,
-      strPobDes,
-      strCPDes,
-      strTlfDes,
-      intPaq,
-      strContenido
-    )
+    const response = await tipsa.construirEtiqueta8(strAlbaran)
 
     return NextResponse.json({ success: true, response })
   } catch (error) {

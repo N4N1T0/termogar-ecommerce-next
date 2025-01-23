@@ -1,3 +1,4 @@
+// TODO: Revisar los campos
 export const loginEnvelop = `
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
 xmlns:tem="http://tempuri.org/">
@@ -37,16 +38,16 @@ export const grabaEnvio24 = (
    </soapenv:Header>
    <soapenv:Body>
       <tem:GrabaEnvio24>
-         <tem:strCodAgeCargo>000000</tem:strCodAgeCargo>
+         <tem:strCodAgeCargo>${process.env.TIPSA_AGENCY}</tem:strCodAgeCargo>
          <tem:strCodAgeOri>${process.env.TIPSA_AGENCY}</tem:strCodAgeOri>
          <tem:dtFecha>${dtFecha}</tem:dtFecha>
          <tem:strCodTipoServ>${strCodTipoServ}</tem:strCodTipoServ>
          <tem:strCodCli>${process.env.TIPSA_USER}</tem:strCodCli>
          <tem:strNomOri>Termogar.es</tem:strNomOri>
-         <tem:strDirOri>Pruebas Informatica</tem:strDirOri>
-         <tem:strPobOri>${strPobDes}</tem:strPobOri>
-         <tem:strCPOri>${strCPDes}</tem:strCPOri>
-         <tem:strTlfOri>666555444</tem:strTlfOri>
+         <tem:strDirOri>C/ Cerrajería, 12 - Polígono el Palmar.</tem:strDirOri>
+         <tem:strPobOri>Cadiz</tem:strPobOri>
+         <tem:strCPOri>11500</tem:strCPOri>
+         <tem:strTlfOri>956 861 081 / 667 525 413</tem:strTlfOri>
          <tem:strNomDes>${strNomDes}</tem:strNomDes>
          <tem:strDirDes>${strDirDes}</tem:strDirDes>
          <tem:strPobDes>${strPobDes}</tem:strPobDes>
@@ -61,3 +62,24 @@ export const grabaEnvio24 = (
    </soapenv:Body>
 </soapenv:Envelope>`
 }
+
+export const construirEtiqueta8 = (
+  strAlbaran: string,
+  id: string
+) => `<?xml version="1.0" encoding="UTF-8"?>
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+     <soapenv:Header>
+        <tem:ROClientIDHeader>
+           <tem:ID>${id}</tem:ID>
+        </tem:ROClientIDHeader>
+     </soapenv:Header>
+     <soapenv:Body>
+        <tem:ConsEtiquetaEnvio6>
+           <tem:strCodAgeOri>${process.env.TIPSA_AGENCY}</tem:strCodAgeOri>
+           <tem:strCodAgeCargo>${process.env.TIPSA_AGENCY}</tem:strCodAgeCargo>
+           <tem:StrAlbaran>${strAlbaran}</tem:StrAlbaran>
+           <tem:intIdRepDet>0</tem:intIdRepDet>
+           <tem:strFormato>pdf</tem:strFormato>
+        </tem:ConsEtiquetaEnvio6>
+     </soapenv:Body>
+  </soapenv:Envelope>`
