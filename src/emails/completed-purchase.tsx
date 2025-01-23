@@ -1,4 +1,4 @@
-import { Section, Text, Heading } from '@react-email/components'
+import { Section, Text, Heading, Link } from '@react-email/components'
 import * as React from 'react'
 import TailwindWrapper from './utils/tailwind-wrapper'
 import { eurilize } from '@/lib/utils'
@@ -16,6 +16,7 @@ interface CompletedPurchaseProps {
   shippingAddress: Address
   billingAddress: Address
   discountCoupon: number
+  currierLink: string
 }
 
 export const CompletedPurchase = ({
@@ -28,7 +29,8 @@ export const CompletedPurchase = ({
   iva,
   shippingAddress,
   billingAddress,
-  discountCoupon
+  discountCoupon,
+  currierLink
 }: CompletedPurchaseProps) => {
   const previewText = `hola ${user?.firstName} ${user?.lastName}! su compra en Termogar.es ha sido realizada con exito`
 
@@ -139,6 +141,9 @@ export const CompletedPurchase = ({
               <strong>Email:</strong> {shippingAddress?.email || ''}
             </Text>
             <Text className='text-sm text-gray-700'>
+              <strong>Telefono:</strong> {shippingAddress?.phone || ''}
+            </Text>
+            <Text className='text-sm text-gray-700'>
               <strong>Piso:</strong> {shippingAddress?.address2 || ''}
             </Text>
           </div>
@@ -151,6 +156,10 @@ export const CompletedPurchase = ({
             </Text>
             <Text className='text-sm text-gray-700'>
               <strong>Localidad:</strong> {shippingAddress?.state || ''}
+            </Text>
+            <Text className='text-sm text-gray-950'>
+              <strong>Link de seguimiento:</strong>{' '}
+              <Link href={currierLink}>Aquí</Link>
             </Text>
           </div>
         </div>
@@ -242,7 +251,9 @@ CompletedPurchase.PreviewProps = {
     state: 'NY',
     postcode: '10001',
     country: 'United States',
-    phone: '123-456-7890'
+    phone: '123-456-7890',
+    firstName: 'John Doe',
+    email: 'rB4Qs@example.com'
   },
   billingAddress: {
     address1: '123 Main St',
@@ -253,7 +264,9 @@ CompletedPurchase.PreviewProps = {
     country: 'United States',
     phone: '123-456-7890'
   },
-  discountCoupon: 0
+  discountCoupon: 0,
+  currierLink:
+    'https://aplicaciones.tip-sa.com/cliente/datos_env.php?id=000000333339999444034'
 } as unknown as CompletedPurchaseProps
 
 export default CompletedPurchase

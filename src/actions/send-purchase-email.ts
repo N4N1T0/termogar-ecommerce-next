@@ -120,7 +120,8 @@ const sendPurchaseEmail = async (
           orderNumber: orderNumber as string,
           purchaseDate: new Date(purchaseDate).toISOString(),
           shippingAddress: shippingAddress as Address,
-          totalAmount: totalAmount.toString()
+          totalAmount: totalAmount.toString(),
+          currierLink: followLink
         })
       })
     }
