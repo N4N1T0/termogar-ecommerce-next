@@ -5,6 +5,7 @@ import {
   GET_CARD_BLOG_POSTResult,
   GET_USER_INFOResult,
   internalGroqTypeReferenceTo,
+  Order,
   Product,
   SanityImageCrop,
   SanityImageHotspot
@@ -359,6 +360,10 @@ export interface AsyncPublishProps extends DocumentActionProps {
 
 export interface AsyncChangeToVariantProps extends DocumentActionProps {
   published: (Omit<Product, '_type'> & { _type: string }) | null
+}
+
+export interface AsyncMakeCurrierTagProps extends DocumentActionProps {
+  published: (Omit<Order, '_type'> & { _type: string }) | null
 }
 // * CUSTOMS
 export interface YoptopReview {

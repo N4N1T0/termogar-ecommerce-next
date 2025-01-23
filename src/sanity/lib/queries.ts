@@ -943,7 +943,7 @@ export const GET_USER_FOR_AUTH =
 }`)
 
 export const GET_ORDERS_BY_USER_ID =
-  defineQuery(`*[_type =='order' && userEmail._ref == $id ]{
+  defineQuery(`*[_type =='order' && userEmail._ref == $id ] | order(purchaseDate desc){
   "id": _id,
   purchaseDate,
   currierCode,

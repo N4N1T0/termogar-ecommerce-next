@@ -109,16 +109,28 @@ export const orderType = defineType({
       description: 'La dirección de envío de la compra'
     }),
     defineField({
+      name: 'currierLink',
+      title: 'Link de Seguimiento',
+      type: 'string',
+      description: 'El Link de seguimiento del pedido.'
+    }),
+    defineField({
       name: 'currierCode',
       title: 'Código de Transporte',
       type: 'string',
-      description: 'El código de transporte utilizado para la compra.'
+      description: 'El código de transporte utilizado para la compra.',
+      hidden: true
     }),
     defineField({
       name: 'expectedDeliveryDate',
       title: 'Fecha de Entrega Estimada',
       type: 'datetime',
       description: 'Fecha estimada de entrega de la compra.'
+    }),
+    defineField({
+      name: 'currierTag',
+      title: 'Etiqueta de Transporte',
+      type: 'file'
     })
   ],
   preview: {

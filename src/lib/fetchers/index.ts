@@ -1,10 +1,11 @@
 import { CartItemType, YoptopReviews } from '@/types'
 import { parseStringPromise } from 'xml2js' // Necesitas instalar xml2js: npm install xml2js
-import { grabaEnvio24, loginEnvelop } from './utils'
+import { grabaEnvio24, loginEnvelop, construirEtiqueta8 } from './utils'
 
 const yoptopAppKey = process.env.NEXT_PUBLIC_YOTPO_APP_KEY
 const paypalClientId = process.env.PAYPAL_CLIENT_ID
 const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET
+// TODO: Cambiar las urls
 const tipsaURLWebService =
   'https://testapps.tipsa-dinapaq.com/SOAP?service=WebServService'
 const tipsaURLWebServiceLogin =
@@ -138,7 +139,7 @@ const paypal = {
       }
     )
     const data = await response.json()
-    console.log('🚀 ~ data:', data)
+
     return data.links.find(
       (link: Record<string, string>) => link.rel === 'approve'
     ).href
@@ -243,6 +244,37 @@ const tipsa = {
         ]?.['v1:strAlbaranOut']
 
       return albaran
+    } catch (error) {
+      console.error('Error creating SOAP client:', error)
+      throw error
+    }
+  },
+  construirEtiqueta8: async function (strAlbaran: string) {
+    try {
+      const sessionId = await this.generateSessionId()
+
+      const response = await fetch(tipsaURLWebService, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/xml'
+        },
+        body: construirEtiqueta8(strAlbaran, sessionId)
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const data = await response.text()
+
+      // Parsear el XML de la respuesta
+      const result = await parseStringPromise(data, { explicitArray: false })
+      const etiqueta =
+        result['SOAP-ENV:Envelope']?.['SOAP-ENV:Body']?.[
+          'v1:WebServService___ConsEtiquetaEnvio6Response'
+        ]?.['v1:strEtiqueta']
+
+      return etiqueta
     } catch (error) {
       console.error('Error creating SOAP client:', error)
       throw error
