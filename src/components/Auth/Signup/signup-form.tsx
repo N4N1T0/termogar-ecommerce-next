@@ -47,7 +47,6 @@ const SignupForm = ({
       form.reset()
       setTimeout(() => router.push(tempUrl), 2000)
     } else {
-      console.log(response.message)
       toast.error(response.message, {
         duration: 5000
       })

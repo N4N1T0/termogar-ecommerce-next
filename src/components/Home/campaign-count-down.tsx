@@ -15,9 +15,6 @@ import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const CampaignCountDown = ({ className, data }: CampaignCountDownProps) => {
-  console.log('🚀 ~ CampaignCountDown ~ data:', data)
-  const countdown = CountDown(data?.date || '2025-10-04 4:00:00')
-
   return (
     <section id='offers' className={cn('w-full lg:h-[460px]', className)}>
       <div className='container-x mx-auto h-full'>
@@ -25,26 +22,7 @@ const CampaignCountDown = ({ className, data }: CampaignCountDownProps) => {
           <div className='campaign-countdown mb-5 h-full w-full lg:mb-0 lg:w-1/2'>
             <Link href='/ofertas'>
               <div className='p-5 xl:p-12'>
-                <div className='countdown-wrapper mb-10 flex w-full justify-evenly lg:justify-between'>
-                  {countdown &&
-                    countdown.map((item, index) => (
-                      <div
-                        className='countdown-item'
-                        key={`countdown-${index}`}
-                      >
-                        <div className='countdown-number flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white sm:h-[100px] sm:w-[100px]'>
-                          <span
-                            className={`font-700 text-[14px] sm:text-[30px] ${saleData.colors[index]}`}
-                          >
-                            {item}
-                          </span>
-                        </div>
-                        <p className='font-500 text-center text-[12px] leading-8 sm:text-[18px]'>
-                          {saleData.labels[index]}
-                        </p>
-                      </div>
-                    ))}
-                </div>
+                <CountdownCounter date={data?.date} />
                 <div className='countdown-title mb-4'>
                   <h1 className='text-qblack font-600 text-[44px]'>
                     WOOOAAA! OFERTAS
@@ -72,6 +50,30 @@ const CampaignCountDown = ({ className, data }: CampaignCountDownProps) => {
         </div>
       </div>
     </section>
+  )
+}
+
+const CountdownCounter = ({ date }: { date: string | null | undefined }) => {
+  const countdown = CountDown(date || '2025-10-04 4:00:00')
+
+  return (
+    <div className='countdown-wrapper mb-10 flex w-full justify-evenly lg:justify-between'>
+      {countdown &&
+        countdown.map((item, index) => (
+          <div className='countdown-item' key={`countdown-${index}`}>
+            <div className='countdown-number flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white sm:h-[100px] sm:w-[100px]'>
+              <span
+                className={`font-700 text-[14px] sm:text-[30px] ${saleData.colors[index]}`}
+              >
+                {item}
+              </span>
+            </div>
+            <p className='font-500 text-center text-[12px] leading-8 sm:text-[18px]'>
+              {saleData.labels[index]}
+            </p>
+          </div>
+        ))}
+    </div>
   )
 }
 

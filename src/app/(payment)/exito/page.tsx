@@ -96,13 +96,14 @@ const SuccessPage = async ({
       _ref: user?.id || '',
       _type: 'reference'
     },
-    shippingAddress: newAddress
-      ? user?.shippingAddresses && user.shippingAddresses.length > 0
-        ? [user.shippingAddresses[0]]
-        : undefined
-      : user?.billingAddress
-        ? [user.billingAddress]
-        : undefined
+    shippingAddress:
+      newAddress === 'true'
+        ? user?.shippingAddresses && user.shippingAddresses.length > 0
+          ? [user.shippingAddresses[0]]
+          : undefined
+        : user?.billingAddress
+          ? [user.billingAddress]
+          : undefined
   })
 
   return (
