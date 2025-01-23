@@ -38,10 +38,7 @@ export default async function Home() {
         sectionTitle='Comprar por Marcas'
         className='brand-section-wrapper mb-[60px]'
       />
-      <CampaignCountDown
-        className='mb-[60px]'
-        // data={searchedMainPage?.offer}
-      />
+      <CampaignCountDown className='mb-[60px]' data={searchedMainPage?.offer} />
 
       <SectionStyleTwo
         sectionTitle={searchedMainPage?.secondaryCategory?.name}
