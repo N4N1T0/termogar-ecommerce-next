@@ -43,7 +43,7 @@
 - [x] Order maker discount stock
 - [x] Update send forget password
 - [x] Delete unused components
-- [ ] Test the TIPSA
+- [ ] Test the TIPSA & and make it a serve action
 - [ ] Improve bundle size (delete unused packages)
 - [ ] improve groq queries
 - [ ] Look for the TODOS

@@ -6,7 +6,12 @@ import { structureTool } from 'sanity/structure'
 import { apiVersion, dataset, projectId } from '@/sanity/env'
 import { schema } from '@/sanity/schemaTypes'
 import { structure } from '@/sanity/structure'
-import { setParent, changeToVariant, duplicateProduct } from '@/sanity/actions'
+import {
+  setParent,
+  changeToVariant,
+  duplicateProduct,
+  makeCurrierTag
+} from '@/sanity/actions'
 
 export default defineConfig({
   basePath: '/studio',
@@ -25,6 +30,10 @@ export default defineConfig({
 
       if (context.schemaType === 'product') {
         return [...prev, changeToVariant(context), duplicateProduct(context)]
+      }
+
+      if (context.schemaType === 'order') {
+        return [...prev, makeCurrierTag(context)]
       }
       return prev
     }
