@@ -45,8 +45,8 @@ const OptionSelect = ({
         <SelectContent className='rounded-none bg-white'>
           {options.values?.map(({ value, product }) => (
             <SelectItem
-              value={product?.slug || value || ''}
-              key={value || ''}
+              value={product?.slug || value || 'N/A'}
+              key={value || 'N/A'}
               className='rounded-none uppercase'
             >
               {value}

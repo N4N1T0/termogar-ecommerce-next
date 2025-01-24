@@ -27,7 +27,9 @@ export default function CartPopup({ className }: { className?: string }) {
     })
   }
 
-  const [subtotal] = calculateTotal(products, '33460')
+  const filteredProducts = products.filter((product) => product.quantity > 0)
+
+  const [subtotal] = calculateTotal(filteredProducts, '33460')
 
   return (
     <>
@@ -38,7 +40,7 @@ export default function CartPopup({ className }: { className?: string }) {
         <div className='h-full w-full'>
           <div className='product-items h-[310px] overflow-y-scroll'>
             <ul>
-              {products.map(
+              {filteredProducts.map(
                 ({ id, featuredMedia, title, price, sale, slug, quantity }) => (
                   <li className='flex h-full w-full' key={id}>
                     <div className='my-[20px] flex items-center justify-center space-x-[6px] px-4'>
@@ -61,11 +63,20 @@ export default function CartPopup({ className }: { className?: string }) {
                         </Link>
 
                         <p className='price'>
-                          <span className='offer-price font-600 ml-2 text-[15px] text-red-500'>
-                            {sale
-                              ? eurilize(sale.price || 0)
-                              : eurilize(price || 0)}
-                          </span>
+                          {sale ? (
+                            <>
+                              <span className='font-400 block text-[12px] text-gray-500 line-through'>
+                                {eurilize(price || 0)} precio normal
+                              </span>
+                              <span className='offer-price font-600 ml-2 text-[15px] text-red-500'>
+                                {eurilize(sale.price || 0)}
+                              </span>
+                            </>
+                          ) : (
+                            <span className='offer-price font-600 ml-2 text-[15px] text-red-500'>
+                              {eurilize(price || 0)}
+                            </span>
+                          )}
 
                           <span className='ml-2 text-[13px] text-gray-500'>
                             cant. {quantity}x
