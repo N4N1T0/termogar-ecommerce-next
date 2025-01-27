@@ -40,7 +40,7 @@ const sendPurchaseEmail = async (
       // TODO: Change the email address
       await resend.emails.send({
         from: 'compra-error@termogar.es',
-        bcc: ['adrian.alvarezalonso1991@gmail.com'],
+        bcc: ['hola@termogar.es'],
         to: [user?.email as string],
         subject: 'Orden Fallida',
         react: ErrorPurchase({
@@ -107,7 +107,7 @@ const sendPurchaseEmail = async (
       // TODO: Change the email address
       await resend.emails.send({
         from: 'compra-realizada@termogar.es',
-        bcc: ['adrian.alvarezalonso1991@gmail.com'],
+        bcc: ['hola@termogar.es'],
         to: [user?.email as string],
         subject: 'Orden Completada',
         react: CompletedPurchase({

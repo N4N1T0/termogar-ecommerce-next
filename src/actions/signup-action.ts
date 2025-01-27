@@ -65,8 +65,8 @@ const signupAction = async (values: SignupSchema) => {
     // TODO: Change the email address
     await resend.emails.send({
       from: 'usario-nuevo@termogar.es',
-      bcc: ['adrian.alvarezalonso1991@gmail.com'],
-      to: ['adrian.alvarezalonso1991@gmail.com'],
+      bcc: ['hola@termogar.es'],
+      to: [parsed.data.email],
       subject: 'Nuevo Usuario',
       react: NewUser({
         email: parsed.data.email,

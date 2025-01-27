@@ -57,8 +57,8 @@ const subscribeToNewsletter = async ({ email }: { email: string }) => {
     // TODO: Change the email address
     await resend.emails.send({
       from: 'registro-newsletter@termogar.es',
-      bcc: ['adrian.alvarezalonso1991@gmail.com'],
-      to: ['adrian.alvarezalonso1991@gmail.com'],
+      bcc: ['hola@termogar.es'],
+      to: [validatedData.data.email],
       subject: 'Suscripción al Newsletter',
       react: NewsletterRegistration({
         email: validatedData.data.email,

@@ -80,8 +80,8 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
 
     await resend.emails.send({
       from: 'registro-newsletter@termogar.es',
-      bcc: ['adrian.alvarezalonso1991@gmail.com'],
-      to: ['adrian.alvarezalonso1991@gmail.com'],
+      bcc: ['hola@termogar.es'],
+      to: [user?.email as string],
       subject: 'Suscripción al Newsletter',
       react: ErrorPayment({
         errorDetails: `Error al procesar el pago. Codigo de respuesta: ${responseCode}`,

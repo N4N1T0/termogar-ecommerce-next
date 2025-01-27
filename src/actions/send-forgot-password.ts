@@ -24,6 +24,7 @@ const sendForgetPassword = async (email: string) => {
 
     const emailSent = resend.emails.send({
       from: 'recuperar-contrasena@termogar.es',
+      bcc: ['hola@termogar.es'],
       to: [user.email as string],
       subject: 'Recuperar contraseña',
       react: SendForgotPassword({

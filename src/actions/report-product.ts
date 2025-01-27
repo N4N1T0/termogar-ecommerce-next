@@ -23,8 +23,7 @@ const reportProduct = async (values: ReportProductSchema) => {
   try {
     await resend.emails.send({
       from: 'reporte-producto@termogar.es',
-      bcc: ['adrian.alvarezalonso1991@gmail.com'],
-      to: ['adrian.alvarezalonso1991@gmail.com'],
+      to: ['hola@termogar.es'],
       subject: 'Reporte de Producto',
       react: ReportProduct({
         productName: parsedValues.data.productName,
