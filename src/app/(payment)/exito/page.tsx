@@ -13,7 +13,9 @@ import { GET_USER_INFO } from '@/sanity/lib/queries'
 import { processRestNotification } from '@/lib/clients'
 import { Order } from '@/types/sanity'
 import { uuid } from '@sanity/uuid'
-import { paypal } from '@/lib/fetchers'
+import { paypal, tipsa } from '@/lib/fetchers'
+import { tipsaFormatDate } from '@/lib/utils'
+import { Logger } from 'next-axiom'
 
 export const metadata: Metadata = {
   title: 'Pago Realizado con Exito',
@@ -21,11 +23,14 @@ export const metadata: Metadata = {
     'Pago realizado con exito. En breve te llegara un correo con los detalles de tu pedido.'
 }
 
+const log = new Logger()
+
 const SuccessPage = async ({
   searchParams
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
+  const currentDate = new Date()
   const {
     userId,
     orderId,
@@ -63,9 +68,20 @@ const SuccessPage = async ({
     }
   }
 
-  const user = await sanityClientWrite.fetch(GET_USER_INFO, {
-    id: userId
-  })
+  let followLink = ''
+
+  const user = await sanityClientWrite.fetch(
+    GET_USER_INFO,
+    {
+      id: userId
+    },
+    {
+      cache: 'force-cache',
+      next: {
+        revalidate: 180
+      }
+    }
+  )
 
   const refactoredProducts =
     Array.isArray(products) || products === undefined
@@ -80,31 +96,76 @@ const SuccessPage = async ({
           _key: uuid()
         }))
 
-  await sanityClientWrite.createIfNotExists<Order>({
-    _id: Array.isArray(orderId) ? '' : orderId,
-    status: 'procesando',
-    paymentMethod:
-      Array.isArray(gateway) || gateway === undefined ? '' : gateway,
-    _type: 'order',
-    _createdAt: new Date().toISOString(),
-    _updatedAt: new Date().toISOString(),
-    _rev: Array.isArray(orderId) ? '' : orderId,
-    purchaseDate: new Date().toISOString(),
-    totalAmount: Number(total),
-    products: refactoredProducts,
-    userEmail: {
-      _ref: user?.id || '',
-      _type: 'reference'
-    },
-    shippingAddress:
-      newAddress === 'true'
-        ? user?.shippingAddresses && user.shippingAddresses.length > 0
-          ? [user.shippingAddresses[0]]
-          : undefined
-        : user?.billingAddress
-          ? [user.billingAddress]
-          : undefined
-  })
+  const address =
+    newAddress === 'true'
+      ? user?.shippingAddresses && user.shippingAddresses.length > 0
+        ? [user.shippingAddresses[0]]
+        : undefined
+      : user?.billingAddress
+        ? [user.billingAddress]
+        : undefined
+
+  try {
+    const albaran = await tipsa.grabaEnvio24(
+      tipsaFormatDate(currentDate),
+      '48',
+      `${user?.firstName} ${user?.lastName}`,
+      `${address && address[0].address1} ${address && address[0].address2}`,
+      (address && address[0].city) || '',
+      (address && address[0].postcode) || '',
+      (address && address[0].phone) || '',
+      refactoredProducts.reduce(
+        (total, product) => total + product.quantity,
+        0
+      ),
+      refactoredProducts
+        .map((product) => `${product.quantity} ${product.product._ref}`)
+        .join(', ')
+    )
+
+    followLink = `https://aplicaciones.tip-sa.com/cliente/datos_env.php?id=${process.env.TIPSA_AGENCY}${process.env.TIPSA_USER}${albaran}`
+
+    await sanityClientWrite.create<Order>({
+      _id: Array.isArray(orderId) ? '' : orderId,
+      status: 'procesando',
+      paymentMethod:
+        Array.isArray(gateway) || gateway === undefined ? '' : gateway,
+      _type: 'order',
+      _createdAt: new Date().toISOString(),
+      _updatedAt: new Date().toISOString(),
+      _rev: Array.isArray(orderId) ? '' : orderId,
+      purchaseDate: new Date().toISOString(),
+      totalAmount: Number(total),
+      products: refactoredProducts,
+      userEmail: {
+        _ref: user?.id || '',
+        _type: 'reference'
+      },
+      shippingAddress: address,
+      currierCode: albaran,
+      currierLink: followLink,
+      expectedDeliveryDate: new Date(
+        currentDate.setHours(currentDate.getHours() + 48)
+      ).toISOString() // Sumar 48 horas
+    })
+
+    for (const product of refactoredProducts) {
+      try {
+        await sanityClientWrite
+          .patch(product._key)
+          .dec({ stockQuantity: product.quantity })
+          .commit()
+      } catch (error) {
+        log.error('Error while updating stock:', { error: error })
+      }
+    }
+
+    console.log('Order created successfully', { orderId })
+
+    log.info('Order created successfully', { orderId })
+  } catch (error) {
+    log.error('Error while creating order:', { error: error })
+  }
 
   return (
     <div className='container-x relative mx-auto flex py-10'>
@@ -115,6 +176,7 @@ const SuccessPage = async ({
         <CardContent className='p-0'>
           <SuccessContent
             orderData={{ user, orderId, newAddress, discountCoupon, gateway }}
+            followLink={followLink}
           />
         </CardContent>
       </Card>

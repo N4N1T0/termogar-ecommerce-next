@@ -16,7 +16,13 @@ import { calculateTotal, eurilize } from '@/lib/utils'
 import { CartItemType, OrderData } from '@/types'
 import { Pencil } from 'lucide-react'
 
-const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
+const SuccessContent = ({
+  orderData,
+  followLink
+}: {
+  orderData: OrderData
+  followLink: string
+}) => {
   const { products, rehydrated } = useCart()
   const { user, orderId, newAddress, gateway, discountCoupon } = orderData
 
@@ -236,6 +242,7 @@ const SuccessContent = ({ orderData }: { orderData: OrderData }) => {
           refactoredShippingAddress,
           total
         }}
+        followLink={followLink}
       />
     </div>
   )

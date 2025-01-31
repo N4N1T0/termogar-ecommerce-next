@@ -12,9 +12,11 @@ import sendPurchaseEmail from '@/actions/send-purchase-email'
 import { OrderDataNotificationsButtons } from '@/types'
 
 const NotificationsPageButton = ({
-  orderData
+  orderData,
+  followLink
 }: {
   orderData: OrderDataNotificationsButtons
+  followLink: string
 }) => {
   const {
     user,
@@ -48,6 +50,7 @@ const NotificationsPageButton = ({
       new Date(),
       gateway as string,
       iva,
+      followLink,
       Number(refactoredCoupon[0]),
       refactoredShippingAddress,
       'success'
@@ -72,6 +75,7 @@ const NotificationsPageButton = ({
       new Date(),
       gateway as string,
       iva,
+      followLink,
       Number(refactoredCoupon[0]),
       refactoredShippingAddress,
       'failed'
