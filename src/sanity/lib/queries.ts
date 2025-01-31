@@ -11,12 +11,12 @@ export const GET_MAIN_PAGE = defineQuery(`*[_type =='homePage'][0]{
   name,
   "slug": slug.current
   },
-   "offer": offer{
-    date,
-    active,
+   "offer": *[_type =='offerPage'][0]{
+    "date": offer.date,
+    "active": offer.active,
     "media": {
-      "url": banner.asset->url,
-      "blur": banner.asset->metadata.lqip
+      "url": offer.banner.asset->url,
+      "blur": offer.banner.asset->metadata.lqip
     }
  },
     secondaryCategory->{
@@ -575,15 +575,15 @@ export const GET_PRODUCTS_BY_OFFER = defineQuery(`{
       "blur": productListBanner.banner.asset->metadata.lqip,
       "link": productListBanner.link
   },
-   "offer": *[_type =='homePage'][0]{
+   "offer": *[_type =='offerPage'][0]{
     "date": offer.date,
     "active": offer.active,
     "media": {
       "url": offer.banner.asset->url,
       "blur": offer.banner.asset->metadata.lqip
     }
-  },
-  "products": *[_type=='product' && status=='publish' && stockQuantity > 0][0...24]{
+ },
+  "products": *[_type =='offerPage'][0].productList[]->{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -627,7 +627,7 @@ export const GET_PRODUCTS_BY_OFFER = defineQuery(`{
   "blur": metadata.lqip
 },
 "hasLastMinute": defined(lastMinute)
-}}`)
+  }}`)
 
 export const GET_PRODUCTS_WITH_OFFER_FOR_FILTERING = defineQuery(`{
   "products": *[_type=='product' && status=='publish' && defined(sale)][0...24]{

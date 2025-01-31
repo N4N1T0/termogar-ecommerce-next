@@ -40,33 +40,6 @@ export const homePageType = defineType({
       }
     }),
     defineField({
-      name: 'offer',
-      title: 'Sección 3 - Ofertas',
-      type: 'object',
-      description: 'Ofertas de la página (en caso de no tener desactivar)',
-      fields: [
-        defineField({
-          name: 'active',
-          title: 'Activa!',
-          type: 'boolean',
-          initialValue: false
-        }),
-        defineField({
-          name: 'date',
-          title: 'Fecha de finalización',
-          type: 'date'
-        }),
-        defineField({
-          name: 'banner',
-          title: 'Banner',
-          type: 'image',
-          options: {
-            hotspot: true
-          }
-        })
-      ]
-    }),
-    defineField({
       name: 'secondaryCategory',
       title: 'Sección 4 - Categoría Secundaria',
       type: 'reference',

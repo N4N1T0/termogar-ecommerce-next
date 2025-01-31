@@ -38,6 +38,10 @@ export const structure: StructureResolver = (S) =>
                 .title('Pagina Principal')
                 .icon(() => <BookOpen className='h-4 w-4' />)
                 .child(S.document().schemaType('homePage')),
+              S.listItem()
+                .title('Pagina de Ofertas')
+                .icon(() => <CircleDollarSign className='h-4 w-4' />)
+                .child(S.document().schemaType('offerPage')),
               S.divider(),
               S.documentTypeListItem('post')
                 .title('Entradas')
