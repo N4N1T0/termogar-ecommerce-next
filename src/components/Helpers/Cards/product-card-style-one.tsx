@@ -48,7 +48,6 @@ export default function ProductCardStyleOne<T>({
       options.values.some((option) => option?.product),
     [options]
   )
-  console.log('🚀 ~ hasVariant:', hasVariant, title, options)
 
   const getDiscountedPrice = React.useCallback(
     (basePrice: number): number =>

@@ -202,6 +202,7 @@ export default function FailedPaymentContent({
           refactoredShippingAddress,
           total
         }}
+        followLink=''
       />
     </div>
   )

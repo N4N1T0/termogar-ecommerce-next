@@ -38,7 +38,7 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
     }
   )
 
-  const refactoredProducts = errorProducts.map((product) => ({
+  const refactoredProducts = errorProducts.map((product: { id: string }) => ({
     product: product,
     quantity:
       products
