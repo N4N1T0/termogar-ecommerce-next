@@ -28,6 +28,8 @@ const OffersBanners = ({ className, data }: CampaignCountDownProps) => {
         alt='Ofertas'
         title='Ofertas'
         placeholder='blur'
+        width={500}
+        height={500}
         blurDataURL={data?.media.blur || PlaceholderSquare.blurDataURL}
       />
       <div className='sm:mr-[75px]'>

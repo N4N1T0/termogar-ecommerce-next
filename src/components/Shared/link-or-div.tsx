@@ -20,13 +20,13 @@ const LinkOrDiv = ({
     return (
       <Link
         href={banner?.link || '/'}
-        className='group mb-10 block h-40 w-full overflow-hidden'
+        className='group mx-auto mb-10 block h-32 w-full max-w-screen-lg overflow-hidden md:h-64'
       >
         <Image
           src={banner?.url || Banner5}
           alt='Banner para la lista de productos'
-          width={1902}
-          height={164}
+          width={1920}
+          height={630}
           blurDataURL={banner?.blur || Banner5.blurDataURL}
           placeholder='blur'
           className='h-full w-full object-cover transition-transform duration-200 ease-in group-hover:scale-105'
@@ -35,12 +35,12 @@ const LinkOrDiv = ({
     )
   } else {
     return (
-      <div className='mb-10 h-40 w-full overflow-hidden'>
+      <div className='mx-auto mb-10 h-32 w-full max-w-screen-lg overflow-hidden md:h-64'>
         <Image
           src={banner?.url || Banner5}
           alt='Banner para la lista de productos'
-          width={1902}
-          height={164}
+          width={1920}
+          height={630}
           className='h-full w-full object-fill'
         />
       </div>
