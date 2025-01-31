@@ -264,6 +264,17 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
     name,
     "slug": slug.current
   },
+  "options": options{
+      name,
+      "values": values[]{
+        value,
+        "product": reference->{
+          "slug": slug.current,
+          price,
+          sale
+        }
+      }
+    },
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
@@ -295,6 +306,16 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION =
     name,
     "slug": slug.current
   },
+  "options": options{
+      name,
+      "values": values[]{
+        value,
+        "product": reference->{
+          "slug": slug.current,
+          price,
+          sale
+        }
+      }},
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
@@ -329,6 +350,16 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
     name,
     "slug": slug.current
   },
+   "options": options{
+      name,
+      "values": values[]{
+        value,
+        "product": reference->{
+          "slug": slug.current,
+          price,
+          sale
+        }
+      }},
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
@@ -480,9 +511,9 @@ export const GET_CATEGORY_AND_PRODUCTS =
     "name": name,
   },
   description,
-  "banner": *[_type == "homePage"][0].productListBanner.banner.asset->{
-    "url": url,
-    "blur": metadata.lqip,
+  "banner": *[_type == "homePage"][0].productListBanner{
+    "url": banner.asset->url,
+    "blur": banner.asset->metadata.lqip,
     link
   },
   "children": *[_type == "productCategory" && references(^._id)]{
@@ -548,11 +579,11 @@ export const GET_PRODUCTS_BY_OFFER = defineQuery(`{
     "date": offer.date,
     "active": offer.active,
     "media": {
-      "url": offer.banner.assets->url,
-      "blur": offer.banner.assets->metadata.lqip
+      "url": offer.banner.asset->url,
+      "blur": offer.banner.asset->metadata.lqip
     }
   },
-  "products": *[_type=='product' && status=='publish' && defined(sale)][0...24]{
+  "products": *[_type=='product' && status=='publish' && stockQuantity > 0][0...24]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -580,6 +611,17 @@ export const GET_PRODUCTS_BY_OFFER = defineQuery(`{
     name,
     "slug": slug.current
   },
+  "options": options{
+      name,
+      "values": values[]{
+        value,
+        "product": reference->{
+          "slug": slug.current,
+          price,
+          sale
+        }
+      }
+    },
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip

@@ -1,18 +1,15 @@
 // * NEXT.JS IMPORTS
 import { Metadata } from 'next'
-import React, { Suspense } from 'react'
 
 // * ASSETS IMPORTS
 import PageTitle from '@/components/Helpers/PageTitle'
-import OrderSummary from '@/components/CheakoutPage/order-summary'
-import BillingAddress from '@/components/CheakoutPage/billing-address'
-import LastMinute from '@/components/CheakoutPage/last-minute'
 
 // * UTILS IMPORTS
 import { auth } from '@/lib/auth'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_USER_INFO } from '@/sanity/lib/queries'
 import { GET_USER_INFOResult } from '@/types/sanity'
+import ClientPage from '@/components/CheakoutPage/client-page'
 
 export const metadata: Metadata = {
   title: 'Formulario de Pago',
@@ -49,15 +46,11 @@ const CheckoutPage = async ({
           { name: 'Formulario de Pago', path: '/checkout' }
         ]}
       />
-      <div className='container-x mx-auto mt-5 w-full'>
-        <div className='relative w-full lg:flex lg:space-x-[30px]'>
-          <BillingAddress user={searchesUser} />
-          <OrderSummary userId={userId} newAddress={newAddress} />
-        </div>
-        <Suspense>
-          <LastMinute />
-        </Suspense>
-      </div>
+      <ClientPage
+        searchesUser={searchesUser}
+        userId={userId}
+        newAddress={newAddress}
+      />
     </main>
   )
 }

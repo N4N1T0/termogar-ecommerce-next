@@ -110,7 +110,6 @@ const CategoriesPage = async ({
                   )
                 )}
             </div>
-            s
             <LinkOrDiv banner={searchedTag.banner} />
             <div className='mb-10 grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
               {products
