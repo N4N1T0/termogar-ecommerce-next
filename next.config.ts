@@ -16,7 +16,8 @@ const nextConfig: NextConfig = withAxiom({
         port: ''
       }
     ]
-  }
+  },
+  reactStrictMode: false
 })
 
 export default nextConfig

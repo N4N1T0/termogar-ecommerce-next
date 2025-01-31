@@ -238,10 +238,11 @@ export const productType = defineType({
       of: [{ type: 'image' }],
       validation: (Rule) =>
         Rule.custom((relatedImages) => {
+          console.log('🚀 ~ Rule.custom ~ relatedImages:', relatedImages)
           if (!Array.isArray(relatedImages)) return true
 
           const uniqueImages = new Set(
-            relatedImages.map((image: any) => image?._id)
+            relatedImages.map((image: any) => image?.asset?._ref)
           )
 
           if (uniqueImages.size !== relatedImages.length) {
