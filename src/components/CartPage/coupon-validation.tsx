@@ -13,7 +13,8 @@ import { couponValidation } from '@/actions/coupon-validation'
 const CouponValidation = ({
   cart,
   setCoupon,
-  className
+  className,
+  disabled
 }: {
   cart: CartItemType[]
   setCoupon: React.Dispatch<
@@ -23,6 +24,7 @@ const CouponValidation = ({
     }>
   >
   className?: string
+  disabled?: boolean
 }) => {
   const [isPending, setIsPending] = React.useState(false)
 
@@ -78,7 +80,7 @@ const CouponValidation = ({
       </div>
       <button
         type='submit'
-        aria-disabled={isPending}
+        aria-disabled={isPending || disabled}
         className='hover-200 text-gray-gray-50 h-[50px] w-[90px] bg-accent text-gray-100 hover:text-gray-900 aria-disabled:cursor-not-allowed aria-disabled:opacity-50'
       >
         {isPending ? (

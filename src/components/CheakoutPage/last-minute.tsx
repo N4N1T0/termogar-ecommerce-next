@@ -13,7 +13,7 @@ import { GET_LAST_MINUTE_PRODUCTS_FROM_ID } from '@/sanity/lib/queries'
 import { useCart } from '@/stores'
 import { cn } from '@/lib/utils'
 
-const LastMinute = () => {
+const LastMinute = ({ disabled = false }: { disabled: boolean }) => {
   const { products, rehydrated } = useCart()
   const [lastMinuteProducts, setLastMinuteProducts] = React.useState<
     GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult | null | undefined
@@ -74,7 +74,7 @@ const LastMinute = () => {
       id='last-minute-products'
       className={cn(
         'container-x mx-auto mb-10 mt-5 w-full bg-white py-5',
-        remainingTime === 'Tiempo Finalizado'
+        remainingTime === 'Tiempo Finalizado' || disabled
           ? 'pointer-events-none cursor-not-allowed opacity-50'
           : ''
       )}

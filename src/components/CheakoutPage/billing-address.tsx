@@ -145,7 +145,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
 
   const onSubmit = async (values: CheckoutUser) => {
     if (!isDirty && noErrors && !isShippingAddress) {
-      router.replace(
+      router.push(
         `/checkout?userId=${user?.id}&newAddress=false#order-summary`,
         {
           scroll: false
@@ -164,7 +164,7 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
       toast.success(response.message, {
         duration: 4000
       })
-      router.replace(
+      router.push(
         `/checkout?userId=${response.userId}&newAddress=${isShippingAddress}#order-summary`,
         {
           scroll: false
@@ -179,7 +179,13 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className='flex-1'>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={cn(
+          'flex-1',
+          isDisabled ? 'pointer-events-none opacity-50' : ''
+        )}
+      >
         <h2
           className={cn(
             'mb-5 text-xl font-medium sm:text-2xl',

@@ -48,63 +48,72 @@ const paymentLogic = async (
     discountCoupon
   })
 
-  if (paymentType === 'tarjeta') {
-    const currencyInfo = CURRENCIES[currency]
-    const redsysAmount = new Decimal(totalAmount)
-      .mul(10 ** currencyInfo.decimals)
-      .toFixed(0)
-    const redsysCurrency = currencyInfo.num
+  try {
+    if (paymentType === 'tarjeta') {
+      const currencyInfo = CURRENCIES[currency]
+      const redsysAmount = new Decimal(totalAmount)
+        .mul(10 ** currencyInfo.decimals)
+        .toFixed(0)
+      const redsysCurrency = currencyInfo.num
 
-    const form = createRedirectForm({
-      ...merchantInfo,
-      DS_MERCHANT_ORDER: orderId,
-      DS_MERCHANT_AMOUNT: redsysAmount,
-      DS_MERCHANT_CURRENCY: redsysCurrency,
-      DS_MERCHANT_MERCHANTURL: templateRedirectUrl('api/notifications'),
-      DS_MERCHANT_URLOK: templateRedirectUrl('exito'),
-      DS_MERCHANT_URLKO: templateRedirectUrl('fallo'),
-      DS_MERCHANT_TRANSACTIONDATE: new Date().toISOString(),
-      DS_MERCHANT_CONSUMERLANGUAGE: LANGUAGES.es,
-      DS_MERCHANT_SHIPPINGADDRESSPYP: 'S',
-      DS_MERCHANT_MERCHANTNAME: 'Termogar'
-    })
+      const form = createRedirectForm({
+        ...merchantInfo,
+        DS_MERCHANT_ORDER: orderId,
+        DS_MERCHANT_AMOUNT: redsysAmount,
+        DS_MERCHANT_CURRENCY: redsysCurrency,
+        DS_MERCHANT_MERCHANTURL: templateRedirectUrl('api/notifications'),
+        DS_MERCHANT_URLOK: templateRedirectUrl('exito'),
+        DS_MERCHANT_URLKO: templateRedirectUrl('fallo'),
+        DS_MERCHANT_TRANSACTIONDATE: new Date().toISOString(),
+        DS_MERCHANT_CONSUMERLANGUAGE: LANGUAGES.es,
+        DS_MERCHANT_SHIPPINGADDRESSPYP: 'S',
+        DS_MERCHANT_MERCHANTNAME: 'Termogar'
+      })
 
-    log.info('Tarjeta payment form created', { orderId })
+      log.info('Tarjeta payment form created', { orderId })
+
+      return {
+        success: true,
+        data: form
+      }
+    }
+
+    if (paymentType === 'transferencia-bancaria-directa') {
+      log.info('Transferencia bancaria directa selected', { orderId })
+      return {
+        success: true,
+        data: templateRedirectUrl('exito', 'transferencia-bancaria-directa')
+      }
+    }
+
+    if (paymentType === 'paypal') {
+      const redirectUrl = await paypal.createOrder(
+        products,
+        templateRedirectUrl,
+        totalAmount
+      )
+
+      log.info('Paypal order created', { orderId, redirectUrl })
+
+      return {
+        success: true,
+        data: redirectUrl
+      }
+    }
+
+    log.error('Invalid payment type', { paymentType })
 
     return {
-      success: true,
-      data: form
+      success: false,
+      data: null
     }
-  }
-
-  if (paymentType === 'transferencia-bancaria-directa') {
-    log.info('Transferencia bancaria directa selected', { orderId })
-    return {
-      success: true,
-      data: templateRedirectUrl('exito', 'transferencia-bancaria-directa')
-    }
-  }
-
-  if (paymentType === 'paypal') {
-    const redirectUrl = await paypal.createOrder(
-      products,
-      templateRedirectUrl,
-      totalAmount
-    )
-
-    log.info('Paypal order created', { orderId, redirectUrl })
+  } catch (error) {
+    log.error('Payment logic failed', { error })
 
     return {
-      success: true,
-      data: redirectUrl
+      success: false,
+      data: null
     }
-  }
-
-  log.error('Invalid payment type', { paymentType })
-
-  return {
-    success: false,
-    data: null
   }
 }
 

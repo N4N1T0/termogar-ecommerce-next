@@ -17,13 +17,19 @@ import { Coupon } from '@/types/sanity'
 import paymentLogic from '@/actions/payment-logic'
 import { RedirectForm } from 'redsys-easy'
 import { PlaceholderSquare } from '@/assets'
+import { toast } from 'sonner'
+import { ChevronLeft } from 'lucide-react'
 
 const OrderSummary = ({
   userId,
-  newAddress
+  newAddress,
+  loading,
+  setLoading
 }: {
   userId: string | string[] | undefined
   newAddress: string | string[] | undefined
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   // * HOOKS
   const { products, rehydrated } = useCart()
@@ -37,6 +43,7 @@ const OrderSummary = ({
   const [paymentForm, setPaymentForm] = React.useState<RedirectForm | null>(
     null
   )
+
   const router = useRouter()
 
   // * VARIABLES
@@ -49,6 +56,8 @@ const OrderSummary = ({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setLoading(true)
+
     const value = new FormData(event.currentTarget)
     const paymentType = value.get('payment-type')
 
@@ -60,6 +69,12 @@ const OrderSummary = ({
       newAddress,
       `${coupon.amount}_${coupon.type}`
     )
+
+    if (response.data === null) {
+      setLoading(false)
+      toast.error('Error al realizar el pago, por favor intente de nuevo')
+      return
+    }
 
     if (
       paymentType === 'transferencia-bancaria-directa' &&
@@ -89,16 +104,27 @@ const OrderSummary = ({
   return (
     <section
       id='order-summary'
-      className='mt-5 h-fit flex-1 px-2 md:sticky md:top-2 md:mt-0 md:px-0'
+      className={cn(
+        'mt-5 h-fit flex-1 px-2 md:sticky md:top-2 md:mt-0 md:px-0',
+        isDisabled ? 'pointer-events-none opacity-50' : ''
+      )}
     >
-      <h2
-        className={cn(
-          'mb-5 text-xl font-medium sm:text-2xl',
-          isDisabled ? 'text-gray-900' : 'text-accent'
-        )}
-      >
-        Resumen de Orden
-      </h2>
+      <div className='flex w-full items-center justify-between'>
+        <h2
+          className={cn(
+            'mb-5 text-xl font-medium sm:text-2xl',
+            isDisabled ? 'text-gray-900' : 'text-accent'
+          )}
+        >
+          Resumen de Orden
+        </h2>
+        <button
+          onClick={() => router.back()}
+          className='hover-200 hover flex items-center gap-1 text-gray-900 hover:text-gray-600'
+        >
+          <ChevronLeft /> Editar Datos
+        </button>
+      </div>
 
       <div className='w-full border border-gray-200 px-7 py-[30px] md:px-10'>
         <div className='mb-4 flex items-center justify-between border-b border-gray-200'>
@@ -209,6 +235,7 @@ const OrderSummary = ({
           cart={products}
           setCoupon={setCoupon}
           className='mt-3 sm:w-full'
+          disabled={isDisabled}
         />
 
         <div className='border-px mb-2 mt-4 flex justify-between border-y border-gray-200 py-5'>
@@ -256,7 +283,7 @@ const OrderSummary = ({
             disabled={isDisabled}
           >
             <span className='text-sm font-semibold uppercase'>
-              Realizar pedido ahora
+              {loading ? 'Realizando compra...' : 'Realizar pedido ahora'}
             </span>
           </button>
           {isDisabled && (
