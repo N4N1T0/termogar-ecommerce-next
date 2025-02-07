@@ -203,13 +203,16 @@ export function makeCurrierTag(
             toast.error('Error: No se encontró el Albaran')
             return
           } else {
-            const response = await fetch('http://localhost:3000/api/tipsa', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ strAlbaran: order.currierCode })
-            })
+            const response = await fetch(
+              `${process.env.NEXT_PUBLIC_URL}/api/tipsa`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ strAlbaran: order.currierCode })
+              }
+            )
 
             const { response: etiqueta } = await response.json()
 
