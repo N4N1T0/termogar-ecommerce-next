@@ -152,7 +152,7 @@ const SuccessPage = async ({
     for (const product of refactoredProducts) {
       try {
         await sanityClientWrite
-          .patch(product._key)
+          .patch(product.product._ref)
           .dec({ stockQuantity: product.quantity })
           .commit()
       } catch (error) {
