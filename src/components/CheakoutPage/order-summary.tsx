@@ -252,7 +252,13 @@ const OrderSummary = ({
                   <input
                     type='radio'
                     name='payment-type'
+                    title='payment-type'
                     required
+                    onInvalid={(event) => {
+                      event.currentTarget.setCustomValidity(
+                        'Por favor, seleccione algunas de estas opciones'
+                      )
+                    }}
                     value={paymentType.replace(/ /g, '-').toLowerCase()}
                     className='mr-2 cursor-pointer accent-accent'
                     id={paymentType.replace(/ /g, '-').toLowerCase()}
