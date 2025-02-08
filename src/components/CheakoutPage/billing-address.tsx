@@ -232,18 +232,6 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
               />
               <FormFieldComponent
                 className='w-full'
-                label='Usuario'
-                placeholder='juanP11...'
-                type='text'
-                control={control}
-                name='userName'
-                isSubmitting={isSubmitting}
-                autocomplete='username'
-              />
-            </div>
-            <div className='mb-4 flex space-x-2.5'>
-              <FormFieldComponent
-                className='w-full'
                 label='Documento de Identidad'
                 placeholder='123456...'
                 type='text'
@@ -252,9 +240,11 @@ const BillingAddress = ({ user }: { user: GET_USER_INFOResult }) => {
                 isSubmitting={isSubmitting}
                 autocomplete='document-id'
               />
+            </div>
+            <div className='mb-4 flex space-x-2.5'>
               <FormFieldComponent
-                className='w-full'
-                label='Nombre de de la Compañía (Opcional)'
+                className='w-1/2'
+                label='Nombre de la Empresa (Opcional)'
                 placeholder='termoga...'
                 type='text'
                 control={control}

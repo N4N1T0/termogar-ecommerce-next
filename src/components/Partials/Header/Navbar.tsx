@@ -79,6 +79,18 @@ const MegaMenuLi = React.memo(
   ({ menu }: { menu: GET_MENU_CATEGORIESResult[number] }) => {
     const hasChildren = menu.children?.length > 0
 
+    const refactoredMenu = React.useMemo(() => {
+      if (menu.name === 'Calentadores' && hasChildren) {
+        return {
+          ...menu,
+          children: [...menu.children].sort((a, b) =>
+            a.name === 'Estancos' ? -1 : b.name === 'Estancos' ? 1 : 0
+          )
+        }
+      }
+      return menu
+    }, [hasChildren, menu])
+
     return (
       <li>
         <span className='font-600 flex cursor-pointer items-center text-sm text-white'>
@@ -99,7 +111,7 @@ const MegaMenuLi = React.memo(
             >
               <div className='flex h-full justify-start pr-3'>
                 <ul className='flex flex-col space-y-2'>
-                  {menu.children.map((child) => (
+                  {refactoredMenu.children.map((child) => (
                     <li key={child.id}>
                       <Link href={`/categorias/${child.slug}`}>
                         <span className='font-400 border-b border-transparent text-gray-500 hover:border-accent hover:text-accent'>

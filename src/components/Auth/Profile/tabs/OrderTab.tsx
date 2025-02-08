@@ -18,7 +18,7 @@ const OrderTab = async ({
             <td className='block whitespace-nowrap py-4 text-center'>Pedido</td>
             <td className='whitespace-nowrap py-4 text-center'>Fecha</td>
             <td className='whitespace-nowrap py-4 text-center'>Estado</td>
-            <td className='whitespace-nowrap py-4 text-center'>Monto</td>
+            <td className='whitespace-nowrap py-4 text-center'>Importe</td>
             <td className='whitespace-nowrap py-4 text-center'>Iva</td>
             <td className='whitespace-nowrap py-4 text-center'>Acción</td>
           </tr>

@@ -127,7 +127,10 @@ const SuccessPage = async ({
 
     await sanityClientWrite.create<Order>({
       _id: Array.isArray(orderId) ? '' : orderId,
-      status: 'procesando',
+      status:
+        gateway === 'transferencia-bancaria-directa'
+          ? 'pendiente'
+          : 'procesando',
       paymentMethod:
         Array.isArray(gateway) || gateway === undefined ? '' : gateway,
       _type: 'order',
