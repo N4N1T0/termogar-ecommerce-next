@@ -6,12 +6,22 @@ import React from 'react'
 // * ASSETS IMPORTS
 import { Minus, Plus, ShoppingBag } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
 import { toast } from 'sonner'
 import { useCart } from '@/stores'
 import { CartItemType } from '@/types'
 
 // * UTILS IMPORTS
 import { cn } from '@/lib/utils'
+import OptionSelect from '../SingleProductPage/option-select'
 
 const AddToCart = ({
   product,
@@ -105,6 +115,61 @@ export const AddToCartMobile = ({ product }: { product: CartItemType }) => {
     >
       <ShoppingBag className='h-10 w-10 cursor-pointer p-2' />
     </Button>
+  )
+}
+
+export const AddToCartVariant = ({
+  product,
+  stock
+}: {
+  product: CartItemType
+  stock: number
+}) => {
+  const { options } = product
+  const [type, setType] = React.useState<string | null>(null)
+
+  const refactoredDatas: CartItemType = {
+    ...product,
+    quantity: 1,
+    selectedOption:
+      type ||
+      (Array.isArray(options?.values) &&
+        options?.values?.length > 0 &&
+        options?.values[0]?.value) ||
+      ''
+  }
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className='w-full rounded-none bg-accent text-gray-100 transition-colors duration-150 ease-in hover:text-gray-900'>
+          <ShoppingBag size={18} />
+          Agregar
+        </Button>
+      </DialogTrigger>
+      <DialogContent className='bg-white'>
+        <DialogHeader className='sr-only'>
+          <DialogTitle>Agregar Variante</DialogTitle>
+          <DialogDescription>
+            Agregar la variante {product.title} al carrito
+          </DialogDescription>
+        </DialogHeader>
+        <h3>{product.title}</h3>
+        <p>
+          Debe agregar una de las siguientes variantes para continuar con la
+          compra
+        </p>
+        {/* OPTIONS */}
+        {options &&
+          Array.isArray(options?.values) &&
+          options?.values?.length > 0 && (
+            <OptionSelect options={options} setType={setType} />
+          )}
+        <DialogFooter>
+          <AddToCart product={refactoredDatas} stock={stock} showQuantity />
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
 

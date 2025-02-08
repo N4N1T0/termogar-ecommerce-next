@@ -39,8 +39,10 @@ const OptionSelect = ({
         {options.name}
       </span>
       <Select onValueChange={(e) => handleValueChange(e)}>
-        <SelectTrigger className='w-full rounded-none'>
-          <SelectValue placeholder={defaultValue || 'Seleccionar Variante'} />
+        <SelectTrigger className='w-full rounded-none uppercase'>
+          <SelectValue
+            placeholder={defaultValue || options.values?.[0].value}
+          />
         </SelectTrigger>
         <SelectContent className='rounded-none bg-white'>
           {options.values?.map(({ value, product }) => (

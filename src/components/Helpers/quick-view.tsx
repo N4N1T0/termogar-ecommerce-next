@@ -160,6 +160,13 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
                   )}
                 </div>
               </div>
+              {/* OPTIONS */}
+              {!hasVariant &&
+                options &&
+                Array.isArray(options?.values) &&
+                options?.values?.length > 0 && (
+                  <OptionSelect options={options} setType={setType} />
+                )}
               {content ? (
                 <section
                   id='content'
@@ -170,13 +177,6 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
               ) : (
                 <p className='text-xl text-gray-700'>{excerpt}</p>
               )}
-              {/* OPTIONS */}
-              {!hasVariant &&
-                options &&
-                Array.isArray(options?.values) &&
-                options?.values?.length > 0 && (
-                  <OptionSelect options={options} setType={setType} />
-                )}
             </div>
             {!hasVariant && (
               <div className='bg-background sticky bottom-0 flex gap-3 border-t p-3 md:p-5'>

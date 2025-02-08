@@ -8,7 +8,10 @@ import Link from 'next/link'
 // * ASSETS IMPORTS
 import { PlaceholderProductCard } from '@/assets'
 import ProductQuickViewDynamic from '@/components/Helpers/quick-view'
-import AddToCart, { AddToCartMobile } from '@/components/Helpers/quantity'
+import AddToCart, {
+  AddToCartMobile,
+  AddToCartVariant
+} from '@/components/Helpers/quantity'
 import { WishlistBtn } from '@/components/Wishlist/wishlist-helpers'
 import { CompaireBtn } from '@/components/Compaire/compaire-helpers'
 
@@ -46,6 +49,13 @@ export default function ProductCardStyleOne<T>({
     () =>
       Array.isArray(options?.values) &&
       options.values.some((option) => option?.product),
+    [options]
+  )
+
+  const hasSimpleVariant = React.useMemo(
+    () =>
+      Array.isArray(options?.values) &&
+      options.values.some((option) => option?.product === null),
     [options]
   )
 
@@ -149,10 +159,17 @@ export default function ProductCardStyleOne<T>({
 
       <div className='product-card-details relative px-5 pb-3 md:px-7 md:pb-5'>
         {/* ADD TO CART */}
-        {!hasVariant && (
+        {!hasVariant && stockQuantity !== null && (
           <div className='absolute left-0 top-40 hidden h-10 w-full px-[30px] transition-all duration-300 ease-in-out group-hover:top-[55px] md:block'>
-            {stockQuantity !== null && stockQuantity > 0 ? (
-              <AddToCart product={refactoredDatas} stock={stockQuantity} />
+            {stockQuantity > 0 ? (
+              hasSimpleVariant ? (
+                <AddToCartVariant
+                  product={refactoredDatas}
+                  stock={stockQuantity}
+                />
+              ) : (
+                <AddToCart product={refactoredDatas} stock={stockQuantity} />
+              )
             ) : (
               <NoStockNotifyMe product={refactoredDatas} />
             )}
