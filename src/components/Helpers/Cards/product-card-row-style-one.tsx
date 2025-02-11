@@ -124,7 +124,7 @@ const ProductCardRowStyleOne = ({
         <div className='flex h-full flex-1 flex-col justify-center'>
           <div>
             <Link href={`/producto/${slug}`} prefetch={true}>
-              <p className='title font-600 text-qblack mb-2 line-clamp-2 text-[13px] leading-[24px] hover:text-blue-600 sm:text-[15px]'>
+              <p className='title font-600 text-qblack mb-2 line-clamp-3 text-[13px] leading-[24px] hover:text-blue-600 sm:text-[15px]'>
                 {title}
               </p>
             </Link>

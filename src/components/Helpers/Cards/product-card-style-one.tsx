@@ -178,7 +178,7 @@ export default function ProductCardStyleOne<T>({
 
         {/* TITLE */}
         <Link href={`/producto/${slug}`} prefetch={true}>
-          <p className='title font-600 mb-1 line-clamp-2 text-[15px] uppercase leading-[24px] text-gray-900 transition-colors duration-150 ease-in-out hover:text-secondary'>
+          <p className='title font-600 mb-1 line-clamp-3 text-[15px] uppercase leading-[24px] text-gray-900 transition-colors duration-150 ease-in-out hover:text-secondary'>
             {title}
           </p>
         </Link>
