@@ -1,15 +1,11 @@
 'use client'
 
 // * NEXT IMPORTS
-import Image from 'next/image'
 import Link from 'next/link'
 
 // * ASSETS IMPORTS
 import { ChevronDownIcon } from 'lucide-react'
-import { PlaceholderHorizontal } from '@/assets'
 import { GET_MENU_CATEGORIESResult } from '@/types/sanity'
-import { PortableText } from 'next-sanity'
-import { portableTextComponents } from '@/components/Helpers/PortableText'
 
 // * UTILS IMPORTS
 import { cn } from '@/lib/utils'
@@ -92,7 +88,7 @@ const MegaMenuLi = React.memo(
     }, [hasChildren, menu])
 
     return (
-      <li>
+      <li className='relative'>
         <span className='font-600 flex cursor-pointer items-center text-sm text-white'>
           <Link href={`/categorias/${menu.slug}`}>{menu.name}</Link>
           {hasChildren && (
@@ -102,9 +98,9 @@ const MegaMenuLi = React.memo(
           )}
         </span>
         {hasChildren && (
-          <div className='sub-menu absolute left-0 top-[60px] z-50 w-full'>
+          <div className='sub-menu absolute left-0 top-[60px] z-50 w-fit'>
             <div
-              className='flex h-[295px] w-full items-center justify-between bg-white p-[30px]'
+              className='flex h-fit w-full items-center justify-between bg-white p-[30px]'
               style={{
                 boxShadow: '0px 15px 50px 0px rgba(0, 0, 0, 0.14)'
               }}
@@ -121,31 +117,6 @@ const MegaMenuLi = React.memo(
                     </li>
                   ))}
                 </ul>
-              </div>
-              {menu.description && (
-                <div className='categories-wrapper prose h-full flex-1 overflow-hidden pr-3'>
-                  <PortableText
-                    value={menu.description}
-                    components={portableTextComponents}
-                  />
-                </div>
-              )}
-              <div className='h-full w-[348px]'>
-                <div className='h-[235px] w-full'>
-                  <Image
-                    src={menu.featuredImage?.url || PlaceholderHorizontal}
-                    alt='Mega Menu'
-                    className='h-full w-full object-contain'
-                    width={348}
-                    height={235}
-                    quality={70}
-                    placeholder='blur'
-                    blurDataURL={
-                      menu.featuredImage?.blur ||
-                      PlaceholderHorizontal.blurDataURL
-                    }
-                  />
-                </div>
               </div>
             </div>
           </div>
