@@ -47,14 +47,9 @@ const CostumerServicePageSlug = async ({
     GET_COSTUMER_SERVICES_PAGE,
     {
       slug: [slug]
-    },
-    {
-      cache: 'force-cache',
-      next: {
-        revalidate: 43200
-      }
     }
   )
+
   if (!searchedPage) {
     log.error(`The page with slug ${slug} was not found`)
     return notFound()

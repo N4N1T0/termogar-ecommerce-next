@@ -26,13 +26,7 @@ const log = new Logger()
 const MATCH_URL_SERVICE = 'servicio-de-atencion-al-cliente'
 const MATCH_URL_PROFILE = 'mi-cuenta'
 
-const CostumerServiceSidebar = async ({
-  params
-}: {
-  params: Promise<{ [key: string]: string | string[] | undefined }>
-}) => {
-  const { slug } = await params
-
+const CostumerServiceSidebar = async () => {
   const searchedPages = await sanityClientRead.fetch(
     GET_COSTUMER_SERVICES_SIDEBAR_MENU
   )
@@ -81,7 +75,7 @@ const CostumerServiceSidebar = async ({
                       <li key={id} className='cursor-pointer'>
                         <Link
                           href={`/servicio-al-cliente/${pageSlug}`}
-                          className={`hover-200 flex items-center text-base underline ${pageSlug === slug ? 'text-accent hover:text-gray-900' : 'text-gray-900 hover:text-accent'}`}
+                          className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
                         >
                           {title}
                         </Link>
@@ -102,7 +96,7 @@ const CostumerServiceSidebar = async ({
                       <li key={id} className='cursor-pointer'>
                         <Link
                           href={`/servicio-al-cliente/${pageSlug}`}
-                          className={`hover-200 flex items-center text-base underline ${pageSlug === slug ? 'text-accent hover:text-gray-900' : 'text-gray-900 hover:text-accent'}`}
+                          className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
                         >
                           {title}
                         </Link>
@@ -122,7 +116,7 @@ const CostumerServiceSidebar = async ({
                     <li key={id}>
                       <Link
                         href={`/servicio-al-cliente/${pageSlug}`}
-                        className={`hover-200 flex items-center underline ${pageSlug === slug ? 'text-accent hover:text-gray-900' : 'text-gray-900 hover:text-accent'}`}
+                        className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
                       >
                         {title}
                       </Link>
@@ -173,7 +167,7 @@ const CostumerServiceSidebar = async ({
                         <li key={id} className='cursor-pointer'>
                           <Link
                             href={`/servicio-al-cliente/${pageSlug}`}
-                            className={`hover-200 flex items-center text-base underline ${pageSlug === slug ? 'text-accent hover:text-gray-900' : 'text-gray-900 hover:text-accent'}`}
+                            className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
                           >
                             {title}
                           </Link>
@@ -194,7 +188,7 @@ const CostumerServiceSidebar = async ({
                         <li key={id} className='cursor-pointer'>
                           <Link
                             href={`/servicio-al-cliente/${pageSlug}`}
-                            className={`hover-200 flex items-center text-base underline ${pageSlug === slug ? 'text-accent hover:text-gray-900' : 'text-gray-900 hover:text-accent'}`}
+                            className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
                           >
                             {title}
                           </Link>
@@ -214,7 +208,7 @@ const CostumerServiceSidebar = async ({
                       <li key={id}>
                         <Link
                           href={`/servicio-al-cliente/${pageSlug}`}
-                          className={`hover-200 flex items-center underline ${pageSlug === slug ? 'text-accent hover:text-gray-900' : 'text-gray-900 hover:text-accent'}`}
+                          className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
                         >
                           {title}
                         </Link>

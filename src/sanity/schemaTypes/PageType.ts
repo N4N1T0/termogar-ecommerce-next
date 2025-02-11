@@ -67,6 +67,9 @@ export const pageType = defineType({
         { type: 'block' },
         { type: 'image' },
         {
+          type: 'link'
+        },
+        {
           type: 'reference',
           to: [{ type: 'externalImage' }],
           name: 'externalImage'
@@ -81,7 +84,7 @@ export const pageType = defineType({
       rows: 3
     }),
     defineField({
-      name: 'featuredMedia',
+      name: 'c',
       title: 'Imagen destacada',
       description: 'La imagen destacada de la página.',
       type: 'image'

@@ -7,13 +7,19 @@ export const link = defineType({
   fields: [
     defineField({
       name: 'link',
-      title: 'URL',
-      type: 'url'
+      title: 'Enlace',
+      type: 'string'
     }),
     defineField({
       name: 'text',
       title: 'Texto',
       type: 'string'
     })
-  ]
+  ],
+  preview: {
+    select: {
+      title: 'text',
+      subtitle: 'link'
+    }
+  }
 })
