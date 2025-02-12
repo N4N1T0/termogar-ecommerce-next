@@ -70,7 +70,6 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
 
     return NextResponse.json({ success: true, message: 'Payment completed' })
   } else {
-    // TODO: Change the email address
     log.error('Payment failed', {
       orderId,
       responseCode,
