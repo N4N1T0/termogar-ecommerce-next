@@ -162,7 +162,6 @@ const jldBlogArticle = (article: GET_BLOG_ARTICLE_BY_SLUGResult) => {
   )
 }
 
-// TODO info
 const jldHomePage = () => {
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -172,7 +171,7 @@ const jldHomePage = () => {
     'logo': smallLogo.src,
     'contactPoint': {
       '@type': 'ContactPoint',
-      'telephone': '+1-800-555-1234',
+      'telephone': '+34667525413',
       'contactType': 'Customer Service'
     }
   }

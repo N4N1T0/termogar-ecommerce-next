@@ -134,7 +134,6 @@ export function ResetPasswordForm({
             ? 'Restableciendo contraseña...'
             : 'Restablecer contraseña'}
         </button>
-        {/* // TODO: Add a link to contact support */}
         <p className='mt-4 text-xs text-gray-600'>
           Si tienes alguna duda, por favor contáctenos:
           <br />
@@ -143,15 +142,15 @@ export function ResetPasswordForm({
             href='tel:+34900123456'
             className='hover-200 underline hover:text-accent'
           >
-            +34 900 123 456
+            +34 667525413
           </Link>
           <br />
           Email:{' '}
           <Link
-            href='mailto:soporte@ejemplo.com'
+            href='mailto:hola@termogar.es'
             className='hover-200 underline hover:text-accent'
           >
-            soporte@ejemplo.com
+            hola@termogar.es
           </Link>
         </p>
       </form>
