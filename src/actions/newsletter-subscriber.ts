@@ -54,7 +54,6 @@ const subscribeToNewsletter = async ({ email }: { email: string }) => {
 
     log.info(`New subscriber created: ${validatedData.data.email}`)
 
-    // TODO: Change the email address
     await resend.emails.send({
       from: 'registro-newsletter@termogar.es',
       bcc: ['hola@termogar.es'],

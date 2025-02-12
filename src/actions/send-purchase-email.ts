@@ -35,7 +35,7 @@ const sendPurchaseEmail = async (
       log.info(
         `Sending order failed email to ${user?.email} with order number ${orderNumber}`
       )
-      // TODO: Change the email address
+
       await resend.emails.send({
         from: 'compra-error@termogar.es',
         bcc: ['hola@termogar.es'],
@@ -59,7 +59,6 @@ const sendPurchaseEmail = async (
         `Sending order completed email to ${user?.email} with order number ${orderNumber}`
       )
 
-      // TODO: Change the email address
       await resend.emails.send({
         from: 'compra-realizada@termogar.es',
         bcc: ['hola@termogar.es'],

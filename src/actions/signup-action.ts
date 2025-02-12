@@ -62,7 +62,6 @@ const signupAction = async (values: SignupSchema) => {
       }
     })
 
-    // TODO: Change the email address
     await resend.emails.send({
       from: 'usario-nuevo@termogar.es',
       bcc: ['hola@termogar.es'],
