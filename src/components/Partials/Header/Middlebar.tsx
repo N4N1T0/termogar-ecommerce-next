@@ -5,11 +5,11 @@ import Image from 'next/image'
 // * ASSETS IMPORTS
 import CartPopup from '@/components/Cart/cart-popup'
 import SearchBox from '@/components/Helpers/search-box'
+import UserPopup from '@/components/Partials/Header/user-popup'
 import { WishlistLink } from '@/components/Wishlist/wishlist-helpers'
 import { CompaireLink } from '@/components/Compaire/compaire-helpers'
 import { CartLink } from '@/components/Cart/cart-helpers'
 import { bigLogo, smallLogo } from '@/assets'
-import UserPopup from '@/components/Partials/Header/user-popup'
 
 // * UTILS IMPORTS
 import { GET_MENU_CATEGORIESResult } from '@/types/sanity'

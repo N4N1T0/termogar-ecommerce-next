@@ -61,7 +61,7 @@ const paymentLogic = async (
         DS_MERCHANT_ORDER: orderId,
         DS_MERCHANT_AMOUNT: redsysAmount,
         DS_MERCHANT_CURRENCY: redsysCurrency,
-        DS_MERCHANT_MERCHANTURL: templateRedirectUrl('api/notifications'),
+        DS_MERCHANT_MERCHANTURL: templateRedirectUrl('api/redsys'),
         DS_MERCHANT_URLOK: templateRedirectUrl('exito'),
         DS_MERCHANT_URLKO: templateRedirectUrl('fallo'),
         DS_MERCHANT_TRANSACTIONDATE: new Date().toISOString(),

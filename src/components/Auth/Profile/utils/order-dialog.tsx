@@ -31,10 +31,10 @@ const OrderDialog = ({
     totalAmount,
     products,
     shippingAddress,
-    currierCode,
     expectedDeliveryDate,
     paymentMethod,
-    purchaseDate
+    purchaseDate,
+    currierLink
   } = orderInfo
 
   return (
@@ -94,12 +94,11 @@ const OrderDialog = ({
               </h3>
               <dl className='flex w-full items-center justify-between'>
                 <div className='grid grid-cols-2 gap-2 text-sm'>
-                  {/* TODO: Add tracking link */}
                   <dt className='font-medium'>Link de Seguimiento:</dt>
-                  {currierCode && (
+                  {currierLink && (
                     <dd>
                       <Link
-                        href={currierCode}
+                        href={currierLink}
                         className='underline hover:text-accent'
                         target='_blank'
                       >
