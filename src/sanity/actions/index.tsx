@@ -13,6 +13,7 @@ import { DocumentActionComponent, DocumentActionsContext } from 'sanity'
 import { Product, ProductVariant } from '@/types/sanity'
 import { uuid } from '@sanity/uuid'
 import { base64ToBlob } from '@/lib/utils'
+import { construirEtiqueta8 } from '@/actions/tipsa-logic'
 
 export function setParent(
   context: DocumentActionsContext
@@ -203,25 +204,15 @@ export function makeCurrierTag(
             toast.error('Error: No se encontró el Albaran')
             return
           } else {
-            const response = await fetch(
-              `${process.env.NEXT_PUBLIC_URL}/api/tipsa`,
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ strAlbaran: order.currierCode })
-              }
-            )
+            const { response } = await construirEtiqueta8(order.currierCode)
+            console.log('🚀 ~ onHandle: ~ response:', response)
 
-            const { response: etiqueta } = await response.json()
-
-            if (!etiqueta) {
+            if (!response) {
               toast.error('Error: No se pudo construir la etiqueta')
               return
             }
 
-            const pdfBlob = base64ToBlob(etiqueta)
+            const pdfBlob = base64ToBlob(response as unknown as string)
 
             const file = await client.assets.upload('file', pdfBlob, {
               filename: order.currierCode + '.pdf',
