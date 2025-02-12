@@ -237,8 +237,8 @@ export const GET_BRANDS = defineQuery(`*[_type=='brand']{
   title
 }`)
 
-export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
-  defineQuery(`*[_type=='product' && status=='publish' && (title match $search || excerpt match $search) && count((productCategories[]->slug.current)[@ in $category]) > 0]{
+export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ORAMA =
+  defineQuery(`*[_type=='product' && status=='publish']{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -246,14 +246,16 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
   },
   title,
   "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
   excerpt,
   "categories": productCategories[]->{
     "id": _id,
     name,
     "slug": slug.current
-  },
-  "brand": *[_type == 'brand' && ^.title match title] {
-    title
   },
   content,
   price,
@@ -264,17 +266,6 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY =
     name,
     "slug": slug.current
   },
-  "options": options{
-      name,
-      "values": values[]{
-        value,
-        "product": reference->{
-          "slug": slug.current,
-          price,
-          sale
-        }
-      }
-    },
  "otherImages": relatedImages[].asset->{
   "url": url,
   "blur": metadata.lqip
@@ -368,7 +359,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY =
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
-  defineQuery(`*[_type=='product' && status=='publish' && count((productCategories[]->name)[@ in $type]) > 0][0...8]{
+  defineQuery(`*[_type=='product' && status=='publish' && count((productCategories[]->name)[@ in $type]) > 0][0...8] | order(lower(title) asc){
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -404,7 +395,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_BY_IDS =
-  defineQuery(`*[_type=='product' && status=='publish' && _id in $ids][0...4]{
+  defineQuery(`*[_type=='product' && status=='publish' && _id in $ids][0...4] | order(lower(title) asc) {
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -447,7 +438,7 @@ export const GET_BRANDS_AND_PRODUCTS =
       "blur": productListBanner.banner.asset->metadata.lqip,
       "link": productListBanner.link
   },
-  "products": *[_type=='product' && status=='publish' && title match ^.title]{
+  "products": *[_type=='product' && status=='publish' && title match ^.title] | order(lower(title) asc) {
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -485,7 +476,7 @@ export const GET_BRANDS_AND_PRODUCTS =
 
 export const GET_PRODUCTS_AND_BRAND_FOR_FILTERING =
   defineQuery(`*[_type=='brand' && link.current == $slug][0] {
-  "products": *[_type=='product' && status=='publish' && title match ^.title]{
+  "products": *[_type=='product' && status=='publish' && title match ^.title] | order(lower(title) asc) {
      "categories": productCategories[]->{
     "id": _id,
     name,
@@ -521,7 +512,7 @@ export const GET_CATEGORY_AND_PRODUCTS =
     name, 
     link
   },
-  "products": *[_type == "product" && status == "publish" && references(^._id)]{
+  "products": *[_type == "product" && status == "publish" && references(^._id)] | order(lower(title) asc) {
     "id": _id,
     "featuredMedia": featuredMedia.asset->{
       "url": url,
@@ -630,7 +621,7 @@ export const GET_PRODUCTS_BY_OFFER = defineQuery(`{
   }}`)
 
 export const GET_PRODUCTS_WITH_OFFER_FOR_FILTERING = defineQuery(`{
-  "products": *[_type=='product' && status=='publish' && defined(sale)][0...24]{
+  "products": *[_type=='product' && status=='publish' && defined(sale)][0...24] | order(lower(title) asc) {
      "categories": productCategories[]->{
     "id": _id,
     name,
@@ -661,7 +652,7 @@ export const GET_PRODUCTS_AND_CATEGORIES_FOR_FILTERING =
     name, 
     "slug": slug.current, 
    },
-  "products": *[_type=='product' && status=='publish' && references(^._id)]{
+  "products": *[_type=='product' && status=='publish' && references(^._id)] | order(lower(title) asc){
      "categories": productCategories[]->{
     "id": _id,
     name,
@@ -684,7 +675,7 @@ export const GET_TAG_AND_PRODUCTS =
       "blur": productListBanner.banner.asset->metadata.lqip,
       "link": productListBanner.link
   },
-  "products": *[_type=='product' && status=='publish' && references(^._id)]{
+  "products": *[_type=='product' && status=='publish' && references(^._id)] | order(lower(title) asc){
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -989,6 +980,7 @@ export const GET_ORDERS_BY_USER_ID =
   "id": _id,
   purchaseDate,
   currierCode,
+  currierLink,
   status,
   expectedDeliveryDate,
   paymentMethod,

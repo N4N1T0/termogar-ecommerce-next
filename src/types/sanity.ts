@@ -2974,7 +2974,7 @@ export type GET_USER_FOR_AUTHResult = {
 export type GET_ORDERS_BY_USER_IDResult = Array<{
   id: string
   purchaseDate: string | null
-  currierCode: string | null
+  currierLink: string | null
   status:
     | 'cancelado'
     | 'completado'
