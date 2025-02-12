@@ -4,16 +4,15 @@ import { Metadata } from 'next'
 // * ASSETS IMPORTS
 import ProductCardStyleOne from '@/components/Helpers/Cards/product-card-style-one'
 import PageTitle from '@/components/Helpers/PageTitle'
-import { sanityClientRead } from '@/sanity/lib/client'
-import {
-  GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY,
-  GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY
-} from '@/sanity/lib/queries'
-import { GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult } from '@/types/sanity'
 import EmptySearch from '@/components/Shared/empty-search'
+
+// * UTILS IMPORTS
+import { GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult } from '@/types/sanity'
 import { Logger } from 'next-axiom'
+import { oramaClient } from '@/lib/clients'
 
 const log = new Logger()
+
 export async function generateMetadata({
   searchParams
 }: {
@@ -33,31 +32,19 @@ const SearchPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { search, category } = await searchParams
-  let searchedProducts: GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult | null =
-    null
 
-  if (!category || Array.isArray(category)) {
-    searchedProducts = await sanityClientRead.fetch(
-      GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORY,
-      {
-        search
-      }
-    )
-  } else {
-    searchedProducts = await sanityClientRead.fetch(
-      GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITH_CATEGORY,
-      {
-        category: [category],
-        search
-      }
-    )
+  const oramaResponse = await oramaClient.search({
+    term: search as string,
+    mode: 'vector'
+  })
+
+  console.log('🚀 ~ searchedProducts:', oramaResponse)
+
+  if (!oramaResponse) {
+    log.error('Products not found', { oramaResponse })
   }
 
-  if (!searchedProducts) {
-    log.error('Products not found', { searchedProducts })
-  }
-
-  if (searchedProducts?.length === 0) {
+  if (oramaResponse?.hits.length === 0) {
     return (
       <section id='search-empty' className='cart-page-wrapper mt-10 w-full'>
         <div className='container-x mx-auto'>
@@ -92,12 +79,14 @@ const SearchPage = async ({
         id='products'
         className='container-x mx-auto grid grid-cols-2 gap-5 p-5 lg:grid-cols-3 xl:grid-cols-4'
       >
-        {searchedProducts?.map((product, index) => (
-          <div data-aos='fade-up' key={product?.id} className='item'>
+        {oramaResponse?.hits?.map(({ document, id }, index) => (
+          <div data-aos='fade-up' key={id} className='item'>
             <ProductCardStyleOne<
               GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult[number]
             >
-              datas={product}
+              datas={
+                document as unknown as GET_CARD_STYLE_ONE_PRODUCTS_BY_SEARCH_WITHOUT_CATEGORYResult[number]
+              }
               priority={index < 6}
             />
           </div>

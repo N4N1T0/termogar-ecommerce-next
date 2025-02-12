@@ -1,3 +1,4 @@
+import { OramaClient } from '@oramacloud/client'
 import WooCommerceRestApi from '@woocommerce/woocommerce-rest-api'
 import { createRedsysAPI, SANDBOX_URLS } from 'redsys-easy'
 import { Resend } from 'resend'
@@ -15,3 +16,8 @@ export const { createRedirectForm, processRestNotification } = createRedsysAPI({
 })
 
 export const resend = new Resend(process.env.RESEND_API_KEY)
+
+export const oramaClient = new OramaClient({
+  endpoint: 'https://cloud.orama.run/v1/indexes/products-s2tig7',
+  api_key: process.env.ORAMA_PUBLIC_API_KEY!
+})
