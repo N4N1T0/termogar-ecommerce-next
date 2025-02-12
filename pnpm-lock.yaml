@@ -11,6 +11,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.10.0
         version: 3.10.0(react-hook-form@7.54.2(react@19.0.0))
+      '@oramacloud/client':
+        specifier: ^2.1.4
+        version: 2.1.4
       '@portabletext/block-tools':
         specifier: ^1.1.4
         version: 1.1.4(@sanity/types@3.72.1(@types/react@19.0.8)(debug@4.4.0))(@types/react@19.0.8)
@@ -1697,6 +1700,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@noble/hashes@1.7.1':
+    resolution: {integrity: sha512-B8XBPsn4vT/KJAGqDzbwztd+6Yte3P4V7iafm24bxgDe/mlRuK6xmWPuCNrKt2vDafZ8MfJLlchDG/vYafQEjQ==}
+    engines: {node: ^14.21.3 || >=16}
+
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -1773,6 +1780,16 @@ packages:
   '@optimize-lodash/transform@3.0.4':
     resolution: {integrity: sha512-pEzPjvEnWHQCTIv8j/6IYdYBJQUL/Z9Vo0SB2yr5GZNgf0OAznapjilOb7JY9dBEgXtbgtTgSpANZAiipsjhhw==}
     engines: {node: '>= 12'}
+
+  '@orama/cuid2@2.2.3':
+    resolution: {integrity: sha512-Lcak3chblMejdlSHgYU2lS2cdOhDpU6vkfIJH4m+YKvqQyLqs1bB8+w6NT1MG5bO12NUK2GFc34Mn2xshMIQ1g==}
+
+  '@orama/orama@3.0.6':
+    resolution: {integrity: sha512-wWY0WrvoZnb6maHtj3BkVrlpBBaWheqjgfRIRw+4OYPHVDDZduYGRfNBSRAHmvqdzs+7dex0Oqf43tIzJRb7Vw==}
+    engines: {node: '>= 16.0.0'}
+
+  '@oramacloud/client@2.1.4':
+    resolution: {integrity: sha512-uNPFs4wq/iOPbggCwTkVNbIr64Vfd7ZS/h+cricXVnzXWocjDTfJ3wLL4lr0qiSu41g8z+eCAGBqJ30RO2O4AA==}
 
   '@panva/hkdf@1.2.1':
     resolution: {integrity: sha512-6oclG6Y3PiDFcoyk8srjLfVKyMfVCKJ27JwNPViuXziFpmdz+MZnZN/aKY0JGXgYuO/VghU0jcOAZgWXZ1Dmrw==}
@@ -8749,6 +8766,8 @@ snapshots:
   '@next/swc-win32-x64-msvc@15.1.6':
     optional: true
 
+  '@noble/hashes@1.7.1': {}
+
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -8833,6 +8852,18 @@ snapshots:
     dependencies:
       estree-walker: 2.0.2
       magic-string: 0.30.17
+
+  '@orama/cuid2@2.2.3':
+    dependencies:
+      '@noble/hashes': 1.7.1
+
+  '@orama/orama@3.0.6': {}
+
+  '@oramacloud/client@2.1.4':
+    dependencies:
+      '@orama/cuid2': 2.2.3
+      '@orama/orama': 3.0.6
+      lodash: 4.17.21
 
   '@panva/hkdf@1.2.1': {}
 

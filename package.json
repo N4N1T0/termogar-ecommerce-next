@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
+    "@oramacloud/client": "^2.1.4",
     "@portabletext/block-tools": "^1.1.4",
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-avatar": "^1.1.2",

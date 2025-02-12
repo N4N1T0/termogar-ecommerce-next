@@ -44,11 +44,21 @@
 - [x] Update send forget password
 - [x] Delete unused components
 - [x] Test the TIPSA & and make it a serve action
+- [x] improve groq queries
+- [x] Add a orama api
+- [x] Integrate orama to the search page
+- [x] Delete search queries
+- [x] add order products
+- [x] Improve bundle size (delete unused packages && migration packages)
+- [x] delete tipsa route make an action
 - [ ] Look for the TODOS
-- [ ] Improve bundle size (delete unused packages && migration packages)
-- [ ] improve groq queries
-- [ ] delete tipsa route
 
 ## MAINTENANCE
 
 - [ ] Sanity Webhook for the notify
+
+## ORAMA AI CHAT
+
+- [ ] Add Pages WP
+- [ ] Add Pages Legal
+- [ ] Add orama box chat
