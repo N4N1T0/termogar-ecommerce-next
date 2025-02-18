@@ -23,10 +23,18 @@ export const pageType = defineType({
       }
     }),
     defineField({
-      name: 'link',
-      title: 'Enlace Principal',
-      description: 'El enlace de la página.',
-      type: 'slug'
+      name: 'category',
+      title: 'Categoria Principal',
+      description: 'Categoria de la página.',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Principal', value: 'main' },
+          { title: 'Gestion de Pedidos', value: 'gestion-de-pedidos' },
+          { title: 'Nosotros', value: 'nosotros' },
+          { title: 'Terminos Legales', value: 'terminos-legales' }
+        ]
+      }
     }),
     defineField({
       name: 'date',

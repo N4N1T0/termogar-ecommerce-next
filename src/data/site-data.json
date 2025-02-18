@@ -51,19 +51,24 @@
     ],
     "Atención al Cliente": [
       {
-        "id": "service",
+        "id": "principal",
         "name": "Servicio de atención al cliente",
         "slug": "servicio-al-cliente"
       },
       {
         "id": "delivery",
-        "name": "Plazos y horarios de entrega",
-        "slug": "servicio-al-cliente/plazos-horarios-entrega"
+        "name": "Como realizar tu pedido",
+        "slug": "servicio-al-cliente/como-realizar-tu-pedido"
       },
       {
-        "id": "tracking",
-        "name": "Seguimiento de pedidos",
-        "slug": "servicio-al-cliente/seguimiento-de-pedidos"
+        "id": "contact",
+        "name": "Contacto",
+        "slug": "servicio-al-cliente/contacto"
+      },
+      {
+        "id": "about",
+        "name": "Acerca de la empresa",
+        "slug": "servicio-al-cliente/acerca-de-la-empresa"
       }
     ],
     "Paginas Legales": [

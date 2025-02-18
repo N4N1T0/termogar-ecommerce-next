@@ -14,12 +14,13 @@ import { portableTextComponents } from '@/components/Helpers/PortableText'
 import { Logger } from 'next-axiom'
 
 const log = new Logger()
+
 // * METADATA
 export async function generateMetadata(): Promise<Metadata> {
   const searchedPage = await sanityClientRead.fetch(
     GET_COSTUMER_SERVICES_PAGE,
     {
-      slug: ['servicio-de-atencion-al-cliente']
+      slug: ['pagina-principal-de-atencion-al-cliente']
     }
   )
 
@@ -37,7 +38,7 @@ const CostumerServicePageIndex = async () => {
   const searchedPage = await sanityClientRead.fetch(
     GET_COSTUMER_SERVICES_PAGE,
     {
-      slug: ['servicio-de-atencion-al-cliente']
+      slug: ['pagina-principal-de-atencion-al-cliente']
     },
     {
       cache: 'force-cache',
@@ -49,7 +50,7 @@ const CostumerServicePageIndex = async () => {
 
   if (!searchedPage) {
     log.error(
-      `The page with slug 'servicio-de-atencion-al-cliente' was not found`
+      `The page with slug 'pagina-principal-de-atencion-al-cliente' was not found`
     )
     return notFound()
   }

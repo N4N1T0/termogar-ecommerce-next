@@ -1217,11 +1217,11 @@ export type GET_ALL_TAGSResult = Array<{
   slug: string | null
 }>
 // Variable: GET_COSTUMER_SERVICES_SIDEBAR_MENU
-// Query: *[_type =='page' && status == 'publish']{  "id": _id,  "slug": slug.current,  "link": link.current,  title,}
+// Query: *[_type =='page' && status == 'publish']{  "id": _id,  "slug": slug.current,  category,  title}
 export type GET_COSTUMER_SERVICES_SIDEBAR_MENUResult = Array<{
   id: string
   slug: string | null
-  link: string | null
+  category: string | null
   title: string | null
 }>
 // Variable: GET_COSTUMER_SERVICES_PAGE
@@ -3043,7 +3043,7 @@ declare module '@sanity/client' {
     '*[_type ==\'homePage\'][0]{\n mainBanner[]{\n    "url": image.asset->url,\n    "blur": image.asset->metadata.lqip,\n     "link": link.current\n  },\n  "mainCategory": mainCategory->{\n  name,\n  "slug": slug.current\n  },\n   "offer": offer{\n    date,\n    active,\n    "media": {\n      "url": banner.asset->url,\n      "blur": banner.asset->metadata.lqip\n    }\n },\n    secondaryCategory->{\n      name,\n      "slug": slug.current\n    },\n    "ads": ads[]{\n    "url": image.asset->url,\n    "blur": image.asset->metadata.lqip,\n    link\n  },\n"tertiaryCategory": tertiaryCategory->{\n  name,\n  "slug": slug.current\n  },\nyoutubeVideos[]{\n      videoId,\n      "id": _key,\n      title\n  }\n}': GET_MAIN_PAGEResult
     '*[_type==\'productCategory\' && main == true] | order(name asc){\n  "id": _id,\n  name, \n  description, \n  "slug": slug.current, \n  "children": *[_type==\'productCategory\' && references(^._id)]\n   {\n      "id": _id,\n    name, \n    "slug": slug.current, \n   },\n  "featuredImage": *[_type==\'product\' && references(^._id)][0]{\n    "url":featuredMedia.asset->url,\n      "blur":featuredMedia.asset->metadata.lqip\n  }\n  }': GET_MENU_CATEGORIESResult
     '*[_type==\'productTag\'] | order(name asc){\n  "id": _id,\n  name,\n"slug": slug.current\n}': GET_ALL_TAGSResult
-    '*[_type ==\'page\' && status == \'publish\']{\n  "id": _id,\n  "slug": slug.current,\n  "link": link.current,\n  title,\n}': GET_COSTUMER_SERVICES_SIDEBAR_MENUResult
+    '*[_type ==\'page\' && status == \'publish\']{\n  "id": _id,\n  "slug": slug.current,\n  category,\n  title\n}': GET_COSTUMER_SERVICES_SIDEBAR_MENUResult
     "*[_type =='page' && status == 'publish' && slug.current in $slug][0]{\n  title,\n  excerpt,\n  content\n}": GET_COSTUMER_SERVICES_PAGEResult
     '*[_type ==\'post\' && status == \'publish\' && count((categories[]->name)[@ in $type]) > 0] | order(_id) [0...12] {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POSTResult
     '*[_type ==\'post\' && status == \'publish\' && count((tags[]->slug.current)[@ in $slug]) > 0] | order(_id) [0...12] {\n    "id": _id,\n  "featuredMedia": {\n    "url": featuredMedia.asset -> url,\n    "blur": featuredMedia.asset -> metadata.lqip\n  },\n  excerpt,\n  author->{\n    name,\n    "avatar": {\n      "url": avatar.asset -> url,\n    "blur": avatar.asset -> metadata.lqip\n    }\n  },\n  "slug": slug.current,\n  categories[]->{\n    name,\n    "id": _id,\n  },\n    title,\n    date\n  }': GET_CARD_BLOG_POST_BY_TAGSResult

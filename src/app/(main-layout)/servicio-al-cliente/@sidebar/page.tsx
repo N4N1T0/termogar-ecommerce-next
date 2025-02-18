@@ -23,8 +23,10 @@ import { GET_COSTUMER_SERVICES_SIDEBAR_MENU } from '@/sanity/lib/queries'
 import { Logger } from 'next-axiom'
 
 const log = new Logger()
-const MATCH_URL_SERVICE = 'servicio-de-atencion-al-cliente'
-const MATCH_URL_PROFILE = 'mi-cuenta'
+
+const MATCH_URL_SERVICE = 'gestion-de-pedidos'
+const MATCH_URL_PROFILE = 'nosotros'
+const MATCH_URL_TERMS = 'terminos-legales'
 
 const CostumerServiceSidebar = async () => {
   const searchedPages = await sanityClientRead.fetch(
@@ -35,47 +37,45 @@ const CostumerServiceSidebar = async () => {
     log.error('The sidebar menu was not found')
   }
 
-  const costumerServicesPages = searchedPages?.filter((page) => {
-    return page.link?.split('/').includes(MATCH_URL_SERVICE)
-  })
+  // Group pages by category
+  const gestionDePedidosPages = searchedPages?.filter((page) =>
+    page.category?.split('/').includes(MATCH_URL_SERVICE)
+  )
 
-  const profileServicesPages = searchedPages?.filter((page) => {
-    return page.link?.split('/').includes(MATCH_URL_PROFILE)
-  })
+  const nosotrosPages = searchedPages?.filter((page) =>
+    page.category?.split('/').includes(MATCH_URL_PROFILE)
+  )
 
-  const otherPages = searchedPages?.filter((page) => {
-    return (
-      !page.link?.split('/').includes(MATCH_URL_SERVICE) &&
-      !page.link?.split('/').includes(MATCH_URL_PROFILE)
-    )
-  })
+  const terminosLegalesPages = searchedPages?.filter((page) =>
+    page.category?.split('/').includes(MATCH_URL_TERMS)
+  )
 
   return (
     <>
       <aside className='sticky top-0 m-4 hidden h-screen w-72 divide-y-[1px] overflow-y-auto text-balance bg-white px-4 pt-10 md:block'>
         <nav aria-label='Customer Service Navigation'>
           <h2 className='mb-4 text-xl font-semibold uppercase text-accent'>
-            Servicio de Atencion al cliente
+            Servicio de Atención al Cliente
           </h2>
 
           <Accordion
             type='single'
             collapsible
             className='mb-4'
-            defaultValue='links-de-ayuda'
+            defaultValue='gestion-de-pedidos'
           >
-            <AccordionItem value='cliente'>
+            <AccordionItem value='gestion-de-pedidos'>
               <AccordionTrigger className='text-lg font-bold'>
-                Cliente
+                Gestión de Pedidos
               </AccordionTrigger>
               <AccordionContent>
                 <ul className='space-y-2'>
-                  {costumerServicesPages?.map(
+                  {gestionDePedidosPages?.map(
                     ({ id, slug: pageSlug, title }) => (
-                      <li key={id} className='cursor-pointer'>
+                      <li key={id}>
                         <Link
                           href={`/servicio-al-cliente/${pageSlug}`}
-                          className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
+                          className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
                         >
                           {title}
                         </Link>
@@ -85,43 +85,45 @@ const CostumerServiceSidebar = async () => {
                 </ul>
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value='mi-cuenta'>
+
+            <AccordionItem value='nosotros'>
               <AccordionTrigger className='text-lg font-bold'>
-                Mi Cuenta
+                Nosotros
               </AccordionTrigger>
               <AccordionContent>
                 <ul className='space-y-2'>
-                  {profileServicesPages?.map(
-                    ({ id, slug: pageSlug, title }) => (
-                      <li key={id} className='cursor-pointer'>
-                        <Link
-                          href={`/servicio-al-cliente/${pageSlug}`}
-                          className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
-                        >
-                          {title}
-                        </Link>
-                      </li>
-                    )
-                  )}
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value='links-de-ayuda'>
-              <AccordionTrigger className='text-lg font-bold'>
-                Links de Ayuda
-              </AccordionTrigger>
-              <AccordionContent>
-                <ul className='space-y-2'>
-                  {otherPages?.map(({ id, slug: pageSlug, title }) => (
+                  {nosotrosPages?.map(({ id, slug: pageSlug, title }) => (
                     <li key={id}>
                       <Link
                         href={`/servicio-al-cliente/${pageSlug}`}
-                        className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
+                        className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
                       >
                         {title}
                       </Link>
                     </li>
                   ))}
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value='terminos-legales'>
+              <AccordionTrigger className='text-lg font-bold'>
+                Términos Legales
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className='space-y-2'>
+                  {terminosLegalesPages?.map(
+                    ({ id, slug: pageSlug, title }) => (
+                      <li key={id}>
+                        <Link
+                          href={`/servicio-al-cliente/${pageSlug}`}
+                          className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
+                        >
+                          {title}
+                        </Link>
+                      </li>
+                    )
+                  )}
                 </ul>
               </AccordionContent>
             </AccordionItem>
@@ -147,27 +149,27 @@ const CostumerServiceSidebar = async () => {
           </SheetHeader>
           <nav aria-label='Customer Service Navigation'>
             <h2 className='mb-4 text-xl font-semibold uppercase text-accent'>
-              Servicio de Atencion al cliente
+              Servicio de Atención al Cliente
             </h2>
 
             <Accordion
               type='single'
               collapsible
               className='mb-4'
-              defaultValue='links-de-ayuda'
+              defaultValue='gestion-de-pedidos'
             >
-              <AccordionItem value='cliente'>
+              <AccordionItem value='gestion-de-pedidos'>
                 <AccordionTrigger className='text-lg font-bold'>
-                  Cliente
+                  Gestión de Pedidos
                 </AccordionTrigger>
                 <AccordionContent>
                   <ul className='space-y-2'>
-                    {costumerServicesPages?.map(
+                    {gestionDePedidosPages?.map(
                       ({ id, slug: pageSlug, title }) => (
-                        <li key={id} className='cursor-pointer'>
+                        <li key={id}>
                           <Link
                             href={`/servicio-al-cliente/${pageSlug}`}
-                            className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
+                            className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
                           >
                             {title}
                           </Link>
@@ -177,43 +179,45 @@ const CostumerServiceSidebar = async () => {
                   </ul>
                 </AccordionContent>
               </AccordionItem>
-              <AccordionItem value='mi-cuenta'>
+
+              <AccordionItem value='nosotros'>
                 <AccordionTrigger className='text-lg font-bold'>
-                  Mi Cuenta
+                  Nosotros
                 </AccordionTrigger>
                 <AccordionContent>
                   <ul className='space-y-2'>
-                    {profileServicesPages?.map(
-                      ({ id, slug: pageSlug, title }) => (
-                        <li key={id} className='cursor-pointer'>
-                          <Link
-                            href={`/servicio-al-cliente/${pageSlug}`}
-                            className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
-                          >
-                            {title}
-                          </Link>
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value='links-de-ayuda'>
-                <AccordionTrigger className='text-lg font-bold'>
-                  Links de Ayuda
-                </AccordionTrigger>
-                <AccordionContent>
-                  <ul className='space-y-2'>
-                    {otherPages?.map(({ id, slug: pageSlug, title }) => (
+                    {nosotrosPages?.map(({ id, slug: pageSlug, title }) => (
                       <li key={id}>
                         <Link
                           href={`/servicio-al-cliente/${pageSlug}`}
-                          className='hover-200 flex items-center text-base text-gray-900 underline hover:text-gray-900'
+                          className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
                         >
                           {title}
                         </Link>
                       </li>
                     ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value='terminos-legales'>
+                <AccordionTrigger className='text-lg font-bold'>
+                  Términos Legales
+                </AccordionTrigger>
+                <AccordionContent>
+                  <ul className='space-y-2'>
+                    {terminosLegalesPages?.map(
+                      ({ id, slug: pageSlug, title }) => (
+                        <li key={id}>
+                          <Link
+                            href={`/servicio-al-cliente/${pageSlug}`}
+                            className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
+                          >
+                            {title}
+                          </Link>
+                        </li>
+                      )
+                    )}
                   </ul>
                 </AccordionContent>
               </AccordionItem>
