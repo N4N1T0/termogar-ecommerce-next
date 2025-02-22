@@ -92,7 +92,7 @@ export default function ProductCardStyleOne<T>({
 
   return (
     <div
-      className='product-card-one group relative h-full w-full overflow-hidden bg-white'
+      className='product-card-one group relative flex h-full w-full flex-col justify-between overflow-hidden bg-white'
       style={{ boxShadow: '0px 15px 64px 0px rgba(0, 0, 0, 0.05)' }}
     >
       {/* Image */}
