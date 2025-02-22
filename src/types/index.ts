@@ -3,6 +3,7 @@ import {
   Address,
   ExternalImage,
   GET_CARD_BLOG_POSTResult,
+  GET_MENU_CATEGORIESResult,
   GET_USER_INFOResult,
   internalGroqTypeReferenceTo,
   Order,
@@ -40,8 +41,7 @@ export interface ViewMoreTitleProps {
 }
 
 export interface CategoryCardProps {
-  background?: string
-  childrenCategories: string[]
+  category: GET_MENU_CATEGORIESResult[number]
 }
 
 export interface BrandSectionProps {
