@@ -36,7 +36,7 @@ export const CompletedPurchase = ({
 
   return (
     <TailwindWrapper previewText={previewText}>
-      <Heading className='mb-6 text-center text-4xl font-bold text-accent'>
+      <Heading className='mb-6 text-center text-3xl font-bold text-accent'>
         Confirmación de Pago via{' '}
         <span className='font-bold uppercase'>{gateway}</span>
       </Heading>
@@ -47,10 +47,11 @@ export const CompletedPurchase = ({
         Gracias por tu compra. Estamos emocionados de confirmar que tu pedido ha
         sido procesado con éxito.
       </Text>
-      <div className='flex w-full gap-3'>
+
+      <div className='flex w-full gap-3 px-3'>
         {/* ORDER SUMMARY */}
         <Section
-          className='mb-6 border p-6'
+          className='mb-6 w-full flex-1 border p-6'
           style={{ border: '1px solid #e5e7eb' }}
         >
           <Text className='mb-4 text-xl text-accent'>
@@ -88,7 +89,7 @@ export const CompletedPurchase = ({
 
         {/* New Section for billing Information */}
         <Section
-          className='mb-6 h-full p-6'
+          className='mb-6 h-full w-full flex-1 p-6'
           style={{ border: '1px solid #e5e7eb' }}
         >
           <Text className='mb-4 text-xl text-accent'>
