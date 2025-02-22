@@ -74,7 +74,7 @@ const InfoRow = () => {
         </svg>
       ),
       title: 'Devolución Gratis',
-      description: 'Devolución dentro de 30 días'
+      description: 'Devolución dentro de 15 días'
     },
     {
       svg: (
