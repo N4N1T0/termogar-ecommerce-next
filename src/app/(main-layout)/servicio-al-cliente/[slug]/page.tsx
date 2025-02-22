@@ -14,6 +14,7 @@ import { portableTextComponents } from '@/components/Helpers/PortableText'
 import { Logger } from 'next-axiom'
 
 const log = new Logger()
+
 // * METADATA
 export async function generateMetadata({
   params

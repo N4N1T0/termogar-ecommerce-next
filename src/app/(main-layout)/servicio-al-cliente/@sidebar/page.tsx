@@ -14,7 +14,8 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger
+  SheetTrigger,
+  SheetClose
 } from '@/components/ui/sheet'
 
 // * UTILS IMPORTS
@@ -167,12 +168,14 @@ const CostumerServiceSidebar = async () => {
                     {gestionDePedidosPages?.map(
                       ({ id, slug: pageSlug, title }) => (
                         <li key={id}>
-                          <Link
-                            href={`/servicio-al-cliente/${pageSlug}`}
-                            className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
-                          >
-                            {title}
-                          </Link>
+                          <SheetClose asChild>
+                            <Link
+                              href={`/servicio-al-cliente/${pageSlug}`}
+                              className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
+                            >
+                              {title}
+                            </Link>
+                          </SheetClose>
                         </li>
                       )
                     )}
@@ -188,12 +191,14 @@ const CostumerServiceSidebar = async () => {
                   <ul className='space-y-2'>
                     {nosotrosPages?.map(({ id, slug: pageSlug, title }) => (
                       <li key={id}>
-                        <Link
-                          href={`/servicio-al-cliente/${pageSlug}`}
-                          className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
-                        >
-                          {title}
-                        </Link>
+                        <SheetClose asChild>
+                          <Link
+                            href={`/servicio-al-cliente/${pageSlug}`}
+                            className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
+                          >
+                            {title}
+                          </Link>
+                        </SheetClose>
                       </li>
                     ))}
                   </ul>
@@ -209,12 +214,14 @@ const CostumerServiceSidebar = async () => {
                     {terminosLegalesPages?.map(
                       ({ id, slug: pageSlug, title }) => (
                         <li key={id}>
-                          <Link
-                            href={`/servicio-al-cliente/${pageSlug}`}
-                            className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
-                          >
-                            {title}
-                          </Link>
+                          <SheetClose asChild>
+                            <Link
+                              href={`/servicio-al-cliente/${pageSlug}`}
+                              className='hover-200 flex items-center text-base text-gray-900 hover:text-gray-900'
+                            >
+                              {title}
+                            </Link>
+                          </SheetClose>
                         </li>
                       )
                     )}
