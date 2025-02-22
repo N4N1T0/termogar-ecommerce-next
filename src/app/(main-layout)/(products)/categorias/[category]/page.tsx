@@ -91,6 +91,14 @@ const CategoriesPage = async ({
     }
   ]
 
+  const getRandomProducts = (
+    products: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult
+  ) => {
+    const randomProducts = [...products]
+    randomProducts.sort(() => Math.random() - 0.5)
+    return randomProducts.slice(0, 4)
+  }
+
   return (
     <main className='container-x mx-auto w-full'>
       <BreadcrumbCom
@@ -116,6 +124,32 @@ const CategoriesPage = async ({
           </p>
           <OrderSelect url={`/categorias/${category}`} />
         </div>
+        {products.length === 0 && (
+          <div className='container-x mx-auto w-full text-center'>
+            <h2 className='text-3xl font-semibold'>
+              No hay{' '}
+              <span className='text-accent'>{searchedCategory.name}</span> con
+              esos parámetros de búsqueda, ¡realice otra búsqueda por favor!
+            </h2>
+            <hr className='mt-10' />
+            <div className='mt-10'>
+              <h3 className='mb-5 text-xl font-semibold text-secondary'>
+                Te podrían interesar otros productos de la misma categoría
+              </h3>
+              <div className='grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
+                {getRandomProducts(searchedCategory.products).map(
+                  (
+                    product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]
+                  ) => (
+                    <div data-aos='fade-up' key={product.id}>
+                      <ProductCardStyleOne datas={product} priority={false} />
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+          </div>
+        )}
         {middlePart ? (
           <>
             <div className='mb-10 grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
