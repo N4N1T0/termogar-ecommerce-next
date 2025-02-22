@@ -58,7 +58,7 @@ const NewsletterBanner = () => {
               id='email'
               type='email'
               required
-              className='h-[60px] w-full rounded-none bg-gray-200 pl-5 placeholder:text-gray-500 focus:outline-none focus:ring-0'
+              className='h-[60px] w-full rounded-none bg-gray-200 pl-5 text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-0'
               placeholder='Ingresa tu dirección de correo electrónico'
             />
           </div>

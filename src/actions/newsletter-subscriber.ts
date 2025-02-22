@@ -1,6 +1,7 @@
 'use server'
 
 import NewsletterRegistration from '@/emails/newsletter-registration'
+import NewsletterUserEmail from '@/emails/welcome-newsletter'
 import { resend } from '@/lib/clients'
 
 // * UTILS IMPORTS
@@ -56,12 +57,21 @@ const subscribeToNewsletter = async ({ email }: { email: string }) => {
 
     await resend.emails.send({
       from: 'registro-newsletter@termogar.es',
-      bcc: ['hola@termogar.es'],
-      to: [validatedData.data.email],
+      to: ['hola@termogar.es'],
       subject: 'Suscripción al Newsletter',
       react: NewsletterRegistration({
         email: validatedData.data.email,
         registrationDate: new Date().toISOString()
+      })
+    })
+
+    await resend.emails.send({
+      from: 'registro-newsletter@termogar.es',
+      to: [validatedData.data.email],
+      subject: 'Suscripción al Newsletter',
+      react: NewsletterUserEmail({
+        registrationDate: new Date().toISOString(),
+        couponCode: 'DESCUENTO3'
       })
     })
 
