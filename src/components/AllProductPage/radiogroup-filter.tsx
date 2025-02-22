@@ -3,7 +3,7 @@
 // * NEXT.JS IMPORTS
 import React from 'react'
 import { useQueryState, parseAsString } from 'nuqs'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 // * ASSETS IMPORTS
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
@@ -18,6 +18,7 @@ export function RadiogroupFilter({
   links = false
 }: RadiogroupFilterProps) {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [subCat, setSubCat] = useQueryState('subcat', parseAsString)
 
   const handleCategoryChange = React.useCallback(
@@ -29,9 +30,12 @@ export function RadiogroupFilter({
 
   const handleLinksChange = React.useCallback(
     (value: string) => {
-      router.push(`/categorias/${value}`)
+      const newParams = new URLSearchParams(searchParams.toString())
+      newParams.set('subcat', value)
+
+      router.push(`/categorias/${value}?${newParams.toString()}`)
     },
-    [router]
+    [router, searchParams]
   )
 
   if (!categories) return null
