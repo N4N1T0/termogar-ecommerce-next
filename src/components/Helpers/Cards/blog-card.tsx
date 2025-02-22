@@ -12,8 +12,8 @@ import { ArrowRight, Calendar, UserCircle } from 'lucide-react'
 
 const BlogCard = ({ className, data, priority, type }: BlogCardProps) => {
   return (
-    <div
-      className={cn('group w-full border border-gray-200', className)}
+    <article
+      className={cn('group h-fit w-full border border-gray-200', className)}
       data-aos='fade-up'
     >
       <Link
@@ -31,17 +31,17 @@ const BlogCard = ({ className, data, priority, type }: BlogCardProps) => {
           priority={priority}
         />
       </Link>
-      <div className='p-5'>
-        <div className='short-data mb-3 flex items-center space-x-9'>
+      <div className='p-3 md:p-5'>
+        <div className='mb-3 flex items-center space-x-9'>
           <div className='flex items-center space-x-1.5'>
             <UserCircle className='h-5 w-5 text-tertiary' />
-            <span className='text-gray-500two text-base capitalize'>
+            <span className='text-base capitalize text-gray-500'>
               Por {data.author?.name}
             </span>
           </div>
           <div className='flex items-center space-x-1.5'>
             <Calendar className='h-5 w-5 text-tertiary' />
-            <span className='text-gray-500two text-base'>
+            <span className='text-base text-gray-500'>
               {data.date
                 ? new Date(data.date).toLocaleDateString('es-es')
                 : new Date().toLocaleDateString('es-es')}
@@ -71,7 +71,7 @@ const BlogCard = ({ className, data, priority, type }: BlogCardProps) => {
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   )
 }
 
