@@ -120,7 +120,8 @@ const SuccessPage = async ({
       ),
       refactoredProducts
         .map((product) => `${product.quantity} ${product.product._ref}`)
-        .join(', ')
+        .join(', '),
+      (address && address[0].email) || user?.email || ''
     )
 
     followLink = `https://aplicaciones.tip-sa.com/cliente/datos_env.php?id=${process.env.TIPSA_AGENCY}${process.env.TIPSA_USER}${albaran}`

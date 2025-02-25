@@ -27,7 +27,8 @@ export const grabaEnvio24 = (
   strTlfDes: string,
   intPaq: number,
   strContenido: string,
-  id: string
+  id: string,
+  strDesDirEmails: string
 ) => {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
@@ -58,6 +59,10 @@ export const grabaEnvio24 = (
          <tem:strContenido>${strContenido}</tem:strContenido>
          <tem:boInsert>true</tem:boInsert>
          <tem:strAlbaran></tem:strAlbaran>
+         <ns0:boDesSMS>true</ns0:boDesSMS>
+         <ns0:boDesEmail>true</ns0:boDesEmail>
+         <ns0:strDesMoviles>${strTlfDes}</ns0:strDesMoviles>
+         <ns0:strDesDirEmails>${strDesDirEmails}</ns0:strDesDirEmails>
       </tem:GrabaEnvio24>
    </soapenv:Body>
 </soapenv:Envelope>`
@@ -83,3 +88,17 @@ export const construirEtiqueta8 = (
         </tem:ConsEtiquetaEnvio6>
      </soapenv:Body>
   </soapenv:Envelope>`
+
+export const factusolBody = JSON.stringify({
+  codigoFabricante: 761,
+  codigoCliente: 99973,
+  baseDatosCliente: 'FS761',
+  password: btoa('HuA7zUycx4yj')
+})
+
+// TODO: Cambiar las urls
+export const tipsaURLWebService =
+  'https://testapps.tipsa-dinapaq.com/SOAP?service=WebServService'
+export const tipsaURLWebServiceLogin =
+  'https://testapps.tipsa-dinapaq.com/SOAP?service=LoginWSService'
+export const factusolURLLogin = 'https://api.sdelsol.com/login/autenticar'
