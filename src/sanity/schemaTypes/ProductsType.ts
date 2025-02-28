@@ -299,7 +299,7 @@ export const productType = defineType({
       type: 'array',
       title: 'Productos Relacionados',
       description: 'Los productos relacionados del Producto.',
-      of: [{ type: 'reference', to: [{ type: 'product' }] }]
+      of: [{ type: 'reference', to: [{ type: 'product' }], weak: true }]
     }),
     defineField({
       name: 'lastMinute',
@@ -312,7 +312,7 @@ export const productType = defineType({
           name: 'products',
           type: 'array',
           title: 'Productos',
-          of: [{ type: 'reference', to: [{ type: 'product' }] }],
+          of: [{ type: 'reference', to: [{ type: 'product' }], weak: true }],
           validation: (Rule) =>
             Rule.required().max(4).error('Máximo 4 productos')
         }),
