@@ -1,4 +1,3 @@
-// TODO: Revisar los campos
 export const loginEnvelop = `
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
 xmlns:tem="http://tempuri.org/">
@@ -90,8 +89,8 @@ export const construirEtiqueta8 = (
   </soapenv:Envelope>`
 
 export const factusolBody = JSON.stringify({
-  codigoFabricante: 761,
-  codigoCliente: 99973,
+  codigoFabricante: '761',
+  codigoCliente: '99973',
   baseDatosCliente: 'FS761',
   password: btoa('HuA7zUycx4yj')
 })
@@ -101,4 +100,3 @@ export const tipsaURLWebService =
   'https://testapps.tipsa-dinapaq.com/SOAP?service=WebServService'
 export const tipsaURLWebServiceLogin =
   'https://testapps.tipsa-dinapaq.com/SOAP?service=LoginWSService'
-export const factusolURLLogin = 'https://api.sdelsol.com/login/autenticar'

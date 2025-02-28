@@ -1,15 +1,18 @@
 import { CartItemType, YoptopReviews } from '@/types'
-import { parseStringPromise } from 'xml2js' // Necesitas instalar xml2js: npm install xml2js
-import { grabaEnvio24, loginEnvelop, construirEtiqueta8 } from './utils'
+import { parseStringPromise } from 'xml2js'
+import {
+  grabaEnvio24,
+  loginEnvelop,
+  construirEtiqueta8,
+  factusolBody,
+  tipsaURLWebServiceLogin,
+  tipsaURLWebService
+} from './utils'
 
+// CONST
 const yoptopAppKey = process.env.NEXT_PUBLIC_YOTPO_APP_KEY
 const paypalClientId = process.env.PAYPAL_CLIENT_ID
 const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET
-// TODO: Cambiar las urls
-const tipsaURLWebService =
-  'https://testapps.tipsa-dinapaq.com/SOAP?service=WebServService'
-const tipsaURLWebServiceLogin =
-  'https://testapps.tipsa-dinapaq.com/SOAP?service=LoginWSService'
 
 const yoptop = {
   fetchReviews: async (
@@ -206,7 +209,8 @@ const tipsa = {
     strCPDes: string,
     strTlfDes: string,
     intPaq: number,
-    strContenido: string
+    strContenido: string,
+    strDesDirEmails: string
   ) {
     try {
       const sessionId = await this.generateSessionId()
@@ -226,7 +230,8 @@ const tipsa = {
           strTlfDes,
           intPaq,
           strContenido,
-          sessionId
+          sessionId,
+          strDesDirEmails
         )
       })
 
@@ -281,4 +286,71 @@ const tipsa = {
     }
   }
 }
-export { yoptop, paypal, tipsa }
+
+const factusol = {
+  generateAccessToken: async () => {
+    try {
+      const response = await fetch('https://api.sdelsol.com/login/autenticar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: factusolBody
+      })
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      console.log('🚀 ~ generateAccessToken: ~ data:', data)
+      return data.resultado
+    } catch (error) {
+      console.error('Error al obtener el token:', error)
+    }
+  },
+  getAllProductsStock: async function () {
+    try {
+      const token = await this.generateAccessToken()
+
+      const myHeaders = new Headers()
+      myHeaders.append('Content-Type', 'application/json')
+      myHeaders.append('Authorization', `Bearer ${token}`)
+
+      const raw = JSON.stringify({
+        'ejercicio': '2019',
+        'tabla': 'F_CLI',
+        'filtro': 'CODCLI = 1'
+      })
+
+      const requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow' as RequestRedirect
+      }
+
+      const response = await fetch(
+        'https://api.sdelsol.com/admin/CargaTabla',
+        requestOptions
+      )
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`)
+      }
+
+      const data = await response.json()
+
+      // const products = data.resultado.map((product) => ({
+      //   id: product.CODART,
+      //   stock: product.STOCK
+      // }))
+
+      return data
+    } catch (error) {
+      console.error('Error al obtener los productos:', error)
+    }
+  }
+}
+
+export { yoptop, paypal, tipsa, factusol }
