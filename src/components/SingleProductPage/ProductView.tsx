@@ -128,6 +128,7 @@ const ProductView = ({
               blurDataURL={imgUrl.blur || PlaceholderSquare.blurDataURL}
               quality={100}
               className='object-contain'
+              id='primaryimage'
             />
             {sale &&
               isOnSale &&

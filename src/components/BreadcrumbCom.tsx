@@ -13,6 +13,7 @@ export default function BreadcrumbCom({
     <>
       {paths && paths.length > 0 && (
         <div
+          id='breadcrumb'
           className={cn(
             'breadcrumb-wrapper font-400 text-qblack mb-[23px] text-[13px]',
             className
