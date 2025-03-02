@@ -19,9 +19,9 @@ import { GET_MENU_CATEGORIES } from '@/sanity/lib/queries'
 import Instagram from '@/components/Helpers/icons/Instagram'
 import Facebook from '@/components/Helpers/icons/Facebook'
 import Youtube from '@/components/Helpers/icons/Youtube'
-import { Logger } from 'next-axiom'
+// import { Logger } from 'next-axiom'
 
-const log = new Logger()
+// const log = new Logger()
 const Footer = async () => {
   const { footerLinks } = siteData
 
@@ -32,7 +32,7 @@ const Footer = async () => {
   )
 
   if (!searchedCategories) {
-    log.error('No categories found')
+    // log.error('No categories found')
   }
 
   return (
@@ -61,21 +61,21 @@ const Footer = async () => {
               <Link
                 href='https://www.instagram.com/termogar.es/'
                 target='_blank'
-                className='flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
+                className='bg-accent flex aspect-square size-7 items-center justify-center rounded-full'
               >
                 <Instagram className='hover-200 fill-gray-100 hover:fill-gray-900' />
               </Link>
               <Link
                 href='https://es-es.facebook.com/termogar'
                 target='_blank'
-                className='flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
+                className='bg-accent flex aspect-square size-7 items-center justify-center rounded-full'
               >
                 <Facebook className='hover-200 fill-gray-100 hover:fill-gray-900' />
               </Link>
               <Link
                 href='https://www.youtube.com/channel/UC2bX_gn3IX27PP2fyDpbhbg'
                 target='_blank'
-                className='flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
+                className='bg-accent flex aspect-square size-7 items-center justify-center rounded-full'
               >
                 <Youtube className='hover-200 fill-gray-100 hover:fill-gray-900' />
               </Link>
@@ -199,8 +199,8 @@ const Footer = async () => {
             </AccordionItem>
           </Accordion>
         </div>
-        <div className='items-center justify-between border-gray-200 py-3 text-gray-500 md:border-t lg:flex lg:h-[82px]'>
-          <div className='mb-3 flex items-center justify-between lg:space-x-5'>
+        <div className='items-center justify-between border-gray-200 py-2 text-gray-500 md:border-t lg:flex lg:h-[82px]'>
+          <div className='mb-3 flex flex-col items-center justify-between gap-2 text-center md:items-start'>
             <small>termogar.es - PEREZEMMALVA SLU - CIF: B-72301666.</small>
             <small>
               Inscrita en Registro Mercantil Tomo 2180, Folio 184, Sección 8,
@@ -211,9 +211,9 @@ const Footer = async () => {
         </div>
 
         {/* Designer and developer */}
-        <div className='border-t border-gray-200 py-2 text-center text-gray-500'>
+        <div className='flex flex-col items-center justify-between gap-2 border-t border-gray-200 py-2 pb-2 text-center text-gray-500 md:flex-row'>
           <small>Copyright ©️2025 | TERMOGAR | PEREZEMMALVA SLU</small>
-          <small className='sr-only'>
+          <small className='text-gray-400'>
             Created with <span className='text-red-500'>❤️</span>, powered by{' '}
             <Link
               href='https://nextjs.org/'
@@ -228,7 +228,7 @@ const Footer = async () => {
               className='underline'
               target='_blank'
             >
-              Adrian
+              adrian-alvarez.dev
             </Link>
           </small>
         </div>
