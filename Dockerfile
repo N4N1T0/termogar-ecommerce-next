@@ -1,50 +1,52 @@
 # Use a specific Node.js version with Alpine
 FROM node:20-alpine AS base
 
+# Set working directory
+WORKDIR /app
+
 # Install dependencies only when needed
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
-WORKDIR /app
 
-# Copy only package files first for better caching
+# Install PNPM globally
+RUN npm install -g pnpm@10.5.2
 COPY package.json pnpm-lock.yaml* ./
-RUN corepack enable pnpm && pnpm i --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
-# Rebuild the source code only when needed
+# Build the Next.js application
 FROM base AS builder
 WORKDIR /app
+RUN npm install -g pnpm@10.5.2
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build the application
-RUN corepack enable pnpm && pnpm build
+# Build the Next.js project in standalone mode
+RUN pnpm build && \
+    mkdir -p /app/.next/standalone && \
+    cp -r .next/static .next/standalone/.next/static
 
-# Production image, copy all the files and run next
+# Prepare the final runtime image
 FROM base AS runner
 WORKDIR /app
 
 # Set environment variables
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Create a non-root user for security
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
+RUN mkdir -p .next && chown -R nextjs:nodejs /app
 
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
-
-# Copy the public folder and built application
+# Copy necessary built files
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Switch to the non-root user
+# Use non-root user
 USER nextjs
-
 EXPOSE 3000
 
-# Start the application
+# Start Next.js server correctly
 CMD ["node", "server.js"]
