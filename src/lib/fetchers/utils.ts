@@ -89,10 +89,10 @@ export const construirEtiqueta8 = (
   </soapenv:Envelope>`
 
 export const factusolBody = JSON.stringify({
-  codigoFabricante: '761',
-  codigoCliente: '99973',
-  baseDatosCliente: 'FS761',
-  password: btoa('HuA7zUycx4yj')
+  codigoFabricante: process.env.BUILDERCODE,
+  codigoCliente: process.env.CLIENTCODE,
+  baseDatosCliente: process.env.DATABASE,
+  password: btoa(process.env.DBPASSWORD || '')
 })
 
 // TODO: Cambiar las urls
