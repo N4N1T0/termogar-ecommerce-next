@@ -39,4 +39,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# migrations
+# Recurrence
+seo-sem-maintenance-work
