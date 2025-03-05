@@ -200,16 +200,17 @@ export const productVariantType = defineType({
       description: 'Las imágenes relacionadas del producto.',
       of: [{ type: 'image' }],
       validation: (Rule) =>
-        Rule.custom((relatedImages, context) => {
-          const featuredImage = context.document?.featuredMedia as ImageAsset
-          if (
-            featuredImage &&
-            relatedImages?.some(
-              (image: any) => image?._id === featuredImage._id
-            )
-          ) {
-            return 'La imagen destacada no puede ser una imagen relacionada'
+        Rule.custom((relatedImages) => {
+          if (!Array.isArray(relatedImages)) return true
+
+          const uniqueImages = new Set(
+            relatedImages.map((image: any) => image?.asset?._ref)
+          )
+
+          if (uniqueImages.size !== relatedImages.length) {
+            return 'No se permiten imágenes duplicadas en Imágenes Relacionadas.'
           }
+
           return true
         })
     }),
