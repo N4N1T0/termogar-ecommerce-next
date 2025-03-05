@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { defineField, defineType, ImageAsset } from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export const productVariantType = defineType({
   name: 'productVariant',
