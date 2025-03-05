@@ -12,6 +12,7 @@ import {
   duplicateProduct,
   makeCurrierTag
 } from '@/sanity/actions'
+import { esESLocale } from '@sanity/locale-es-es'
 
 export default defineConfig({
   basePath: '/studio',
@@ -20,7 +21,8 @@ export default defineConfig({
   schema,
   plugins: [
     structureTool({ structure }),
-    visionTool({ defaultApiVersion: apiVersion })
+    visionTool({ defaultApiVersion: apiVersion }),
+    esESLocale()
   ],
   document: {
     actions: (prev, context) => {
