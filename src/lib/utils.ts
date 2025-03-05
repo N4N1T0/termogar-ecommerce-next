@@ -102,7 +102,7 @@ export const handleCompareTableCharacteristics = (
         : 'Precio no disponible'
     case 'options':
       return product.options
-        ? `${product.options.name || 'Opción'}: ${product.options.values?.join(', ') || 'N/A'}`
+        ? `${product.options.name || 'Opción'}: ${product.options.values?.map((value) => value.value || 'N/A').join(', ') || 'N/A'}`
         : 'No hay opciones disponibles'
     case 'categories':
       return product.categories
