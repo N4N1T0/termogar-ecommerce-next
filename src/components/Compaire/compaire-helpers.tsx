@@ -60,13 +60,12 @@ const CompaireBtn = ({ product }: { product: ProductCardType }) => {
 
   return (
     <Button
-      asChild
-      className={`rounded-none bg-accent p-0 text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900 ${compaireHasProduct ? 'text-gray-900' : ''}`}
+      className='rounded-none bg-accent p-0 text-white [&_svg]:pointer-events-auto [&_svg]:size-6'
       onClick={handleAddToCompaireList}
+      title='Agregar a la lista de comparación'
     >
       <GitCompareArrows
-        className='h-10 w-10 cursor-pointer p-2'
-        stroke='currentColor'
+        className={`cursor-pointer rounded-none text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900 ${compaireHasProduct ? 'text-gray-900' : ''}`}
       />
     </Button>
   )
