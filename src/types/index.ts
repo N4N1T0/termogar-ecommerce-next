@@ -163,7 +163,7 @@ export interface OptionSelectProps {
         } | null
       } | null
     }> | null
-  }
+  } | null
   defaultValue?: string | null | undefined
   setType: (e: string) => void
 }
