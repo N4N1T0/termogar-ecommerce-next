@@ -36,16 +36,16 @@ const OptionSelect = ({
   return (
     <div data-aos='fade-up' className='product-size'>
       <span className='mb-3 inline-block text-sm font-normal uppercase text-accent'>
-        {options.name}
+        {options?.name}
       </span>
       <Select onValueChange={(e) => handleValueChange(e)}>
         <SelectTrigger className='w-full rounded-none uppercase'>
           <SelectValue
-            placeholder={defaultValue || options.values?.[0].value}
+            placeholder={defaultValue || options?.values?.[0].value}
           />
         </SelectTrigger>
         <SelectContent className='rounded-none bg-white'>
-          {options.values?.map(({ value, product }) => (
+          {options?.values?.map(({ value, product }) => (
             <SelectItem
               value={product?.slug || value || 'N/A'}
               key={value || 'N/A'}

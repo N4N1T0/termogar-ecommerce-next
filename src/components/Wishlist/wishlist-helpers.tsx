@@ -40,11 +40,13 @@ const WishlistBtn = ({ product }: { product: ProductCardType }) => {
 
   return (
     <Button
-      asChild
-      className={`rounded-none bg-accent p-0 text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900 ${wishlistHasProduct ? 'fill-gray-900 text-gray-900' : ''}`}
+      title='Agregar a la lista de deseos'
+      className='rounded-none bg-accent p-0 text-white [&_svg]:pointer-events-auto [&_svg]:size-6'
       onClick={handleAddToWishlist}
     >
-      <Heart className='h-10 w-10 cursor-pointer p-2' />
+      <Heart
+        className={`cursor-pointer rounded-none text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900 ${wishlistHasProduct ? 'text-gray-900' : ''}`}
+      />
     </Button>
   )
 }

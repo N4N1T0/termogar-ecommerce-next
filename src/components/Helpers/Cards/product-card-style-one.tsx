@@ -38,13 +38,8 @@ export default function ProductCardStyleOne<T>({
     () => (stockQuantity && stockQuantity < 4 ? stockQuantity : null),
     [stockQuantity]
   )
-  const salePercentage = React.useMemo(
-    () =>
-      isOnSale && sale?.price && price
-        ? 100 - (sale.price * 100) / price
-        : null,
-    [isOnSale, sale, price]
-  )
+
+  // The product has Products Variants
   const hasVariant = React.useMemo(
     () =>
       Array.isArray(options?.values) &&
@@ -52,6 +47,16 @@ export default function ProductCardStyleOne<T>({
     [options]
   )
 
+  // Sale Percentage for the floating badge
+  const salePercentage = React.useMemo(
+    () =>
+      isOnSale && sale?.price && price && !hasVariant
+        ? 100 - (sale.price * 100) / price
+        : null,
+    [isOnSale, sale, price, hasVariant]
+  )
+
+  // The product has variantes without products
   const hasSimpleVariant = React.useMemo(
     () =>
       Array.isArray(options?.values) &&

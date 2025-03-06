@@ -74,7 +74,10 @@ const ProductQuickView = ({ data }: ProductQuickViewProps) => {
 
   return (
     <Dialog modal>
-      <DialogTrigger className='flex h-10 w-10 cursor-pointer items-center justify-center bg-accent p-1 text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900'>
+      <DialogTrigger
+        className='flex h-10 w-10 cursor-pointer items-center justify-center bg-accent p-1 text-gray-100 transition-colors duration-100 ease-in hover:text-gray-900'
+        title='Vista Rápida'
+      >
         <Expand />
       </DialogTrigger>
       <DialogContent className='overflow-hidden border-0 bg-gray-50 p-0 sm:max-w-[900px]'>

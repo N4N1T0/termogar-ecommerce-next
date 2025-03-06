@@ -10,7 +10,8 @@ import {
   setParent,
   changeToVariant,
   duplicateProduct,
-  makeCurrierTag
+  makeCurrierTag,
+  changeToMain
 } from '@/sanity/actions'
 import { esESLocale } from '@sanity/locale-es-es'
 
@@ -27,7 +28,7 @@ export default defineConfig({
   document: {
     actions: (prev, context) => {
       if (context.schemaType === 'productVariant') {
-        return [...prev, setParent(context)]
+        return [...prev, setParent(context), changeToMain(context)]
       }
 
       if (context.schemaType === 'product') {

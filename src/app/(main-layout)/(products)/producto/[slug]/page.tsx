@@ -172,7 +172,11 @@ const SingleProductPage = async ({
         />
       </div>
       <div className='container-x mx-auto w-full bg-white py-10'>
-        <ProductView product={updatedProduct} reviews={reviews?.reviews} />
+        <ProductView
+          product={searchedProduct}
+          variant={updatedProduct}
+          reviews={reviews?.reviews}
+        />
       </div>
       <SingleProductTabs
         product={updatedProduct}

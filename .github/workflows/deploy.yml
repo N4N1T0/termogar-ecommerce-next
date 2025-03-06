@@ -1,0 +1,77 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - 'docker'
+
+jobs:
+  docker-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          echo NEXT_PUBLIC_SANITY_PROJECT_ID=${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }} >> .env
+          echo NEXT_PUBLIC_SANITY_DATASET=${{ secrets.NEXT_PUBLIC_SANITY_DATASET }} >> .env
+          echo SANITY_TOKEN=${{ secrets.SANITY_TOKEN }} >> .env
+          echo WOOCOMMERCE_CLIENT_ID=${{ secrets.WOOCOMMERCE_CLIENT_ID }} >> .env
+          echo WOOCOMMERCE_CLIENT_SECRET=${{ secrets.WOOCOMMERCE_CLIENT_SECRET }} >> .env
+          echo REDSYS_MERCHANT_CODE=${{ secrets.REDSYS_MERCHANT_CODE }} >> .env
+          echo REDSYS_TERMINAL=${{ secrets.REDSYS_TERMINAL }} >> .env
+          echo REDSYS_SECRET_KEY=${{ secrets.REDSYS_SECRET_KEY }} >> .env
+          echo PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} >> .env
+          echo PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }} >> .env
+          echo NEXT_PUBLIC_PAYPAL_URL=${{ secrets.NEXT_PUBLIC_PAYPAL_URL }} >> .env
+          echo RESEND_API_KEY=${{ secrets.RESEND_API_KEY }} >> .env
+          echo NEXT_PUBLIC_AXIOM_DATASET=${{ secrets.NEXT_PUBLIC_AXIOM_DATASET }} >> .env
+          echo NEXT_PUBLIC_AXIOM_TOKEN=${{ secrets.NEXT_PUBLIC_AXIOM_TOKEN }} >> .env
+          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+          echo AUTH_SECRET=${{ secrets.AUTH_SECRET }} >> .env
+          echo AUTH_TRUST_HOST=${{ secrets.AUTH_TRUST_HOST }} >> .env
+          echo AUTH_GOOGLE_ID=${{ secrets.AUTH_GOOGLE_ID }} >> .env
+          echo NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }} >> .env
+          echo AUTH_GOOGLE_SECRET=${{ secrets.AUTH_GOOGLE_SECRET }} >> .env
+          echo NEXT_PUBLIC_YOTPO_APP_KEY=${{ secrets.NEXT_PUBLIC_YOTPO_APP_KEY }} >> .env
+          echo NEXT_PUBLIC_URL=${{ secrets.NEXT_PUBLIC_URL }} >> .env
+          echo TIPSA_AGENCY=${{ secrets.TIPSA_AGENCY }} >> .env
+          echo TIPSA_USER=${{ secrets.TIPSA_USER }} >> .env
+          echo TIPSA_PASSWORD=${{ secrets.TIPSA_PASSWORD }} >> .env
+          echo ORAMA_PRIVATE_API_KEY=${{ secrets.ORAMA_PRIVATE_API_KEY }} >> .env
+          echo ORAMA_PUBLIC_API_KEY=${{ secrets.ORAMA_PUBLIC_API_KEY }} >> .env
+          echo BUILDERCODE=${{ secrets.BUILDERCODE }} >> .env
+          echo DATABASE=${{ secrets.DATABASE }} >> .env
+          echo CLIENTCODE=${{ secrets.CLIENTCODE }} >> .env
+          echo DBPASSWORD=${{ secrets.DBPASSWORD }} >> .env
+
+      - name: Set up QEMU for cross-platform builds
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+      - name: Build multi-platform Docker image
+        run: docker build . --platform linux/amd64 -t ghcr.io/n4n1t0/termogar:latest
+
+      - name: Push Docker image to GitHub Packages
+        run: docker push ghcr.io/n4n1t0/termogar:latest
+
+      # - name: Connect with VPS
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.VPS_HOST }}
+      #     username: ${{ secrets.VPS_USERNAME }}
+      #     key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+      #     passphrase: ${{ secrets.VPS_SSH_PASSPHRASE }}
+      #     port: ${{ secrets.VPS_SSH_PORT }}
+      #     script: |
+      #       docker stop termogar || true
+      #       docker rm termogar || true
+      #       docker pull ghcr.io/n4n1t0/termogar:latest
+      #       docker run -d --name termogar -p 3000:3000 ghcr.io/n4n1t0/termogar:latest
