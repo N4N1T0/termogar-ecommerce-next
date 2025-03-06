@@ -40,10 +40,12 @@ import { GET_WHOLE_PRODUCT_BY_SLUGResult } from '@/types/sanity'
 const ProductView = ({
   className = '',
   product,
+  variant,
   reviews
 }: {
   className?: string
   product: GET_WHOLE_PRODUCT_BY_SLUGResult
+  variant?: GET_WHOLE_PRODUCT_BY_SLUGResult
   reviews: YoptopReviews | undefined
 }) => {
   const [imgUrl, setImgUrl] = React.useState<{
@@ -89,7 +91,7 @@ const ProductView = ({
     youtube,
     stockQuantity,
     sku
-  } = product
+  } = variant ? variant : product
 
   const hasVariant =
     Array.isArray(options?.values) &&
@@ -98,7 +100,7 @@ const ProductView = ({
   const score = calculateAverageRating(reviews)
   const isOnSale = sale && isWithinSalePeriod(sale)
   const salePercentage =
-    sale && sale.price && isOnSale && price
+    sale && sale.price && isOnSale && price && !hasVariant
       ? 100 - (sale.price * 100) / price
       : null
 
@@ -289,8 +291,8 @@ const ProductView = ({
           </p>
 
           {/* OPTIONS */}
-          {options && stockQuantity !== null && stockQuantity > 0 && (
-            <OptionSelect options={options} setType={setType} />
+          {product.options && stockQuantity !== null && stockQuantity > 0 && (
+            <OptionSelect options={product.options} setType={setType} />
           )}
 
           {/* ADD TO CART */}
