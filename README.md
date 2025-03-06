@@ -17,8 +17,6 @@
 - [ ] Add Pages Legal
 - [ ] Add orama box chat
 
----
-
 ### DEPLOYMENT
 
 - [x] Update the Repo Secrets
