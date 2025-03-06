@@ -22,4 +22,4 @@
 ### DEPLOYMENT
 
 - [x] Update the Repo Secrets
-- [ ] Test Deployment
+- [x] Test Deployment
