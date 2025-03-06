@@ -236,6 +236,60 @@ export function makeCurrierTag(
   return asyncMakeCurrierTag
 }
 
+export function changeToMain(
+  context: DocumentActionsContext
+): DocumentActionComponent {
+  const client = context.getClient({ apiVersion: '2022-11-29' })
+
+  const AsyncChangeToVariant: DocumentActionComponent = (
+    props: AsyncChangeToVariantProps
+  ) => {
+    const product = props.published
+    return {
+      label: 'Cambiar a Principal',
+      icon: <Replace size={17} strokeWidth={1.2} />,
+      onHandle: async () => {
+        try {
+          await client.createIfNotExists<Product>({
+            _id: uuid(),
+            _type: 'product',
+            _createdAt: new Date().toISOString(),
+            _updatedAt: new Date().toISOString(),
+            _rev: uuid(),
+            content: product?.content,
+            excerpt: product?.excerpt,
+            featuredMedia: product?.featuredMedia,
+            price: product?.price,
+            title: product?.title,
+            dimensions: product?.dimensions,
+            downloads: product?.downloads,
+            ean: product?.ean,
+            productCategories: product?.productCategories,
+            productTag: product?.productTag,
+            referenceCode: product?.referenceCode,
+            relatedImages: product?.relatedImages,
+            sale: product?.sale,
+            sku: product?.sku,
+            stockQuantity: product?.stockQuantity,
+            brand: product?.brand,
+            options: product?.options,
+            slug: product?.slug,
+            status: product?.status,
+            youtube: product?.youtube
+          })
+
+          toast.success('Variante Exitosamente Creada')
+        } catch (error) {
+          console.log('🚀 ~ onHandle: ~ error:', error)
+          toast.error('Error al Crear Variante, inténtelo mas tarde')
+        }
+      }
+    }
+  }
+
+  return AsyncChangeToVariant
+}
+
 // * HELPERS FUNCTIONS
 const NewVariantDialog = (
   newVariantInfo: NewVariantInfoProps,
