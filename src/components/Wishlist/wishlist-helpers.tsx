@@ -12,8 +12,15 @@ import { toast } from 'sonner'
 import { useWishlist } from '@/stores'
 import { ProductCardType } from '@/types'
 import Link from 'next/link'
+import { cn } from '@/lib/utils'
 
-const WishlistBtn = ({ product }: { product: ProductCardType }) => {
+const WishlistBtn = ({
+  product,
+  className
+}: {
+  product: ProductCardType
+  className?: string
+}) => {
   const { products, addProduct, removeProduct } = useWishlist()
 
   const wishlistHasProduct = products.some((item) => item.id === product.id)
@@ -41,7 +48,10 @@ const WishlistBtn = ({ product }: { product: ProductCardType }) => {
   return (
     <Button
       title='Agregar a la lista de deseos'
-      className='rounded-none bg-accent p-0 text-white [&_svg]:pointer-events-auto [&_svg]:size-6'
+      className={cn(
+        'rounded-none bg-accent p-0 text-white [&_svg]:pointer-events-auto [&_svg]:size-6',
+        className
+      )}
       onClick={handleAddToWishlist}
     >
       <Heart

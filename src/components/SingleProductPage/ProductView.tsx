@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation'
 // * ASSETS IMPORTS
 import AddToCart from '@/components/Helpers/quantity'
 import { AtencionAlCliente, PlaceholderSquare } from '@/assets'
-import { ReportProductModal } from '@/components/SingleProductPage/report-modal'
+import { AskAboutProduct } from '@/components/SingleProductPage/ask-about-a-product-modal'
 import {
   Clipboard,
   Twitter,
@@ -308,8 +308,8 @@ const ProductView = ({
                     stock={stockQuantity}
                     showQuantity={true}
                   />
-                  <WishlistBtn product={product} />
-                  <CompaireBtn product={product} />
+                  <WishlistBtn product={product} className='px-2' />
+                  <CompaireBtn product={product} className='px-2' />
                 </>
               ) : (
                 <NoStockNotifyMe product={refactoredRelatesProduct} />
@@ -346,7 +346,7 @@ const ProductView = ({
             data-aos='fade-up'
             className='mb-5 flex items-center space-x-2 text-red-500'
           >
-            <ReportProductModal productName={title!} />
+            <AskAboutProduct productName={product.title} />
           </div>
 
           {/* SHARE */}
