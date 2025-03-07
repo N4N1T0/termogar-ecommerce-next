@@ -66,13 +66,13 @@ export function AskAboutProduct({
     }
   }
 
-  if (!productName) return null
-
   React.useEffect(() => {
     if (session && session.user && session.user.email) {
       form.setValue('email', session?.user?.email)
     }
   }, [session, form])
+
+  if (!productName) return null
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
