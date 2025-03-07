@@ -2,27 +2,27 @@ import { Section, Text, Heading } from '@react-email/components'
 import * as React from 'react'
 import TailwindWrapper from './utils/tailwind-wrapper'
 
-interface ReportProductProps {
+interface AskAboutAProductProps {
   productName: string
-  reason: 'inapropiado' | 'falso' | 'ofensivo' | 'otro'
-  description: string
+  email: string
+  message: string
 }
 
-export const ReportProduct = ({
+export const AskAboutAProduct = ({
   productName,
-  reason,
-  description
-}: ReportProductProps) => {
+  email,
+  message
+}: AskAboutAProductProps) => {
   const previewText = `Producto ${productName} reportado`
 
   return (
     <TailwindWrapper previewText={previewText}>
       <Heading className='mb-4 text-center text-2xl font-bold text-gray-800'>
-        Producto {productName} reportado
+        Pregunta sobre {productName}
       </Heading>
       <Text className='mb-6 text-gray-800'>
-        Estimado equipo administrativo, Se ha reportado un producto en la
-        plataforma.
+        Estimado equipo administrativo, hay una pregunta de parte del cliente
+        {email}.
       </Text>
       <Section className='mb-6'>
         <table className='w-full border-collapse'>
@@ -43,35 +43,24 @@ export const ReportProduct = ({
                 className='border border-gray-300 px-4 py-2 font-bold'
                 style={{ border: '1px solid #e5e7eb' }}
               >
-                Razón
+                Mensaje
               </td>
-              <td className='border border-gray-300 px-4 py-2'>{reason}</td>
-            </tr>
-            <tr>
-              <td
-                className='border border-gray-300 px-4 py-2 font-bold'
-                style={{ border: '1px solid #e5e7eb' }}
-              >
-                Descripción
-              </td>
-              <td className='border border-gray-300 px-4 py-2'>
-                {description}
-              </td>
+              <td className='border border-gray-300 px-4 py-2'>{message}</td>
             </tr>
           </tbody>
         </table>
       </Section>
       <Text className='mb-6 text-gray-800'>
-        Por favor, agreguen este usuario a la lista de envíos del newsletter.
+        Por favor, responder con la mayor brevedad posible.
       </Text>
     </TailwindWrapper>
   )
 }
 
-ReportProduct.PreviewProps = {
+AskAboutAProduct.PreviewProps = {
   productName: 'Producto 1',
-  reason: 'inapropiado',
-  description: 'Descripción del producto'
-} as unknown as ReportProductProps
+  email: 'correo@ejemplo',
+  message: 'Hola, estoy interesado en este producto.'
+} as unknown as AskAboutAProductProps
 
-export default ReportProduct
+export default AskAboutAProduct

@@ -16,23 +16,30 @@ import {
 } from '@/components/ui/dialog'
 import FormFieldComponent from '@/components/Auth/ResetPassword/form-field'
 import { Form } from '@/components/ui/form'
-import { Flag } from 'lucide-react'
+import { MessageCircleQuestion } from 'lucide-react'
 
 // * UTILS IMPORTS
 import { zodResolver } from '@hookform/resolvers/zod'
 import { reportProductSchema, ReportProductSchema } from '@/lib/schemas'
 import reportProduct from '@/actions/report-product'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
+import { useSession } from 'next-auth/react'
 
-export function ReportProductModal({ productName }: { productName: string }) {
+export function AskAboutProduct({
+  productName
+}: {
+  productName: string | null
+}) {
   const [open, setOpen] = React.useState(false)
+  const { data: session } = useSession()
 
   const form = useForm<ReportProductSchema>({
     resolver: zodResolver(reportProductSchema),
     defaultValues: {
-      productName: productName,
-      reason: 'falso',
-      description: ''
+      email: session?.user?.email || '',
+      message: '',
+      productName: productName || ''
     }
   })
 
@@ -59,23 +66,32 @@ export function ReportProductModal({ productName }: { productName: string }) {
     }
   }
 
-  if (!productName) {
-    return null
-  }
+  if (!productName) return null
+
+  React.useEffect(() => {
+    if (session && session.user && session.user.email) {
+      form.setValue('email', session?.user?.email)
+    }
+  }, [session, form])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className='flex gap-3 text-accent underline'>
-          <Flag /> Reportar Producto
-        </button>
+        <Button
+          className='flex gap-3 text-accent underline shadow-none'
+          title='Preguntar sobre el producto'
+        >
+          <MessageCircleQuestion /> ¿Tienes alguna Duda?
+        </Button>
       </DialogTrigger>
       <DialogContent className='rounded-none border-none bg-white sm:max-w-[425px]'>
         <DialogHeader>
-          <DialogTitle className='text-accent'>Reportar Producto</DialogTitle>
+          <DialogTitle className='text-accent'>
+            Preguntar sobre el Producto
+          </DialogTitle>
           <DialogDescription>
-            Reporta problemas con el producto &quot;{productName}&quot;.
-            Revisaremos tu informe y tomaremos las medidas apropiadas.
+            Estamos aquí para resolver cualquier inquietud que tengas sobre este
+            producto!
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -84,21 +100,20 @@ export function ReportProductModal({ productName }: { productName: string }) {
               <FormFieldComponent
                 control={control}
                 isSubmitting={isSubmitting}
-                label='Motivo'
-                name='reason'
-                options={['inapropiado', 'falso', 'ofensivo', 'otro']}
-                type='select'
-                autocomplete='reason'
-                placeholder='Motivo'
+                label='Email'
+                name='email'
+                type='email'
+                autocomplete='email'
+                placeholder='termogra@example.com'
               />
               <FormFieldComponent
                 control={control}
                 isSubmitting={isSubmitting}
-                label='Descripción'
-                name='description'
+                label='Message'
+                name='message'
                 type='textarea'
-                autocomplete='description'
-                placeholder='El producto es un ...'
+                autocomplete='message'
+                placeholder='Tengo una duda sobre ...'
               />
             </div>
             <DialogFooter>
