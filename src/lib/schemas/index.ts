@@ -80,11 +80,14 @@ export const signupSchema = z
   })
 
 export const reportProductSchema = z.object({
+  email: z
+    .string()
+    .email()
+    .min(2, { message: 'el email del producto es obligatorio' }),
+  message: z.string().min(2, { message: 'el mensaje es obligatorio' }),
   productName: z
     .string()
-    .min(2, { message: 'el Id del producto es obligatorio' }),
-  reason: z.enum(['inapropiado', 'falso', 'ofensivo', 'otro']),
-  description: z.string().min(2, { message: 'la descripción es obligatoria' })
+    .min(2, { message: 'el nombre del producto es obligatorio' })
 })
 
 export const reviewSchema = z.object({

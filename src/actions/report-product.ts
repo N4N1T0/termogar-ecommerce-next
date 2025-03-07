@@ -1,6 +1,6 @@
 'use server'
 
-import ReportProduct from '@/emails/report-product'
+import ReportProduct from '@/emails/ask-about-a-product-email'
 import { resend } from '@/lib/clients'
 import { reportProductSchema, ReportProductSchema } from '@/lib/schemas'
 import { Logger } from 'next-axiom'
@@ -27,8 +27,8 @@ const reportProduct = async (values: ReportProductSchema) => {
       subject: 'Reporte de Producto',
       react: ReportProduct({
         productName: parsedValues.data.productName,
-        reason: parsedValues.data.reason,
-        description: parsedValues.data.description
+        email: parsedValues.data.email,
+        message: parsedValues.data.message
       })
     })
 

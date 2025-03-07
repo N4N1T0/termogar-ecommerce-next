@@ -47,7 +47,7 @@ const InfoRow = () => {
         </svg>
       ),
       title: 'Envío Gratis',
-      description: 'Al ordenar sobre $100'
+      description: 'Para toda la peninsula'
     },
     {
       svg: (
@@ -174,7 +174,14 @@ const InfoRow = () => {
               <p className='font-700 mb-1 text-[15px] tracking-wide text-gray-900'>
                 {item.title}
               </p>
-              <p className='text-sm text-gray-500'>{item.description}</p>
+              <div className='gap-o flex flex-col'>
+                <p className='text-sm text-gray-500'>{item.description}</p>
+                {item.title === 'Devolución Gratis' && (
+                  <small className='text-[10px] text-gray-300'>
+                    El cliente corre con los gastos de envío
+                  </small>
+                )}
+              </div>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { Metadata } from 'next'
 // * ASSETS IMPORTS
 import CostumerServiceError from '@/components/CostumerService/empty'
 import { PortableText } from 'next-sanity'
+import { AtencionAlCliente } from '@/assets'
 
 // * UTILS IMPORTS
 import { sanityClientRead } from '@/sanity/lib/client'
@@ -12,6 +13,7 @@ import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
 import { Logger } from 'next-axiom'
+import Image from 'next/image'
 
 const log = new Logger()
 
@@ -78,6 +80,12 @@ const CostumerServicePageIndex = async () => {
           id='content'
           className='prose mx-auto mt-10 w-full max-w-none text-pretty bg-white py-10 pl-10 pr-5'
         >
+          <Image
+            src={AtencionAlCliente}
+            priority
+            alt='Servicio de atencion al Cliente'
+            className='h-auto max-w-[300px]'
+          />
           <PortableText value={content} components={portableTextComponents} />
         </section>
       ) : (

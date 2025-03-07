@@ -7,6 +7,7 @@ import React from 'react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { ProductCardType } from '@/types'
+import { cn } from '@/lib/utils'
 
 const CompaireLink = () => {
   const { products, rehydrated } = useCompare()
@@ -33,7 +34,13 @@ const CompaireLink = () => {
   )
 }
 
-const CompaireBtn = ({ product }: { product: ProductCardType }) => {
+const CompaireBtn = ({
+  product,
+  className
+}: {
+  product: ProductCardType
+  className?: string
+}) => {
   const { products, addProduct, removeProduct } = useCompare()
 
   const compaireHasProduct = products.some((item) => item.id === product.id)
@@ -60,7 +67,10 @@ const CompaireBtn = ({ product }: { product: ProductCardType }) => {
 
   return (
     <Button
-      className='rounded-none bg-accent p-0 text-white [&_svg]:pointer-events-auto [&_svg]:size-6'
+      className={cn(
+        'rounded-none bg-accent p-0 text-white [&_svg]:pointer-events-auto [&_svg]:size-6',
+        className
+      )}
       onClick={handleAddToCompaireList}
       title='Agregar a la lista de comparación'
     >
