@@ -109,7 +109,7 @@ export function AskAboutProduct({
               <FormFieldComponent
                 control={control}
                 isSubmitting={isSubmitting}
-                label='Message'
+                label='Mensaje'
                 name='message'
                 type='textarea'
                 autocomplete='message'
