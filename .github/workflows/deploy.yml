@@ -62,16 +62,15 @@ jobs:
       - name: Push Docker image to GitHub Packages
         run: docker push ghcr.io/n4n1t0/termogar:latest
 
-      # - name: Connect with VPS
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.VPS_HOST }}
-      #     username: ${{ secrets.VPS_USERNAME }}
-      #     key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
-      #     passphrase: ${{ secrets.VPS_SSH_PASSPHRASE }}
-      #     port: ${{ secrets.VPS_SSH_PORT }}
-      #     script: |
-      #       docker stop termogar || true
-      #       docker rm termogar || true
-      #       docker pull ghcr.io/n4n1t0/termogar:latest
-      #       docker run -d --name termogar -p 3000:3000 ghcr.io/n4n1t0/termogar:latest
+      - name: Connect with VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_SSH_PASSWORD }}
+          port: ${{ secrets.VPS_SSH_PORT }}
+          script: |
+            docker stop termogar || true
+            docker rm termogar || true
+            docker pull ghcr.io/n4n1t0/termogar:latest
+            docker run -d --name termogar -p 3000:3000 ghcr.io/n4n1t0/termogar:latest
