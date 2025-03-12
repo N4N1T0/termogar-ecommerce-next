@@ -8,7 +8,11 @@ import { usePathname } from 'next/navigation'
 
 // * ASSETS IMPORTS
 import AddToCart from '@/components/Helpers/quantity'
-import { AtencionAlCliente, PlaceholderSquare } from '@/assets'
+import {
+  AtencionAlCliente,
+  PlaceholderSquare,
+  WhitePlaceholder
+} from '@/assets'
 import { AskAboutProduct } from '@/components/SingleProductPage/ask-about-a-product-modal'
 import {
   Clipboard,
@@ -120,7 +124,7 @@ const ProductView = ({
         <div className='w-full'>
           <div className='relative mb-3 flex h-[600px] w-full items-center justify-center overflow-hidden border border-gray-300 p-3'>
             <Image
-              src={imgUrl.url || PlaceholderSquare}
+              src={imgUrl.url || WhitePlaceholder}
               alt={title || 'Sin Nombre'}
               title={title || 'Sin Nombre'}
               priority

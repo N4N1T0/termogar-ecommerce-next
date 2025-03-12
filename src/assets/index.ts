@@ -21,6 +21,7 @@ import PlaceholderProductCard from './images/banner-4.1.png'
 import PlaceholderBlogPost from './images/banner-1.png'
 import PlaceholderHorizontal from './images/ads-1.png'
 import PlaceholderUser from './images/wp-avatar-442.jpg'
+import WhitePlaceholder from './images/white-placeholder.png'
 
 // * BACKGROUNDS
 import NewsletterBG from './images/new-letter.jpg'
@@ -57,5 +58,6 @@ export {
   bigLogo,
   smallLogo,
   AtencionAlCliente,
-  PlaceholderUser
+  PlaceholderUser,
+  WhitePlaceholder
 }
