@@ -152,7 +152,7 @@ const SingleProductPage = async ({
     )
     .then((res) => (res.status !== null ? res : null))
 
-  const refactoredRelatesProductsIds = searchedProduct?.relatedProducts
+  const refactoredRelatedProductsIds = searchedProduct?.relatedProducts
     ? searchedProduct?.relatedProducts.map((product) => product.id)
     : []
 
@@ -183,7 +183,7 @@ const SingleProductPage = async ({
         reviews={reviews?.reviews}
         user={session?.user}
       />
-      <RelatedProducts productsId={refactoredRelatesProductsIds} />
+      <RelatedProducts productsId={refactoredRelatedProductsIds} />
       {jldProduct(updatedProduct)}
     </main>
   )

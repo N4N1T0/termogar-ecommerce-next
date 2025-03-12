@@ -79,9 +79,6 @@ const CategoriesPage = async ({
     searchedCategory.main
   )
 
-  const middlePart =
-    products.length > 8 ? Math.floor(products.length / 2) : null
-
   const breadcrumb = [
     { name: 'P. Principal', path: '/' },
     { name: 'Categorias', path: '/categorias' },
@@ -150,49 +147,18 @@ const CategoriesPage = async ({
             </div>
           </div>
         )}
-        {middlePart ? (
-          <>
-            <div className='mb-10 grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
-              {products
-                .slice(0, middlePart)
-                .map(
-                  (
-                    product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]
-                  ) => (
-                    <div data-aos='fade-up' key={product.id}>
-                      <ProductCardStyleOne datas={product} priority={true} />
-                    </div>
-                  )
-                )}
-            </div>
-            <LinkOrDiv banner={searchedCategory.banner} />
-            <div className='mb-10 grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
-              {products
-                .slice(middlePart, products.length)
-                .map(
-                  (
-                    product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]
-                  ) => (
-                    <div data-aos='fade-up' key={product.id}>
-                      <ProductCardStyleOne datas={product} priority={false} />
-                    </div>
-                  )
-                )}
-            </div>
-          </>
-        ) : (
-          <div className='mb-10 grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
-            {products.map(
-              (
-                product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]
-              ) => (
-                <div data-aos='fade-up' key={product.id}>
-                  <ProductCardStyleOne datas={product} priority={false} />
-                </div>
-              )
-            )}
-          </div>
-        )}
+        <div className='mb-10 grid grid-cols-2 gap-5 p-0 md:p-5 lg:grid-cols-3 xl:grid-cols-4'>
+          {products.map(
+            (
+              product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]
+            ) => (
+              <div data-aos='fade-up' key={product.id}>
+                <ProductCardStyleOne datas={product} priority={false} />
+              </div>
+            )
+          )}
+        </div>
+        <LinkOrDiv banner={searchedCategory.banner} />
         {searchedCategory.description !== null && (
           <section
             id='category-description'
