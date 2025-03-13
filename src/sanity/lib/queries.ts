@@ -762,7 +762,7 @@ export const GET_WHOLE_PRODUCT_BY_SLUG =
   "blur": metadata.lqip
 },
 "downloads": downloads[]{
-    "title": asset->title,
+    "title": asset->originalFilename,
     "url": asset->url
   },
 "relatedProducts": relatedProducts[]->{
