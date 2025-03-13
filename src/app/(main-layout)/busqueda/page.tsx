@@ -38,8 +38,6 @@ const SearchPage = async ({
     mode: 'vector'
   })
 
-  console.log('🚀 ~ searchedProducts:', oramaResponse)
-
   if (!oramaResponse) {
     log.error('Products not found', { oramaResponse })
   }
