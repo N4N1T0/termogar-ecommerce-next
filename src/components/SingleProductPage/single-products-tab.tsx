@@ -43,7 +43,7 @@ const ModalDocumentation = dynamic(
   () => import('@/components/SingleProductPage/pdf-modal'),
   {
     loading: () => (
-      <main className='w-full space-y-5'>
+      <main className='flex w-full gap-3 space-y-5'>
         {Array(3)
           .fill('product-documents')
           .map((item, index) => (
@@ -167,10 +167,16 @@ const SingleProductTabs = ({
         </TabsContent>
 
         {/* Documentation Tab */}
-        <TabsContent value='info' className='tab-content-item w-full'>
+        <TabsContent
+          value='info'
+          className='tab-content-item flex w-full gap-3'
+        >
           {product.downloads && product.downloads.length > 0 ? (
-            product.downloads.map((item) => (
-              <ModalDocumentation key={item.title} pdf={item} />
+            product.downloads.map((item, index) => (
+              <ModalDocumentation
+                key={`${item.title}-${item.url}-${index}`}
+                pdf={item}
+              />
             ))
           ) : (
             <h3 className='w-full bg-white p-5 text-center text-xl'>

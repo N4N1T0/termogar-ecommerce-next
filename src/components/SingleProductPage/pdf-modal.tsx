@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/dialog'
 import PDFThumbnail from './pdf-helpers/thumbnail'
 import PDFViewer from './pdf-helpers/viewer'
-import { desurlizeForBreadcrumbs } from '@/lib/utils'
 import Link from 'next/link'
 import { Download } from 'lucide-react'
 
@@ -20,7 +19,9 @@ export default function ProductDocumentation({
     url: string | null
   }
 }) {
+  console.log('🚀 ~ pdf:', pdf)
   if (!pdf.title || !pdf.url) {
+    console.log('🚀 ~ notPdf:', pdf)
     return null
   }
 
@@ -29,14 +30,12 @@ export default function ProductDocumentation({
       <DialogTrigger asChild>
         <article className='group h-[280px] w-[200px] cursor-pointer space-y-2 rounded-none p-0'>
           <PDFThumbnail pdfUrl={pdf.url} />
-          <h4 className='hover-200 group-hover:text-accent'>
-            {desurlizeForBreadcrumbs(pdf.title)}
-          </h4>
+          <h4 className='hover-200 group-hover:text-accent'>{pdf.title}</h4>
         </article>
       </DialogTrigger>
       <DialogContent className='max-h-[90vh] max-w-[670px] rounded-none border-none bg-white'>
         <DialogHeader className='mt-2 flex flex-row items-center justify-between'>
-          <DialogTitle>{desurlizeForBreadcrumbs(pdf.title)}</DialogTitle>
+          <DialogTitle>{pdf.title}</DialogTitle>
           <DialogDescription className='sr-only'>
             Documentación para el Producto de termogar
           </DialogDescription>

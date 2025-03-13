@@ -153,7 +153,7 @@ const SingleProductPage = async ({
     .then((res) => (res.status !== null ? res : null))
 
   const refactoredRelatedProductsIds = searchedProduct?.relatedProducts
-    ? searchedProduct?.relatedProducts.map((product) => product.id)
+    ? searchedProduct?.relatedProducts.map((product) => product?.id)
     : []
 
   const updatedProduct = mergeProductData(searchedProduct, searchedVariant)
