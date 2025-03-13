@@ -89,9 +89,9 @@ export const construirEtiqueta8 = (
   </soapenv:Envelope>`
 
 export const factusolBody = JSON.stringify({
-  codigoFabricante: process.env.BUILDERCODE,
-  codigoCliente: process.env.CLIENTCODE,
-  baseDatosCliente: process.env.DATABASE,
+  codigoFabricante: Number(process.env.BUILDERCODE),
+  codigoCliente: Number(process.env.CLIENTCODE),
+  baseDatosCliente: String(process.env.DATABASE),
   password: btoa(process.env.DBPASSWORD || '')
 })
 
