@@ -32,11 +32,13 @@ const SearchPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { search, category } = await searchParams
+  console.log('🚀 ~ search:', search)
 
   const oramaResponse = await oramaClient.search({
     term: search as string,
-    mode: 'vector'
+    mode: 'fulltext'
   })
+  console.log('🚀 ~ oramaResponse:', oramaResponse)
 
   if (!oramaResponse) {
     log.error('Products not found', { oramaResponse })
