@@ -273,6 +273,42 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ORAMA =
 "hasLastMinute": defined(lastMinute)
 }`)
 
+export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTER =
+  defineQuery(`*[_type == "product" && dateTime(_updatedAt) >= dateTime(now()) - 60 * 60 * 24]{
+  "id": _id,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+      "blur": featuredMedia.asset->metadata.lqip
+  },
+  title,
+  "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+      "link": link.current,
+      "featuredMedia": image.asset->url,
+    },
+  excerpt,
+  "categories": productCategories[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+  content,
+  price,
+  sale,
+  "stockQuantity": stockQuantity,
+  "tags": productTag[]->{
+    "id": _id,
+    name,
+    "slug": slug.current
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+  "blur": metadata.lqip
+},
+"hasLastMinute": defined(lastMinute)
+}`)
+
 export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATION =
   defineQuery(`*[_type=='product' && status=='publish' && _id in $ids]{
   "id": _id,
