@@ -46,6 +46,11 @@ jobs:
           echo DATABASE=${{ secrets.DATABASE }} >> .env
           echo CLIENTCODE=${{ secrets.CLIENTCODE }} >> .env
           echo DBPASSWORD=${{ secrets.DBPASSWORD }} >> .env
+          echo CRON_JOBS_SECRET=${{ secrets.CRON_JOBS_SECRET }} >> .env
+          echo MERCHANT_CENTER_ACCOUNT_ID=${{ secrets.MERCHANT_CENTER_ACCOUNT_ID }} >> .env MERCHANT_CENTER_ACCOUNT_ID
+          echo MERCHANT_CENTER_DATASOURCE_NAME=${{ secrets.MERCHANT_CENTER_DATASOURCE_NAME }} >> .env
+          echo GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL=${{ secrets.GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL }} >> .env
+          echo GOOGLE_SERVICE_ACCOUNT_CLIENT_PRIVATE_KEY=${{ secrets.GOOGLE_SERVICE_ACCOUNT_CLIENT_PRIVATE_KEY }} >> .env
 
       - name: Set up QEMU for cross-platform builds
         uses: docker/setup-qemu-action@v3
@@ -72,5 +77,6 @@ jobs:
           script: |
             docker stop termogar || true
             docker rm termogar || true
+            docker rmi ghcr.io/n4n1t0/termogar:latest || true
             docker pull ghcr.io/n4n1t0/termogar:latest
             docker run -d --name termogar -p 3000:3000 ghcr.io/n4n1t0/termogar:latest
