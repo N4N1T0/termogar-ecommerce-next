@@ -8,6 +8,7 @@ import {
   tipsaURLWebServiceLogin,
   tipsaURLWebService
 } from './utils'
+import { sanityClientRead } from '@/sanity/lib/client'
 
 // CONST
 const yoptopAppKey = process.env.NEXT_PUBLIC_YOTPO_APP_KEY
@@ -303,7 +304,6 @@ const factusol = {
       }
 
       const data = await response.json()
-      console.log('🚀 ~ generateAccessToken: ~ data:', data)
       return data.resultado
     } catch (error) {
       console.error('Error al obtener el token:', error)
@@ -318,9 +318,8 @@ const factusol = {
       myHeaders.append('Authorization', `Bearer ${token}`)
 
       const raw = JSON.stringify({
-        ejercicio: '2023',
-        tabla: 'F_ART',
-        filtro: ''
+        ejercicio: '2025',
+        consulta: "SELECT * FROM f_art WHERE CODART = '02662'"
       })
 
       const requestOptions = {
@@ -331,7 +330,7 @@ const factusol = {
       }
 
       const response = await fetch(
-        'https://api.sdelsol.com/admin/CargaTabla',
+        'https://api.sdelsol.com/admin/LanzarConsulta',
         requestOptions
       )
 
@@ -341,15 +340,40 @@ const factusol = {
 
       const data = await response.json()
 
-      // const products = data.resultado.map((product) => ({
-      //   id: product.CODART,
-      //   stock: product.STOCK
-      // }))
-
       return data
     } catch (error) {
       console.error('Error al obtener los productos:', error)
     }
+  },
+  updateStock: async function (id: string, stock: number) {
+    const sku = await sanityClientRead.fetch(
+      `*[_type == 'product' && _id == '${id}'][0].sku`
+    )
+
+    const token = await this.generateAccessToken()
+
+    const myHeaders = new Headers()
+    myHeaders.append('Content-Type', 'application/json')
+    myHeaders.append('Authorization', `Bearer ${token}`)
+
+    const raw = JSON.stringify({
+      'ejercicio': '2023',
+      'tabla': 'F_ART',
+      'registro': [
+        {
+          'columna': 'CODANT',
+          'dato': 20
+        },
+        {
+          'columna': 'FECANT',
+          'dato': '2019-08-27'
+        },
+        {
+          'columna': 'IMPANT',
+          'dato': 210.06
+        }
+      ]
+    })
   }
 }
 
