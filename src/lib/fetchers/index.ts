@@ -8,7 +8,6 @@ import {
   tipsaURLWebServiceLogin,
   tipsaURLWebService
 } from './utils'
-import { sanityClientRead } from '@/sanity/lib/client'
 
 // CONST
 const yoptopAppKey = process.env.NEXT_PUBLIC_YOTPO_APP_KEY
