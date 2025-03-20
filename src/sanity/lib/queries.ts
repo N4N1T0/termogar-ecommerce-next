@@ -238,7 +238,7 @@ export const GET_BRANDS = defineQuery(`*[_type=='brand']{
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ORAMA =
-  defineQuery(`*[_type=='product' && status=='publish']{
+  defineQuery(`*[_type == "product" && dateTime(_updatedAt) >= dateTime(now()) - 60 * 60 * 24]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,

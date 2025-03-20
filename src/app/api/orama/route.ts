@@ -14,8 +14,7 @@ export const GET = async () => {
       GET_CARD_STYLE_ONE_PRODUCTS_FOR_ORAMA
     )
 
-    await indexManager.empty()
-    await indexManager.insert(products)
+    await indexManager.update(products)
     await indexManager.deploy()
 
     return NextResponse.json('OK', { status: 200 })
