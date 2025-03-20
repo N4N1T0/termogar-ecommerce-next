@@ -13,7 +13,7 @@ import { GET_USER_INFO } from '@/sanity/lib/queries'
 import { processRestNotification } from '@/lib/clients'
 import { Order } from '@/types/sanity'
 import { uuid } from '@sanity/uuid'
-import { factusol, paypal, tipsa } from '@/lib/fetchers'
+import { paypal, tipsa } from '@/lib/fetchers'
 import { tipsaFormatDate } from '@/lib/utils'
 import { Logger } from 'next-axiom'
 
