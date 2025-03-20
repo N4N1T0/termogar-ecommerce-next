@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server'
 import * as content from '@googleapis/content'
 import pLimit from 'p-limit'
