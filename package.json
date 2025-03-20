@@ -20,6 +20,7 @@
     ]
   },
   "dependencies": {
+    "@googleapis/content": "^33.0.0",
     "@hookform/resolvers": "^4.1.2",
     "@oramacloud/client": "^2.1.4",
     "@portabletext/block-tools": "^1.1.11",
@@ -107,5 +108,5 @@
       "sharp"
     ]
   },
-  "packageManager": "pnpm@10.5.2"
+  "packageManager": "pnpm@10.6.5"
 }
