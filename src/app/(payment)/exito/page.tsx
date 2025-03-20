@@ -165,15 +165,6 @@ const SuccessPage = async ({
       }
     }
 
-    // Update stock in Factusol
-    for (const product of refactoredProducts) {
-      try {
-        await factusol.updateStock(product.product._ref, product.quantity)
-      } catch (error) {
-        log.error('Error while updating stock in Factusol:', { error: error })
-      }
-    }
-
     log.info('Order created successfully', { orderId })
   } catch (error) {
     log.error('Error while creating order:', { error: error })
