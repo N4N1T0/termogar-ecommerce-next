@@ -344,64 +344,7 @@ const factusol = {
     } catch (error) {
       console.error('Error al obtener los productos:', error)
     }
-  },
-  updateStock: async function (id: string, stock: number) {
-    const sku = await sanityClientRead.fetch(
-      `*[_type == 'product' && _id == '${id}'][0].sku`
-    )
-
-    const token = await this.generateAccessToken()
-
-    const myHeaders = new Headers()
-    myHeaders.append('Content-Type', 'application/json')
-    myHeaders.append('Authorization', `Bearer ${token}`)
-
-    const raw = JSON.stringify({
-      'ejercicio': '2023',
-      'tabla': 'F_ART',
-      'registro': [
-        {
-          'columna': 'CODANT',
-          'dato': 20
-        },
-        {
-          'columna': 'FECANT',
-          'dato': '2019-08-27'
-        },
-        {
-          'columna': 'IMPANT',
-          'dato': 210.06
-        }
-      ]
-    })
   }
 }
 
-const merchant = {
-  getAccessToken: async function () {
-    const clientId = process.env.AUTH_GOOGLE_ID
-    const clientSecret = process.env.AUTH_GOOGLE_SECRET
-    const refreshToken = 'still' // TODO
-
-    const tokenUrl = 'https://oauth2.googleapis.com/token'
-
-    const body = new URLSearchParams({
-      client_id: clientId as string,
-      client_secret: clientSecret as string,
-      refresh_token: refreshToken as string,
-      grant_type: 'refresh_token'
-    })
-
-    const response = await fetch(tokenUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: body.toString()
-    })
-    console.log('🚀 ~ getAccessToken ~ response:', response)
-
-    const data = await response.json()
-    return data.access_token
-  }
-}
-
-export { yoptop, paypal, tipsa, factusol, merchant }
+export { yoptop, paypal, tipsa, factusol }
