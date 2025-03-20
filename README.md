@@ -17,6 +17,11 @@
 - [ ] Add Pages Legal
 - [ ] Add orama box chat
 
+## SEM
+
+- [ ] Add checkout_link_template [doc](https://support.google.com/merchants/answer/13580733?sjid=9673701225904806725-EU)
+- [ ] Add Google Pay
+
 ### DEPLOYMENT
 
 - [x] Update the Repo Secrets
