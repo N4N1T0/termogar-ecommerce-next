@@ -13,7 +13,7 @@ import { GET_USER_INFO } from '@/sanity/lib/queries'
 import { processRestNotification } from '@/lib/clients'
 import { Order } from '@/types/sanity'
 import { uuid } from '@sanity/uuid'
-import { paypal, tipsa } from '@/lib/fetchers'
+import { factusol, paypal, tipsa } from '@/lib/fetchers'
 import { tipsaFormatDate } from '@/lib/utils'
 import { Logger } from 'next-axiom'
 
@@ -153,6 +153,7 @@ const SuccessPage = async ({
       ).toISOString() // Sumar 48 horas
     })
 
+    // Update stock in Sanity
     for (const product of refactoredProducts) {
       try {
         await sanityClientWrite
@@ -164,7 +165,14 @@ const SuccessPage = async ({
       }
     }
 
-    console.log('Order created successfully', { orderId })
+    // Update stock in Factusol
+    for (const product of refactoredProducts) {
+      try {
+        await factusol.updateStock(product.product._ref, product.quantity)
+      } catch (error) {
+        log.error('Error while updating stock in Factusol:', { error: error })
+      }
+    }
 
     log.info('Order created successfully', { orderId })
   } catch (error) {
