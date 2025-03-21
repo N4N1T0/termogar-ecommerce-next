@@ -38,7 +38,6 @@ const SearchPage = async ({
     term: search as string,
     mode: 'fulltext'
   })
-  console.log('🚀 ~ oramaResponse:', oramaResponse)
 
   if (!oramaResponse) {
     log.error('Products not found', { oramaResponse })
