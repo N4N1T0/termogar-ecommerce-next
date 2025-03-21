@@ -85,7 +85,6 @@ export const POST = withAxiom(async (req: AxiomRequest) => {
       react: ErrorPayment({
         errorDetails: `Error al procesar el pago. Codigo de respuesta: ${responseCode}`,
         orderId,
-        products: refactoredProducts,
         purchaseDate: new Date().toISOString(),
         user
       })

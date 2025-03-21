@@ -1214,7 +1214,7 @@ export type GET_ALL_TAGSResult = Array<{
 export type GET_COSTUMER_SERVICES_SIDEBAR_MENUResult = Array<{
   id: string
   slug: string | null
-  category: null
+  category: string
   title: string | null
 }>
 // Variable: GET_ALL_PRODUCTS
@@ -2111,7 +2111,7 @@ export type GET_CATEGORY_AND_PRODUCTSResult = {
     featuredMedia: {
       url: string | null
       blur: string | null
-    } | null
+    }
     title: string | null
     slug: string | null
     brand: {

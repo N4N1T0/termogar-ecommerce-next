@@ -9,10 +9,6 @@ import {
 
 interface ErrorPaymentProps {
   purchaseDate: string
-  products: {
-    product: GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATIONResult[number]
-    quantity: string | number
-  }[]
   user: GET_USER_INFOResult
   errorDetails: string
   orderId: string
@@ -22,7 +18,6 @@ export const ErrorPayment = ({
   user,
   errorDetails,
   orderId,
-  products,
   purchaseDate
 }: ErrorPaymentProps) => {
   const previewText = `Error en el pago de ${user?.firstName} ${user?.lastName}`
@@ -102,45 +97,6 @@ export const ErrorPayment = ({
           <Text className='mb-2 text-xl text-accent'>
             <strong>Productos:</strong>
           </Text>
-          <table width='100%' style={{ borderCollapse: 'collapse' }}>
-            <thead>
-              <tr>
-                <th style={{ padding: '10px', textAlign: 'left' }}>Producto</th>
-                <th style={{ padding: '10px', textAlign: 'left' }}>Cantidad</th>
-                <th style={{ padding: '10px', textAlign: 'left' }}>Precio</th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map(({ product, quantity }) => (
-                <tr
-                  key={product.id}
-                  style={{ borderBottom: '1px solid #dddddd' }}
-                >
-                  <td
-                    style={{
-                      padding: '10px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      gap: '10px'
-                    }}
-                  >
-                    <p>{product.title}</p>
-                  </td>
-                  <td style={{ padding: '10px', textAlign: 'center' }}>
-                    {quantity}
-                  </td>
-                  <td style={{ padding: '10px', textAlign: 'right' }}>
-                    {eurilize(
-                      product.price
-                        ? Number(quantity) * product.price
-                        : Number(quantity) * 1
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </Section>
       </Container>
     </TailwindWrapper>
@@ -167,7 +123,6 @@ ErrorPayment.PreviewProps = {
   },
   errorDetails: 'Error al procesar el pago',
   orderId: '123456789',
-  products: [],
   purchaseDate: new Date()
 } as unknown as ErrorPaymentProps
 
