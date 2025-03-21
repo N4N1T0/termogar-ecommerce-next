@@ -73,6 +73,44 @@ export const GET_COSTUMER_SERVICES_SIDEBAR_MENU =
   title
 }`)
 
+export const GET_ALL_PRODUCTS =
+  defineQuery(`*[_type=='product' && status == 'publish']{
+  "id": _id,
+  sku,
+  ean,
+  referenceCode,
+  "featuredMedia": {
+    "url": featuredMedia.asset->url,
+  },
+  title,
+  "slug": slug.current,
+ "brand": *[_type == 'brand' && ^.title match title][0] {
+      title,
+    },
+    youtube,
+  excerpt,
+  "categories": productCategories[]->{
+    name,
+    main
+  },
+  content,
+  price,
+  sale,
+  dimensions,
+  "stockQuantity": stockQuantity,
+  "options": options{
+      "values": values[]{
+        value,
+      }
+    },
+  "tags": productTag[]->{
+    name,
+  },
+ "otherImages": relatedImages[].asset->{
+  "url": url,
+},
+}`)
+
 export const GET_COSTUMER_SERVICES_PAGE =
   defineQuery(`*[_type =='page' && status == 'publish' && slug.current in $slug][0]{
   title,
@@ -238,7 +276,7 @@ export const GET_BRANDS = defineQuery(`*[_type=='brand']{
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ORAMA =
-  defineQuery(`*[_type == "product" && dateTime(_updatedAt) >= dateTime(now()) - 60 * 60 * 24]{
+  defineQuery(`*[_type == "product" && status == 'publish' && dateTime(_updatedAt) >= dateTime(now()) - 60 * 60 * 24]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
@@ -281,6 +319,8 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTER =
       "blur": featuredMedia.asset->metadata.lqip
   },
   title,
+  sku,
+  ean,
   "slug": slug.current,
  "brand": *[_type == 'brand' && ^.title match title][0] {
       title,
