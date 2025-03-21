@@ -19,9 +19,7 @@ export default function ProductDocumentation({
     url: string | null
   }
 }) {
-  console.log('🚀 ~ pdf:', pdf)
   if (!pdf.title || !pdf.url) {
-    console.log('🚀 ~ notPdf:', pdf)
     return null
   }
 
