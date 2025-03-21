@@ -265,11 +265,19 @@ const ProductView = ({
                     <span className='font-500 text-2xl text-red-500'>
                       {eurilize(sale?.price || 0)}
                     </span>
+                    <span className='font-500 text-base text-gray-800'>
+                      {eurilize((sale?.price && sale?.price * 1.21) || 0)} iva.
+                    </span>
                   </>
                 ) : (
-                  <span className='font-500 text-2xl text-red-500'>
-                    {eurilize(price || 0)}
-                  </span>
+                  <>
+                    <span className='font-500 text-2xl text-red-500'>
+                      {eurilize(price || 0)}
+                    </span>
+                    <span className='font-500 text-base text-gray-800'>
+                      {eurilize((price && price * 1.21) || 0)}
+                    </span>
+                  </>
                 )}
               </div>
             ) : (
