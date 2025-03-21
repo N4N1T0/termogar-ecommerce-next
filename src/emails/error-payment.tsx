@@ -1,11 +1,7 @@
 import { Section, Text, Heading, Container } from '@react-email/components'
 import * as React from 'react'
 import TailwindWrapper from './utils/tailwind-wrapper'
-import { eurilize } from '@/lib/utils'
-import {
-  GET_CARD_STYLE_ONE_PRODUCTS_FOR_ERROR_NOTIFICATIONResult,
-  GET_USER_INFOResult
-} from '@/types/sanity'
+import { GET_USER_INFOResult } from '@/types/sanity'
 
 interface ErrorPaymentProps {
   purchaseDate: string
