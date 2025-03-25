@@ -72,7 +72,7 @@ const yoptop = {
 const paypal = {
   generateAccessToken: async (): Promise<string> => {
     const response = await fetch(
-      'https://api-m.sandbox.paypal.com/v1/oauth2/token',
+      `${process.env.NEXT_PUBLIC_PAYPAL_URL}/v1/oauth2/token`,
       {
         method: 'POST',
         headers: {
