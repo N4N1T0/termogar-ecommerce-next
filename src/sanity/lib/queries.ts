@@ -312,7 +312,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_ORAMA =
 }`)
 
 export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTER =
-  defineQuery(`*[_type == "product" && dateTime(_updatedAt) >= dateTime(now()) - 60 * 60 * 24]{
+  defineQuery(`*[_type == "product" && status == 'publish' && dateTime(_updatedAt) >= dateTime(now()) - 60 * 60 * 24]{
   "id": _id,
   "featuredMedia": {
     "url": featuredMedia.asset->url,
