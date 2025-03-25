@@ -15,7 +15,8 @@ import {
   FileUser,
   CircleDollarSign,
   ChartBarStacked,
-  Bell
+  Bell,
+  Sparkle
 } from 'lucide-react'
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -97,5 +98,9 @@ export const structure: StructureResolver = (S) =>
                 .title('No Stock Notificarme')
                 .icon(() => <Bell className='h-4 w-4' />)
             ])
-        )
+        ),
+      S.listItem()
+        .title('Funciones')
+        .icon(() => <Sparkle className='h-4 w-4' />)
+        .child(S.documentTypeList('featureFlags').title('Funciones'))
     ])

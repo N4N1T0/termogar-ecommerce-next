@@ -1,6 +1,6 @@
 import { defineField, defineType } from 'sanity'
 
-export const OfferPageType = defineType({
+export const offerPageType = defineType({
   name: 'offerPage',
   title: 'Pagina de Oferta',
   type: 'document',
