@@ -61,13 +61,13 @@ export default function WebsiteRevampDialog() {
               className='object-cover'
             />
           </div>
-          <button
+          <AlertDialogAction
             onClick={handleClick}
             className='ring-offset-background focus:ring-ring absolute right-2 top-2 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2'
           >
             <X className='h-5 w-5 text-accent' />
             <span className='sr-only'>Close</span>
-          </button>
+          </AlertDialogAction>
 
           <div className='p-6 sm:w-3/5'>
             <AlertDialogHeader>
