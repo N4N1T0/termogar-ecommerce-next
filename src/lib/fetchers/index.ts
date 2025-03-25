@@ -113,7 +113,9 @@ const paypal = {
                   quantity: product.quantity,
                   unit_amount: {
                     currency_code: 'EUR',
-                    value: product.sale ? product.sale.price : product.price
+                    value: product.sale
+                      ? product.sale.price && product.sale.price * 1.21
+                      : product.price && product.price * 1.21
                   }
                 }))
               ],

@@ -72,6 +72,7 @@ const OrderSummary = ({
 
     if (response.data === null) {
       setLoading(false)
+      console.log(response.data)
       toast.error('Error al realizar el pago, por favor intente de nuevo')
       return
     }
@@ -97,7 +98,7 @@ const OrderSummary = ({
       response.success &&
       response.data !== null
     ) {
-      router.push(response.data as unknown as string)
+      window.location.href = response.data as unknown as string
     }
   }
 
@@ -240,9 +241,7 @@ const OrderSummary = ({
 
         <div className='border-px mb-2 mt-4 flex justify-between border-y border-gray-200 py-5'>
           <p className='text-2xl font-medium text-gray-900'>Total</p>
-          <p className='text-2xl font-medium text-accent'>
-            {eurilize(total + iva)}
-          </p>
+          <p className='text-2xl font-medium text-accent'>{eurilize(total)}</p>
         </div>
         <Form onSubmit={handleSubmit} action='' disabled={isDisabled}>
           <ul className='mt-4'>
