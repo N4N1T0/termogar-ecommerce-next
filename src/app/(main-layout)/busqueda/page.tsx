@@ -32,7 +32,6 @@ const SearchPage = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { search, category } = await searchParams
-  console.log('🚀 ~ search:', search)
 
   const oramaResponse = await oramaClient.search({
     term: search as string,
