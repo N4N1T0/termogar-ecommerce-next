@@ -72,7 +72,6 @@ const OrderSummary = ({
 
     if (response.data === null) {
       setLoading(false)
-      console.log(response.data)
       toast.error('Error al realizar el pago, por favor intente de nuevo')
       return
     }
