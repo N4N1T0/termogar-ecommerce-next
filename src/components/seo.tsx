@@ -3,10 +3,13 @@ import type { Metadata } from 'next'
 import { smallLogo } from '@/assets'
 import {
   GET_BLOG_ARTICLE_BY_SLUGResult,
+  GET_COSTUMER_SERVICES_PAGEResult,
   GET_WHOLE_PRODUCT_BY_SLUGResult
 } from '@/types/sanity'
 
-const seoMetatags = (): Metadata => {
+const BASE_URL = 'https://www.termogar.es'
+
+export const seoMetatags = (): Metadata => {
   return {
     title: {
       template: '%s  |  Termogar',
@@ -200,17 +203,114 @@ export const jldProduct = (product: GET_WHOLE_PRODUCT_BY_SLUGResult) => {
   )
 }
 
-export const jldProductList = (products: any[]) => {
+export const jldProductList = (
+  products: any[],
+  params: string | string[] | undefined
+) => {
+  const productListUrl = `${BASE_URL}/${params}`
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: [
-      ...products.map((product) => ({
-        '@type': 'Product',
-        name: product?.nombre || 'Product Name',
-        image: [product.image],
-        description: product?.descripcion
-      }))
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${productListUrl}`,
+        'url': `${productListUrl}`,
+        'name': `Productos de la Categoria ${params} | Termogar.es | Expertos en Climatización`,
+        'isPartOf': { '@id': 'https://termogar.es' },
+        'primaryImageOfPage': {
+          '@id': products[0].featuredMedia.url
+        },
+        'image': {
+          '@id': products[0].featuredMedia.url
+        },
+        'thumbnailUrl': products[0].featuredMedia.url,
+        'breadcrumb': {
+          '@id': `${productListUrl}#breadcrumbs`
+        },
+        'inLanguage': 'es'
+      },
+      {
+        '@type': 'ImageObject',
+        'inLanguage': 'es',
+        '@id': products[0].featuredMedia.url,
+        'url': products[0].featuredMedia.url,
+        'contentUrl': products[0].featuredMedia.url,
+        'width': 500,
+        'height': 600,
+        'caption': products[0].title
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${productListUrl}#breadcrumbs`,
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Inicio',
+            'item': 'https://termogar.es/'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Categorias',
+            'item': 'https://termogar.es/categorias'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': params,
+            'item': `${productListUrl}#breadcrumbs`
+          },
+          { '@type': 'ListItem', 'position': 3, 'name': 'Split' }
+        ]
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://termogar.es/',
+        'url': 'https://termogar.es/',
+        'name': 'Termogar.es | Expertos en Climatización',
+        'description':
+          'Venta online de productos de climatización, con amplia oferta en calentadores a gas, calderas y bombas de calor. Asesoramiento técnico especializado.',
+        'publisher': { '@id': 'https://www.adrian-alvarez.dev/es/' },
+        'potentialAction': [
+          {
+            '@type': 'SearchAction',
+            'target': {
+              '@type': 'EntryPoint',
+              'urlTemplate':
+                'http://termogar.es/busqueda?search=junkers&category=calentadores'
+            },
+            'query-input': {
+              '@type': 'PropertyValueSpecification',
+              'valueRequired': true,
+              'valueName': 'search_term_string'
+            }
+          }
+        ],
+        'inLanguage': 'es'
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'http://termogar.es/servicio-al-cliente/acerca-de-la-empresa',
+        'name': 'TERMOGAR, Expertos en climatización',
+        'url': 'https://termogar.es/',
+        'logo': {
+          '@type': 'ImageObject',
+          'inLanguage': 'es',
+          '@id': 'https://termogar.es/android-chrome-192x192.png',
+          'url': 'https://termogar.es/android-chrome-192x192.png',
+          'contentUrl': 'https://termogar.es/android-chrome-192x192.png',
+          'width': 450,
+          'height': 220,
+          'caption': 'TERMOGAR, Expertos en climatización'
+        },
+        'image': { '@id': 'https://termogar.es/android-chrome-192x192.png' },
+        'sameAs': [
+          'https://www.instagram.com/termogar.es/',
+          'https://es-es.facebook.com/termogar',
+          'https://www.youtube.com/channel/UC2bX_gn3IX27PP2fyDpbhbg'
+        ]
+      }
     ]
   }
 
@@ -222,26 +322,154 @@ export const jldProductList = (products: any[]) => {
   )
 }
 
-const jldBlogArticle = (article: GET_BLOG_ARTICLE_BY_SLUGResult) => {
+export const jldBlogArticle = (article: GET_BLOG_ARTICLE_BY_SLUGResult) => {
+  const isBlog = article?.categories?.some(
+    (category) => category?.slug === 'blog'
+  )
+  const blogUrl = `${BASE_URL}/${isBlog ? 'blog/articulos' : 'noticias'}/${article?.slug}`
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: article?.title,
-    image: article?.featuredMedia.url,
-    description: article?.excerpt,
-    author: {
-      '@type': 'Person',
-      name: article?.author?.name
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Lavanda del Lago',
-      logo: {
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': blogUrl,
+        'isPartOf': {
+          '@id': blogUrl
+        },
+        'author': {
+          'name': article?.author?.name,
+          '@id': article?.author?.name
+        },
+        'headline': article?.title,
+        'datePublished': article?.date,
+        'dateModified': article?.date,
+        'mainEntityOfPage': {
+          '@id': blogUrl
+        },
+        'wordCount': 349,
+        'publisher': {
+          '@id': 'http://termogar.es/servicio-al-cliente/acerca-de-la-empresa'
+        },
+        'image': {
+          '@id': 'https://termogar.es/android-chrome-192x192.png'
+        },
+        'thumbnailUrl': article?.featuredMedia.url,
+        'keywords': [
+          ...(article?.categories?.map((category) => category?.name) || []),
+          ...(article?.tags?.map((tag) => tag?.name) || [])
+        ],
+        'articleSection': [
+          ...(article?.categories?.map((category) => category?.name) || [])
+        ],
+        'inLanguage': 'es'
+      },
+      {
+        '@type': 'WebPage',
+        '@id': blogUrl,
+        'url': blogUrl,
+        'name': article?.title,
+        'isPartOf': { '@id': 'https://termogar.es' },
+        'primaryImageOfPage': {
+          '@id': article?.featuredMedia.url
+        },
+        'image': {
+          '@id': article?.featuredMedia.url
+        },
+        'thumbnailUrl': article?.featuredMedia.url,
+        'datePublished': article?.date,
+        'dateModified': article?.date,
+        'description': article?.excerpt,
+        'breadcrumb': {
+          '@id': `${blogUrl}#breadcrumb`
+        },
+        'inLanguage': 'es',
+        'potentialAction': [
+          {
+            '@type': 'ReadAction',
+            'target': [blogUrl]
+          }
+        ]
+      },
+      {
         '@type': 'ImageObject',
-        url: smallLogo.src
+        'inLanguage': 'es',
+        '@id': `${blogUrl}#primaryimage`,
+        'url': article?.featuredMedia.url,
+        'contentUrl': article?.featuredMedia.url,
+        'width': 903,
+        'height': 504
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${blogUrl}#breadcrumb`,
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Inicio',
+            'item': 'https://termogar.es/'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': isBlog ? 'Blog' : 'Noticias',
+            'item': `${BASE_URL}/${isBlog ? 'blog' : 'noticias'}`
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': article?.title
+          }
+        ]
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://termogar.es/',
+        'url': 'https://termogar.es/',
+        'name': 'Termogar.es | Expertos en Climatización',
+        'description':
+          'Venta online de productos de climatización, con amplia oferta en calentadores a gas, calderas y bombas de calor. Asesoramiento técnico especializado.',
+        'publisher': { '@id': 'https://www.adrian-alvarez.dev/es/' },
+        'potentialAction': [
+          {
+            '@type': 'SearchAction',
+            'target': {
+              '@type': 'EntryPoint',
+              'urlTemplate':
+                'http://termogar.es/busqueda?search=junkers&category=calentadores'
+            },
+            'query-input': {
+              '@type': 'PropertyValueSpecification',
+              'valueRequired': true,
+              'valueName': 'search_term_string'
+            }
+          }
+        ],
+        'inLanguage': 'es'
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'http://termogar.es/servicio-al-cliente/acerca-de-la-empresa',
+        'name': 'TERMOGAR, Expertos en climatización',
+        'url': 'https://termogar.es/',
+        'logo': {
+          '@type': 'ImageObject',
+          'inLanguage': 'es',
+          '@id': 'https://termogar.es/android-chrome-192x192.png',
+          'url': 'https://termogar.es/android-chrome-192x192.png',
+          'contentUrl': 'https://termogar.es/android-chrome-192x192.png',
+          'width': 450,
+          'height': 220,
+          'caption': 'TERMOGAR, Expertos en climatización'
+        },
+        'image': { '@id': 'https://termogar.es/android-chrome-192x192.png' },
+        'sameAs': [
+          'https://www.instagram.com/termogar.es/',
+          'https://es-es.facebook.com/termogar',
+          'https://www.youtube.com/channel/UC2bX_gn3IX27PP2fyDpbhbg'
+        ]
       }
-    },
-    datePublished: article?.date
+    ]
   }
 
   return (
@@ -252,7 +480,7 @@ const jldBlogArticle = (article: GET_BLOG_ARTICLE_BY_SLUGResult) => {
   )
 }
 
-const jldHomePage = () => {
+export const jldHomePage = () => {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -274,4 +502,119 @@ const jldHomePage = () => {
   )
 }
 
-export { jldBlogArticle, jldHomePage, seoMetatags }
+export const jldCostumerServicesPages = (
+  page: GET_COSTUMER_SERVICES_PAGEResult,
+  slug: string | string[] | undefined
+) => {
+  const costumerServiceUrl = `${BASE_URL}/${slug}`
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': costumerServiceUrl,
+        'url': costumerServiceUrl,
+        'name':
+          'Cómo realizar tu pedido, paso a paso | Termogar.es | Expertos en Climatización',
+        'isPartOf': { '@id': 'https://termogar.es/#website' },
+        'primaryImageOfPage': {
+          '@id': `${costumerServiceUrl}#primaryimage`
+        },
+        'image': {
+          '@id': `${costumerServiceUrl}#primaryimage`
+        },
+        'datePublished': '2016-08-20T17:50:04+00:00',
+        'dateModified': '2022-04-18T17:02:24+00:00',
+        'description': page?.excerpt,
+        'breadcrumb': {
+          '@id': `${costumerServiceUrl}#breadcrumb`
+        },
+        'inLanguage': 'es',
+        'potentialAction': [
+          {
+            '@type': 'ReadAction',
+            'target': [costumerServiceUrl]
+          }
+        ]
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${costumerServiceUrl}#breadcrumb`,
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Inicio',
+            'item': 'https://termogar.es/'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Servicio de Atención al Cliente',
+            'item': 'https://termogar.es/servicio-de-atencion-al-cliente/'
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': page?.title,
+            'item': costumerServiceUrl
+          }
+        ]
+      },
+      {
+        '@type': 'WebSite',
+        '@id': 'https://termogar.es/',
+        'url': 'https://termogar.es/',
+        'name': 'Termogar.es | Expertos en Climatización',
+        'description':
+          'Venta online de productos de climatización, con amplia oferta en calentadores a gas, calderas y bombas de calor. Asesoramiento técnico especializado.',
+        'publisher': { '@id': 'https://www.adrian-alvarez.dev/es/' },
+        'potentialAction': [
+          {
+            '@type': 'SearchAction',
+            'target': {
+              '@type': 'EntryPoint',
+              'urlTemplate':
+                'http://termogar.es/busqueda?search=junkers&category=calentadores'
+            },
+            'query-input': {
+              '@type': 'PropertyValueSpecification',
+              'valueRequired': true,
+              'valueName': 'search_term_string'
+            }
+          }
+        ],
+        'inLanguage': 'es'
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'http://termogar.es/servicio-al-cliente/acerca-de-la-empresa',
+        'name': 'TERMOGAR, Expertos en climatización',
+        'url': 'https://termogar.es/',
+        'logo': {
+          '@type': 'ImageObject',
+          'inLanguage': 'es',
+          '@id': 'https://termogar.es/android-chrome-192x192.png',
+          'url': 'https://termogar.es/android-chrome-192x192.png',
+          'contentUrl': 'https://termogar.es/android-chrome-192x192.png',
+          'width': 450,
+          'height': 220,
+          'caption': 'TERMOGAR, Expertos en climatización'
+        },
+        'image': { '@id': 'https://termogar.es/android-chrome-192x192.png' },
+        'sameAs': [
+          'https://www.instagram.com/termogar.es/',
+          'https://es-es.facebook.com/termogar',
+          'https://www.youtube.com/channel/UC2bX_gn3IX27PP2fyDpbhbg'
+        ]
+      }
+    ]
+  }
+
+  return (
+    <script
+      type='application/ld+json'
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  )
+}

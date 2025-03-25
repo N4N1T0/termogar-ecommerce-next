@@ -95,6 +95,7 @@ const BogArticlePage = async ({
                 PlaceholderBlogPost.blurDataURL
               }
               className='h-full w-full object-fill'
+              id='primaryimage'
             />
           </div>
           <div className='px-6 pt-6'>

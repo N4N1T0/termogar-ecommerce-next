@@ -12,6 +12,7 @@ import { GET_COSTUMER_SERVICES_PAGE } from '@/sanity/lib/queries'
 import PageTitle from '@/components/Helpers/PageTitle'
 import { portableTextComponents } from '@/components/Helpers/PortableText'
 import { Logger } from 'next-axiom'
+import { jldCostumerServicesPages } from '@/components/seo'
 
 const log = new Logger()
 
@@ -88,6 +89,7 @@ const CostumerServicePageSlug = async ({
       ) : (
         <CostumerServiceError />
       )}
+      {jldCostumerServicesPages(searchedPage, slug)}
     </section>
   )
 }

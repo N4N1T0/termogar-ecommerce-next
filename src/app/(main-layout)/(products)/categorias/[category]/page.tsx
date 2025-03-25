@@ -168,7 +168,7 @@ const CategoriesPage = async ({
           </section>
         )}
       </div>
-      {jldProductList(products)}
+      {jldProductList(products, category)}
     </main>
   )
 }
