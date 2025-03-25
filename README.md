@@ -6,20 +6,18 @@
 - [ ] Sanity Webhook for the notify
 - [ ] Portable/text External image
 
-## ORAMA AI CHAT
+## SEO
 
 - [ ] Add Pages WP
 - [ ] Add Pages Legal
 - [ ] Add orama box chat
+- [ ] Add an Sanity Action for sending Yotpo Review
 
 ## SEM
 
 - [ ] Add checkout_link_template [doc](https://support.google.com/merchants/answer/13580733?sjid=9673701225904806725-EU)
 - [ ] Add Google Pay
-
-## SEO
-
-- [ ] Add an Sanity Action for sending Yotpo Review
+- [ ] Installation service Landing Page
 
 ---
 
@@ -31,8 +29,10 @@
 - - [x] 100 best
 - [x] Look for the TODOS
 - [x] Delete all console.log
-- [ ] Cron job (Secret)
-- - [ ] Orama
-- - [ ] Merchant Center
-- [ ] Update the Repo Secrets
+- [x] Cron job (Secret)
+- - [x] Orama
+- - [x] Merchant Center
+- [x] Update the Repo Secrets
+- [x] Look for the TODOS
+- [x] Redirects
 - [ ] Update VPS
