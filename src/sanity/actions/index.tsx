@@ -55,7 +55,6 @@ export function setParent(
 
           toast.success('Padre encontrado y actualizado, Puede Publicar')
         } catch (error) {
-          console.log('Error updating parent field before publishing:', error)
           toast.error('Error actualizando el campo padre antes de publicar')
         }
       }
@@ -168,7 +167,6 @@ export function duplicateProduct(
             toast.success('Producto Exitosamente Duplicado')
           }
         } catch (error) {
-          console.log('🚀 ~ onHandle: ~ error:', error)
           toast.error('Error al Duplicar Producto, trate de actualizar')
         }
       }
@@ -198,7 +196,6 @@ export function makeCurrierTag(
             return
           } else {
             const { response } = await construirEtiqueta8(order.currierCode)
-            console.log('🚀 ~ onHandle: ~ response:', response)
 
             if (!response) {
               toast.error('Error: No se pudo construir la etiqueta')
@@ -226,7 +223,6 @@ export function makeCurrierTag(
             toast.success('Etiqueta Exitosamente Creada')
           }
         } catch (error) {
-          console.log('🚀 ~ onHandle: ~ error:', error)
           toast.error('Error al Crear Etiqueta, inténtelo mas tarde')
         }
       }
@@ -280,7 +276,6 @@ export function changeToMain(
 
           toast.success('Variante Exitosamente Creada')
         } catch (error) {
-          console.log('🚀 ~ onHandle: ~ error:', error)
           toast.error('Error al Crear Variante, inténtelo mas tarde')
         }
       }
@@ -460,7 +455,6 @@ const handleChangeToVariant = async (
       toast.success('Producto Exitosamente cambiado a Variante')
     }
   } catch (error) {
-    console.log('🚀 ~ onHandle: ~ error:', error)
     toast.error('Error al cambiar a Variante, trate de actualizar')
   }
 }
