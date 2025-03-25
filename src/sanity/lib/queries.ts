@@ -283,6 +283,7 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTER =
   title,
   sku,
   ean,
+  referenceCode,
   "slug": slug.current,
  "brand": *[_type == 'brand' && ^.title match title][0] {
       title,
@@ -398,9 +399,6 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
       "blur": featuredMedia.asset->metadata.lqip
   },
   title,
-  sku,
-  ean,
-  referenceCode,
   "slug": slug.current,
  "brand": *[_type == 'brand' && ^.title match title][0] {
       title,
@@ -412,7 +410,6 @@ export const GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORY =
     "id": _id,
     name,
     "slug": slug.current,
-    main
   },
   content,
   price,
