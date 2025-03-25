@@ -4,7 +4,8 @@ import Header from '@/components/Partials/Header'
 import GoogleOneTap from '@/components/Auth/google-one-tap'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { SessionProvider } from 'next-auth/react'
-import CookieConsent from '@/components/Helpers/cookies'
+import WebsiteRevampDialog from '@/components/Features/welcome-modal'
+import CookieConsent from '@/components/Features/cookies'
 
 export default function MainLayout({
   children
@@ -16,6 +17,7 @@ export default function MainLayout({
       <Header />
       <NuqsAdapter>{children}</NuqsAdapter>
       <CookieConsent />
+      <WebsiteRevampDialog />
       <Footer />
       {process.env.NODE_ENV !== 'development' && (
         <SessionProvider>

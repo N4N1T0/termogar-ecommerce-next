@@ -1,14 +1,32 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { hasCookie, setCookie } from 'cookies-next'
 import Link from 'next/link'
+import { sanityClientRead } from '@/sanity/lib/client'
+import { GET_FEATURE_BY_KEY } from '@/sanity/lib/queries'
 
 const CookieConsent = () => {
-  const [showConsent, setShowConsent] = React.useState<boolean>(true)
+  const [showConsent, setShowConsent] = useState<boolean>(false)
 
-  React.useEffect(() => {
-    return setShowConsent(hasCookie('localConsent') as boolean)
+  useEffect(() => {
+    const fetchFeatureFlag = async () => {
+      try {
+        const isFeatureFlagEnabled = await sanityClientRead.fetch(
+          GET_FEATURE_BY_KEY,
+          { key: 'cookie' },
+          {
+            cache: 'no-cache',
+            next: { revalidate: 60 }
+          }
+        )
+        setShowConsent(isFeatureFlagEnabled.state && !hasCookie('localConsent'))
+      } catch (error) {
+        console.error('Error fetching feature flag:', error)
+      }
+    }
+
+    fetchFeatureFlag()
   }, [])
 
   const acceptCookie = () => {
@@ -21,7 +39,7 @@ const CookieConsent = () => {
     setCookie('localConsent', 'false', {})
   }
 
-  if (showConsent) {
+  if (!showConsent) {
     return null
   }
 
