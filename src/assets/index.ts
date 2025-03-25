@@ -32,6 +32,7 @@ import smallLogo from './logos/termogar_imagotipo-03.png'
 
 // * IMAGES
 import AtencionAlCliente from './images/servicio-atencion-al-cliente-termogar.webp'
+import WelcomeModal from './images/RENOVAMOS LA WEB (1).webp'
 
 export {
   Brand1,
@@ -59,5 +60,6 @@ export {
   smallLogo,
   AtencionAlCliente,
   PlaceholderUser,
-  WhitePlaceholder
+  WhitePlaceholder,
+  WelcomeModal
 }

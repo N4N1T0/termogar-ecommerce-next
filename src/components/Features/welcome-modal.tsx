@@ -14,6 +14,7 @@ import {
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_FEATURE_BY_KEY } from '@/sanity/lib/queries'
 import { X } from 'lucide-react'
+import { WelcomeModal } from '@/assets'
 
 export default function WebsiteRevampDialog() {
   const [showModal, setShowModal] = useState<boolean>(false)
@@ -49,13 +50,13 @@ export default function WebsiteRevampDialog() {
   return (
     <AlertDialog open={showModal} onOpenChange={setShowModal}>
       <AlertDialogContent
-        className='overflow-hidden bg-white p-0 sm:max-w-[600px]'
+        className='overflow-hidden bg-white p-0 sm:max-w-[800px]'
         onClick={handleClick}
       >
         <div className='flex flex-col sm:flex-row'>
-          <div className='relative h-[200px] w-full bg-accent sm:h-auto sm:w-2/5'>
+          <div className='relative h-[200px] w-full bg-accent sm:h-auto sm:w-4/6'>
             <Image
-              src='/placeholder.svg?height=400&width=300'
+              src={WelcomeModal}
               alt='Visual del rediseño del sitio web'
               fill
               className='object-cover'
@@ -63,7 +64,7 @@ export default function WebsiteRevampDialog() {
           </div>
           <AlertDialogAction
             onClick={handleClick}
-            className='ring-offset-background focus:ring-ring absolute right-2 top-2 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2'
+            className='ring-offset-background focus:ring-ring absolute right-2 top-2 rounded-sm opacity-70 shadow-none transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2'
           >
             <X className='h-5 w-5 text-accent' />
             <span className='sr-only'>Close</span>
