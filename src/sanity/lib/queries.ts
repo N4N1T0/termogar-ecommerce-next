@@ -1098,3 +1098,9 @@ export const GET_NOTIFY_ME_FOR_EMAIL =
     "featuredMedia": featuredMedia.asset->url,
   }
 }`)
+
+// * MISC
+export const GET_FEATURE_BY_KEY =
+  defineQuery(`*[_type=='featureFlags' && key == $key][0]{
+  state
+}`)
