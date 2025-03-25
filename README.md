@@ -17,13 +17,22 @@
 - [ ] Add checkout_link_template [doc](https://support.google.com/merchants/answer/13580733?sjid=9673701225904806725-EU)
 - [ ] Add Google Pay
 
+## SEO
+
+- [ ] Add an Sanity Action for sending Yotpo Review
+
 ---
 
 ### DEPLOYMENT
 
-- [ ] Welcome Modal
-- [ ] Update VPS
+- [x] Welcome Modal
+- [x] Improve jsonDL from yoast
+- [x] Redirects
+- - [x] 100 best
+- [x] Look for the TODOS
+- [x] Delete all console.log
+- [ ] Cron job (Secret)
+- - [ ] Orama
+- - [ ] Merchant Center
 - [ ] Update the Repo Secrets
-- [ ] Improve jsonDL from yoast
-- [ ] Look for the TODOS
-- [ ] Add Cron job secret key (1)
+- [ ] Update VPS
