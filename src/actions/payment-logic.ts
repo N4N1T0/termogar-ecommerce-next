@@ -108,7 +108,7 @@ const paymentLogic = async (
       data: null
     }
   } catch (error) {
-    console.log('🚀 ~ error:', error)
+    log.error('Error Payment', { error })
     return {
       success: false,
       data: null
