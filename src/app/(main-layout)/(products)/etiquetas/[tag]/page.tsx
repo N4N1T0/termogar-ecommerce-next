@@ -105,7 +105,7 @@ const CategoriesPage = async ({
         </div>
         <LinkOrDiv banner={searchedTag.banner} />
       </div>
-      {jldProductList(products)}
+      {jldProductList(products, tag)}
     </main>
   )
 }
