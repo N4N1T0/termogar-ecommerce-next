@@ -20,7 +20,9 @@ const CookieConsent = () => {
             next: { revalidate: 60 }
           }
         )
-        setShowConsent(isFeatureFlagEnabled.state && !hasCookie('localConsent'))
+        setShowConsent(
+          isFeatureFlagEnabled?.state === true && !hasCookie('localConsent')
+        )
       } catch (error) {
         console.error('Error fetching feature flag:', error)
       }
