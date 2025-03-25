@@ -11,6 +11,6 @@ export async function construirEtiqueta8(strAlbaran: string) {
     const response = await tipsa.construirEtiqueta8(strAlbaran)
     return { response }
   } catch (error) {
-    throw new Error('An error occurred')
+    throw new Error('An error occurred', { cause: error })
   }
 }
