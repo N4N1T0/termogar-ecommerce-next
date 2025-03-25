@@ -6,7 +6,7 @@ import pLimit from 'p-limit'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTER } from '@/sanity/lib/queries'
 import { uuid } from '@sanity/uuid'
-import { GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult } from '@/types/sanity'
+import { GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTERResult } from '@/types/sanity'
 
 export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.nextUrl)
@@ -34,10 +34,9 @@ export const GET = async (req: NextRequest) => {
   })
 
   try {
-    const products: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult =
-      await sanityClientRead.fetch(
-        GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTER
-      )
+    const products = await sanityClientRead.fetch(
+      GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTER
+    )
 
     if (!products || products.length === 0) {
       return NextResponse.json(
@@ -50,8 +49,9 @@ export const GET = async (req: NextRequest) => {
 
     const updateResults = await Promise.all(
       products.map(
-        (product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number]) =>
-          limit(() => updateProduct(product, contentClient))
+        (
+          product: GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTERResult[number]
+        ) => limit(() => updateProduct(product, contentClient))
       )
     )
 
@@ -66,7 +66,7 @@ export const GET = async (req: NextRequest) => {
 }
 
 const updateProduct = async (
-  product: GET_CARD_STYLE_ONE_PRODUCTS_BY_CATEGORYResult[number],
+  product: GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTERResult[number],
   contentClient: content_v2_1.Content
 ) => {
   try {
