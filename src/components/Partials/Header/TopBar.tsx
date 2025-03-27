@@ -35,6 +35,7 @@ export default function TopBar({ className = '' }: { className?: string }) {
           >
             <Youtube className='hover-200 size-3 fill-gray-100 hover:fill-gray-900' />
           </Link>
+          {process.env.NODE_ENV === 'development' && <p>Desarrollo</p>}
         </div>
         <div className='flex gap-2 text-center'>
           <span className='hidden animate-pulse font-semibold uppercase text-accent md:block'>
