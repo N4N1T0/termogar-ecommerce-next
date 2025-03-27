@@ -95,7 +95,5 @@ export const factusolBody = JSON.stringify({
   password: btoa(process.env.DBPASSWORD || '')
 })
 
-export const tipsaURLWebService =
-  'https://ws.tipsa-dinapaq.com/SOAP?service=LoginWSService'
-export const tipsaURLWebServiceLogin =
-  'https://ws.tipsa-dinapaq.com/SOAP?service=WebServService'
+export const tipsaURLWebService = process.env.NEXT_PUBLIC_TIPSA_URL!
+export const tipsaURLWebServiceLogin = process.env.NEXT_PUBLIC_TIPSA_URL_LOGIN!
