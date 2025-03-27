@@ -33,6 +33,9 @@ import smallLogo from './logos/termogar_imagotipo-03.png'
 // * IMAGES
 import AtencionAlCliente from './images/servicio-atencion-al-cliente-termogar.webp'
 import WelcomeModal from './images/RENOVAMOS LA WEB (1).webp'
+import RGPD from './images/rgpd.webp'
+import JAC from './images/junta-arbitral-de-consumo.webp'
+import Google from './images/Google_logo__Google_Logo__icons_logos_emojis__tech_companies_png-removebg-preview.webp'
 
 export {
   Brand1,
@@ -61,5 +64,8 @@ export {
   AtencionAlCliente,
   PlaceholderUser,
   WhitePlaceholder,
-  WelcomeModal
+  WelcomeModal,
+  RGPD,
+  JAC,
+  Google
 }
