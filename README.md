@@ -23,16 +23,5 @@
 
 ### DEPLOYMENT
 
-- [x] Welcome Modal
-- [x] Improve jsonDL from yoast
-- [x] Redirects
-- - [x] 100 best
-- [x] Look for the TODOS
-- [x] Delete all console.log
-- [x] Cron job (Secret)
-- - [x] Orama
-- - [x] Merchant Center
-- [x] Update the Repo Secrets
-- [x] Look for the TODOS
-- [x] Redirects
-- [ ] Update VPS
+- [ ] Conversion Tag
+- [ ] Google Analytics Tag
