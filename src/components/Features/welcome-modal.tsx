@@ -32,7 +32,8 @@ export default function WebsiteRevampDialog() {
         )
 
         setShowModal(
-          isFeatureFlagEnabled.state && !hasCookie('hasSeenRevampDialog')
+          isFeatureFlagEnabled.state === true &&
+            !hasCookie('hasSeenRevampDialog')
         )
       } catch (error) {
         console.error('Error fetching feature flag:', error)

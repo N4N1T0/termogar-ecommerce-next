@@ -95,8 +95,7 @@ export const factusolBody = JSON.stringify({
   password: btoa(process.env.DBPASSWORD || '')
 })
 
-// TODO: Cambiar las urls
 export const tipsaURLWebService =
-  'https://testapps.tipsa-dinapaq.com/SOAP?service=WebServService'
+  'https://ws.tipsa-dinapaq.com/SOAP?service=LoginWSService'
 export const tipsaURLWebServiceLogin =
-  'https://testapps.tipsa-dinapaq.com/SOAP?service=LoginWSService'
+  'https://ws.tipsa-dinapaq.com/SOAP?service=WebServService'

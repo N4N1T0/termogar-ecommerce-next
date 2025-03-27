@@ -1,10 +1,10 @@
 import { OramaClient } from '@oramacloud/client'
-import { createRedsysAPI, SANDBOX_URLS } from 'redsys-easy'
+import { createRedsysAPI, PRODUCTION_URLS } from 'redsys-easy'
 import { Resend } from 'resend'
 
 export const { createRedirectForm, processRestNotification } = createRedsysAPI({
   secretKey: process.env.REDSYS_SECRET_KEY!,
-  urls: SANDBOX_URLS
+  urls: PRODUCTION_URLS
 })
 
 export const resend = new Resend(process.env.RESEND_API_KEY)

@@ -716,7 +716,12 @@ export const calculateTotal = (
   let subTotal = 0
 
   for (const item of count) {
-    subTotal += Number(item.sale ? item.sale.price : item.price) * item.quantity
+    subTotal +=
+      Number(
+        item.sale
+          ? item.sale.price && item.sale.price * 1.21
+          : item.price && item.price * 1.21
+      ) * item.quantity
   }
 
   subTotal = Math.max(subTotal, 0)

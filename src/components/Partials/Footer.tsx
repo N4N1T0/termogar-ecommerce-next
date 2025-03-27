@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 // * ASSETS IMPORTS
-import { bigLogo } from '@/assets'
+import { bigLogo, JAC, RGPD } from '@/assets'
 import Gateways from '@/assets/images/payment-getways.png'
 import {
   Accordion,
@@ -61,21 +61,21 @@ const Footer = async () => {
               <Link
                 href='https://www.instagram.com/termogar.es/'
                 target='_blank'
-                className='bg-accent flex aspect-square size-7 items-center justify-center rounded-full'
+                className='flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
               >
                 <Instagram className='hover-200 fill-gray-100 hover:fill-gray-900' />
               </Link>
               <Link
                 href='https://es-es.facebook.com/termogar'
                 target='_blank'
-                className='bg-accent flex aspect-square size-7 items-center justify-center rounded-full'
+                className='flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
               >
                 <Facebook className='hover-200 fill-gray-100 hover:fill-gray-900' />
               </Link>
               <Link
                 href='https://www.youtube.com/channel/UC2bX_gn3IX27PP2fyDpbhbg'
                 target='_blank'
-                className='bg-accent flex aspect-square size-7 items-center justify-center rounded-full'
+                className='flex aspect-square size-7 items-center justify-center rounded-full bg-accent'
               >
                 <Youtube className='hover-200 fill-gray-100 hover:fill-gray-900' />
               </Link>
@@ -207,7 +207,28 @@ const Footer = async () => {
               Hoja 49059, Inscripción 1.
             </small>
           </div>
-          <Image width='318' height='28' src={Gateways} alt='payment-getways' />
+          <div className='flex gap-3'>
+            <Image
+              width='318'
+              height='28'
+              src={Gateways}
+              alt='payment-getways'
+            />
+            <Image
+              width='318'
+              height='28'
+              src={RGPD}
+              className='aspect-video h-8 w-auto'
+              alt='General Data Protection Regulation (Reglamento General de Protección de Datos)'
+            />
+            <Image
+              width='318'
+              height='28'
+              src={JAC}
+              className='h-8 w-auto'
+              alt='Junta Arbitral de Consumo'
+            />
+          </div>
         </div>
 
         {/* Designer and developer */}

@@ -4,6 +4,7 @@ import localFont from 'next/font/local'
 import { seoMetatags } from '@/components/seo'
 import { AxiomWebVitals } from 'next-axiom'
 import { Toaster } from 'sonner'
+import { GoogleTagManager } from '@next/third-parties/google'
 
 export const metadata: Metadata = seoMetatags()
 
@@ -43,6 +44,7 @@ export default function RootLayout({
         className={`overflow-x-hidden bg-gray-50 antialiased ${korbFonts.className}`}
       >
         {children}
+        <GoogleTagManager gtmId='GTM-WJMLMCR' />
         <AxiomWebVitals />
         <Toaster
           toastOptions={{

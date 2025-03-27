@@ -1,0 +1,32 @@
+[
+  {
+    "source": "https://termogar.es/comprar/calentadores/calentadores-a-gas-estancos/",
+    "destination": "https://termogar.es/categorias/calentadores-a-gas-estancos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/marca/junkers/calentadores-a-gas-junkers/",
+    "destination": "https://termogar.es/marcas/junkers?subcat=calentadores-a-gas-estancos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/calentadores-junkers-en-termogar/",
+    "destination": "https://termogar.es/marcas/junkers?subcat=calentadores-a-gas-estancos",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/comprar/calentadores/",
+    "destination": "https://termogar.es/categorias/calentadores",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/marca/htw/",
+    "destination": "https://termogar.es/marcas/htw/",
+    "permanent": true
+  },
+  {
+    "source": "https://termogar.es/opiniones-de-nuestros-clientes/",
+    "destination": "https://termogar.es/servicio-al-cliente/opiniones-de-nuestros-clientes/",
+    "permanent": true
+  }
+]

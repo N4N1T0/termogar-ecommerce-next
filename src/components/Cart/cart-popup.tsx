@@ -29,7 +29,7 @@ export default function CartPopup({ className }: { className?: string }) {
 
   const filteredProducts = products.filter((product) => product.quantity > 0)
 
-  const [subtotal] = calculateTotal(filteredProducts, '33460')
+  const [subtotal, total, iva] = calculateTotal(filteredProducts, '33460')
 
   return (
     <>
@@ -69,12 +69,14 @@ export default function CartPopup({ className }: { className?: string }) {
                                 {eurilize(price || 0)} precio normal
                               </span>
                               <span className='offer-price font-600 ml-2 text-[15px] text-red-500'>
-                                {eurilize(sale.price || 0)}
+                                {eurilize(
+                                  (sale.price && sale.price * 1.21) || 0
+                                )}
                               </span>
                             </>
                           ) : (
                             <span className='offer-price font-600 ml-2 text-[15px] text-red-500'>
-                              {eurilize(price || 0)}
+                              {eurilize((price && price * 1.21) || 0)}
                             </span>
                           )}
 
@@ -107,19 +109,19 @@ export default function CartPopup({ className }: { className?: string }) {
                 Subtotal
               </span>
               <span className='font-500 text-[15px] text-red-500'>
-                {eurilize(subtotal * 0.79 || 0)}
+                {eurilize(subtotal || 0)}
               </span>
             </div>
             <div className='total-equation mb-[14px] flex items-center justify-between'>
               <span className='font-500 text-[15px] text-gray-900'>Iva</span>
               <span className='font-500 text-[15px] text-red-500'>
-                {eurilize(subtotal * 0.21 || 0)}
+                {eurilize(iva || 0)}
               </span>
             </div>
             <div className='total-equation mb-[7px] flex items-center justify-between'>
               <span className='font-500 text-[15px] text-gray-900'>Total</span>
               <span className='font-500 text-[15px] text-red-500'>
-                {eurilize(subtotal || 0)}
+                {eurilize(total || 0)}
               </span>
             </div>
             <div className='product-action-btn'>

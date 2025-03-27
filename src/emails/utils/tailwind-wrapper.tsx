@@ -23,11 +23,10 @@ const TailwindWrapper = ({
   previewText: string
   children: React.ReactNode
 }) => {
-  // TODO: Add production URL
   const baseUrl =
     process.env.NODE_ENV !== 'production'
       ? 'http://localhost:3000'
-      : 'https://termogar-ecommerce-next.vercel.app'
+      : 'https://termogar.es'
 
   return (
     <Html>

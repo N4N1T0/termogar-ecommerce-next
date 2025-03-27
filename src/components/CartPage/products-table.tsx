@@ -11,7 +11,7 @@ import OptionSelect from '@/components/SingleProductPage/option-select'
 
 // * UTILS IMPORTS
 import { CartItemType } from '@/types'
-import { cn, eurilize } from '@/lib/utils'
+import { calculateTotal, cn, eurilize } from '@/lib/utils'
 import {
   CartProductTableQuantity,
   CartProductTableRemover
@@ -28,7 +28,6 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
     price,
     sale,
     id,
-    quantity,
     slug,
     options,
     stockQuantity,
@@ -41,7 +40,7 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
     }
   }, [id, type, updateProductOption])
 
-  const totalPrice = eurilize((sale?.price || price || 1) * quantity)
+  const [subtotal, total, iva] = calculateTotal([product], '33460')
 
   return (
     <tr className='border-b bg-white hover:bg-gray-50'>
@@ -69,7 +68,9 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
       </td>
       <td className='p-4 text-center'>
         <div className='flex items-center justify-center'>
-          {sale ? eurilize(sale.price || 0) : eurilize(price || 0)}
+          {sale
+            ? eurilize((sale.price && sale.price * 1.21) || 0)
+            : eurilize((price && price * 1.21) || 0)}
         </div>
       </td>
       <td className='p-4 text-center'>
@@ -90,20 +91,14 @@ const ProductRow = ({ product }: { product: CartItemType }) => {
       </td>
       <td className='p-4 text-center'>
         <div className='flex items-center justify-center'>
-          {sale
-            ? eurilize((sale.price && sale.price * 0.79) || 0)
-            : eurilize((price && price * 0.79) || 0)}
+          {eurilize(subtotal)}
         </div>
       </td>
       <td className='p-4 text-center'>
-        <div className='flex items-center justify-center'>
-          {sale
-            ? eurilize((sale.price && sale.price * 0.21) || 0)
-            : eurilize((price && price * 0.21) || 0)}
-        </div>
+        <div className='flex items-center justify-center'>{eurilize(iva)}</div>
       </td>
       <td className='p-4 text-center'>
-        <span className='text-[15px] font-normal'>{totalPrice}</span>
+        <span className='text-[15px] font-normal'>{eurilize(total)}</span>
       </td>
       <td className='p-4'>
         <CartProductTableRemover id={id} />

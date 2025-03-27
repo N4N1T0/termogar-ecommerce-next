@@ -2,10 +2,16 @@ import { auth } from '@/lib/auth'
 import { NextResponse } from 'next/server'
 
 // * REDIRECTS
-import { etiquetas, posts, products, raiola } from './data/sitemaps'
+import { categories, etiquetas, posts, products, raiola } from './data/sitemaps'
 
 // Example redirects array
-const redirects = [...etiquetas, ...posts, ...products, ...raiola]
+const redirects = [
+  ...etiquetas,
+  ...posts,
+  ...products,
+  ...raiola,
+  ...categories
+]
 
 const protectedAuthRoutes = ['login', 'signup', 'reset-password']
 const protectedRoutes = ['perfil']
