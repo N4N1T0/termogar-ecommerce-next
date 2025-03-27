@@ -2,78 +2,30 @@
 
 // * NEXT.jS IMPORTS
 import React from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
+import { YouTubeEmbed } from '@next/third-parties/google'
 
 // * ASSETS IMPORTS
-import { ArrowRight, PlayCircle } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
-const tempVideos = [
-  {
-    id: '1',
-    title: 'Product Showcase: Latest Collection',
-    videoId: 'dQw4w9WgXcQ'
-  },
-  {
-    id: '2',
-    title: "How It's Made: Behind the Scenes",
-    videoId: 'dQw4w9WgXcQ'
-  },
-  {
-    id: '3',
-    title: 'Customer Reviews: Real Experiences',
-    videoId: 'dQw4w9WgXcQ'
-  },
-  {
-    id: '4',
-    title: 'Styling Tips: Get the Look',
-    videoId: 'dQw4w9WgXcQ'
-  }
-]
-
-const YouTubeEmbed = React.memo(
+const YouTubeEmbedCard = React.memo(
   ({ videoId, title }: { videoId: string; title: string }) => {
-    const [isLoaded, setIsLoaded] = React.useState(false)
     const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
 
     return (
-      <div className='relative aspect-video bg-gray-200'>
-        {!isLoaded && (
-          <>
-            <Image
-              src={thumbnailUrl}
-              alt={`Thumbnail for ${title}`}
-              width={800}
-              height={800}
-              className='h-full w-full object-cover'
-            />
-            <div
-              className='group absolute inset-0 flex cursor-pointer items-center justify-center bg-black bg-opacity-20'
-              onClick={() => setIsLoaded(true)}
-            >
-              <div className='flex h-14 w-14 items-center justify-center rounded-full bg-white/80 transition-colors group-hover:bg-white'>
-                <PlayCircle className='h-6 w-6 text-accent' />
-                <span className='sr-only'>Play video</span>
-              </div>
-            </div>
-          </>
-        )}
-        {isLoaded && (
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
-            title={title}
-            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-            allowFullScreen
-            className='absolute left-0 top-0 h-full w-full rounded-t-lg'
-          />
-        )}
+      <div className='relative aspect-video bg-gray-200' title={title}>
+        <YouTubeEmbed
+          videoid={videoId}
+          params='accelerometer=1&autoplay&clipboard-write=1&encrypted-media=1&gyroscope=1&picture-in-picture=1'
+          style={`background-image: url(${thumbnailUrl});`}
+        />
       </div>
     )
   }
 )
 
 const YouTubeVideoSection = ({
-  videos = tempVideos
+  videos
 }: {
   videos?:
     | { videoId: string | null; id: string; title: string | null }[]
@@ -106,7 +58,7 @@ const YouTubeVideoSection = ({
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
           {videos?.map((video) => (
             <div key={video.id} className='overflow-hidden bg-white shadow-lg'>
-              <YouTubeEmbed
+              <YouTubeEmbedCard
                 videoId={video.videoId || 'dQw4w9WgXcQ'}
                 title={video.title || 'Sin Nombre'}
               />
