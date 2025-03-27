@@ -89,9 +89,9 @@ const TailwindWrapper = ({
                     <Column>
                       <Link
                         className='mx-2 text-gray-600 no-underline'
-                        href={`${baseUrl}/noticias`}
+                        href={`${baseUrl}/categorias`}
                       >
-                        Noticias
+                        Categorias
                       </Link>
                     </Column>
                     <Column>
@@ -122,7 +122,7 @@ const TailwindWrapper = ({
                   <Text className='mt-1 text-[16px] font-semibold text-gray-900'>
                     Termogar
                   </Text>
-                  <Text className='mt-1 text-[16px] text-gray-500'>
+                  <Text className='mt-1 text-[14px] text-gray-500'>
                     956 861 081 / 667 525 413
                   </Text>
                 </Column>
@@ -155,7 +155,7 @@ const TailwindWrapper = ({
                     </Column>
                   </Row>
                   <Row>
-                    <Text className='my-2 text-[16px] text-gray-500'>
+                    <Text className='my-2 text-[14px] text-gray-500'>
                       C/ Cerrajería, 12 - Polígono el Palmar. CP: 11500, El
                       Puerto de Santa María (Cádiz)
                     </Text>
