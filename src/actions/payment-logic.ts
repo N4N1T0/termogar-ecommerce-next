@@ -45,7 +45,8 @@ const paymentLogic = async (
     totalAmount,
     userId,
     newAddress,
-    discountCoupon
+    discountCoupon,
+    products
   })
 
   try {

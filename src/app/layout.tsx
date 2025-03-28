@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import localFont from 'next/font/local'
 import { seoMetatags } from '@/components/seo'
-import { AxiomWebVitals } from 'next-axiom'
 import { Toaster } from 'sonner'
 import { GoogleTagManager } from '@next/third-parties/google'
 
@@ -45,7 +44,6 @@ export default function RootLayout({
       >
         {children}
         <GoogleTagManager gtmId='GTM-WJMLMCR' />
-        <AxiomWebVitals />
         <Toaster
           toastOptions={{
             unstyled: true,
