@@ -37,7 +37,7 @@ const paymentLogic = async (
     )
     .join(',')
   const templateRedirectUrl = (page: string, gateway: string = 'RedSys') => {
-    return `${process.env.NEXT_PUBLIC_URL}/${page}?userId=${userId}&orderId=${orderId}&gateway=${gateway}&newAddress=${newAddress}&discountCoupon=${discountCoupon}&total=${totalAmount}&products=${refactoredProductsForPayment}`
+    return `${process.env.NEXT_PUBLIC_URL}/${page}?userId=${userId}&orderId=${orderId}&gateway=${gateway}&newAddress=${newAddress}&discountCoupon=${discountCoupon}&total=${gateway === 'paypal' ? totalAmount * 1.04 : totalAmount}&products=${refactoredProductsForPayment}`
   }
 
   log.info('Payment logic initiated', {

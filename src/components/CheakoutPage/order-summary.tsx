@@ -276,6 +276,11 @@ const OrderSummary = ({
                       pago.
                     </small>
                   )}
+                  {paymentType === 'PayPal' && (
+                    <small className='block text-gray-600'>
+                      + 4% de comisión
+                    </small>
+                  )}
                 </li>
               )
             )}
