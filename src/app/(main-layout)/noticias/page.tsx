@@ -38,7 +38,7 @@ const NewsPage = async ({
         {
           cache: 'force-cache',
           next: {
-            revalidate: 43200
+            revalidate: 600
           }
         }
       )
@@ -50,7 +50,7 @@ const NewsPage = async ({
         {
           cache: 'force-cache',
           next: {
-            revalidate: 43200
+            revalidate: 600
           }
         }
       )

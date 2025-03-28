@@ -31,7 +31,7 @@ export async function generateMetadata({
     {
       cache: 'force-cache',
       next: {
-        revalidate: 43200
+        revalidate: 600
       }
     }
   )
