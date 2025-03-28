@@ -49,7 +49,7 @@ const WishlistBtn = ({
     <Button
       title='Agregar a la lista de deseos'
       className={cn(
-        'rounded-none bg-accent p-0 text-white [&_svg]:pointer-events-auto [&_svg]:size-6',
+        'rounded-none bg-accent p-0 px-2 text-white [&_svg]:pointer-events-auto [&_svg]:size-6',
         className
       )}
       onClick={handleAddToWishlist}
