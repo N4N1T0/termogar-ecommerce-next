@@ -55,7 +55,7 @@ export default function WebsiteRevampDialog() {
         onClick={handleClick}
       >
         <div className='flex flex-col sm:flex-row'>
-          <div className='relative h-[200px] w-full bg-accent sm:h-auto sm:w-4/6'>
+          <div className='relative h-[300px] w-full bg-accent sm:h-auto sm:w-4/6'>
             <Image
               src={WelcomeModal}
               alt='Visual del rediseño del sitio web'
@@ -73,42 +73,44 @@ export default function WebsiteRevampDialog() {
 
           <div className='p-6 sm:w-3/5'>
             <AlertDialogHeader>
-              <AlertDialogTitle className='text-2xl font-bold'>
+              <AlertDialogTitle className='text-xl font-bold md:text-2xl'>
                 ¡Nuestro sitio web ha sido renovado!
               </AlertDialogTitle>
-              <AlertDialogDescription className='mt-2 text-base'>
+              <AlertDialogDescription className='mt-2 text-sm md:text-base'>
                 Estamos emocionados de presentar nuestro sitio web rediseñado
                 con funciones y experiencia de usuario mejorada.
               </AlertDialogDescription>
             </AlertDialogHeader>
 
-            <div className='mt-6 space-y-4'>
-              <h3 className='text-lg font-semibold'>Nuevas Características:</h3>
+            <div className='mt-6 space-y-3'>
+              <h3 className='text-base font-semibold md:text-lg'>
+                Nuevas Características:
+              </h3>
               <ul className='space-y-3'>
                 <li className='flex items-start'>
-                  <div className='mt-1 h-4 w-4 flex-shrink-0 rounded-full bg-accent'></div>
-                  <span className='ml-3'>
+                  <div className='mt-1 h-3 w-4 flex-shrink-0 rounded-full bg-accent'></div>
+                  <span className='ml-3 text-xs md:text-base'>
                     Interfaz de usuario completamente rediseñada para una mejor
                     navegación
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <div className='mt-1 h-4 w-4 flex-shrink-0 rounded-full bg-accent'></div>
-                  <span className='ml-3'>
+                  <div className='mt-1 h-3 w-4 flex-shrink-0 rounded-full bg-accent'></div>
+                  <span className='ml-3 text-xs md:text-base'>
                     Función e interfaz de comparación para que puedas decidir
                     con más información
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <div className='mt-1 h-4 w-4 flex-shrink-0 rounded-full bg-accent'></div>
-                  <span className='ml-3'>
+                  <div className='mt-1 h-3 w-4 flex-shrink-0 rounded-full bg-accent'></div>
+                  <span className='ml-3 text-xs md:text-base'>
                     Funcionalidad de búsqueda mejorada y Filtros para encontrar
                     lo que necesitas más rápido
                   </span>
                 </li>
-                <li className='flex items-start text-xl'>
-                  <div className='mt-1 h-4 w-4 flex-shrink-0 rounded-full bg-accent'></div>
-                  <span className='ml-3'>¡Y mucho más!</span>
+                <li className='flex items-start'>
+                  <div className='mt-1 h-3 w-4 flex-shrink-0 rounded-full bg-accent'></div>
+                  <span className='ml-3 text-sm md:text-lg'>¡Y mucho más!</span>
                 </li>
               </ul>
             </div>
