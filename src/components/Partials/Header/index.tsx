@@ -25,7 +25,7 @@ const HeaderOne = async ({ className }: { className?: string }) => {
   const navbarMenu = await sanityClientRead.fetch(
     GET_MENU_CATEGORIES,
     {},
-    { cache: 'force-cache', next: { revalidate: 43200 } }
+    { cache: 'force-cache', next: { revalidate: 600 } }
   )
 
   if (!navbarMenu) {
