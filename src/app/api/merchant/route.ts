@@ -5,7 +5,6 @@ import { type content_v2_1 } from '@googleapis/content'
 import pLimit from 'p-limit'
 import { sanityClientRead } from '@/sanity/lib/client'
 import { GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTER } from '@/sanity/lib/queries'
-import { uuid } from '@sanity/uuid'
 import { GET_CARD_STYLE_ONE_PRODUCTS_FOR_MERCHANT_CENTERResult } from '@/types/sanity'
 
 export const GET = async (req: NextRequest) => {
@@ -75,15 +74,14 @@ const updateProduct = async (
     )?.name
     const updatedProduct = await contentClient.products.update({
       merchantId: process.env.MERCHANT_CENTER_ACCOUNT_ID,
+      productId: `online:ES:${product.id.split('-')[1]}`,
       requestBody: {
-        id: product.sku || product.id.split('-')[1],
         title: toTitleCase(product.title),
         description: product.excerpt,
         price: {
           value: String(product.price && product.price * 1.21) || '0.00',
           currency: 'EUR'
         },
-        offerId: product.sku || uuid(),
         salePrice:
           product.sale && product.sale.price
             ? {
@@ -91,11 +89,8 @@ const updateProduct = async (
                 value: String(product.sale.price * 1.21) || '0.00'
               }
             : undefined,
-        link: `${process.env.NEXT_PUBLIC_UR}/productos/${product.slug}`,
+        link: `${process.env.NEXT_PUBLIC_URL}productos/${product.slug}`,
         imageLink: product.featuredMedia.url,
-        contentLanguage: 'es',
-        targetCountry: 'ES',
-        channel: 'online',
         availability:
           product?.stockQuantity && product.stockQuantity > 0
             ? 'in stock'
@@ -117,7 +112,10 @@ const updateProduct = async (
           googleProductCategory[
             (mainCategory as keyof typeof googleProductCategory) ||
               'Calentadores'
-          ] || null
+          ] || null,
+        linkTemplate: `${process.env.NEXT_PUBLIC_URL}productos/[slug]`,
+        identifierExists: product.ean ? true : false,
+        mobileLinkTemplate: `${process.env.NEXT_PUBLIC_URL}productos/[slug]`
       }
     })
     return { success: true, product: updatedProduct }
