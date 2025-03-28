@@ -22,16 +22,18 @@ const OffersBanners = ({ className, data }: CampaignCountDownProps) => {
         className
       )}
     >
-      <Image
-        className='download-app h-[430px] flex-1 p-5 lg:h-full xl:p-12'
-        src={data?.media.url || PlaceholderSquare}
-        alt='Ofertas'
-        title='Ofertas'
-        placeholder='blur'
-        width={500}
-        height={500}
-        blurDataURL={data?.media.blur || PlaceholderSquare.blurDataURL}
-      />
+      <div className='flex h-full flex-1 items-center justify-center p-5'>
+        <Image
+          className='aspect-square h-full'
+          src={data?.media.url || PlaceholderSquare}
+          alt='Ofertas'
+          title='Ofertas'
+          placeholder='blur'
+          width={500}
+          height={500}
+          blurDataURL={data?.media.blur || PlaceholderSquare.blurDataURL}
+        />
+      </div>
       <div className='sm:mr-[75px]'>
         <div className='countdown-wrapper flex w-full justify-evenly space-x-3 sm:justify-between sm:space-x-6'>
           {countdown &&
@@ -39,12 +41,12 @@ const OffersBanners = ({ className, data }: CampaignCountDownProps) => {
               <div className='countdown-item' key={`countdown-${index}`}>
                 <div className='countdown-number flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white sm:h-[100px] sm:w-[100px]'>
                   <span
-                    className={`font-700 text-[14px] sm:text-[30px] ${saleData?.colors[index]}`}
+                    className={`font-700 text-5xl md:text-7xl ${saleData?.colors[index]}`}
                   >
                     {item}
                   </span>
                 </div>
-                <p className='font-500 text-center text-[12px] leading-8 sm:text-[18px]'>
+                <p className='font-500 text-center text-[12px] leading-8 text-accent sm:text-[18px]'>
                   {saleData.labels[index]}
                 </p>
               </div>
